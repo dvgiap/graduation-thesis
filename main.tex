@@ -1,0 +1,633 @@
+\documentclass{uetgraduation}
+\usepackage{array}
+\usepackage{subcaption}
+\usepackage[
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=black,
+    urlcolor=blue,
+    bookmarks=true,
+    bookmarksopen=true
+]{hyperref}
+
+\begin{document}
+% ---------------------------------------------
+% 1. Thông tin trang bìa
+% ---------------------------------------------
+\studentname{Đoàn Văn Giáp}
+\title{Tác động của phần thưởng nội tại đến quá trình khám phá trong Học tăng cường}
+\documenttype{Báo cáo dự án công nghệ}
+\major{Công nghệ thông tin}
+\year{2025}
+\supervisor{TS. Nguyễn Thị Thủy}
+
+\makecovers % Tạo các trang bìa
+
+% ---------------------------------------------
+% 2. Các trang Tóm tắt, Lời cam đoan, Cảm ơn
+% ---------------------------------------------
+
+\begin{preamble}{Lời cam đoan}
+Em là Đoàn Văn Giáp, sinh viên lớp QH-2022-I/CQ-I-IT1 khóa K67, ngành Công nghệ thông tin tại trường Đại học Công Nghệ - Đại học Quốc gia Hà Nội.\\
+Em xin cam đoan: Dự án công nghệ với đề tài ``Tác động của phần thưởng nội tại đến quá trình khám phá trong Học tăng cường'' trong báo cáo này là công trình nghiên cứu do bản thân em tìm hiểu, thực hiện, và đánh giá. Các nội dung có trình bày trong bản báo cáo đều được thực hiện một cách chính xác và xác thực.\\
+Các thông tin có trong báo cáo là có cơ sở và các nội dung được trích dẫn từ các tài liệu khác đều được ghi rõ nguồn tham khảo. Em xin chịu trách nhiệm về lời
+cam đoan này.
+
+\vspace{2cm}
+
+\begin{flushright}
+Hà Nội, ngày 21 tháng 12 năm 2025
+
+\vspace{1\baselineskip}
+
+\begin{minipage}{6cm}
+\centering
+Sinh viên
+
+\vspace{4\baselineskip}
+
+Đoàn Văn Giáp
+\end{minipage}
+\end{flushright}
+
+
+\end{preamble}
+
+\begin{preamble}{Lời cảm ơn}
+Em xin chân thành cảm ơn TS. Nguyễn Thị Thủy đã tận tình hướng dẫn, chỉ bảo và tạo điều kiện thuận lợi để em hoàn thành báo cáo này. 
+
+Em cũng xin gửi lời cảm ơn đến các thầy cô trong Khoa Công nghệ Thông tin, Trường Đại học Công nghệ, Đại học Quốc gia Hà Nội đã trang bị cho em những kiến thức nền tảng quý báu trong suốt quá trình học tập.
+\end{preamble}
+
+\begin{preamble}{Tóm tắt}
+\textbf{Tóm tắt:} Trong lĩnh vực Học tăng cường (Reinforcement Learning), vấn đề khám phá (exploration) trong môi trường có phần thưởng thưa thớt (sparse reward) là một thách thức lớn. Các chiến lược khám phá cổ điển thường thất bại do không nhận được tín hiệu phản hồi đủ sớm để hướng dẫn tác tử. Báo cáo này tập trung nghiên cứu hiệu quả của phương pháp phần thưởng nội tại (Intrinsic Rewards) dựa trên kỹ thuật Random Network Distillation (RND) kết hợp với thuật toán Proximal Policy Optimization (PPO).
+
+Nghiên cứu thực hiện khảo sát tác động của các hệ số phần thưởng nội tại ($\lambda$) khác nhau bao gồm 1, 0.1 và 0.01 lên hiệu suất của tác tử. Môi trường thực nghiệm được lựa chọn là bộ MiniGrid với các bài toán đòi hỏi khả năng điều hướng và lập kế hoạch, bao gồm DoorKey (kích thước 5x5, 6x6, 8x8), LavaCrossing (s9n1, s9n2, s9n3) và KeyCorridor (s3r1, s3r2). Mục tiêu là đánh giá khả năng của RND trong việc thúc đẩy tác tử khám phá các trạng thái mới và hoàn thành tác vụ khi phần thưởng ngoại lai rất hiếm gặp.
+
+\textit{\textbf{Từ khóa:} Học tăng cường, Phần thưởng nội tại, PPO, RND, MiniGrid.}
+\end{preamble}
+
+% ---------------------------------------------
+% 3. Mục lục và Danh sách
+% ---------------------------------------------
+\begin{contentlisting}
+
+\tableofcontents % Mục lục
+\listoffigures % Danh sách hình vẽ
+\listoftables % Danh sách bảng
+
+\begin{contentlistingsection}{Danh mục các từ viết tắt}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\setlength{\tabcolsep}{8pt}
+
+\begin{tabular}{|
+    >{\centering\arraybackslash}m{1cm}
+    |>{\centering\arraybackslash}m{2.5cm}
+    |>{\raggedright\arraybackslash}m{5cm}
+    |>{\raggedright\arraybackslash}m{5cm}|
+}
+\hline
+\textbf{STT} & \textbf{Từ viết tắt} & \textbf{Cụm từ đầy đủ} & \textbf{Cụm từ tiếng Việt} \\
+\hline
+1 & RL   & Reinforcement Learning & Học tăng cường \\
+\hline
+2 & MDP  & Markov Decision Process & Quá trình quyết định Markov \\
+\hline
+3 & PPO  & Proximal Policy Optimization & Tối ưu hóa chính sách lân cận \\
+\hline
+4 & RND  & Random Network Distillation & Chưng cất mạng ngẫu nhiên \\
+\hline
+5 & TRPO & Trust Region Policy Optimization & Tối ưu hóa chính sách vùng tin cậy \\
+\hline
+6 & ICM  & Intrinsic Curiosity Module & Mô-đun tò mò nội tại \\
+\hline
+7 & MSE  & Mean Squared Error & Sai số bình phương trung bình \\
+\hline
+8 & DIAYN & Diversity Is All You Need & Đa dạng là tất cả những gì bạn cần \\
+\hline
+9 & SAC  & Soft Actor-Critic & Tác tử-Phê bình mềm \\
+\hline
+10 & MLP & Multi-Layer Perceptron & Mạng nơ-ron đa lớp \\
+\hline
+\end{tabular}
+\end{center}
+
+\end{contentlistingsection}
+
+\end{contentlisting}
+
+% ---------------------------------------------
+% 4. Nội dung chính
+% ---------------------------------------------
+\chapter{Giới thiệu}
+
+\section{Đặt vấn đề}
+Học tăng cường đã đạt được những bước tiến vượt bậc trong việc giải quyết các bài toán ra quyết định tuần tự, từ điều khiển robot đến các trò chơi chiến thuật. Tuy nhiên, hiệu suất của các thuật toán RL truyền thống phụ thuộc rất lớn vào độ dày đặc và chất lượng của tín hiệu phần thưởng. Một trong những thách thức lớn nhất hiện nay là vấn đề khám phá khó (hard exploration) trong các môi trường có phần thưởng thưa (sparse reward).
+
+Trong các môi trường này, tác tử (agent) hiếm khi nhận được phản hồi tích cực từ môi trường nếu không thực hiện chính xác một chuỗi hành động phức tạp. Các chiến lược khám phá ngẫu nhiên cổ điển như $\epsilon$-greedy hay phân phối Boltzmann thường thất bại vì không gian trạng thái quá lớn để có thể tìm kiếm ngẫu nhiên một cách hiệu quả.
+
+Để khắc phục hạn chế này, các phương pháp Động lực nội tại (Intrinsic Motivation) đã được đề xuất, trong đó tác tử tự sinh ra phần thưởng nội tại $r_{int}$ dựa trên sự mới lạ của trạng thái hoặc sự tò mò, bổ sung cho phần thưởng ngoại lai $r_{ext}$. Hàm phần thưởng tổng quát thường có dạng:
+\begin{equation}
+    r_{total} = r_{ext} + \lambda \cdot r_{int}
+\end{equation}
+Trong đó, $\lambda$ là hệ số trọng số điều chỉnh mức độ ưu tiên giữa việc hoàn thành nhiệm vụ (khai thác) và tìm kiếm tri thức mới (khám phá). Mặc dù phương pháp RND đã được chứng minh là hiệu quả trong việc sinh $r_{int}$, việc lựa chọn hệ số $\lambda$ phù hợp vẫn là một bài toán mở. Nếu $\lambda$ quá nhỏ, tác tử sẽ không đủ động lực để thoát khỏi các cực tiểu địa phương; ngược lại, nếu $\lambda$ quá lớn, tác tử có thể bị ``nghiện'' việc khám phá và xao nhãng mục tiêu chính.
+
+\section{Các nghiên cứu liên quan}
+Để định vị nghiên cứu này trong bức tranh tổng thể của lĩnh vực khám phá trong RL, em dựa trên các phân tích và phân loại mới nhất từ cộng đồng nghiên cứu, đặc biệt là công trình của Kayal và cộng sự (2025). Phần này sẽ tổng quan các phương pháp tạo phần thưởng nội tại hiện có, phân loại chúng theo bản chất của tín hiệu khám phá và mức độ đa dạng mà chúng thúc đẩy.   
+
+\subsection{Phân loại theo bản chất tín hiệu: Kiến thức và Năng lực}
+Theo cách phân loại truyền thống, các phương pháp phần thưởng nội tại thường được chia thành hai nhóm chính:
+
+\subsubsection{Phần thưởng dựa trên Kiến thức (Knowledge-based)}
+Nhóm này tập trung vào việc khuyến khích tác tử thu thập thông tin mới về môi trường để giảm bớt sự không chắc chắn (uncertainty). Cơ chế hoạt động chủ yếu dựa vào việc so sánh những gì tác tử đang trải nghiệm với những gì nó đã biết.
+\begin{itemize}
+    \item \textbf{Đếm trạng thái (State Count):} Đây là phương pháp trực quan nhất, trong đó phần thưởng nội tại tỉ lệ nghịch với số lần tác tử đã ghé thăm một trạng thái ($r_{int} \propto 1/\sqrt{N(s)}$). Các nghiên cứu thực nghiệm trên MiniGrid cho thấy State Count thường mang lại hiệu quả khám phá tốt nhất cho các quan sát lưới đơn giản nhờ khả năng thúc đẩy bao phủ không gian trạng thái một cách trực tiếp.
+    \item \textbf{Sai số dự đoán (Prediction Error):} Tác tử xây dựng một mô hình động lực học để dự đoán trạng thái tiếp theo. Sự sai lệch giữa dự đoán và thực tế (prediction error) được coi là tín hiệu của sự ``ngạc nhiên'', thúc đẩy tác tử khám phá những vùng mà mô hình chưa hiểu rõ.
+    \item \textbf{RND (Random Network Distillation):} Mặc dù không đếm trực tiếp, RND sử dụng sai số dự đoán của một mạng nơ-ron cố định để xấp xấp độ mới lạ của trạng thái, do đó thường được xếp vào nhóm này.
+\end{itemize}
+
+\subsubsection{Phần thưởng dựa trên Năng lực (Competence-based)}
+Nhóm này, còn được gọi là học kỹ năng (skill learning), khuyến khích tác tử học một tập hợp các hành vi đa dạng mà không cần giám sát. Mục tiêu là phát triển các kỹ năng có thể tái sử dụng hoặc giúp tác tử thích nghi nhanh với các tác vụ mới.
+\begin{itemize}
+    \item \textbf{Học kỹ năng không giám sát (Unsupervised Skill Discovery):} Các phương pháp như DIAYN (Diversity Is All You Need) cố gắng học các kỹ năng sao cho chúng có thể được phân biệt rõ ràng dựa trên các trạng thái mà chúng ghé thăm.
+    \item \textbf{Goal-conditioned RL:} Tác tử tự đặt ra các mục tiêu (goals) và cố gắng đạt được chúng.
+\end{itemize}
+
+\subsection{Phân loại theo Mức độ Đa dạng (Diversity Levels)}
+Một đóng góp quan trọng của Kayal et al. là việc hệ thống hóa các phương pháp này dựa trên cấp độ đa dạng mà chúng áp đặt lên hành vi của tác tử. Việc hiểu rõ các cấp độ này giúp giải thích tại sao một số phương pháp lại hiệu quả hơn trong các môi trường cụ thể như MiniGrid.
+
+\subsubsection{Đa dạng cấp độ Trạng thái (State Level Diversity)}
+Các phương pháp ở cấp độ này khuyến khích sự đa dạng trong các trạng thái được ghé thăm ($s$). Mục tiêu là tối đa hóa entropy của phân phối trạng thái hoặc bao phủ càng nhiều vùng của không gian trạng thái càng tốt.
+\begin{itemize}
+    \item \textbf{Đại diện:} State Count, SimHash (cho ảnh RGB), RND.
+    \item \textbf{Đặc điểm:} Phương pháp này đặc biệt hiệu quả trong các bài toán điều hướng nơi việc tìm ra con đường đúng đòi hỏi phải đi qua các trạng thái mới. State Count đạt hiệu suất cao nhất trong các môi trường lưới có quan sát chiều thấp (low-dimensional grid encodings) vì nó trực tiếp giải quyết vấn đề khám phá không gian. Tuy nhiên, hiệu suất của nó bị suy giảm nghiêm trọng với đầu vào hình ảnh (RGB) do khó khăn trong việc học biểu diễn (representation learning).
+\end{itemize}
+
+\subsubsection{Đa dạng cấp độ Trạng thái + Động lực học (State + Dynamics Level)}
+Cấp độ này mở rộng sự đa dạng sang cả các chuyển đổi trạng thái (transitions). Tác tử không chỉ tìm kiếm trạng thái mới mà còn tìm kiếm các quy luật vận động mới của môi trường.
+\begin{itemize}
+    \item \textbf{Đại diện:} Intrinsic Curiosity Module (ICM). ICM sử dụng sai số dự đoán của mô hình động lực học thuận (forward dynamics) làm phần thưởng.
+    \item \textbf{Đặc điểm:} ICM giúp tác tử hiểu rõ cấu trúc nhân quả của môi trường. Tuy nhiên, nó có thể chậm hội tụ hơn State Count do chi phí tính toán huấn luyện các mô hình động lực học và vấn đề ``Noisy-TV'' (bị thu hút bởi nhiễu ngẫu nhiên không thể dự đoán).
+\end{itemize}
+
+\subsubsection{Đa dạng cấp độ Chính sách (Policy Level Diversity)}
+Tại đây, sự đa dạng được khuyến khích trong không gian hành động tại mỗi trạng thái.
+\begin{itemize}
+    \item \textbf{Đại diện:} Maximum Entropy RL (ví dụ: thuật toán Soft Actor-Critic, hoặc thêm entropy bonus vào PPO).
+    \item \textbf{Đặc điểm:} Phương pháp này khuyến khích chính sách ngẫu nhiên nhất có thể ($\max H(\pi)$). Trong môi trường lưới với không gian trạng thái lớn, việc chỉ tối đa hóa entropy hành động là chưa đủ để đảm bảo khám phá sâu, nhưng nó giúp tăng tính bền vững (robustness) và ít bị ảnh hưởng bởi vấn đề biểu diễn hình ảnh hơn so với State Count.
+\end{itemize}
+
+\subsubsection{Đa dạng cấp độ Kỹ năng (Skill Level Diversity)}
+Cấp độ cao nhất hướng tới việc học các kỹ năng vĩ mô (abstract skills) khác biệt nhau.
+\begin{itemize}
+    \item \textbf{Đại diện:} DIAYN (Diversity Is All You Need).
+    \item \textbf{Đặc điểm:} DIAYN tối đa hóa thông tin tương hỗ giữa kỹ năng ($z$) và trạng thái ($s$). Tuy nhiên, kết quả thực nghiệm cho thấy DIAYN thường thất bại trong việc thúc đẩy khám phá hiệu quả trên MiniGrid. Nguyên nhân là do việc học không gian kỹ năng (skill space) rất khó khăn trong môi trường quan sát một phần, và quan trọng hơn, việc tối ưu hóa khả năng phân biệt kỹ năng (discriminability) thường mâu thuẫn với việc khám phá các trạng thái mới lạ xa xôi. Tác tử có xu hướng lặp lại các hành vi đơn giản dễ phân biệt thay vì đi sâu vào mê cung.
+\end{itemize}
+
+\subsection{Kết luận rút ra cho nghiên cứu}
+Dựa trên phân tích các nghiên cứu liên quan, có thể rút ra các nhận định quan trọng định hướng cho báo cáo này:
+\begin{enumerate}
+    \item Trong các môi trường điều hướng lưới như MiniGrid, các phương pháp tập trung vào Đa dạng cấp độ Trạng thái (như State Count, RND) thường mang lại hiệu quả cao nhất về tốc độ hội tụ và khả năng tìm kiếm phần thưởng thưa.
+    \item RND là một lựa chọn hợp lý để xấp xỉ ``đếm trạng thái'' trong không gian liên tục, tránh được các hạn chế của bảng đếm truyền thống và sự phức tạp của các mô hình động lực học (ICM).
+    \item Các phương pháp phức tạp như học kỹ năng (DIAYN) chưa thực sự hiệu quả cho bài toán khám phá thuần túy trong bối cảnh này.
+\end{enumerate}
+
+\textbf{Lý do chọn RND cho môi trường MiniGrid:}
+
+Mặc dù MiniGrid là môi trường lưới rời rạc nơi phương pháp đếm trạng thái (Count-based) có thể hoạt động hiệu quả bằng bảng băm đơn giản, em vẫn lựa chọn RND cho nghiên cứu này vì các lý do sau:
+
+\begin{itemize}
+    \item \textbf{Kiểm chứng khả năng tổng quát hóa:} RND vốn được thiết kế cho không gian trạng thái liên tục và cao chiều (ví dụ: pixel đầu vào từ game Atari). Việc áp dụng RND vào MiniGrid cho phép đánh giá khả năng tổng quát của phương pháp này trên các bài toán đơn giản hơn, nơi có thể dễ dàng so sánh và phân tích kết quả.
+    
+    \item \textbf{Làm tiền đề cho các môi trường phức tạp hơn:} Nghiên cứu này đóng vai trò như bước đệm trước khi mở rộng sang các môi trường sử dụng đầu vào hình ảnh RGB hoặc môi trường 3D, nơi mà Count-based không còn khả thi do ``lời nguyền chiều'' (curse of dimensionality). Các kỹ thuật và hiểu biết thu được từ MiniGrid có thể được chuyển giao trực tiếp.
+    
+    \item \textbf{Tính nhất quán trong pipeline huấn luyện:} RND sử dụng mạng nơ-ron để xấp xỉ độ mới lạ, do đó tích hợp tự nhiên với các thuật toán Policy Gradient như PPO mà không cần duy trì cấu trúc dữ liệu bổ sung (như bảng đếm). Điều này giúp đơn giản hóa việc triển khai và mở rộng sang các bài toán quy mô lớn.
+    
+    \item \textbf{Phân tích độ nhạy của $\lambda$:} Việc phân tích ảnh hưởng của hệ số $\lambda$ trong RND có ý nghĩa thực tiễn cao hơn vì tham số này sẽ tiếp tục được sử dụng khi chuyển sang các môi trường phức tạp, trong khi Count-based không có tham số tương đương cần được tinh chỉnh.
+\end{itemize}
+
+Do đó, nghiên cứu này sẽ tập trung sâu vào việc phân tích và tối ưu hóa RND (đại diện cho State-level diversity) kết hợp với PPO.
+
+\section{Mục tiêu nghiên cứu}
+Nghiên cứu này tập trung vào việc tích hợp cơ chế RND vào thuật toán PPO để giải quyết bài toán phần thưởng thưa.
+Mục tiêu cốt lõi không chỉ dừng lại ở việc áp dụng RND, mà là phân tích độ nhạy và tác động của hệ số phần thưởng nội tại ($\lambda$) đối với hành vi của tác tử. Cụ thể, em đặt ra giả thuyết rằng RND hoạt động như một ``phần thưởng bonus'' có thể điều chỉnh, và việc thay đổi độ lớn của $\lambda$ sẽ ảnh hưởng trực tiếp đến tốc độ hội tụ và khả năng tìm kiếm lời giải tối ưu trong các môi trường lưới (grid-world) phức tạp.
+
+\section{Phạm vi nghiên cứu}
+Nghiên cứu được giới hạn trong các phạm vi sau:
+\begin{itemize}
+    \item \textbf{Thuật toán:} 
+    \begin{itemize}
+        \item \textbf{Baseline:} PPO thuần túy (không sử dụng phần thưởng nội tại).
+        \item \textbf{Đề xuất:} PPO kết hợp với RND (PPO+RND).
+    \end{itemize}
+    \item \textbf{Tham số nghiên cứu:} Tập trung đánh giá ảnh hưởng của hệ số $\lambda$ với các giá trị đại diện cho các mức độ ưu tiên khám phá khác nhau: $\lambda \in \{1.0, 0.1, 0.01\}$.
+    \item \textbf{Môi trường thực nghiệm:} Sử dụng bộ thư viện \textit{MiniGrid}, đặc trưng bởi quan sát cục bộ (partially observable) và phần thưởng rất thưa. Các bài toán được lựa chọn có độ khó tăng dần:
+    \begin{itemize}
+        \item \textbf{DoorKey:} Kích thước $5\times5, 6\times6, 8\times8$ (Yêu cầu chuỗi hành động: nhặt chìa -> mở cửa -> đến đích).
+        \item \textbf{LavaCrossing:} Các cấu hình S9N1, S9N2, S9N3 (Yêu cầu điều hướng an toàn tránh chướng ngại vật).
+        \item \textbf{KeyCorridor:} Các cấu hình S3R1, S3R2 (Yêu cầu khả năng khám phá và quay lui - backtracking).
+    \end{itemize}
+\end{itemize}
+
+\chapter{Cơ sở Lý thuyết}
+
+Chương này trình bày các nền tảng lý thuyết cốt lõi được sử dụng trong nghiên cứu, bao gồm mô hình Quá trình quyết định Markov (MDP), thuật toán tối ưu hóa chính sách PPO và mạng chưng cất ngẫu nhiên RND để tạo động lực nội tại.
+
+\section{Quá trình quyết định Markov (MDP)}
+Bài toán Học tăng cường (Reinforcement Learning - RL) trong nghiên cứu này được mô hình hóa dưới dạng một Quá trình quyết định Markov (MDP), được định nghĩa bởi bộ năm thành phần $(S, A, P, R, \gamma)$, trong đó:
+\begin{itemize}
+    \item $S$: Không gian trạng thái (State space), mô tả các quan sát từ môi trường.
+    \item $A$: Không gian hành động (Action space), tập hợp các quyết định khả thi của tác tử.
+    \item $P(s_{t+1}|s_t, a_t)$: Hàm xác suất chuyển trạng thái, biểu thị động lực học của môi trường.
+    \item $R(s_t, a_t)$: Hàm phần thưởng (Reward function), tín hiệu phản hồi từ môi trường.
+    \item $\gamma \in [0, 1]$: Hệ số chiết khấu (Discount factor), xác định trọng số của các phần thưởng trong tương lai.
+\end{itemize}
+
+Tại mỗi bước thời gian $t$, tác tử quan sát trạng thái $s_t \in S$, thực hiện hành động $a_t \in A$ dựa trên chính sách $\pi(a_t|s_t)$, nhận phần thưởng $r_t$ và chuyển sang trạng thái mới $s_{t+1}$. Mục tiêu tối thượng của tác tử là tìm kiếm một chính sách tối ưu $\pi^*$ để cực đại hóa tổng phần thưởng tích lũy kỳ vọng $J(\pi)$:
+\begin{equation}
+J(\pi) = \mathbb{E}_{\tau \sim \pi} \left[ \sum_{t=0}^{\infty} \gamma^t r_t \right]
+\end{equation}
+
+\section{Proximal Policy Optimization (PPO)}
+PPO là một thuật toán thuộc họ Policy Gradient, được thiết kế để cân bằng giữa độ phức tạp tính toán, sự đơn giản trong cài đặt và hiệu suất thực nghiệm. PPO giải quyết vấn đề bước cập nhật quá lớn (large step updates) thường gặp trong các phương pháp gradient truyền thống bằng cách giới hạn sự thay đổi của chính sách trong một vùng lân cận an toàn (trust region).
+
+\subsection{Hàm mục tiêu bị cắt (Clipped Surrogate Objective)}
+Thành phần cốt lõi của PPO là hàm mục tiêu thay thế, được thiết kế để ngăn chặn chính sách mới lệch quá xa so với chính sách cũ. Gọi $r_t(\theta)$ là tỷ lệ xác suất giữa chính sách mới và chính sách cũ:
+\begin{equation}
+r_t(\theta) = \frac{\pi_\theta(a_t|s_t)}{\pi_{\theta_{old}}(a_t|s_t)}
+\end{equation}
+
+Hàm mục tiêu $L^{CLIP}$ được định nghĩa như sau:
+\begin{equation}
+L^{CLIP}(\theta) = \hat{\mathbb{E}}_t \left[ \min \left( r_t(\theta)\hat{A}_t, \text{clip}(r_t(\theta), 1-\epsilon, 1+\epsilon)\hat{A}_t \right) \right]
+\end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $\hat{A}_t$ là ước lượng hàm lợi thế (Advantage function), đo lường mức độ tốt hơn của hành động $a_t$ so với giá trị trung bình của trạng thái $s_t$. Trong nghiên cứu này, $\hat{A}_t$ được tính toán dựa trên sai lệch giữa phần thưởng tích lũy thực tế và giá trị dự đoán của mạng Critic.
+    \item $\epsilon$ là siêu tham số (thường đặt là 0.2), quy định biên độ thay đổi cho phép của chính sách.
+    \item Hàm $\text{clip}$ giữ giá trị $r_t(\theta)$ nằm trong khoảng $[1-\epsilon, 1+\epsilon]$, loại bỏ động lực cập nhật quá mức khi tỉ lệ xác suất quá lớn.
+\end{itemize}
+
+\subsection{Hàm mất mát tổng quát}
+Trong thực tế cài đặt (như được thể hiện trong kiến trúc Actor-Critic), PPO tối ưu hóa đồng thời cả chính sách (Actor) và hàm giá trị (Critic). Hàm mất mát tổng quát $L^{PPO}_t(\theta)$ bao gồm ba thành phần:
+\begin{equation}
+L^{PPO}_t(\theta) = -L^{CLIP}_t(\theta) + c_1 L^{VF}_t(\theta) - c_2 S[\pi_\theta](s_t)
+\end{equation}
+Trong đó:
+\begin{itemize}
+    \item $L^{VF}_t(\theta) = (V_\theta(s_t) - V^{target}_t)^2$ là sai số bình phương trung bình (MSE) của mạng Critic, giúp mạng học cách ước lượng giá trị trạng thái chính xác.
+    \item $S[\pi_\theta](s_t)$ là entropy của chính sách, đóng vai trò như một phần thưởng khuyến khích sự khám phá ngẫu nhiên, ngăn chặn sự hội tụ sớm về một chiến lược cục bộ tối ưu (sub-optimal).
+    \item $c_1, c_2$ là các hệ số trọng số.
+\end{itemize}
+
+\section{Random Network Distillation (RND)}
+Để giải quyết vấn đề phần thưởng thưa thớt (sparse reward), nghiên cứu sử dụng kỹ thuật RND. RND tạo ra phần thưởng nội tại (intrinsic reward) dựa trên độ mới lạ (novelty) của trạng thái, không phụ thuộc vào hành động của tác tử.
+
+Mô hình RND bao gồm hai mạng nơ-ron có cùng kiến trúc ánh xạ trạng thái $s$ sang không gian đặc trưng $\mathbb{R}^k$:
+\begin{enumerate}
+    \item \textbf{Target Network ($f$):} Mạng đích được khởi tạo ngẫu nhiên và cố định tham số (đóng băng) trong suốt quá trình huấn luyện. Nó đóng vai trò tạo ra một bài toán giám sát giả định cố định.
+    \item \textbf{Predictor Network ($\hat{f}_\phi$):} Mạng dự đoán được huấn luyện tích cực để xấp xỉ đầu ra của Target Network trên các trạng thái mà tác tử ghé thăm.
+\end{enumerate}
+
+\subsection{Cơ chế sinh phần thưởng nội tại}
+Phần thưởng nội tại $r^{int}_t$ được định nghĩa là sai số dự đoán giữa hai mạng:
+\begin{equation}
+r^{int}_t = ||\hat{f}_\phi(s_{t+1}) - f(s_{t+1})||^2
+\end{equation}
+
+Nguyên lý hoạt động dựa trên sự chưng cất kiến thức: Tại các trạng thái quen thuộc (đã ghé thăm nhiều lần), mạng Predictor đã được huấn luyện đủ nhiều để xấp xỉ tốt Target Network, dẫn đến $r^{int}_t$ nhỏ. Ngược lại, tại các trạng thái mới lạ, sai số dự đoán sẽ lớn. Điều này tạo ra một tín hiệu gradient thúc đẩy tác tử khám phá các vùng chưa biết của không gian trạng thái.
+
+\section{Chiến lược kết hợp phần thưởng}
+Trong mô hình đề xuất, hệ thống học tăng cường không chỉ dựa vào phần thưởng từ môi trường mà còn kết hợp với động lực nội tại. Tổng phần thưởng $r_t$ tại mỗi bước được tính toán như sau:
+\begin{equation}
+r_t = r^{ext}_t + \lambda_{rnd} \cdot r^{int}_t
+\end{equation}
+
+Trong đó:
+\begin{itemize}
+    \item $r^{ext}_t$: Phần thưởng ngoại lai (Extrinsic reward) do môi trường cung cấp khi hoàn thành nhiệm vụ.
+    \item $r^{int}_t$: Phần thưởng nội tại (Intrinsic reward) do RND sinh ra.
+    \item $\lambda_{rnd}$: Hệ số cân bằng (scaling factor), kiểm soát mức độ ưu tiên giữa việc thực hiện nhiệm vụ (exploitation) và khám phá môi trường (exploration).
+\end{itemize}
+
+Việc lựa chọn $\lambda_{rnd}$ phù hợp là rất quan trọng; nghiên cứu này sẽ thực nghiệm với các giá trị khác nhau của $\lambda_{rnd}$ để đánh giá tác động của động lực nội tại đối với khả năng hội tụ của thuật toán trong các môi trường lưới (grid-world).
+\chapter{Phương pháp thực nghiệm}
+
+\section{Kiến trúc mạng}
+
+\subsection{Mạng Actor-Critic}
+Em sử dụng kiến trúc Actor-Critic với hai mạng MLP riêng biệt cho Actor và Critic. Cả hai mạng đều có cấu trúc tương tự với 2 lớp ẩn:
+
+\begin{itemize}
+    \item \textbf{Actor Network:} Linear($d_{state}$, 64) $\rightarrow$ Tanh $\rightarrow$ Linear(64, 64) $\rightarrow$ Tanh $\rightarrow$ Linear(64, $d_{action}$) $\rightarrow$ Softmax
+    \item \textbf{Critic Network:} Linear($d_{state}$, 64) $\rightarrow$ Tanh $\rightarrow$ Linear(64, 64) $\rightarrow$ Tanh $\rightarrow$ Linear(64, 1)
+\end{itemize}
+
+Trong đó $d_{state}$ là chiều của không gian trạng thái (quan sát đã được làm phẳng bởi FlatObsWrapper) và $d_{action}$ là số lượng hành động rời rạc (7 hành động trong MiniGrid).
+
+\subsection{Mạng RND}
+Cơ chế RND sử dụng hai mạng nơ-ron nhỏ hơn:
+
+\begin{itemize}
+    \item \textbf{Target Network ($f$):} Linear($d_{state}$, 64) $\rightarrow$ ReLU $\rightarrow$ Linear(64, 32) $\rightarrow$ ReLU
+    \item \textbf{Predictor Network ($\hat{f}$):} Linear($d_{state}$, 64) $\rightarrow$ ReLU $\rightarrow$ Linear(64, 32) $\rightarrow$ ReLU
+\end{itemize}
+
+Target Network được khởi tạo ngẫu nhiên và cố định (frozen) trong suốt quá trình huấn luyện. Predictor Network được huấn luyện để dự đoán đầu ra của Target Network. Chiều không gian embedding là 32.
+
+\section{Siêu tham số}
+
+\begin{table}{Siêu tham số PPO}
+\centering
+\begin{tabular}{|l|c|l|}
+\hline
+\textbf{Tham số} & \textbf{Giá trị} & \textbf{Mô tả} \\
+\hline
+$\gamma$ & 0.99 & Hệ số chiết khấu \\
+\hline
+$\epsilon_{clip}$ & 0.2 & Ngưỡng clipping cho PPO \\
+\hline
+$K_{epochs}$ & 80 & Số epoch cập nhật mỗi lần update \\
+\hline
+$\alpha_{actor}$ & 0.0003 & Learning rate của Actor \\
+\hline
+$\alpha_{critic}$ & 0.001 & Learning rate của Critic \\
+\hline
+Update frequency & 4000 steps & Tần suất cập nhật policy \\
+\hline
+Max timesteps & $10^6$ & Tổng số bước huấn luyện \\
+\hline
+Max episode length & 1000 & Độ dài tối đa mỗi episode \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}{Siêu tham số RND}
+\centering
+\begin{tabular}{|l|c|l|}
+\hline
+\textbf{Tham số} & \textbf{Giá trị} & \textbf{Mô tả} \\
+\hline
+$\lambda$ & \{1.0, 0.1, 0.01\} & Hệ số trọng số phần thưởng nội tại \\
+\hline
+use\_rnd & True / False & Bật/tắt cơ chế RND (False = PPO baseline) \\
+\hline
+$\alpha_{RND}$ & 0.0001 & Learning rate của Predictor \\
+\hline
+RND epochs & 5 & Số epoch huấn luyện RND mỗi lần update \\
+\hline
+Embedding dim & 32 & Chiều không gian embedding \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Môi trường thực nghiệm}
+Em sử dụng bộ thư viện MiniGrid với wrapper FlatObsWrapper để chuyển đổi quan sát hình ảnh thành vector một chiều. Các môi trường được chọn có độ khó tăng dần:
+
+\begin{table}{Các môi trường MiniGrid được sử dụng}
+\centering
+\begin{tabular}{|l|l|p{7cm}|}
+\hline
+\textbf{Môi trường} & \textbf{Kích thước} & \textbf{Mô tả} \\
+\hline
+DoorKey-5x5 & $5 \times 5$ & Nhặt chìa khóa, mở cửa, đến đích \\
+\hline
+DoorKey-6x6 & $6 \times 6$ & Tương tự DoorKey-5x5, không gian lớn hơn \\
+\hline
+DoorKey-8x8 & $8 \times 8$ & Tương tự DoorKey-5x5, không gian lớn hơn \\
+\hline
+LavaCrossing-S9N1 & $9 \times 9$ & Điều hướng qua 1 vùng dung nham \\
+\hline
+LavaCrossing-S9N2 & $9 \times 9$ & Điều hướng qua 2 vùng dung nham \\
+\hline
+LavaCrossing-S9N3 & $9 \times 9$ & Điều hướng qua 3 vùng dung nham \\
+\hline
+KeyCorridor-S3R1 & $3 \times 3$ rooms & Khám phá nhiều phòng, nhặt chìa khóa \\
+\hline
+KeyCorridor-S3R2 & $3 \times 3$ rooms & Tương tự S3R1, phức tạp hơn \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Chỉ số đánh giá}
+Em thu thập các chỉ số sau trong quá trình huấn luyện:
+
+\begin{itemize}
+    \item \textbf{Episode Return:} Tổng phần thưởng ngoại lai nhận được trong mỗi episode
+    \item \textbf{Observation Coverage:} Số lượng quan sát (trạng thái) duy nhất đã ghé thăm
+    \item \textbf{Position Coverage:} Tỉ lệ các vị trí trên lưới đã được ghé thăm
+    \item \textbf{Policy Entropy:} Entropy trung bình của chính sách, đo lường độ ngẫu nhiên trong việc chọn hành động
+    \item \textbf{Reward Discovery Frame:} Thời điểm (số bước) đầu tiên tác tử nhận được phần thưởng dương
+\end{itemize}
+
+Mỗi cấu hình được chạy với 5 random seeds (1-5) để đảm bảo tính thống kê. Kết quả được trình bày dưới dạng trung bình $\pm$ độ lệch chuẩn.
+
+\chapter{Kết quả thực nghiệm}
+
+Chương này trình bày các kết quả thực nghiệm của việc huấn luyện tác tử PPO+RND trên các môi trường MiniGrid. Các kết quả được tổ chức theo từng nhóm môi trường và phân tích dựa trên 4 chỉ số chính: Episode Reward, Observation Coverage, Position Coverage và Policy Entropy.
+
+\section{Thiết lập thực nghiệm}
+\subsection{Môi trường thử nghiệm}
+Các thuật toán được đánh giá trên 8 môi trường MiniGrid với độ khó tăng dần, bao gồm:
+\begin{itemize}
+    \item \textbf{Nhóm DoorKey:} DoorKey-5x5, DoorKey-6x6, DoorKey-8x8.
+    \item \textbf{Nhóm KeyCorridor:} KeyCorridorS3R1, KeyCorridorS3R2.
+    \item \textbf{Nhóm LavaCrossing:} LavaCrossingS9N1, LavaCrossingS9N2, LavaCrossingS9N3.
+\end{itemize}
+
+\subsection{Các chỉ số đánh giá}
+Hiệu suất của tác tử được đo lường qua 4 chỉ số chính:
+\begin{enumerate}
+    \item \textbf{Phần thưởng tích lũy (Episodic Return):} Đo lường khả năng hoàn thành nhiệm vụ.
+    \item \textbf{Độ bao phủ quan sát (Observation Coverage):} Số lượng các quan sát độc nhất mà tác tử nhìn thấy.
+    \item \textbf{Độ bao phủ vị trí (Position Coverage):} Tỷ lệ các ô trên lưới (grid cells) mà tác tử đã đi qua.
+    \item \textbf{Entropy của chính sách:} Đo lường mức độ ngẫu nhiên trong hành động của tác tử, phản ánh sự cân bằng giữa khám phá (exploration) và khai thác (exploitation).
+\end{enumerate}
+
+\section{Kết quả trên nhóm bài toán DoorKey và KeyCorridor đơn giản}
+
+Các biểu đồ dưới đây trình bày đường cong huấn luyện của các thuật toán trên các môi trường DoorKey và KeyCorridor.
+
+\subsection{DoorKey-5x5}
+
+\begin{figure}[H]{Episode Reward trên DoorKey-5x5}
+\centering
+\includegraphics[width=0.8\textwidth]{figs/MiniGrid-DoorKey-5x5-v0/episode_reward.png}
+\end{figure}
+
+\begin{figure}[H]{Observation Coverage trên DoorKey-5x5}
+\centering
+\includegraphics[width=0.8\textwidth]{figs/MiniGrid-DoorKey-5x5-v0/obs_coverage.png}
+\end{figure}
+
+\subsection{DoorKey-6x6}
+
+\begin{figure}[H]{Episode Reward trên DoorKey-6x6}
+\centering
+\includegraphics[width=0.8\textwidth]{figs/MiniGrid-DoorKey-6x6-v0/episode_reward.png}
+\end{figure}
+
+\subsection{DoorKey-8x8}
+
+\begin{figure}[H]{Episode Reward trên DoorKey-8x8}
+\centering
+\includegraphics[width=0.8\textwidth]{figs/MiniGrid-DoorKey-8x8-v0/episode_reward.png}
+\end{figure}
+
+\begin{figure}[H]{Position Coverage trên DoorKey-8x8}
+\centering
+\includegraphics[width=0.8\textwidth]{figs/MiniGrid-DoorKey-8x8-v0/pos_coverage.png}
+\end{figure}
+
+\subsection{KeyCorridor-S3R1}
+
+\begin{figure}[H]{Episode Reward trên KeyCorridor-S3R1}
+\centering
+\includegraphics[width=0.8\textwidth]{figs/MiniGrid-KeyCorridorS3R1-v0/episode_reward.png}
+\end{figure}
+
+\textbf{Nhận xét:}
+Trên các môi trường kích thước nhỏ như DoorKey-5x5 và 6x6, cả PPO và PPO+RND đều hội tụ nhanh chóng. Tuy nhiên, khi kích thước môi trường tăng lên (DoorKey-8x8), sự khác biệt bắt đầu rõ rệt. Phương pháp PPO+RND (đặc biệt với $\lambda=0.1$) cho thấy tốc độ khám phá (thể hiện qua Obs Coverage và Pos Coverage) nhanh hơn so với PPO thuần túy, dẫn đến việc tìm thấy phần thưởng sớm hơn.
+
+\section{Kết quả trên nhóm bài toán LavaCrossing và KeyCorridor phức tạp}
+
+Đối với các bài toán yêu cầu khả năng điều hướng phức tạp và tránh chướng ngại vật (LavaCrossing), vai trò của động lực nội tại trở nên quan trọng hơn.
+
+\subsection{KeyCorridor-S3R2}
+
+\begin{figure}[H]{Episode Reward trên KeyCorridor-S3R2}
+\centering
+\includegraphics[width=0.8\textwidth]{figs/MiniGrid-KeyCorridorS3R2-v0/episode_reward.png}
+\end{figure}
+
+\subsection{LavaCrossing-S9N1}
+
+\begin{figure}[H]{Episode Reward trên LavaCrossing-S9N1}
+\centering
+\includegraphics[width=0.8\textwidth]{figs/MiniGrid-LavaCrossingS9N1-v0/episode_reward.png}
+\end{figure}
+
+\subsection{LavaCrossing-S9N2}
+
+\begin{figure}[H]{Episode Reward trên LavaCrossing-S9N2}
+\centering
+\includegraphics[width=0.8\textwidth]{figs/MiniGrid-LavaCrossingS9N2-v0/episode_reward.png}
+\end{figure}
+
+\subsection{LavaCrossing-S9N3}
+
+\begin{figure}[H]{Episode Reward trên LavaCrossing-S9N3}
+\centering
+\includegraphics[width=0.8\textwidth]{figs/MiniGrid-LavaCrossingS9N3-v0/episode_reward.png}
+\end{figure}
+
+\textbf{Nhận xét:}
+Tại môi trường LavaCrossingS9N1 và S9N2, PPO thuần túy gặp khó khăn trong việc thoát khỏi các điểm cực tiểu cục bộ (local optima), thể hiện qua Entropy giảm chậm hoặc Return không ổn định. Ngược lại, cơ chế RND giúp duy trì Entropy ở mức cao hơn trong giai đoạn đầu, khuyến khích tác tử thử nghiệm các hành động mới, từ đó vượt qua các bẫy dung nham (lava) hiệu quả hơn.
+
+\section{Thảo luận về hệ số phần thưởng nội tại ($\lambda$)}
+Kết quả thực nghiệm cho thấy sự nhạy cảm của thuật toán đối với siêu tham số $\lambda$:
+\begin{itemize}
+    \item \textbf{Với $\lambda=1$:} Phần thưởng nội tại quá lớn lấn át phần thưởng ngoại lai. Tác tử có xu hướng ``nghiện'' việc tìm kiếm sự mới lạ (Obs Coverage tăng rất nhanh) nhưng chậm hội tụ về chính sách tối ưu để hoàn thành nhiệm vụ (Return tăng chậm hoặc dao động). Đây là biểu hiện của hiện tượng ``\textit{The Dark Side of Curiosity}'' -- một thuật ngữ trong cộng đồng RL để chỉ việc tác tử bị thu hút quá mức bởi sự mới lạ mà quên mất nhiệm vụ chính, dẫn đến hành vi phi mục tiêu (goal-agnostic behavior).
+    \item \textbf{Với $\lambda=0.01$:} Tác động của RND không có sự khác biệt thống kê đáng kể (statistically significant difference) so với PPO thuần túy.
+    \item \textbf{Với $\lambda=0.1$:} Đây là điểm cân bằng tốt nhất trong hầu hết các thử nghiệm. Giá trị này đủ lớn để thúc đẩy khám phá khi phần thưởng ngoại lai thưa thớt, nhưng đủ nhỏ để không làm nhiễu tín hiệu phần thưởng chính.
+\end{itemize}
+
+\begin{enumerate}
+    \item \textbf{Hiệu quả của RND:} Phần thưởng nội tại từ RND giúp tác tử duy trì động lực khám phá trong suốt quá trình huấn luyện, đặc biệt quan trọng trong các môi trường với phần thưởng thưa.
+    
+    \item \textbf{Tác động của kích thước môi trường:} Khi kích thước môi trường tăng (DoorKey 5x5 → 8x8), thời gian hội tụ tăng đáng kể. Điều này cho thấy thách thức của việc mở rộng quy mô (scalability).
+    
+    \item \textbf{Observation Coverage vs Position Coverage:} Observation Coverage tăng liên tục cho thấy tác tử liên tục gặp các trạng thái mới, trong khi Position Coverage nhanh chóng bão hòa. Điều này phản ánh sự đa dạng trong quan sát cục bộ của MiniGrid.
+    
+    \item \textbf{Entropy giảm dần:} Xu hướng giảm của Policy Entropy theo thời gian cho thấy sự chuyển đổi từ khám phá (exploration) sang khai thác (exploitation) khi tác tử dần học được chính sách tối ưu.
+\end{enumerate}
+
+\chapter{Kết luận}
+
+\section{Tóm tắt nghiên cứu}
+
+Khóa luận này đã nghiên cứu và triển khai hệ thống học tăng cường kết hợp thuật toán PPO với cơ chế RND để giải quyết vấn đề phần thưởng thưa thớt (sparse reward) trong các môi trường điều hướng dạng lưới MiniGrid.
+
+Các đóng góp chính của nghiên cứu bao gồm:
+\begin{enumerate}
+    \item \textbf{Xây dựng hệ thống PPO+RND:} Em đã cài đặt thành công thuật toán PPO với kiến trúc Actor-Critic và tích hợp cơ chế sinh phần thưởng nội tại RND. Hệ thống được thiết kế theo dạng module, cho phép dễ dàng bật/tắt chức năng RND thông qua tham số \texttt{use\_rnd}.
+    
+    \item \textbf{Phân tích ảnh hưởng của hệ số $\lambda$:} Em đã thực nghiệm với các giá trị $\lambda \in \{1.0, 0.1, 0.01\}$ và nhận thấy rằng $\lambda = 0.1$ mang lại sự cân bằng tốt nhất giữa khám phá và khai thác trong hầu hết các môi trường thử nghiệm.
+    
+    \item \textbf{Đánh giá toàn diện:} Em đã đề xuất và sử dụng bộ chỉ số đánh giá đa chiều bao gồm Episode Return, Observation Coverage, Position Coverage và Policy Entropy để đánh giá hiệu suất của tác tử từ nhiều góc độ khác nhau.
+\end{enumerate}
+
+\section{Kết quả đạt được}
+
+Kết quả thực nghiệm trên 8 môi trường MiniGrid (DoorKey, LavaCrossing, KeyCorridor) cho thấy:
+\begin{itemize}
+    \item PPO+RND với $\lambda = 0.1$ giúp tác tử khám phá hiệu quả hơn so với PPO thuần túy, đặc biệt trong các môi trường có phần thưởng thưa thớt như DoorKey-8x8 và LavaCrossing.
+    \item Phần thưởng nội tại từ RND giúp duy trì động lực khám phá trong suốt quá trình huấn luyện, ngăn chặn tác tử rơi vào các điểm cực tiểu cục bộ.
+    \item Giá trị $\lambda$ quá lớn ($\lambda = 1.0$) có thể khiến tác tử ``nghiện'' khám phá mà bỏ qua mục tiêu hoàn thành nhiệm vụ.
+\end{itemize}
+
+\section{Hạn chế}
+
+Nghiên cứu này vẫn còn một số hạn chế cần được cải thiện:
+\begin{itemize}
+    \item \textbf{Môi trường thử nghiệm:} Các thực nghiệm chỉ được thực hiện trên môi trường MiniGrid với không gian trạng thái rời rạc và đơn giản. Khả năng mở rộng sang các môi trường phức tạp hơn (ví dụ: Atari, MuJoCo) chưa được kiểm chứng.
+    \item \textbf{Tối ưu hóa siêu tham số:} Các siêu tham số được lựa chọn dựa trên kinh nghiệm và thử nghiệm thủ công, chưa áp dụng các phương pháp tự động hóa như Bayesian Optimization hay Population-Based Training.
+    \item \textbf{Chi phí tính toán:} Việc duy trì và huấn luyện thêm mạng RND làm tăng chi phí tính toán so với PPO thuần túy.
+\end{itemize}
+
+\section{Hướng phát triển tương lai}
+
+Dựa trên kết quả và hạn chế của nghiên cứu, em đề xuất các hướng phát triển sau:
+
+\subsection{Mở rộng sang hệ thống đa tác tử (Multi-Agent RL)}
+
+Hướng phát triển chính trong tương lai là mở rộng nghiên cứu sang bài toán học tăng cường đa tác tử (Multi-Agent Reinforcement Learning - MARL). Trong môi trường đa tác tử, vấn đề khám phá trở nên phức tạp hơn do:
+\begin{itemize}
+    \item \textbf{Không gian trạng thái-hành động mở rộng:} Với $n$ tác tử, không gian hành động chung tăng theo cấp số mũ, làm tăng độ khó của bài toán khám phá.
+    \item \textbf{Tín hiệu phần thưởng không tĩnh (Non-stationarity):} Môi trường thay đổi liên tục do hành động của các tác tử khác, khiến việc học trở nên khó khăn hơn.
+    \item \textbf{Bài toán gán công trạng (Credit Assignment):} Khó xác định đóng góp của từng tác tử trong phần thưởng chung của nhóm.
+\end{itemize}
+
+Trong bối cảnh MARL, việc nhiều tác tử cùng khám phá sẽ làm thay đổi trạng thái môi trường liên tục (non-stationarity), khiến tín hiệu RND của từng cá nhân bị nhiễu nghiêm trọng: một trạng thái ``mới lạ'' với tác tử A có thể là kết quả hành động của tác tử B, không phải do tác tử A khám phá. Do đó, các hướng nghiên cứu tiềm năng bao gồm:
+
+\begin{itemize}
+    \item \textbf{Centralized RND:} Xây dựng mạng RND tập trung dựa trên trạng thái toàn cục (global state), thay vì trạng thái cục bộ của từng tác tử. Cơ chế này giúp sinh phần thưởng nội tại nhất quán và tránh việc nhiều tác tử ``tranh giành'' khám phá cùng một vùng trạng thái.
+    \item \textbf{Chia sẻ tri thức khám phá (Exploration Knowledge Sharing):} Các tác tử có thể chia sẻ bộ nhớ (memory) hoặc gradient của mạng Predictor để học chung từ kinh nghiệm khám phá của nhau, giảm thiểu việc lặp lại khám phá không cần thiết.
+    \item \textbf{Kết hợp với MAPPO/HAPPO:} Tích hợp RND vào các thuật toán MARL hiện đại như Multi-Agent PPO (MAPPO) hoặc Heterogeneous-Agent PPO (HAPPO) để cải thiện khả năng phối hợp trong các nhiệm vụ có phần thưởng thưa.
+\end{itemize}
+
+\subsection{Các hướng phát triển khác}
+
+\begin{itemize}
+    \item \textbf{Adaptive $\lambda$ Scheduling:} Phát triển cơ chế tự động điều chỉnh hệ số $\lambda$ trong quá trình huấn luyện, giảm dần khi tác tử đã khám phá đủ và cần tập trung vào nhiệm vụ.
+    
+    \item \textbf{Kết hợp với các phương pháp khám phá khác:} Tích hợp RND với các kỹ thuật như ICM (Intrinsic Curiosity Module), count-based exploration, hoặc Go-Explore để tận dụng ưu điểm của từng phương pháp.
+    
+    \item \textbf{Áp dụng vào bài toán thực tế:} Thử nghiệm trên các bài toán robot navigation, game AI, hoặc autonomous driving với phần thưởng thưa thớt.
+\end{itemize}
+% ---------------------------------------------
+% 5. Tài liệu tham khảo
+% ---------------------------------------------
+\begin{thebibliography}{99}
+\begin{bibsection}{Tiếng Anh}
+\bibitem{kayal2025}
+Aya Kayal, Eduardo Pignatelli, and Laura Toni.
+\textit{The impact of intrinsic rewards on exploration in Reinforcement Learning}.
+arXiv preprint arXiv:2501.11533, 2025.
+
+\bibitem{schulman2017}
+John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov.
+\textit{Proximal Policy Optimization Algorithms}.
+arXiv preprint arXiv:1707.06347, 2017.
+
+\bibitem{burda2018}
+Yuri Burda, Harrison Edwards, Amos Storkey, and Oleg Klimov.
+\textit{Exploration by Random Network Distillation}.
+arXiv preprint arXiv:1810.12894, 2018.
+\end{bibsection}
+\end{thebibliography}
+
+\end{document}

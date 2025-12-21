@@ -31,8 +31,8 @@ luatexbase.add_to_callback("mathfont.add_math_constants", custom_math_constants,
 \raggedbottom
 \lefthyphenmin 64
 \frenchspacing
-\setmainfont{Times New Roman}
-\mathfont[upper,lower,digits]{Times New Roman}
+% \setmainfont{Times New Roman}
+% \mathfont[upper,lower,digits]{Times New Roman}
 \pagenumbering{roman}
 \newcounter{firstContentPageIndex}
 
