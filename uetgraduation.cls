@@ -156,7 +156,7 @@ luatexbase.add_to_callback("mathfont.add_math_constants", custom_math_constants,
 }
 
 \newenvironment{preamble}[1]{%
-	\clearpage\setlength\parindent{0cm}{\centering\textbf{\MakeUppercase{#1}}\par}\vspace{1cm}\setfontsize{12pt}
+	\clearpage\setlength\parindent{0cm}{\centering\textbf{\MakeUppercase{#1}}\par}\vspace{1cm}\setfontsize{13pt}
 }{\normalsize}
 
 \newif\if@incontentlisting\@incontentlistingfalse
