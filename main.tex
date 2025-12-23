@@ -2,6 +2,8 @@
 \usepackage{array}
 \usepackage{amssymb}
 \usepackage{subcaption}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 \usepackage[
     colorlinks=true,
     linkcolor=black,
@@ -294,7 +296,7 @@ Việc sử dụng critic giúp giảm đáng kể phương sai của gradient s
 
 Để khắc phục vấn đề bước cập nhật chính sách quá lớn trong TRPO, PPO giới thiệu hàm mục tiêu thay thế có ràng buộc (clipped surrogate objective) \cite{schulman2017}:
 \[
-L^{\text{CLIP}}(\theta) = \mathbb{E}_t \left[ \min \left( r_t(\theta) \hat{A}_t, \, \clip(r_t(\theta), 1-\epsilon, 1+\epsilon) \hat{A}_t \right) \right],
+L^{\text{CLIP}}(\theta) = \hat{\mathbb{E}}_{t} \left[ \min \left( r_t(\theta) \hat{A}_t, \, \text{clip}(r_t(\theta), 1-\epsilon, 1+\epsilon) \hat{A}_t \right) \right],
 \]
 trong đó tỷ số xác suất $r_t(\theta) = \frac{\pi_\theta(a_t|s_t)}{\pi_{\theta_{\text{old}}}(a_t|s_t)}$ và $\epsilon$ thường là $0.1$ hoặc $0.2$.
 
@@ -390,17 +392,138 @@ trong đó $\beta \geq 0$ là hệ số cân bằng giữa exploration và explo
 % =============================================
 \chapter{Phương pháp đề xuất}
 
-\section{Tổng quan kiến trúc phương pháp}
-% TODO: Viết nội dung
+\section{Tổng quan kiến trúc phương pháp}\label{sec:overview}
 
-\section{Thiết kế Module RND}
-% TODO: Viết nội dung
+Phương pháp đề xuất trong luận văn là sự kết hợp trực tiếp giữa Proximal Policy Optimization (PPO) và mô-đun khám phá Random Network Distillation (RND), nhằm giải quyết vấn đề học tăng cường trong các môi trường có phần thưởng ngoại lai thưa thớt hoặc lừa dối (deceptive reward).
 
-\section{Cơ chế tích hợp phần thưởng (Reward Integration)}
-% TODO: Viết nội dung
+Kiến trúc tổng thể bao gồm hai thành phần chính hoạt động song song:
 
-\section{Quy trình huấn luyện PPO + RND}
-% TODO: Viết nội dung
+\begin{enumerate}
+    \item \textbf{Tác nhân PPO} với kiến trúc Actor–Critic cổ điển, trong đó:
+    \begin{itemize}
+        \item Policy network (actor) $\pi_\theta(a|s)$ xuất hành động theo phân phối ngẫu nhiên.
+        \item Value network (critic) $v_\phi(s)$ ước lượng giá trị trạng thái để tính advantage và giảm phương sai gradient.
+    \end{itemize}
+    Cả hai mạng đều chia sẻ phần thân mạng chính (feature extractor) và được huấn luyện bằng hàm mục tiêu clipped surrogate objective của PPO (xem Mục~\ref{subsec:ppo-objective}).
+
+    \item \textbf{Mô-đun RND} bao gồm target network $f_{\text{target}}(s)$ cố định ngẫu nhiên và predictor network $\hat{f}_\psi(s)$ được huấn luyện liên tục. Sai số dự đoán của predictor trên quan sát trạng thái tiếp theo được sử dụng làm phần thưởng nội tại $r_t^i$ (xem Mục~\ref{subsec:rnd-reward}).
+\end{enumerate}
+
+Tại mỗi bước thời gian $t$, tác nhân nhận quan sát $s_t$ từ môi trường, policy network xuất hành động $a_t \sim \pi_\theta(\cdot|s_t)$, môi trường chuyển sang trạng thái $s_{t+1}$ và trả về phần thưởng ngoại lai $r_t^{\text{ext}}$. Đồng thời, mô-đun RND tính phần thưởng nội tại $r_t^i$ dựa trên $s_{t+1}$.
+
+Phần thưởng tổng mà tác nhân PPO sử dụng để cập nhật chính sách và hàm giá trị được xác định là:
+\[
+r_t^{\text{total}} = r_t^{\text{ext}} + \beta \, r_t^i,
+\]
+trong đó hệ số $\beta \geq 0$ được điều chỉnh trong quá trình thực nghiệm. Việc bổ sung phần thưởng nội tại giúp chính sách nhận được tín hiệu học tập thường xuyên ngay cả trong các giai đoạn dài không có phần thưởng ngoại lai, từ đó khuyến khích khám phá có hệ thống các vùng trạng thái mới và tránh rơi vào tối ưu cục bộ sớm.
+
+Toàn bộ quá trình thu thập dữ liệu, tính toán advantage bằng Generalized Advantage Estimation (GAE), cập nhật predictor network của RND, và tối ưu hóa PPO diễn ra đồng bộ trong cùng một vòng lặp huấn luyện. Kiến trúc này không thay đổi cấu trúc của PPO hoặc RND gốc, mà chỉ tích hợp phần thưởng nội tại vào tín hiệu phần thưởng của môi trường, do đó giữ nguyên các đảm bảo lý thuyết và tính ổn định đã được chứng minh của cả hai phương pháp.
+
+Chi tiết cách triển khai chuẩn hóa quan sát, chuẩn hóa phần thưởng nội tại, lựa chọn siêu tham số $\beta$, và lịch trình huấn luyện chung sẽ được trình bày ở các mục tiếp theo.
+
+\section{Thiết kế Module RND}\label{sec:rnd-design}
+
+Mô-đun Random Network Distillation (RND) được triển khai hoàn toàn theo thiết kế gốc trong Burda et al. (2019) \cite{burda2019} mà không thực hiện bất kỳ sửa đổi nào về mặt kiến trúc hoặc cơ chế sinh phần thưởng nội tại.
+
+Mô-đun RND bao gồm hai mạng feed-forward độc lập nhận cùng đầu vào là quan sát trạng thái thô $o_{t+1} \in \mathbb{R}^{d}$ (hoặc vector đặc trưng đã được tiền xử lý nếu cần):
+
+\begin{itemize}
+    \item \textbf{Target network} $f_{\text{target}}(\cdot; \xi) : \mathcal{O} \to \mathbb{R}^{k}$:  
+    Mạng này được khởi tạo với trọng số ngẫu nhiên $\xi \sim \mathcal{N}(0,1)$ (hoặc phân phối uniform tùy theo triển khai) và được giữ cố định vĩnh viễn suốt toàn bộ quá trình huấn luyện. Vai trò của nó là cung cấp một hàm mục tiêu ngẫu nhiên nhưng xác định (deterministic) trên không gian quan sát, đóng vai trò như một "mã hóa ngẫu nhiên" cố định của trạng thái.
+
+    \item \textbf{Predictor network} $\hat{f}_{\psi}(\cdot) : \mathcal{O} \to \mathbb{R}^{k}$:  
+    Mạng này có kiến trúc gần giống hoặc hoàn toàn giống target network (thường là 3--4 tầng fully-connected với kích hoạt ReLU), được khởi tạo độc lập và được huấn luyện liên tục bằng gradient descent nhằm giảm sai số dự đoán đầu ra của target network trên cùng đầu vào quan sát.
+\end{itemize}
+
+Hàm mất mát huấn luyện predictor tại mỗi bước là lỗi bình phương trung bình:
+
+\[
+\mathcal{L}_{\text{RND}}(\psi) = \mathbb{E} \left[ \| \hat{f}_{\psi}(o_{t+1}) - f_{\text{target}}(o_{t+1}) \|_2^2 \right].
+\]
+
+Do target network không bao giờ được cập nhật, sai số dự đoán của predictor tự động phản ánh mức độ quen thuộc của quan sát hiện tại: các quan sát đã xuất hiện nhiều lần trong quá trình huấn luyện sẽ có sai số nhỏ (vì predictor đã học tốt), trong khi các quan sát mới hoặc hiếm gặp sẽ tạo ra sai số lớn. Sai số này sau đó được sử dụng trực tiếp làm phần thưởng nội tại (sau khi qua bước chuẩn hóa cần thiết).
+
+Đầu vào của cả hai mạng là quan sát khung hình đã được chuẩn hóa về khoảng $[0,1]$ và chia cho 255 (hoặc chuẩn hóa đơn vị nếu sử dụng running normalization), hoàn toàn tuân theo khuyến nghị trong tài liệu gốc \cite{burda2019}. Không sử dụng bất kỳ thông tin nào về hành động hoặc lịch sử trước đó.
+
+Thiết kế cố định target network là yếu tố cốt lõi đảm bảo tính ổn định và khả năng đo lường novelty theo thời gian, đồng thời giúp tránh hiện tượng "catastrophic forgetting" thường gặp ở các phương pháp curiosity dựa trên dự đoán động lực học.
+
+\section{Cơ chế tích hợp phần thưởng}\label{sec:reward-integration}
+
+Trong phương pháp đề xuất, phần thưởng tổng mà tác nhân PPO nhận được tại mỗi bước thời gian $t$ được xây dựng bằng cách kết hợp tuyến tính giữa phần thưởng ngoại lai và phần thưởng nội tại.
+
+- Phần thưởng ngoại lai (extrinsic reward) $r_t^{\text{ext}}$ là tín hiệu phần thưởng gốc do môi trường cung cấp, phản ánh mức độ hoàn thành nhiệm vụ chính.
+
+- Phần thưởng nội tại (intrinsic reward) $r_t^i$ được sinh ra từ mô-đun RND, cụ thể là sai số dự đoán đã chuẩn hóa của predictor network trên quan sát trạng thái tiếp theo $o_{t+1}$:
+\[
+r_t^i = \left\| \hat{f}_{\psi}(o_{t+1}) - f_{\text{target}}(o_{t+1}) \right\|_2^2
+\]
+(sau khi qua bước chuẩn hóa running normalization như mô tả trong tài liệu gốc \cite{burda2019}).
+
+Phần thưởng tổng được định nghĩa như sau:
+\[
+r_t^{\text{total}} = r_t^{\text{ext}} + \lambda \cdot r_t^i,
+\]
+trong đó $\lambda \geq 0$ là hệ số cân bằng (scaling coefficient) đóng vai trò điều chỉnh cường độ của tín hiệu khám phá.
+
+Hệ số $\lambda$ kiểm soát mức độ ưu tiên giữa khai thác (exploitation) phần thưởng nhiệm vụ và khám phá (exploration) các trạng thái mới. Giá trị $\lambda = 0$ tương đương với PPO tiêu chuẩn không có exploration bổ sung, trong khi giá trị $\lambda$ lớn sẽ khuyến khích thăm dò mạnh mẽ hơn, có thể làm chậm tốc độ tối ưu hóa phần thưởng ngoại lai trong giai đoạn đầu.
+
+Hệ số $\lambda$ được coi là siêu tham số và sẽ được đánh giá, phân tích độ nhạy trong Chương 4.
+
+\section{Quy trình huấn luyện PPO + RND}\label{sec:training-procedure}
+
+Quá trình huấn luyện PPO kết hợp RND diễn ra trong một vòng lặp duy nhất, trong đó hai mục tiêu tối ưu (PPO và RND) được cập nhật đồng bộ nhưng hoàn toàn tách biệt về mặt hàm mất mát. Quy trình chi tiết tại mỗi vòng lặp như sau:
+
+\begin{enumerate}
+    \item \textbf{Tương tác với môi trường}:  
+    Sử dụng chính sách hiện tại $\pi_{\theta_{\text{old}}}$ để thu thập một tập hợp quỹ đạo (rollout) gồm $T$ bước thời gian. Tại mỗi bước $t$:
+    \begin{itemize}
+        \item Nhận quan sát $o_t$.
+        \item Lấy hành động $a_t \sim \pi_{\theta_{\text{old}}}(\cdot|o_t)$.
+        \item Thực hiện hành động, môi trường chuyển sang $o_{t+1}$ và trả về phần thưởng ngoại lai $r_t^{\text{ext}}$.
+    \end{itemize}
+
+    \item \textbf{Tính phần thưởng nội tại}:  
+    Đưa $o_{t+1}$ qua cả target network (cố định) và predictor network hiện tại để tính sai số dự đoán thô. Sau đó áp dụng chuẩn hóa chạy (running normalization) để thu được phần thưởng nội tại ổn định $r_t^i$.
+
+    \item \textbf{Tổng hợp phần thưởng}:  
+    Tính phần thưởng tổng sử dụng cho PPO:
+    \[
+    r_t^{\text{total}} = r_t^{\text{ext}} + \lambda \cdot r_t^i.
+    \]
+
+    \item \textbf{Cập nhật PPO (Actor–Critic)}:  
+    Sau khi hoàn tất rollout:
+    \begin{itemize}
+        \item Tính reward-to-go và advantage bằng Generalized Advantage Estimation (GAE) sử dụng value network $v_\phi$ và phần thưởng tổng $r_t^{\text{total}}$.
+        \item Thực hiện nhiều epoch tối ưu hóa (thường bằng Adam) đối với hàm mục tiêu clipped surrogate của PPO, đồng thời cập nhật value network bằng lỗi bình phương trung bình trên giá trị mục tiêu.
+    \end{itemize}
+
+    \item \textbf{Cập nhật Predictor network của RND}:  
+    Sử dụng cùng tập quan sát $\{o_{t+1}\}$ từ rollout hiện tại, thực hiện một hoặc nhiều bước gradient descent độc lập để giảm hàm mất mát RND:
+    \[
+    \mathcal{L}_{\text{RND}}(\psi) = \mathbb{E} \left[ \| \hat{f}_\psi(o_{t+1}) - f_{\text{target}}(o_{t+1}) \|_2^2 \right].
+    \]
+    Target network giữ nguyên trọng số suốt toàn bộ quá trình.
+\end{enumerate}
+
+Quá trình trên được lặp lại cho đến khi đạt tổng số khung hình môi trường yêu cầu. Nhờ việc cập nhật predictor network đồng thời với PPO trên cùng dữ liệu mới nhất, phần thưởng nội tại luôn phản ánh chính xác mức độ mới lạ của các trạng thái mà chính sách hiện tại đang thăm dò, tạo thành vòng phản hồi exploration ổn định và hiệu quả.
+
+\begin{algorithm}[H]
+\caption{Quy trình huấn luyện PPO + RND}
+\begin{algorithmic}[1]
+\State Khởi tạo $\theta$ (policy), $\phi$ (value), $\psi$ (predictor), $\xi$ (target cố định)
+\For{số vòng lặp huấn luyện}
+    \State Thu thập rollout $\{o_t, a_t, r_t^{\text{ext}}, o_{t+1}\}$ bằng $\pi_{\theta_{\text{old}}}$
+    \State Tính $r_t^i$ từ RND trên $\{o_{t+1}\}$
+    \State $r_t^{\text{total}} \leftarrow r_t^{\text{ext}} + \lambda \cdot r_t^i$
+    \State Tính GAE advantage sử dụng $r_t^{\text{total}}$ và $v_\phi$
+    \State Tối ưu hóa PPO: cập nhật $\theta$ và $\phi$ (nhiều epoch)
+    \State Tối ưu hóa RND: cập nhật $\psi$ để giảm $\mathcal{L}_{\text{RND}}$ 
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+
+Thiết kế tách biệt này đảm bảo tính mô-đun cao, cho phép tích hợp RND vào bất kỳ triển khai PPO hiện có mà không cần thay đổi cấu trúc hoặc siêu tham số cốt lõi của thuật toán gốc.
 
 % =============================================
 % CHƯƠNG 4: THỰC NGHIỆM VÀ ĐÁNH GIÁ
