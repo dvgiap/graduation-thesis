@@ -531,13 +531,53 @@ Thiết kế tách biệt này đảm bảo tính mô-đun cao, cho phép tích 
 \chapter{Thực nghiệm và đánh giá}
 
 \section{Câu hỏi nghiên cứu}
-% TODO: Viết nội dung
+
+Để đánh giá một cách hệ thống tác động của phần thưởng nội tại đến quá trình khám phá trong học tăng cường, nghiên cứu này đặt ra bốn câu hỏi nghiên cứu. Các câu hỏi được thiết kế nhằm làm rõ vai trò của module RND khi tích hợp với thuật toán PPO, đồng thời phân tích ảnh hưởng của hệ số cân bằng $\lambda$ đến hiệu quả học tập.
+
+\begin{enumerate}
+    \item[\textbf{RQ1:}] \textit{Việc tích hợp module RND có cải thiện khả năng khám phá so với thuật toán PPO cơ sở hay không?} Câu hỏi này nhằm đánh giá liệu phần thưởng nội tại sinh ra từ RND có giúp tác nhân mở rộng phạm vi khám phá không gian trạng thái, đặc biệt trong các môi trường có phần thưởng ngoại lai thưa thớt. Các chỉ số như độ bao phủ vị trí (position coverage) và độ bao phủ quan sát (observation coverage) sẽ được sử dụng để đo lường mức độ cải thiện.
+
+    \item[\textbf{RQ2:}] \textit{Hệ số $\lambda$ ảnh hưởng như thế nào đến hiệu quả học tập của tác nhân?} Câu hỏi này tập trung phân tích mối quan hệ giữa độ lớn của hệ số $\lambda$ và các chỉ số hiệu năng như phần thưởng episode trung bình, tốc độ hội tụ, và mức độ khám phá. Việc khảo sát với nhiều giá trị $\lambda$ khác nhau ($\lambda \in \{1.0, 0.1, 0.01\}$) cho phép xác định xu hướng thay đổi hiệu năng theo cường độ phần thưởng nội tại.
+
+    \item[\textbf{RQ3:}] \textit{Giá trị $\lambda$ quá lớn hoặc quá nhỏ gây ra những tác động tiêu cực nào?} Câu hỏi này nhằm phân tích các trường hợp biên (edge cases) khi hệ số $\lambda$ được thiết lập ở mức cực đoan. Cụ thể, nghiên cứu xem xét liệu $\lambda$ quá lớn có dẫn đến việc tác nhân ưu tiên khám phá quá mức mà bỏ qua phần thưởng nhiệm vụ, hoặc $\lambda$ quá nhỏ có làm mất đi lợi ích của cơ chế khám phá bổ sung.
+
+    \item[\textbf{RQ4:}] \textit{Độ ổn định của quá trình huấn luyện thay đổi như thế nào khi sử dụng phần thưởng nội tại với các giá trị $\lambda$ khác nhau?} Câu hỏi này đánh giá tính ổn định (stability) của thuật toán thông qua các chỉ số như entropy của chính sách (policy entropy) và phương sai của phần thưởng episode. Mục tiêu là xác định liệu việc bổ sung phần thưởng nội tại có làm tăng hay giảm độ biến động trong quá trình huấn luyện so với PPO cơ sở.
+\end{enumerate}
 
 \section{Quy trình thực nghiệm}
 
 \subsection{Môi trường và cấu hình thực nghiệm}
 
+Các thực nghiệm được tiến hành trên bộ môi trường MiniGrid, một nền tảng chuẩn được sử dụng rộng rãi trong nghiên cứu học tăng cường để đánh giá khả năng khám phá và giải quyết bài toán phần thưởng thưa. MiniGrid cung cấp các môi trường lưới (grid-world) với độ phức tạp có thể điều chỉnh, trong đó tác nhân phải hoàn thành các nhiệm vụ điều hướng, thu thập vật phẩm, và tương tác với các đối tượng trong môi trường.
+
+\subsection{Không gian quan sát và hành động}
+
+Không gian quan sát (observation space) trong MiniGrid được biểu diễn dưới dạng tensor ba chiều với kích thước $7 \times 7 \times 3$, mô tả vùng nhìn thấy cục bộ (egocentric view) của tác nhân bao gồm loại đối tượng, màu sắc và trạng thái. Trong triển khai thực nghiệm, quan sát này được làm phẳng (flatten) thành vector một chiều có kích thước 147 phần tử trước khi đưa vào mạng chính sách.
+
+Không gian hành động (action space) là rời rạc, bao gồm 7 hành động cơ bản: xoay trái, xoay phải, tiến về phía trước, nhặt vật phẩm, thả vật phẩm, bật/tắt đối tượng, và hoàn thành nhiệm vụ. Tuy nhiên, tùy thuộc vào từng môi trường cụ thể, chỉ một tập con các hành động có ý nghĩa.
+
+\subsection{Các môi trường thực nghiệm}
+
+Nghiên cứu sử dụng ba nhóm môi trường với độ khó tăng dần:
+
+\begin{itemize}
+    \item \textbf{DoorKey}: Tác nhân cần nhặt chìa khóa, mở cửa và di chuyển đến vị trí đích. Độ khó tăng theo kích thước lưới ($5 \times 5$, $6 \times 6$, $8 \times 8$) do không gian trạng thái mở rộng.
+    
+    \item \textbf{LavaCrossing}: Tác nhân phải điều hướng qua các vùng dung nham nguy hiểm để đến đích. Số lượng vùng dung nham ($N = 1, 2, 3$) quyết định mức độ phức tạp của bài toán tránh chướng ngại vật.
+    
+    \item \textbf{KeyCorridor}: Môi trường đa phòng yêu cầu tác nhân khám phá nhiều khu vực, tìm chìa khóa và mở các cửa liên tiếp. Đây là nhóm môi trường có độ khó cao nhất do yêu cầu lập kế hoạch dài hạn.
+\end{itemize}
+
+Bảng~\ref{tab:environments} liệt kê chi tiết các môi trường được sử dụng trong thực nghiệm.
+
+\subsection{Cấu hình siêu tham số}
+
+Các siêu tham số của thuật toán PPO và module RND được giữ cố định trong toàn bộ thực nghiệm, ngoại trừ hệ số $\lambda$ được khảo sát với ba giá trị: $\lambda \in \{1.0, 0.1, 0.01\}$. Mỗi cấu hình thực nghiệm được huấn luyện trong tổng cộng $10^6$ bước thời gian (timesteps), với tần suất cập nhật chính sách mỗi 4000 bước.
+
+Bảng~\ref{tab:ppo-params} và Bảng~\ref{tab:rnd-params} trình bày chi tiết các siêu tham số của PPO và RND.
+
 \begin{table}{Siêu tham số PPO}
+\label{tab:ppo-params}
 \centering
 \begin{tabular}{|l|c|l|}
 \hline
@@ -607,7 +647,39 @@ KeyCorridor-S3R2 & $3 \times 3$ rooms & Tương tự S3R1, phức tạp hơn \\
 \end{table}
 
 \subsection{Các giải pháp so sánh}
-% TODO: Viết nội dung
+
+Để đánh giá tác động của phần thưởng nội tại đến hiệu quả khám phá, nghiên cứu tiến hành so sánh bốn cấu hình thuật toán. Tất cả các cấu hình đều sử dụng cùng kiến trúc mạng nơ-ron, bộ siêu tham số huấn luyện, và quy trình thu thập dữ liệu. Điểm khác biệt duy nhất nằm ở việc sử dụng hoặc không sử dụng phần thưởng nội tại từ module RND, cũng như giá trị của hệ số cân bằng $\lambda$.
+
+\subsection{PPO Baseline}
+
+Cấu hình cơ sở (baseline) là thuật toán PPO tiêu chuẩn không tích hợp bất kỳ cơ chế khám phá bổ sung nào. Tác nhân chỉ nhận phần thưởng ngoại lai $r_t^{\text{ext}}$ từ môi trường và tối ưu hóa chính sách dựa hoàn toàn trên tín hiệu này. Cấu hình này được thiết lập bằng cách đặt tham số \texttt{use\_rnd = False}, tương đương với việc đặt $\lambda = 0$ trong công thức phần thưởng tổng.
+
+PPO baseline đóng vai trò làm điểm tham chiếu để đo lường mức độ cải thiện (hoặc suy giảm) khi bổ sung phần thưởng nội tại.
+
+\subsection{PPO + RND với các giá trị $\lambda$ khác nhau}
+
+Ba cấu hình còn lại tích hợp module RND vào PPO, với hệ số $\lambda$ được thiết lập ở ba mức độ khác nhau:
+
+\begin{itemize}
+    \item \textbf{PPO + RND ($\lambda = 1.0$)}: Phần thưởng nội tại được sử dụng với trọng số đầy đủ, không có sự điều chỉnh quy mô. Đây là cấu hình có mức độ khám phá mạnh nhất, trong đó tín hiệu novelty từ RND đóng góp tương đương với phần thưởng ngoại lai.
+    
+    \item \textbf{PPO + RND ($\lambda = 0.1$)}: Phần thưởng nội tại được giảm xuống còn 10\% so với giá trị gốc. Cấu hình này tạo ra sự cân bằng trung gian giữa khám phá và khai thác.
+    
+    \item \textbf{PPO + RND ($\lambda = 0.01$)}: Phần thưởng nội tại chỉ đóng góp 1\% vào phần thưởng tổng. Đây là cấu hình có ảnh hưởng khám phá yếu nhất, gần với hành vi của PPO baseline nhưng vẫn nhận được tín hiệu novelty nhỏ.
+\end{itemize}
+
+\subsection{Đảm bảo tính công bằng trong so sánh}
+
+Để đảm bảo tính công bằng và khả năng so sánh giữa các cấu hình, các yếu tố sau được giữ cố định:
+
+\begin{itemize}
+    \item Kiến trúc mạng Actor và Critic hoàn toàn giống nhau giữa các cấu hình.
+    \item Bộ siêu tham số PPO (learning rate, clip epsilon, số epoch, v.v.) được giữ nguyên như trong Bảng~\ref{tab:ppo-params}.
+    \item Cơ chế chuẩn hóa quan sát và phần thưởng nội tại được áp dụng nhất quán cho tất cả các cấu hình có RND.
+    \item Hạt giống ngẫu nhiên (random seed) được đặt giống nhau cho mỗi lần chạy thực nghiệm tương ứng.
+\end{itemize}
+
+Thiết kế thực nghiệm này cho phép cô lập tác động của biến độc lập duy nhất---hệ số $\lambda$---đến các chỉ số hiệu năng, đảm bảo rằng mọi sự khác biệt quan sát được đều xuất phát từ việc điều chỉnh cường độ phần thưởng nội tại.
 
 \section{Độ đo đánh giá}
 % TODO: Viết nội dung
