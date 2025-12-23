@@ -199,81 +199,191 @@ Các đóng góp chính của khóa luận được tóm tắt như sau:
 
 Cần nhấn mạnh rằng, phạm vi của khóa luận này tập trung vào phân tích thực nghiệm và đánh giá độ nhạy của thuật toán hiện có, không hướng tới việc đề xuất một cấu trúc mạng mới hay tuyên bố phát minh ra một thuật toán khám phá mới. Các kết quả thu được sẽ đóng vai trò là tài liệu tham khảo kỹ thuật cho việc ứng dụng PPO và RND trong các bài toán thực tế.
 
-% =============================================
-% CHƯƠNG 2: NỀN TẢNG LÝ THUYẾT
-% =============================================
-\chapter{Nền tảng lý thuyết}
+\chapter{Học tăng cường}\label{sec:rl}
 
-\section{Học tăng cường}
+\section{Quá trình quyết định Markov (MDP)}
 
-\subsection{Quá trình quyết định Markov (MDP)}
-% TODO: Viết nội dung
+Quá trình quyết định Markov (Markov Decision Process - MDP) cung cấp khung toán học chính thức để mô hình hóa các bài toán học tăng cường tuần tự \cite{sutton2018}. Một MDP được định nghĩa bởi bộ năm thành phần $\langle S, A, P, R, \gamma \rangle$, trong đó:
+\begin{itemize}
+    \item $S$: tập hợp các trạng thái (states);
+    \item $A$: tập hợp các hành động (actions);
+    \item $P(s'|s,a) = \Pr(S_{t+1}=s'|S_t=s,A_t=a)$: hàm chuyển trạng thái (transition probability);
+    \item $R(s,a)$ hoặc $R(s,a,s')$: hàm phần thưởng (reward function), biểu thị kỳ vọng phần thưởng tức thời khi thực hiện hành động $a$ tại trạng thái $s$;
+    \item $\gamma \in [0,1]$: hệ số chiết khấu (discount factor).
+\end{itemize}
+
+Tính chất Markov đảm bảo rằng trạng thái hiện tại chứa toàn bộ thông tin cần thiết để dự đoán tương lai, tức là $\Pr(S_{t+1},R_{t+1}|S_t,A_t,\dots,S_0,A_0) = \Pr(S_{t+1},R_{t+1}|S_t,A_t)$ \cite{sutton2018}. Nhờ đó, MDP là nền tảng lý thuyết chuẩn để biểu diễn các bài toán học tăng cường dưới dạng tương tác tuần tự giữa tác nhân (agent) và môi trường.
 
 \subsection{Chính sách (Policy)}
-% TODO: Viết nội dung
+
+Chính sách (policy) $\pi$ xác định cách hành xử của tác nhân. Chính sách là một ánh xạ từ trạng thái sang phân phối xác suất trên các hành động:
+\[
+\pi(a|s) = \Pr(A_t = a | S_t = s).
+\]
+Chính sách được gọi là \textit{tất định} (deterministic) nếu tại mỗi trạng thái chỉ chọn duy nhất một hành động, tức $\pi(s) = a$; ngược lại gọi là \textit{ngẫu nhiên} (stochastic) nếu phân phối xác suất có entropy dương \cite{sutton2018}.
+
+Hành vi dài hạn của tác nhân hoàn toàn được quyết định bởi chính sách, do đó mục tiêu học tập trong học tăng cường chính là tìm ra chính sách tối ưu.
 
 \subsection{Phần thưởng và hàm lợi ích tích lũy (Reward \& Return)}
-% TODO: Viết nội dung
+
+Phần thưởng tức thời $r_t = R(S_t, A_t, S_{t+1})$ là tín hiệu đánh giá duy nhất mà môi trường gửi về cho tác nhân tại mỗi bước thời gian \cite{sutton2018}.
+
+Hàm lợi ích tích lũy (return) $G_t$ được định nghĩa là tổng phần thưởng chiết khấu từ thời điểm $t$ trở đi:
+\[
+G_t = R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \cdots = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}.
+\]
+Việc sử dụng hệ số chiết khấu $\gamma < 1$ đảm bảo chuỗi hội tụ và thể hiện sự ưu tiên phần thưởng gần hơn phần thưởng xa trong tương lai \cite{sutton2018}.
 
 \subsection{Hàm giá trị (Value Function) và Hàm lợi thế (Advantage Function)}
-% TODO: Viết nội dung
+
+Hàm giá trị trạng thái $v_\pi(s)$ biểu thị kỳ vọng return mà tác nhân nhận được khi bắt đầu từ trạng thái $s$ và tuân theo chính sách $\pi$ sau đó:
+\[
+v_\pi(s) = \mathbb{E}_\pi [G_t | S_t = s].
+\]
+
+Hàm giá trị hành động $q_\pi(s,a)$ biểu thị kỳ vọng return khi thực hiện hành động $a$ tại trạng thái $s$, sau đó tiếp tục theo chính sách $\pi$:
+\[
+q_\pi(s,a) = \mathbb{E}_\pi [G_t | S_t = s, A_t = a].
+\]
+Cả hai hàm đều thỏa mãn phương trình Bellman tuần tự \cite{sutton2018}.
+
+Hàm lợi thế (advantage function) đo lường mức độ ưu việt của hành động $a$ so với giá trị trung bình của trạng thái $s$ dưới chính sách $\pi$:
+\[
+A_\pi(s,a) = q_\pi(s,a) - v_\pi(s).
+\]
+Giá trị advantage dương cho thấy hành động $a$ tốt hơn mức trung bình của chính sách hiện tại tại trạng thái $s$ \cite{sutton2018}.
 
 \subsection{Mục tiêu của học tăng cường}
-% TODO: Viết nội dung
+
+Mục tiêu cốt lõi của học tăng cường là tìm ra chính sách $\pi^*$ tối ưu đạt được kỳ vọng return lớn nhất từ mọi trạng thái khởi đầu:
+\[
+\pi^* = \arg\max_\pi \, \mathbb{E} [G_0 | \pi].
+\]
+Chính sách tối ưu tồn tại duy nhất (hoặc tập hợp các chính sách tối ưu) trong mọi MDP hữu hạn, và mọi chính sách tối ưu đều đạt được hàm giá trị tối ưu $v_*(s) = \max_\pi v_\pi(s)$ và $q_*(s) = \max_\pi q_\pi(s)$ \cite{sutton2018}.
 
 \subsection{Phân loại phương pháp học tăng cường}
-% TODO: Viết nội dung
 
-\section{Thuật toán Proximal Policy Optimization (PPO)}
+Các phương pháp học tăng cường chính được phân loại như sau \cite{sutton2018}:
+
+\begin{itemize}
+    \item \textbf{Value-based methods}: học hàm giá trị (thường là $q_*(s,a)$ hoặc $q_\pi(s,a)$), sau đó suy ra chính sách (thường tất định) bằng cách chọn hành động tham lam.
+    \item \textbf{Policy-based methods}: trực tiếp tối ưu hóa tham số của chính sách (thường ngẫu nhiên) mà không cần xây dựng hàm giá trị.
+    \item \textbf{Actor–Critic methods}: kết hợp hai cách tiếp cận trên, trong đó ``actor'' cập nhật chính sách và ``critic'' ước lượng hàm giá trị để hướng dẫn việc cập nhật actor.
+\end{itemize}
+
+\section{Thuật toán Proximal Policy Optimization (PPO)}\label{sec:ppo}
 
 \subsection{Phương pháp Policy Gradient}
-% TODO: Viết nội dung
 
-\subsection{Kiến trúc Actor–Critic}
-% TODO: Viết nội dung
+Phương pháp Policy Gradient tối ưu hóa trực tiếp tham số $\theta$ của chính sách $\pi_\theta$ bằng cách thực hiện bước tăng theo hướng gradient của kỳ vọng lợi ích tích lũy \cite{schulman2017}. Gradient chính sách được biểu diễn dưới dạng kỳ vọng:
+\[
+\nabla_\theta J(\pi_\theta) = \mathbb{E}_{s \sim \rho^{\pi_\theta}, a \sim \pi_\theta} \left[ \nabla_\theta \log \pi_\theta(a|s) \, \hat{A}^{\pi_\theta}(s,a) \right],
+\]
+trong đó $\rho^{\pi_\theta}$ là phân phối trạng thái dưới chính sách $\pi_\theta$, và $\hat{A}^{\pi_\theta}(s,a)$ là ước lượng advantage \cite{schulman2017}. Công thức này còn được gọi là định lý gradient chính sách (policy gradient theorem).
+
+\subsection{Kiến trúc Actor--Critic}
+
+Proximal Policy Optimization (PPO) sử dụng kiến trúc Actor--Critic để giảm phương sai của ước lượng gradient mà vẫn giữ độ chệch thấp \cite{schulman2017}. Trong đó:
+\begin{itemize}
+    \item \textit{Actor} là chính sách $\pi_\theta(a|s)$ chịu trách nhiệm tương tác với môi trường và được cập nhật theo hướng policy gradient.
+    \item \textit{Critic} là hàm giá trị $v_\phi(s)$ (hoặc $q_\phi(s,a)$) được huấn luyện để ước lượng giá trị trạng thái, từ đó cung cấp baseline và tính toán advantage $\hat{A}(s,a)$.
+\end{itemize}
+Việc sử dụng critic giúp giảm đáng kể phương sai của gradient so với các phương pháp policy gradient thuần túy như REINFORCE.
 
 \subsection{Hàm mục tiêu Clipped Surrogate Objective}
-% TODO: Viết nội dung
+
+Để khắc phục vấn đề bước cập nhật chính sách quá lớn trong TRPO, PPO giới thiệu hàm mục tiêu thay thế có ràng buộc (clipped surrogate objective) \cite{schulman2017}:
+\[
+L^{\text{CLIP}}(\theta) = \mathbb{E}_t \left[ \min \left( r_t(\theta) \hat{A}_t, \, \clip(r_t(\theta), 1-\epsilon, 1+\epsilon) \hat{A}_t \right) \right],
+\]
+trong đó tỷ số xác suất $r_t(\theta) = \frac{\pi_\theta(a_t|s_t)}{\pi_{\theta_{\text{old}}}(a_t|s_t)}$ và $\epsilon$ thường là $0.1$ hoặc $0.2$.
+
+Cơ chế clip đảm bảo rằng khi tỷ số $r_t(\theta)$ vượt ra ngoài khoảng $[1-\epsilon, 1+\epsilon]$, phần mục tiêu sẽ bị cắt bỏ, từ đó hạn chế sự thay đổi quá mức của chính sách mới so với chính sách cũ, cải thiện đáng kể độ ổn định huấn luyện mà không cần tính toán ma trận Fisher hay nghịch đảo Hessian như TRPO \cite{schulman2017}.
 
 \subsection{Ước lượng Advantage và Generalized Advantage Estimation (GAE)}
-% TODO: Viết nội dung
+
+Ước lượng advantage có độ chệch thấp thường dẫn đến phương sai cao và ngược lại. Để đạt được sự đánh đổi tối ưu giữa bias và variance, PPO sử dụng Generalized Advantage Estimation (GAE) \cite{schulman2017,schulman2015gae}:
+\[
+\hat{A}_t^{\text{GAE}(\gamma,\lambda)} = \sum_{l=0}^{\infty} (\gamma \lambda)^l \delta_{t+l},
+\]
+trong đó $\delta_t = r_t + \gamma v(s_{t+1}) - v(s_t)$ là TD error. Tham số $\lambda \in [0,1]$ điều chỉnh mức độ đánh đổi: $\lambda \to 0$ cho bias thấp–variance cao, $\lambda \to 1$ cho bias cao–variance thấp.
+
+GAE đã trở thành lựa chọn tiêu chuẩn trong hầu hết các triển khai PPO hiện đại nhờ khả năng cung cấp ước lượng advantage có phương sai thấp mà vẫn giữ độ chệch chấp nhận được \cite{schulman2017}.
 
 \subsection{Quy trình huấn luyện PPO}
-% TODO: Viết nội dung
 
-\section{Vấn đề khám phá trong học tăng cường}
+Quá trình huấn luyện PPO diễn ra theo các giai đoạn lặp như sau \cite{schulman2017}:
+\begin{enumerate}
+    \item Thu thập một tập hợp các quỹ đạo (trajectories) bằng cách chạy chính sách hiện tại $\pi_{\theta_{\text{old}}}$ trong môi trường trong $T$ bước thời gian.
+    \item Tính toán phần thưởng tới đích (reward-to-go) và ước lượng advantage GAE sử dụng critic hiện tại.
+    \item Tối ưu hóa hàm mục tiêu clipped surrogate (cùng với tổn thất giá trị và entropy bonus nếu có) trong nhiều epoch (thường 3--10) bằng cách sử dụng các optimizer dựa trên gradient bậc nhất (Adam).
+    \item Cập nhật $\theta_{\text{old}} \leftarrow \theta$ và lặp lại.
+\end{enumerate}
 
-\subsection{Exploration vs Exploitation}
-% TODO: Viết nội dung
+Nhờ cơ chế clip đơn giản và hiệu quả tính toán cao, PPO đã trở thành một trong những thuật toán policy gradient ổn định và đáng tin cậy nhất hiện nay \cite{schulman2017}.
 
-\subsection{Sparse reward problem}
-% TODO: Viết nội dung
-
-\subsection{Hạn chế của exploration ngẫu nhiên}
-% TODO: Viết nội dung
-
-\section{Phần thưởng nội tại (Intrinsic Reward)}
-% TODO: Viết nội dung
-
-\section{Mạng chưng cất ngẫu nhiên (Random Network Distillation - RND)}
+\section{Mạng chưng cất ngẫu nhiên (Random Network Distillation - RND)}\label{sec:rnd}
 
 \subsection{Động lực và ý tưởng của RND}
-% TODO: Viết nội dung
+
+Trong các môi trường thưa phần thưởng (sparse reward), việc khám phá hiệu quả là yếu tố quyết định thành công của tác nhân học tăng cường. Random Network Distillation (RND) là một phương pháp exploration không yêu cầu phần thưởng ngoại lai phức tạp, mà tạo ra phần thưởng nội tại (intrinsic reward) dựa trên sai số dự đoán của một mạng nơ-ron cố định ngẫu nhiên \cite{burda2019}.
+
+Ý tưởng cốt lõi của RND lấy cảm hứng từ quan sát rằng các trạng thái mới (chưa từng xuất hiện nhiều trong quá trình huấn luyện) thường gây ra sai số dự đoán lớn hơn so với các trạng thái đã quen thuộc. Do đó, sai số này có thể được sử dụng trực tiếp làm tín hiệu novelty, khuyến khích tác nhân ưu tiên khám phá các vùng trạng thái chưa được thăm dò nhiều \cite{burda2019}.
+
+So với các phương pháp curiosity-based trước đó (như ICM \cite{pathak2017}) vốn yêu cầu dự đoán hành động hoặc đặc trưng tiếp theo, RND không cần mô hình động lực học, do đó đơn giản hơn, dễ triển khai và ít bị ảnh hưởng bởi nhiễu stochastic của môi trường \cite{burda2019}.
 
 \subsection{Kiến trúc mạng RND}
-% TODO: Viết nội dung
+
+RND bao gồm hai mạng feed-forward độc lập:
+
+\begin{itemize}
+    \item \textit{Target network} $f_{\text{target}}: \mathcal{S} \to \mathbb{R}^d$: mạng được khởi tạo ngẫu nhiên và giữ cố định suốt quá trình huấn luyện.
+    \item \textit{Predictor network} $\hat{f}_{\theta}: \mathcal{S} \to \mathbb{R}^d$: mạng được huấn luyện để dự đoán đầu ra của target network trên cùng đầu vào quan sát $s$.
+\end{itemize}
+
+Cả hai mạng chỉ nhận quan sát hiện tại $s_t$ (hoặc $o_t$) làm đầu vào, không phụ thuộc vào hành động \cite{burda2019}.
 
 \subsection{Cơ chế sinh phần thưởng nội tại}
-% TODO: Viết nội dung
 
-\subsection{Chuẩn hóa quan sát và phần thưởng (Observation \& Reward Normalization)}
-% TODO: Viết nội dung
+Phần thưởng nội tại tại thời điểm $t$ được định nghĩa là độ chênh lệch bình phương giữa đầu ra dự đoán và đầu ra mục tiêu:
+
+\[
+r_t^i = \frac{1}{2} \left\| \hat{f}_{\theta}(s_{t+1}) - f_{\text{target}}(s_{t+1}) \right\|_2^2.
+\]
+
+Giá trị này luôn không âm và tự động giảm dần khi predictor được huấn luyện tốt hơn trên các trạng thái thường xuyên xuất hiện, từ đó tạo ra tín hiệu exploration hướng tới các trạng thái mới \cite{burda2019}.
+
+\subsection{Chuẩn hóa quan sát và phần thưởng}
+
+Do phần thưởng nội tại RND có thể thay đổi quy luật rất lớn trong suốt quá trình huấn luyện, việc chuẩn hóa quan sát đầu vào và chuẩn hóa chạy (running normalization) phần thưởng nội tại là cực kỳ quan trọng để duy trì ổn định huấn luyện \cite{burda2019}.
+
+Cụ thể, quan sát thường được chuẩn hóa về phân phối chuẩn đơn vị, và phần thưởng nội tại được chia cho ước lượng độ lệch chuẩn chạy (running standard deviation) hoặc một giá trị chuẩn hóa thích nghi. Thiếu bước này có thể dẫn đến hiện tượng gradient biến mất hoặc bùng nổ, làm huấn luyện thất bại hoàn toàn.
 
 \subsection{Quy trình huấn luyện RND}
-% TODO: Viết nội dung
+
+Trong mỗi bước tương tác:
+
+\begin{itemize}
+    \item Tác nhân thực hiện hành động và nhận quan sát tiếp theo $s_{t+1}$.
+    \item Predictor network $\hat{f}_{\theta}$ được cập nhật bằng gradient descent để giảm hàm mất mát:
+    \[
+    \mathcal{L}(\theta) = \mathbb{E} \left[ \left\| \hat{f}_{\theta}(s) - f_{\text{target}}(s) \right\|_2^2 \right].
+    \]
+    \item Target network $f_{\text{target}}$ luôn giữ nguyên trọng số (không được cập nhật).
+    \item Phần thưởng nội tại $r_t^i$ được tính và cộng vào phần thưởng tổng (có thể nhân với hệ số $\beta$).
+\end{itemize}
+
+Quá trình này diễn ra đồng thời và song song với việc huấn luyện chính sách chính \cite{burda2019}.
 
 \subsection{Hệ số điều chỉnh phần thưởng nội tại trong RND}
-% TODO: Viết nội dung
+
+Phần thưởng tổng mà tác nhân nhận được thường có dạng:
+
+\[
+r_t^{\text{total}} = r_t^{\text{ext}} + \beta \, r_t^i,
+\]
+
+trong đó $\beta \geq 0$ là hệ số cân bằng giữa exploration và exploitation \cite{burda2019}. Giá trị $\beta$ có ảnh hưởng lớn đến hiệu suất cuối cùng và thường được chọn theo kinh nghiệm dựa trên đặc điểm môi trường cụ thể trong các nghiên cứu trước đó.
 
 % =============================================
 % CHƯƠNG 3: PHƯƠNG PHÁP ĐỀ XUẤT
@@ -717,7 +827,7 @@ John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov.
 \textit{Proximal Policy Optimization Algorithms}.
 arXiv preprint arXiv:1707.06347, 2017.
 
-\bibitem{burda2019rnd}
+\bibitem{burda2019}
 Yuri Burda, Harrison Edwards, Amos Storkey, and Oleg Klimov.
 \textit{Exploration by Random Network Distillation}.
 International Conference on Learning Representations (ICLR), 2019.
