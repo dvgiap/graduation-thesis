@@ -231,7 +231,7 @@ luatexbase.add_to_callback("mathfont.add_math_constants", custom_math_constants,
 	\addcontentsline{\csname ext@\@captype\endcsname}{\@captype}{%
 		\protect\numberline{\csname the\@captype\endcsname.}{\ignorespaces \@captiontext}%
 	}%
-	\csname prefix@\@captype\endcsname\nobreakspace\csname the\@captype\endcsname. \@captiontext%
+	\csname prefix@\@captype\endcsname\nobreakspace\csname the\@captype\endcsname.\nobreakspace\@captiontext%
 }
 % Arguments:
 % 1. Attachment identifier.

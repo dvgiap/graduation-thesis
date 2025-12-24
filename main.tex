@@ -1,7 +1,9 @@
 \documentclass{uetgraduation}
 \usepackage{array}
 \usepackage{amssymb}
+\usepackage[labelsep=period, labelfont=bf, textfont=normalfont]{caption}
 \usepackage{subcaption}
+\renewcommand{\figurename}{Hình}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage[
@@ -300,7 +302,7 @@ Cơ chế clip đảm bảo rằng khi tỷ số $r_t(\theta)$ vượt ra ngoài
 
 \subsection{Ước lượng Advantage và Generalized Advantage Estimation (GAE)}
 
-Ước lượng advantage có độ chệch thấp thường dẫn đến phương sai cao và ngược lại. Để đạt được sự đánh đổi tối ưu giữa bias và variance, PPO sử dụng Generalized Advantage Estimation (GAE) \cite{schulman2017,schulman2015gae}:
+Ước lượng advantage có độ chệch thấp thường dẫn đến phương sai cao và ngược lại. Để đạt được sự đánh đổi tối ưu giữa bias và variance, PPO sử dụng Generalized Advantage Estimation (GAE) \cite{schulman2017}:
 \[
 \hat{A}_t^{\text{GAE}(\gamma,\lambda)} = \sum_{l=0}^{\infty} (\gamma \lambda)^l \delta_{t+l},
 \]
@@ -400,9 +402,9 @@ Kiến trúc tổng thể bao gồm hai thành phần chính hoạt động song
         \item Policy network (actor) $\pi_\theta(a|s)$ xuất hành động theo phân phối ngẫu nhiên.
         \item Value network (critic) $v_\phi(s)$ ước lượng giá trị trạng thái để tính advantage và giảm phương sai gradient.
     \end{itemize}
-    Cả hai mạng đều chia sẻ phần thân mạng chính (feature extractor) và được huấn luyện bằng hàm mục tiêu clipped surrogate objective của PPO (xem Mục~\ref{subsec:ppo-objective}).
+    Cả hai mạng đều chia sẻ phần thân mạng chính (feature extractor) và được huấn luyện bằng hàm mục tiêu clipped surrogate objective của PPO.
 
-    \item \textbf{Mô-đun RND} bao gồm target network $f_{\text{target}}(s)$ cố định ngẫu nhiên và predictor network $\hat{f}_\psi(s)$ được huấn luyện liên tục. Sai số dự đoán của predictor trên quan sát trạng thái tiếp theo được sử dụng làm phần thưởng nội tại $r_t^i$ (xem Mục~\ref{subsec:rnd-reward}).
+    \item \textbf{Mô-đun RND} bao gồm target network $f_{\text{target}}(s)$ cố định ngẫu nhiên và predictor network $\hat{f}_\psi(s)$ được huấn luyện liên tục. Sai số dự đoán của predictor trên quan sát trạng thái tiếp theo được sử dụng làm phần thưởng nội tại $r_t^i$.
 \end{enumerate}
 
 Tại mỗi bước thời gian $t$, tác tử nhận quan sát $s_t$ từ môi trường, policy network xuất hành động $a_t \sim \pi_\theta(\cdot|s_t)$, môi trường chuyển sang trạng thái $s_{t+1}$ và trả về phần thưởng ngoại lai $r_t^{\text{ext}}$. Đồng thời, mô-đun RND tính phần thưởng nội tại $r_t^i$ dựa trên $s_{t+1}$.
@@ -531,13 +533,11 @@ Thiết kế tách biệt này đảm bảo tính mô-đun cao, cho phép tích 
 Để đánh giá một cách hệ thống tác động của phần thưởng nội tại đến quá trình khám phá trong học tăng cường, nghiên cứu này đặt ra bốn câu hỏi nghiên cứu. Các câu hỏi được thiết kế nhằm làm rõ vai trò của module RND khi tích hợp với thuật toán PPO, đồng thời phân tích ảnh hưởng của hệ số cân bằng $\lambda$ đến hiệu quả học tập.
 
 \begin{enumerate}
-    \item[\textbf{RQ1:}] \textit{Việc tích hợp module RND có cải thiện khả năng khám phá so với thuật toán PPO cơ sở hay không?} Câu hỏi này nhằm đánh giá liệu phần thưởng nội tại sinh ra từ RND có giúp tác tử mở rộng phạm vi khám phá không gian trạng thái, đặc biệt trong các môi trường có phần thưởng ngoại lai thưa thớt. Các chỉ số như độ bao phủ vị trí (position coverage) và độ bao phủ quan sát (observation coverage) sẽ được sử dụng để đo lường mức độ cải thiện.
+    \item[\textbf{RQ1:}] Việc tích hợp module Random Network Distillation (RND) có cải thiện khả năng khám phá của tác tử so với thuật toán PPO cơ sở hay không?
 
-    \item[\textbf{RQ2:}] \textit{Hệ số $\lambda$ ảnh hưởng như thế nào đến hiệu quả học tập của tác tử?} Câu hỏi này tập trung phân tích mối quan hệ giữa độ lớn của hệ số $\lambda$ và các chỉ số hiệu năng như phần thưởng episode trung bình, tốc độ hội tụ, và mức độ khám phá. Việc khảo sát với nhiều giá trị $\lambda$ khác nhau ($\lambda \in \{1.0, 0.1, 0.01\}$) cho phép xác định xu hướng thay đổi hiệu năng theo cường độ phần thưởng nội tại.
+    \item[\textbf{RQ2:}] Hệ số điều chỉnh phần thưởng nội tại $\lambda$ ảnh hưởng như thế nào đến hiệu quả học tập và hành vi khám phá của tác tử trong PPO kết hợp RND?
 
-    \item[\textbf{RQ3:}] \textit{Giá trị $\lambda$ quá lớn hoặc quá nhỏ gây ra những tác động tiêu cực nào?} Câu hỏi này nhằm phân tích các trường hợp biên (edge cases) khi hệ số $\lambda$ được thiết lập ở mức cực đoan. Cụ thể, nghiên cứu xem xét liệu $\lambda$ quá lớn có dẫn đến việc tác tử ưu tiên khám phá quá mức mà bỏ qua phần thưởng nhiệm vụ, hoặc $\lambda$ quá nhỏ có làm mất đi lợi ích của cơ chế khám phá bổ sung.
-
-    \item[\textbf{RQ4:}] \textit{Độ ổn định của quá trình huấn luyện thay đổi như thế nào khi sử dụng phần thưởng nội tại với các giá trị $\lambda$ khác nhau?} Câu hỏi này đánh giá tính ổn định (stability) của thuật toán thông qua các chỉ số như entropy của chính sách (policy entropy) và phương sai của phần thưởng episode. Mục tiêu là xác định liệu việc bổ sung phần thưởng nội tại có làm tăng hay giảm độ biến động trong quá trình huấn luyện so với PPO cơ sở.
+    \item[\textbf{RQ3:}] Việc sử dụng phần thưởng nội tại với các giá trị $\lambda$ khác nhau có ảnh hưởng như thế nào đến độ ổn định của quá trình huấn luyện so với PPO cơ sở?
 \end{enumerate}
 
 \section{Quy trình thực nghiệm}
@@ -564,16 +564,15 @@ Nghiên cứu sử dụng ba nhóm môi trường với độ khó tăng dần:
     \item \textbf{KeyCorridor}: Môi trường đa phòng yêu cầu tác tử khám phá nhiều khu vực, tìm chìa khóa và mở các cửa liên tiếp. Đây là nhóm môi trường có độ khó cao nhất do yêu cầu lập kế hoạch dài hạn.
 \end{itemize}
 
-Bảng~\ref{tab:environments} liệt kê chi tiết các môi trường được sử dụng trong thực nghiệm.
+Bảng 4.3 liệt kê chi tiết các môi trường được sử dụng trong thực nghiệm.
 
 \subsection{Cấu hình siêu tham số}
 
 Các siêu tham số của thuật toán PPO và module RND được giữ cố định trong toàn bộ thực nghiệm, ngoại trừ hệ số $\lambda$ được khảo sát với ba giá trị: $\lambda \in \{1.0, 0.1, 0.01\}$. Mỗi cấu hình thực nghiệm được huấn luyện trong tổng cộng $10^6$ bước thời gian (timesteps), với tần suất cập nhật chính sách mỗi 4000 bước.
 
-Bảng~\ref{tab:ppo-params} và Bảng~\ref{tab:rnd-params} trình bày chi tiết các siêu tham số của PPO và RND.
+Bảng 4.1 và Bảng 4.2 trình bày chi tiết các siêu tham số của PPO và RND.
 
 \begin{table}{Siêu tham số PPO}
-\label{tab:ppo-params}
 \centering
 \begin{tabular}{|l|c|l|}
 \hline
@@ -596,6 +595,7 @@ Max timesteps & $10^6$ & Tổng số bước huấn luyện \\
 Max episode length & 1000 & Độ dài tối đa mỗi episode \\
 \hline
 \end{tabular}
+\label{tab:ppo-params}
 \end{table}
 
 \begin{table}{Siêu tham số RND}
@@ -615,6 +615,7 @@ RND epochs & 5 & Số epoch huấn luyện RND mỗi lần update \\
 Embedding dim & 32 & Chiều không gian embedding \\
 \hline
 \end{tabular}
+\label{tab:rnd-params}
 \end{table}
 
 \begin{table}{Các môi trường MiniGrid được sử dụng}
@@ -640,6 +641,7 @@ KeyCorridor-S3R1 & $3 \times 3$ rooms & Khám phá nhiều phòng, nhặt chìa 
 KeyCorridor-S3R2 & $3 \times 3$ rooms & Tương tự S3R1, phức tạp hơn \\
 \hline
 \end{tabular}
+\label{tab:environments}
 \end{table}
 
 \subsection{Các giải pháp so sánh}
@@ -664,207 +666,75 @@ Ba cấu hình còn lại tích hợp module RND vào PPO, với hệ số $\lam
     \item \textbf{PPO + RND ($\lambda = 0.01$)}: Phần thưởng nội tại chỉ đóng góp 1\% vào phần thưởng tổng. Đây là cấu hình có ảnh hưởng khám phá yếu nhất, gần với hành vi của PPO baseline nhưng vẫn nhận được tín hiệu novelty nhỏ.
 \end{itemize}
 
-\subsection{Đảm bảo tính công bằng trong so sánh}
-
-Để đảm bảo tính công bằng và khả năng so sánh giữa các cấu hình, các yếu tố sau được giữ cố định:
-
-\begin{itemize}
-    \item Kiến trúc mạng Actor và Critic hoàn toàn giống nhau giữa các cấu hình.
-    \item Bộ siêu tham số PPO (learning rate, clip epsilon, số epoch, v.v.) được giữ nguyên như trong Bảng~\ref{tab:ppo-params}.
-    \item Cơ chế chuẩn hóa quan sát và phần thưởng nội tại được áp dụng nhất quán cho tất cả các cấu hình có RND.
-    \item Hạt giống ngẫu nhiên (random seed) được đặt giống nhau cho mỗi lần chạy thực nghiệm tương ứng.
-\end{itemize}
-
-Thiết kế thực nghiệm này cho phép cô lập tác động của biến độc lập duy nhất---hệ số $\lambda$---đến các chỉ số hiệu năng, đảm bảo rằng mọi sự khác biệt quan sát được đều xuất phát từ việc điều chỉnh cường độ phần thưởng nội tại.
-
 \section{Độ đo đánh giá}
-% TODO: Viết nội dung
 
-\section{Kết quả thực nghiệm}
+\subsection{Độ bao phủ không gian trạng thái (Observation Coverage)}
 
-\subsection{Kết quả của RQ1}
+Độ bao phủ quan sát là chỉ số đo lường tổng số lượng trạng thái duy nhất mà tác tử đã ghé thăm trong quá trình huấn luyện. Chỉ số này phản ánh trực tiếp khả năng khám phá (exploration) của thuật toán.
 
-\begin{figure}[H]{Các chỉ số huấn luyện trên LavaCrossing-S9N1}
+\begin{figure}[H]{So sánh Observation Coverage giữa PPO baseline và các cấu hình PPO+RND trên các môi trường khác nhau}
 \centering
-\begin{minipage}{0.45\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{figs/MiniGrid-LavaCrossingS9N1-v0/episode_reward.png}
-    
-    (a) Episode Reward
-\end{minipage}
-\hfill
-\begin{minipage}{0.45\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{figs/MiniGrid-LavaCrossingS9N1-v0/obs_coverage.png}
-    
-    (b) Observation Coverage
-\end{minipage}
-
-\vspace{0.3cm}
-
-\begin{minipage}{0.45\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{figs/MiniGrid-LavaCrossingS9N1-v0/pos_coverage.png}
-    
-    (c) Position Coverage
-\end{minipage}
-\hfill
-\begin{minipage}{0.45\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{figs/MiniGrid-LavaCrossingS9N1-v0/avg_entropy.png}
-    
-    (d) Policy Entropy
-\end{minipage}
-\end{figure}
-
-\begin{figure}[H]{Các chỉ số huấn luyện trên LavaCrossing-S9N2}
-\centering
-\begin{minipage}{0.45\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{figs/MiniGrid-LavaCrossingS9N2-v0/episode_reward.png}
-    
-    (a) Episode Reward
-\end{minipage}
-\hfill
-\begin{minipage}{0.45\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{figs/MiniGrid-LavaCrossingS9N2-v0/obs_coverage.png}
-    
-    (b) Observation Coverage
-\end{minipage}
-
-\vspace{0.3cm}
-
-\begin{minipage}{0.45\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{figs/MiniGrid-LavaCrossingS9N2-v0/pos_coverage.png}
-    
-    (c) Position Coverage
-\end{minipage}
-\hfill
-\begin{minipage}{0.45\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{figs/MiniGrid-LavaCrossingS9N2-v0/avg_entropy.png}
-    
-    (d) Policy Entropy
-\end{minipage}
-\end{figure}
-
-\begin{figure}[H]{Các chỉ số huấn luyện trên LavaCrossing-S9N3}
-\centering
-\begin{minipage}{0.45\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{figs/MiniGrid-LavaCrossingS9N3-v0/episode_reward.png}
-    
-    (a) Episode Reward
-\end{minipage}
-\hfill
-\begin{minipage}{0.45\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{figs/MiniGrid-LavaCrossingS9N3-v0/obs_coverage.png}
-    
-    (b) Observation Coverage
-\end{minipage}
-
-\vspace{0.3cm}
-
-\begin{minipage}{0.45\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{figs/MiniGrid-LavaCrossingS9N3-v0/pos_coverage.png}
-    
-    (c) Position Coverage
-\end{minipage}
-\hfill
-\begin{minipage}{0.45\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{figs/MiniGrid-LavaCrossingS9N3-v0/avg_entropy.png}
-    
-    (d) Policy Entropy
-\end{minipage}
-\end{figure}
-
-\subsection{Kết quả của RQ2}
-
-\begin{figure}[H]{Các chỉ số huấn luyện trên DoorKey-5x5}
-\centering
-\begin{minipage}{0.45\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{figs/MiniGrid-DoorKey-5x5-v0/episode_reward.png}
-    
-    (a) Episode Reward
-\end{minipage}
-\hfill
 \begin{minipage}{0.45\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figs/MiniGrid-DoorKey-5x5-v0/obs_coverage.png}
-    
-    (b) Observation Coverage
-\end{minipage}
-
-\vspace{0.3cm}
-
-\begin{minipage}{0.45\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{figs/MiniGrid-DoorKey-5x5-v0/pos_coverage.png}
-    
-    (c) Position Coverage
-\end{minipage}
-\hfill
-\begin{minipage}{0.45\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{figs/MiniGrid-DoorKey-5x5-v0/avg_entropy.png}
-    
-    (d) Policy Entropy
-\end{minipage}
-\end{figure}
-
-\begin{figure}[H]{Các chỉ số huấn luyện trên DoorKey-6x6}
-\centering
-\begin{minipage}{0.45\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{figs/MiniGrid-DoorKey-6x6-v0/episode_reward.png}
-    
-    (a) Episode Reward
 \end{minipage}
 \hfill
 \begin{minipage}{0.45\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figs/MiniGrid-DoorKey-6x6-v0/obs_coverage.png}
-    
-    (b) Observation Coverage
 \end{minipage}
 
 \vspace{0.3cm}
 
 \begin{minipage}{0.45\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{figs/MiniGrid-DoorKey-6x6-v0/pos_coverage.png}
-    
-    (c) Position Coverage
+    \includegraphics[width=\textwidth]{figs/MiniGrid-DoorKey-8x8-v0/obs_coverage.png}
 \end{minipage}
 \hfill
 \begin{minipage}{0.45\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{figs/MiniGrid-DoorKey-6x6-v0/avg_entropy.png}
-    
-    (d) Policy Entropy
+    \includegraphics[width=\textwidth]{figs/MiniGrid-KeyCorridorS3R1-v0/obs_coverage.png}
+\end{minipage}
+
+\vspace{0.3cm}
+
+\begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/MiniGrid-KeyCorridorS3R2-v0/obs_coverage.png}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/MiniGrid-LavaCrossingS9N1-v0/obs_coverage.png}
+\end{minipage}
+
+\vspace{0.3cm}
+
+\begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/MiniGrid-LavaCrossingS9N2-v0/obs_coverage.png}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/MiniGrid-LavaCrossingS9N3-v0/obs_coverage.png}
 \end{minipage}
 \end{figure}
 
-\begin{figure}[H]{Các chỉ số huấn luyện trên DoorKey-8x8}
+\subsection{Độ bao phủ vị trí (Position Coverage)}
+
+Khác với độ bao phủ quan sát, độ bao phủ vị trí chỉ tập trung vào các tọa độ không gian $(x, y)$ duy nhất mà tác tử đã đặt chân tới, bỏ qua các yếu tố về hướng nhìn hay trạng thái vật phẩm. Chỉ số này phản ánh khả năng điều hướng thuần túy của tác tử trong mê cung.
+
+\begin{figure}[H]{So sánh Position Coverage giữa PPO baseline và các cấu hình PPO+RND trên các môi trường khác nhau}
 \centering
 \begin{minipage}{0.45\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{figs/MiniGrid-DoorKey-8x8-v0/episode_reward.png}
-    
-    (a) Episode Reward
+    \includegraphics[width=\textwidth]{figs/MiniGrid-DoorKey-5x5-v0/pos_coverage.png}
 \end{minipage}
 \hfill
 \begin{minipage}{0.45\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{figs/MiniGrid-DoorKey-8x8-v0/obs_coverage.png}
-    
-    (b) Observation Coverage
+    \includegraphics[width=\textwidth]{figs/MiniGrid-DoorKey-6x6-v0/pos_coverage.png}
 \end{minipage}
 
 \vspace{0.3cm}
@@ -872,67 +742,11 @@ Thiết kế thực nghiệm này cho phép cô lập tác động của biến 
 \begin{minipage}{0.45\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figs/MiniGrid-DoorKey-8x8-v0/pos_coverage.png}
-    
-    (c) Position Coverage
 \end{minipage}
 \hfill
-\begin{minipage}{0.45\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{figs/MiniGrid-DoorKey-8x8-v0/avg_entropy.png}
-    
-    (d) Policy Entropy
-\end{minipage}
-\end{figure}
-
-\subsection{Kết quả của RQ3}
-
-\begin{figure}[H]{Các chỉ số huấn luyện trên KeyCorridor-S3R1}
-\centering
-\begin{minipage}{0.45\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{figs/MiniGrid-KeyCorridorS3R1-v0/episode_reward.png}
-    
-    (a) Episode Reward
-\end{minipage}
-\hfill
-\begin{minipage}{0.45\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{figs/MiniGrid-KeyCorridorS3R1-v0/obs_coverage.png}
-    
-    (b) Observation Coverage
-\end{minipage}
-
-\vspace{0.3cm}
-
 \begin{minipage}{0.45\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figs/MiniGrid-KeyCorridorS3R1-v0/pos_coverage.png}
-    
-    (c) Position Coverage
-\end{minipage}
-\hfill
-\begin{minipage}{0.45\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{figs/MiniGrid-KeyCorridorS3R1-v0/avg_entropy.png}
-    
-    (d) Policy Entropy
-\end{minipage}
-\end{figure}
-
-\begin{figure}[H]{Các chỉ số huấn luyện trên KeyCorridor-S3R2}
-\centering
-\begin{minipage}{0.45\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{figs/MiniGrid-KeyCorridorS3R2-v0/episode_reward.png}
-    
-    (a) Episode Reward
-\end{minipage}
-\hfill
-\begin{minipage}{0.45\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{figs/MiniGrid-KeyCorridorS3R2-v0/obs_coverage.png}
-    
-    (b) Observation Coverage
 \end{minipage}
 
 \vspace{0.3cm}
@@ -940,23 +754,202 @@ Thiết kế thực nghiệm này cho phép cô lập tác động của biến 
 \begin{minipage}{0.45\textwidth}
     \centering
     \includegraphics[width=\textwidth]{figs/MiniGrid-KeyCorridorS3R2-v0/pos_coverage.png}
-    
-    (c) Position Coverage
 \end{minipage}
 \hfill
 \begin{minipage}{0.45\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{figs/MiniGrid-KeyCorridorS3R2-v0/avg_entropy.png}
-    
-    (d) Policy Entropy
+    \includegraphics[width=\textwidth]{figs/MiniGrid-LavaCrossingS9N1-v0/pos_coverage.png}
+\end{minipage}
+
+\vspace{0.3cm}
+
+\begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/MiniGrid-LavaCrossingS9N2-v0/pos_coverage.png}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/MiniGrid-LavaCrossingS9N3-v0/pos_coverage.png}
 \end{minipage}
 \end{figure}
 
-\subsection{Kết quả của RQ4}
-% TODO: Viết nội dung
+\subsection{Phần thưởng trung bình mỗi tập (Episode Reward)}
+
+Phần thưởng trung bình mỗi tập là thước đo quan trọng nhất đánh giá khả năng hoàn thành nhiệm vụ của tác tử. Trong MiniGrid, phần thưởng này phụ thuộc vào việc tác tử có đến được đích hay không và số bước chân thực hiện (càng ít bước càng tốt).
+
+\begin{figure}[H]{So sánh Episode Reward giữa PPO baseline và các cấu hình PPO+RND trên các môi trường khác nhau}
+\centering
+\begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/MiniGrid-DoorKey-5x5-v0/episode_reward.png}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/MiniGrid-DoorKey-6x6-v0/episode_reward.png}
+\end{minipage}
+
+\vspace{0.3cm}
+
+\begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/MiniGrid-DoorKey-8x8-v0/episode_reward.png}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/MiniGrid-KeyCorridorS3R1-v0/episode_reward.png}
+\end{minipage}
+
+\vspace{0.3cm}
+
+\begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/MiniGrid-KeyCorridorS3R2-v0/episode_reward.png}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/MiniGrid-LavaCrossingS9N1-v0/episode_reward.png}
+\end{minipage}
+
+\vspace{0.3cm}
+
+\begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/MiniGrid-LavaCrossingS9N2-v0/episode_reward.png}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/MiniGrid-LavaCrossingS9N3-v0/episode_reward.png}
+\end{minipage}
+\end{figure}
+
+\subsection{Độ hỗn loạn chính sách trung bình (Average Policy Entropy)}
+
+Độ hỗn loạn chính sách là chỉ số đo lường mức độ ngẫu nhiên trong phân phối xác suất hành động của tác tử. Trong quá trình huấn luyện, ta kỳ vọng Entropy sẽ giảm dần theo thời gian. Tuy nhiên, tốc độ giảm của Entropy phản ánh sự cân bằng giữa Khám phá (Exploration) và Khai thác (Exploitation).
+
+\begin{figure}[H]{So sánh Average Policy Entropy giữa PPO baseline và các cấu hình PPO+RND trên các môi trường khác nhau}
+\centering
+\begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/MiniGrid-DoorKey-5x5-v0/avg_entropy.png}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/MiniGrid-DoorKey-6x6-v0/avg_entropy.png}
+\end{minipage}
+
+\vspace{0.3cm}
+
+\begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/MiniGrid-DoorKey-8x8-v0/avg_entropy.png}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/MiniGrid-KeyCorridorS3R1-v0/avg_entropy.png}
+\end{minipage}
+
+\vspace{0.3cm}
+
+\begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/MiniGrid-KeyCorridorS3R2-v0/avg_entropy.png}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/MiniGrid-LavaCrossingS9N1-v0/avg_entropy.png}
+\end{minipage}
+
+\vspace{0.3cm}
+
+\begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/MiniGrid-LavaCrossingS9N2-v0/avg_entropy.png}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figs/MiniGrid-LavaCrossingS9N3-v0/avg_entropy.png}
+\end{minipage}
+\end{figure}
+
+\section{Kết quả thực nghiệm và đánh giá}
+
+Phần này trình bày chi tiết hiệu suất của các thuật toán dựa trên bốn thước đo chính: độ bao phủ quan sát, độ bao phủ vị trí, phần thưởng trung bình và độ hỗn loạn chính sách. Các phân tích được thực hiện so sánh giữa PPO thuần túy (Baseline) và PPO kết hợp RND với các hệ số $\lambda \in \{1.0, 0.1, 0.01\}$.
+
+\subsection{Phân tích độ bao phủ quan sát (Observation Coverage)}
+
+Độ bao phủ quan sát phản ánh tổng số trạng thái duy nhất mà tác tử đã nhìn thấy. Đây là chỉ số trực tiếp nhất để đánh giá khả năng khám phá.
+
+\begin{itemize}
+    \item Trong các bản đồ nhỏ (5x5, 6x6), sự khác biệt giữa các thuật toán là không đáng kể do không gian trạng thái nhỏ nhanh chóng bị bão hòa. Tuy nhiên, ở bản đồ \textit{DoorKey-8x8}, ta bắt đầu thấy sự phân hóa. Mặc dù PPO (cam) vẫn duy trì hiệu suất tốt, nhưng các đường RND (đặc biệt là $\lambda=0.1$) bám sát và có xu hướng mở rộng không gian ổn định.
+    
+    \item Đây là nơi RND thể hiện ưu thế vượt trội. Quan sát biểu đồ \textit{LavaCrossingS9N3} (môi trường khó nhất), đường màu xanh lá ($\lambda=1$) và xanh dương ($\lambda=0.1$) vươn lên mạnh mẽ, đạt độ bao phủ trên 14,000 trạng thái, cao hơn đáng kể so với PPO (khoảng 12,000). Điều này chứng tỏ động lực nội tại giúp tác tử dũng cảm thử nghiệm các hành động rủi ro gần khu vực dung nham để tìm kiếm trạng thái mới.
+    
+    \item Kết quả tại đây cho thấy một hiện tượng thú vị. Trong \textit{KeyCorridorS3R2}, PPO lại có độ bao phủ tốt hơn RND-1. Điều này gợi ý rằng trong các bài toán yêu cầu chuỗi hành động cụ thể (nhặt chìa khóa $\rightarrow$ mở cửa), phần thưởng nội tại quá lớn ($\lambda=1$) có thể gây nhiễu, khiến tác tử bị "cuốn" vào việc đi lại ngẫu nhiên thay vì thực hiện đúng chuỗi thao tác để mở khóa vùng không gian mới.
+\end{itemize}
+
+\subsection{Phân tích độ bao phủ vị trí (Position Coverage)}
+
+Độ bao phủ vị trí đo lường diện tích mặt sàn $(x, y)$ mà tác tử đã đặt chân đến.
+
+\begin{itemize}
+    \item So với Observation Coverage, Position Coverage bão hòa nhanh hơn nhiều. Ví dụ tại \textit{DoorKey-5x5}, tất cả thuật toán đều đạt mức trần ($\sim 0.32$) chỉ sau khoảng 0.05M bước. Điều này cho thấy tác tử đã đi hết các ô có thể đi, và phần lớn thời gian còn lại là học các trạng thái quan sát khác nhau tại các ô đó (ví dụ: quay các hướng khác nhau, cầm/không cầm chìa khóa).
+    
+    \item Tại \textit{KeyCorridorS3R2}, đường biểu diễn của RND-1 (xanh lá) thấp hơn hẳn so với PPO (cam). Điều này củng cố nhận định rằng sự tò mò quá mức làm tác tử mất tập trung, không hoàn thành được các nhiệm vụ phụ (sub-goals) để mở cửa sang phòng tiếp theo, dẫn đến việc bị kẹt lại ở các phòng ban đầu.
+\end{itemize}
+
+\subsection{Phân tích hiệu suất thực hiện tác vụ (Episode Reward)}
+
+Đây là thước đo quan trọng nhất về tính hiệu quả thực tế. Kết quả thực nghiệm cho thấy một sự đánh đổi (trade-off) rõ rệt giữa khám phá và khai thác.
+
+\begin{itemize}
+    \item Mặc dù RND có độ bao phủ tốt hơn ở nhiều môi trường, nhưng phần thưởng trung bình của nó thường thấp hơn hoặc dao động mạnh hơn PPO. Điển hình tại \textit{DoorKey-8x8}, PPO đạt phần thưởng gần tuyệt đối ($\sim 0.96$) và hội tụ rất mượt mà. Ngược lại, RND-1 (xanh lá) dao động dữ dội và chỉ đạt mức trung bình $\sim 0.7$.
+    
+    \item Tại các môi trường phức tạp như \textit{KeyCorridorS3R2} và \textit{LavaCrossingS9N2}, cấu hình RND-1 gần như không học được gì (phần thưởng xấp xỉ 0), trong khi PPO vẫn túc tắc đi lên. Lý do là tín hiệu phần thưởng nội tại quá lớn đã lấn át phần thưởng ngoại lai thưa thớt. Tác tử trở nên "nghiện" việc tìm kiếm sự mới lạ (intrinsic reward hacking) thay vì cố gắng hoàn thành nhiệm vụ để nhận điểm từ môi trường.
+    
+    \item Cấu hình $\lambda=0.1$ (xanh dương) và $\lambda=0.01$ (đỏ) thường cho kết quả cân bằng nhất, duy trì được khả năng khám phá tốt hơn PPO một chút mà không làm sụt giảm quá nhiều hiệu suất thực tế.
+\end{itemize}
+
+\subsection{Phân tích độ hỗn loạn chính sách (Average Policy Entropy)}
+
+Độ hỗn loạn chính sách (Entropy) giải thích cho hành vi của tác tử. Entropy cao thể hiện sự ngẫu nhiên trong hành động.
+
+\begin{itemize}
+    \item Quan sát biểu đồ \textit{DoorKey-8x8} và \textit{KeyCorridorS3R1}, đường RND-1 luôn nằm cao hơn hẳn so với PPO. Điều này nghĩa là RND liên tục thúc đẩy tác tử thử nghiệm các hành động khác nhau, ngăn cản sự hội tụ về một chiến thuật tất định (deterministic policy).
+    \item Việc Entropy giảm quá chậm (như RND-1) chính là nguyên nhân dẫn đến Episode Reward thấp. Tác tử "từ chối" khai thác những gì đã học được mà cứ tiếp tục khám phá, dẫn đến hiệu quả làm nhiệm vụ kém. Ngược lại, PPO giảm Entropy nhanh, cho thấy nó sớm "cam kết" với một chiến thuật và tối ưu hóa nó.
+\end{itemize}
 
 \section{Thảo luận kết quả}
-% TODO: Viết nội dung
+
+Dựa trên các phân tích định lượng ở trên, phần này sẽ trả lời trực tiếp ba câu hỏi nghiên cứu (RQ) đã đặt ra.
+
+\subsection{Trả lời RQ1: Hiệu quả cải thiện khám phá}
+\textit{Việc tích hợp module RND có cải thiện khả năng khám phá của tác tử so với PPO cơ sở hay không?}
+
+Có, nhưng phụ thuộc vào đặc thù môi trường. Kết quả Observation Coverage cho thấy RND thực sự giúp tác tử tiếp cận được nhiều trạng thái hơn, đặc biệt trong các môi trường có tính rủi ro cao như LavaCrossing. RND đóng vai trò như một "tấm đệm" động lực, khuyến khích tác tử không ngại thất bại để tìm kiếm thông tin mới. Tuy nhiên, trong các môi trường yêu cầu logic giải đố tuần tự (như KeyCorridor), RND không mang lại lợi thế vượt trội về mặt khám phá không gian so với chiến lược ngẫu nhiên của PPO.
+
+\subsection{Trả lời RQ2: Tác động của hệ số $\lambda$}
+\textit{Hệ số $\lambda$ ảnh hưởng như thế nào đến hiệu quả học tập?}
+
+Hệ số $\lambda$ tạo ra một sự đánh đổi (trade-off) cốt lõi:
+\begin{itemize}
+    \item $\lambda$ lớn ($1.0$): Tối đa hóa khám phá nhưng làm hại nghiêm trọng đến khả năng hoàn thành nhiệm vụ (Exploration > Exploitation). Tác tử bị phân tâm (distracted) và quá trình huấn luyện thường không hội tụ được về chính sách tối ưu.
+    \item $\lambda$ nhỏ ($0.01$): Hoạt động gần giống PPO gốc, an toàn nhưng ít đột phá.
+    \item $\lambda$ trung bình ($0.1$): Thường là lựa chọn tối ưu, cân bằng giữa việc duy trì sự tò mò đủ lâu để vượt qua các rào cản cục bộ, nhưng vẫn cho phép tác tử tập trung vào phần thưởng ngoại lai khi cần thiết.
+\end{itemize}
+
+\subsection{Trả lời RQ3: Độ ổn định huấn luyện}
+\textit{Độ ổn định của quá trình huấn luyện thay đổi thế nào?}
+
+Việc bổ sung RND, đặc biệt với $\lambda$ lớn, làm giảm đáng kể độ ổn định của quá trình huấn luyện. Điều này thể hiện qua vùng bóng mờ (standard deviation) rộng hơn rất nhiều trên các biểu đồ Episode Reward của RND so với PPO. Nguyên nhân là do mục tiêu tối ưu hóa trở nên "không tĩnh" (non-stationary): phần thưởng nội tại thay đổi liên tục khi mạng Predictor học, buộc chính sách phải liên tục thích nghi. Ngược lại, PPO thuần túy cho thấy sự ổn định và trơn tru hơn nhiều trong quá trình hội tụ.
 
 % =============================================
 % CHƯƠNG 5: KẾT LUẬN
@@ -1007,7 +1000,6 @@ Trong bối cảnh MARL, việc nhiều tác tử cùng khám phá sẽ làm tha
 % 5. Tài liệu tham khảo
 % ---------------------------------------------
 \begin{thebibliography}{99}
-\begin{bibsection}{Tiếng Anh}
 \bibitem{kayal2025}
 Aya Kayal, Eduardo Pignatelli, and Laura Toni.
 \textit{The impact of intrinsic rewards on exploration in Reinforcement Learning}.
@@ -1043,25 +1035,15 @@ Jarryd Martin, Suraj~Narayanan Sasikumar, Tom Everitt, and Marcus Hutter.
 \textit{Count-Based Exploration in Feature Space for Reinforcement Learning}.
 Proceedings of the 26th International Joint Conference on Artificial Intelligence (IJCAI), 2017.
 
-\bibitem{chevalier2023}
-Maxime Chevalier-Boisvert, Bolun Dai, Mark Towers, Rodrigo de Lazcano, Lucas Willems, Salem Lahlou, Suman Pal, Pablo~Samuel Castro, and Jordan Terry.
-\textit{Minigrid \& Miniworld: Modular \& Customizable Reinforcement Learning Environments for Goal-Oriented Tasks}.
-Advances in Neural Information Processing Systems (NeurIPS), 36, 2023.
+\bibitem{pathak2017}
+Deepak Pathak, Pulkit Agrawal, Alexei~A. Efros, and Trevor Darrell.
+\textit{Curiosity-driven Exploration by Self-supervised Prediction}.
+Proceedings of the 34th International Conference on Machine Learning (ICML), 2778--2787, 2017.
 
 \bibitem{eysenbach2019}
 Benjamin Eysenbach, Abhishek Gupta, Julian Ibarz, and Sergey Levine.
 \textit{Diversity is All You Need: Learning Skills without a Reward Function}.
 International Conference on Learning Representations (ICLR), 2019.
-
-\bibitem{haarnoja2018}
-Tuomas Haarnoja, Aurick Zhou, Pieter Abbeel, and Sergey Levine.
-\textit{Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor}.
-Proceedings of the 35th International Conference on Machine Learning (ICML), 1861--1870, 2018.
-
-\bibitem{pathak2017}
-Deepak Pathak, Pulkit Agrawal, Alexei~A. Efros, and Trevor Darrell.
-\textit{Curiosity-driven Exploration by Self-supervised Prediction}.
-Proceedings of the 34th International Conference on Machine Learning (ICML), 2778--2787, 2017.
 
 \bibitem{schulman2015}
 John Schulman, Sergey Levine, Pieter Abbeel, Michael Jordan, and Philipp Moritz.
