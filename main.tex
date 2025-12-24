@@ -182,17 +182,17 @@ Tổng hợp lại, mặc dù RND là một phương pháp mạnh mẽ, và các
 
 \section{Mục tiêu và đóng góp của nghiên cứu}
 
-Mục tiêu cốt lõi của dự án là thực hiện một phân tích thực nghiệm hệ thống về tác động của phần thưởng nội tại, cụ thể là thông qua phương pháp RND, đối với hiệu quả khám phá của thuật toán PPO trong các môi trường có phần thưởng thưa. Nghiên cứu tập trung vào việc làm rõ hành vi của tác nhân dưới các chế độ trọng số phần thưởng nội tại khác nhau, từ đó rút ra các nhận định về sự cân bằng giữa khám phá và khai thác.
+Mục tiêu của dự án là thực hiện một phân tích thực nghiệm hệ thống về tác động của phần thưởng nội tại, cụ thể là thông qua phương pháp RND, đối với hiệu quả khám phá của thuật toán PPO trong các môi trường có phần thưởng thưa. Nghiên cứu tập trung vào việc làm rõ hành vi của tác nhân dưới các chế độ trọng số phần thưởng nội tại khác nhau, từ đó rút ra các nhận định về sự cân bằng giữa khám phá và khai thác.
 
 Các đóng góp chính của dự án được tóm tắt như sau:
 \begin{itemize}
-    \item Tích hợp hệ thống: Xây dựng và tích hợp thành công module RND vào thuật toán cơ sở PPO như một thành phần độc lập (plugin module). Kiến trúc này cho phép linh hoạt bật/tắt hoặc điều chỉnh cường độ của tín hiệu nội tại mà không làm thay đổi cấu trúc cốt lõi của thuật toán tối ưu hóa chính sách.
+    \item Xây dựng và tích hợp thành công module RND vào thuật toán cơ sở PPO như một thành phần độc lập (plugin module). Kiến trúc này cho phép linh hoạt bật/tắt hoặc điều chỉnh cường độ của tín hiệu nội tại mà không làm thay đổi cấu trúc cốt lõi của thuật toán tối ưu hóa chính sách.
     
-    \item Phân tích thực nghiệm về hệ số $\lambda$: Thực hiện một loạt các thí nghiệm so sánh có kiểm soát (controlled experiments) giữa PPO thuần túy (baseline) và PPO tích hợp RND với các hệ số điều chỉnh $\lambda$ khác nhau ($\lambda \in \{1, 0.1, 0.01\}$). Đây là đóng góp trọng tâm nhằm trả lời câu hỏi về độ nhạy của thuật toán đối với độ lớn của phần thưởng nội tại, một vấn đề chưa được khai thác sâu trong các công bố gốc của Burda và cộng sự (2018).
+    \item Thực hiện một loạt các thí nghiệm so sánh có kiểm soát (controlled experiments) giữa PPO thuần túy (baseline) và PPO tích hợp RND với các hệ số điều chỉnh $\lambda$ khác nhau ($\lambda \in \{1, 0.1, 0.01\}$). Đây là đóng góp trọng tâm nhằm trả lời câu hỏi về độ nhạy của thuật toán đối với độ lớn của phần thưởng nội tại, một vấn đề chưa được khai thác sâu trong các công bố gốc của Burda và cộng sự (2018).
     
-    \item Đánh giá đa chiều: Phân tích định lượng và định tính ảnh hưởng của $\lambda$ đến tốc độ hội tụ (convergence rate) và độ bao phủ không gian trạng thái (state coverage). Kết quả phân tích sẽ làm rõ sự đánh đổi (trade-off): $\lambda$ lớn giúp khám phá nhanh nhưng có thể gây mất ổn định hội tụ, trong khi $\lambda$ nhỏ giúp ổn định nhưng có thể không vượt qua được rào cản phần thưởng thưa.
+    \item Phân tích định lượng và định tính ảnh hưởng của $\lambda$ đến tốc độ hội tụ (convergence rate) và độ bao phủ không gian trạng thái (state coverage). Kết quả phân tích sẽ làm rõ sự đánh đổi (trade-off): $\lambda$ lớn giúp khám phá nhanh nhưng có thể gây mất ổn định hội tụ, trong khi $\lambda$ nhỏ giúp ổn định nhưng có thể không vượt qua được rào cản phần thưởng thưa.
     
-    \item Kiểm chứng thực tiễn: Cung cấp các bằng chứng thực nghiệm củng cố cho các nhận định lý thuyết trong nghiên cứu của Andres và cộng sự (2022) về tầm quan trọng của việc tinh chỉnh siêu tham số trong các thuật toán động lực nội tại. Nghiên cứu khẳng định lại rằng không có một giá trị $\lambda$ nào là tối ưu cho mọi bài toán, nhưng việc hiểu rõ hành vi của nó cho phép các kỹ sư RL lựa chọn chiến lược tốt hơn.
+    \item Cung cấp các bằng chứng thực nghiệm củng cố cho các nhận định lý thuyết trong nghiên cứu của Andres và cộng sự (2022) về tầm quan trọng của việc tinh chỉnh siêu tham số trong các thuật toán động lực nội tại. Nghiên cứu khẳng định lại rằng không có một giá trị $\lambda$ nào là tối ưu cho mọi bài toán, nhưng việc hiểu rõ hành vi của nó cho phép các kỹ sư RL lựa chọn chiến lược tốt hơn.
 \end{itemize}
 
 Cần nhấn mạnh rằng, phạm vi của dự án này tập trung vào phân tích thực nghiệm và đánh giá độ nhạy của thuật toán hiện có, không hướng tới việc đề xuất một cấu trúc mạng mới hay tuyên bố phát minh ra một thuật toán khám phá mới. Các kết quả thu được sẽ đóng vai trò là tài liệu tham khảo kỹ thuật cho việc ứng dụng PPO và RND trong các bài toán thực tế.
