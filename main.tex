@@ -3,7 +3,6 @@
 \usepackage{amssymb}
 \usepackage[labelsep=period, labelfont=bf, textfont=normalfont]{caption}
 \usepackage{subcaption}
-\renewcommand{\figurename}{Hình}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage[
@@ -201,9 +200,11 @@ Các đóng góp chính của dự án được tóm tắt như sau:
 
 Cần nhấn mạnh rằng, phạm vi của dự án này tập trung vào phân tích thực nghiệm và đánh giá độ nhạy của thuật toán hiện có, không hướng tới việc đề xuất một cấu trúc mạng mới hay tuyên bố phát minh ra một thuật toán khám phá mới. Các kết quả thu được sẽ đóng vai trò là tài liệu tham khảo kỹ thuật cho việc ứng dụng PPO và RND trong các bài toán thực tế.
 
-\chapter{Học tăng cường}\label{sec:rl}
+\chapter{Nền tảng lý thuyết}\label{sec:rl-theory}
 
-\section{Quá trình quyết định Markov (MDP)}
+\section{Học tăng cường}
+
+\subsection{Quá trình quyết định Markov (MDP)}
 
 Quá trình quyết định Markov (Markov Decision Process - MDP) cung cấp khung toán học chính thức để mô hình hóa các bài toán học tăng cường tuần tự \cite{sutton2018}. Một MDP được định nghĩa bởi bộ năm thành phần $\langle S, A, P, R, \gamma \rangle$, trong đó:
 \begin{itemize}
@@ -429,7 +430,7 @@ Mô-đun RND bao gồm hai mạng feed-forward độc lập nhận cùng đầu 
 
 \begin{itemize}
     \item \textbf{Target network} $f_{\text{target}}(\cdot; \xi) : \mathcal{O} \to \mathbb{R}^{k}$:  
-    Mạng này được khởi tạo với trọng số ngẫu nhiên $\xi \sim \mathcal{N}(0,1)$ (hoặc phân phối uniform tùy theo triển khai) và được giữ cố định vĩnh viễn suốt toàn bộ quá trình huấn luyện. Vai trò của nó là cung cấp một hàm mục tiêu ngẫu nhiên nhưng xác định (deterministic) trên không gian quan sát, đóng vai trò như một "mã hóa ngẫu nhiên" cố định của trạng thái.
+    Mạng này được khởi tạo với trọng số ngẫu nhiên $\xi \sim \mathcal{N}(0,1)$ (hoặc phân phối uniform tùy theo triển khai) và được giữ cố định vĩnh viễn suốt toàn bộ quá trình huấn luyện. Vai trò của nó là cung cấp một hàm mục tiêu ngẫu nhiên nhưng xác định (deterministic) trên không gian quan sát, đóng vai trò như một ``mã hóa ngẫu nhiên'' cố định của trạng thái.
 
     \item \textbf{Predictor network} $\hat{f}_{\psi}(\cdot) : \mathcal{O} \to \mathbb{R}^{k}$:  
     Mạng này có kiến trúc gần giống hoặc hoàn toàn giống target network (thường là 3--4 tầng fully-connected với kích hoạt ReLU), được khởi tạo độc lập và được huấn luyện liên tục bằng gradient descent nhằm giảm sai số dự đoán đầu ra của target network trên cùng đầu vào quan sát.
@@ -445,7 +446,7 @@ Do target network không bao giờ được cập nhật, sai số dự đoán c
 
 Đầu vào của cả hai mạng là quan sát khung hình đã được chuẩn hóa về khoảng $[0,1]$ và chia cho 255 (hoặc chuẩn hóa đơn vị nếu sử dụng running normalization), hoàn toàn tuân theo khuyến nghị trong tài liệu gốc \cite{burda2019}. Không sử dụng bất kỳ thông tin nào về hành động hoặc lịch sử trước đó.
 
-Thiết kế cố định target network là yếu tố cốt lõi đảm bảo tính ổn định và khả năng đo lường novelty theo thời gian, đồng thời giúp tránh hiện tượng "catastrophic forgetting" thường gặp ở các phương pháp curiosity dựa trên dự đoán động lực học.
+Thiết kế cố định target network là yếu tố cốt lõi đảm bảo tính ổn định và khả năng đo lường novelty theo thời gian, đồng thời giúp tránh hiện tượng ``catastrophic forgetting'' thường gặp ở các phương pháp curiosity dựa trên dự đoán động lực học.
 
 \section{Cơ chế tích hợp phần thưởng}\label{sec:reward-integration}
 
@@ -895,7 +896,7 @@ Phần này trình bày chi tiết hiệu suất của các thuật toán dựa 
     
     \item Đây là nơi RND thể hiện ưu thế vượt trội. Quan sát biểu đồ \textit{LavaCrossingS9N3} (môi trường khó nhất), đường màu xanh lá ($\lambda=1$) và xanh dương ($\lambda=0.1$) vươn lên mạnh mẽ, đạt độ bao phủ trên 14,000 trạng thái, cao hơn đáng kể so với PPO (khoảng 12,000). Điều này chứng tỏ động lực nội tại giúp tác tử dũng cảm thử nghiệm các hành động rủi ro gần khu vực dung nham để tìm kiếm trạng thái mới.
     
-    \item Kết quả tại đây cho thấy một hiện tượng thú vị. Trong \textit{KeyCorridorS3R2}, PPO lại có độ bao phủ tốt hơn RND-1. Điều này gợi ý rằng trong các bài toán yêu cầu chuỗi hành động cụ thể (nhặt chìa khóa $\rightarrow$ mở cửa), phần thưởng nội tại quá lớn ($\lambda=1$) có thể gây nhiễu, khiến tác tử bị "cuốn" vào việc đi lại ngẫu nhiên thay vì thực hiện đúng chuỗi thao tác để mở khóa vùng không gian mới.
+    \item Kết quả tại đây cho thấy một hiện tượng thú vị. Trong \textit{KeyCorridorS3R2}, PPO lại có độ bao phủ tốt hơn RND-1. Điều này gợi ý rằng trong các bài toán yêu cầu chuỗi hành động cụ thể (nhặt chìa khóa $\rightarrow$ mở cửa), phần thưởng nội tại quá lớn ($\lambda=1$) có thể gây nhiễu, khiến tác tử bị ``cuốn'' vào việc đi lại ngẫu nhiên thay vì thực hiện đúng chuỗi thao tác để mở khóa vùng không gian mới.
 \end{itemize}
 
 \subsection{Phân tích độ bao phủ vị trí (Position Coverage)}
@@ -915,7 +916,7 @@ Phần này trình bày chi tiết hiệu suất của các thuật toán dựa 
 \begin{itemize}
     \item Mặc dù RND có độ bao phủ tốt hơn ở nhiều môi trường, nhưng phần thưởng trung bình của nó thường thấp hơn hoặc dao động mạnh hơn PPO. Điển hình tại \textit{DoorKey-8x8}, PPO đạt phần thưởng gần tuyệt đối ($\sim 0.96$) và hội tụ rất mượt mà. Ngược lại, RND-1 (xanh lá) dao động dữ dội và chỉ đạt mức trung bình $\sim 0.7$.
     
-    \item Tại các môi trường phức tạp như \textit{KeyCorridorS3R2} và \textit{LavaCrossingS9N2}, cấu hình RND-1 gần như không học được gì (phần thưởng xấp xỉ 0), trong khi PPO vẫn túc tắc đi lên. Lý do là tín hiệu phần thưởng nội tại quá lớn đã lấn át phần thưởng ngoại lai thưa thớt. Tác tử trở nên "nghiện" việc tìm kiếm sự mới lạ (intrinsic reward hacking) thay vì cố gắng hoàn thành nhiệm vụ để nhận điểm từ môi trường.
+    \item Tại các môi trường phức tạp như \textit{KeyCorridorS3R2} và \textit{LavaCrossingS9N2}, cấu hình RND-1 gần như không học được gì (phần thưởng xấp xỉ 0), trong khi PPO vẫn túc tắc đi lên. Lý do là tín hiệu phần thưởng nội tại quá lớn đã lấn át phần thưởng ngoại lai thưa thớt. Tác tử trở nên ``nghiện'' việc tìm kiếm sự mới lạ (intrinsic reward hacking) thay vì cố gắng hoàn thành nhiệm vụ để nhận điểm từ môi trường.
     
     \item Cấu hình $\lambda=0.1$ (xanh dương) và $\lambda=0.01$ (đỏ) thường cho kết quả cân bằng nhất, duy trì được khả năng khám phá tốt hơn PPO một chút mà không làm sụt giảm quá nhiều hiệu suất thực tế.
 \end{itemize}
@@ -926,7 +927,7 @@ Phần này trình bày chi tiết hiệu suất của các thuật toán dựa 
 
 \begin{itemize}
     \item Quan sát biểu đồ \textit{DoorKey-8x8} và \textit{KeyCorridorS3R1}, đường RND-1 luôn nằm cao hơn hẳn so với PPO. Điều này nghĩa là RND liên tục thúc đẩy tác tử thử nghiệm các hành động khác nhau, ngăn cản sự hội tụ về một chiến thuật tất định (deterministic policy).
-    \item Việc Entropy giảm quá chậm (như RND-1) chính là nguyên nhân dẫn đến Episode Reward thấp. Tác tử "từ chối" khai thác những gì đã học được mà cứ tiếp tục khám phá, dẫn đến hiệu quả làm nhiệm vụ kém. Ngược lại, PPO giảm Entropy nhanh, cho thấy nó sớm "cam kết" với một chiến thuật và tối ưu hóa nó.
+    \item Việc Entropy giảm quá chậm (như RND-1) chính là nguyên nhân dẫn đến Episode Reward thấp. Tác tử ``từ chối'' khai thác những gì đã học được mà cứ tiếp tục khám phá, dẫn đến hiệu quả làm nhiệm vụ kém. Ngược lại, PPO giảm Entropy nhanh, cho thấy nó sớm ``cam kết'' với một chiến thuật và tối ưu hóa nó.
 \end{itemize}
 
 \section{Thảo luận kết quả}
@@ -936,7 +937,7 @@ Dựa trên các phân tích định lượng ở trên, phần này sẽ trả 
 \subsection{Trả lời RQ1: Hiệu quả cải thiện khám phá}
 \textit{Việc tích hợp module RND có cải thiện khả năng khám phá của tác tử so với PPO cơ sở hay không?}
 
-Có, nhưng phụ thuộc vào đặc thù môi trường. Kết quả Observation Coverage cho thấy RND thực sự giúp tác tử tiếp cận được nhiều trạng thái hơn, đặc biệt trong các môi trường có tính rủi ro cao như LavaCrossing. RND đóng vai trò như một "tấm đệm" động lực, khuyến khích tác tử không ngại thất bại để tìm kiếm thông tin mới. Tuy nhiên, trong các môi trường yêu cầu logic giải đố tuần tự (như KeyCorridor), RND không mang lại lợi thế vượt trội về mặt khám phá không gian so với chiến lược ngẫu nhiên của PPO.
+Có, nhưng phụ thuộc vào đặc thù môi trường. Kết quả Observation Coverage cho thấy RND thực sự giúp tác tử tiếp cận được nhiều trạng thái hơn, đặc biệt trong các môi trường có tính rủi ro cao như LavaCrossing. RND đóng vai trò như một ``tấm đệm'' động lực, khuyến khích tác tử không ngại thất bại để tìm kiếm thông tin mới. Tuy nhiên, trong các môi trường yêu cầu logic giải đố tuần tự (như KeyCorridor), RND không mang lại lợi thế vượt trội về mặt khám phá không gian so với chiến lược ngẫu nhiên của PPO.
 
 \subsection{Trả lời RQ2: Tác động của hệ số $\lambda$}
 \textit{Hệ số $\lambda$ ảnh hưởng như thế nào đến hiệu quả học tập?}
@@ -951,7 +952,7 @@ Hệ số $\lambda$ tạo ra một sự đánh đổi (trade-off) cốt lõi:
 \subsection{Trả lời RQ3: Độ ổn định huấn luyện}
 \textit{Độ ổn định của quá trình huấn luyện thay đổi thế nào?}
 
-Việc bổ sung RND, đặc biệt với $\lambda$ lớn, làm giảm đáng kể độ ổn định của quá trình huấn luyện. Điều này thể hiện qua vùng bóng mờ (standard deviation) rộng hơn rất nhiều trên các biểu đồ Episode Reward của RND so với PPO. Nguyên nhân là do mục tiêu tối ưu hóa trở nên "không tĩnh" (non-stationary): phần thưởng nội tại thay đổi liên tục khi mạng Predictor học, buộc chính sách phải liên tục thích nghi. Ngược lại, PPO thuần túy cho thấy sự ổn định và trơn tru hơn nhiều trong quá trình hội tụ.
+Việc bổ sung RND, đặc biệt với $\lambda$ lớn, làm giảm đáng kể độ ổn định của quá trình huấn luyện. Điều này thể hiện qua vùng bóng mờ (standard deviation) rộng hơn rất nhiều trên các biểu đồ Episode Reward của RND so với PPO. Nguyên nhân là do mục tiêu tối ưu hóa trở nên ``không tĩnh'' (non-stationary): phần thưởng nội tại thay đổi liên tục khi mạng Predictor học, buộc chính sách phải liên tục thích nghi. Ngược lại, PPO thuần túy cho thấy sự ổn định và trơn tru hơn nhiều trong quá trình hội tụ.
 
 % =============================================
 % CHƯƠNG 5: KẾT LUẬN
