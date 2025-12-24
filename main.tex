@@ -564,15 +564,41 @@ Nghiên cứu sử dụng ba nhóm môi trường với độ khó tăng dần:
     \item \textbf{KeyCorridor}: Môi trường đa phòng yêu cầu tác tử khám phá nhiều khu vực, tìm chìa khóa và mở các cửa liên tiếp. Đây là nhóm môi trường có độ khó cao nhất do yêu cầu lập kế hoạch dài hạn.
 \end{itemize}
 
-Bảng 4.3 liệt kê chi tiết các môi trường được sử dụng trong thực nghiệm.
+Bảng 4.1 liệt kê chi tiết các môi trường được sử dụng trong thực nghiệm.
+
+\begin{table}[H]{Các môi trường MiniGrid được sử dụng}
+\centering
+\begin{tabular}{|l|l|p{7cm}|}
+\hline
+\textbf{Môi trường} & \textbf{Kích thước} & \textbf{Mô tả} \\
+\hline
+DoorKey-5x5 & $5 \times 5$ & Nhặt chìa khóa, mở cửa, đến đích \\
+\hline
+DoorKey-6x6 & $6 \times 6$ & Tương tự DoorKey-5x5, không gian lớn hơn \\
+\hline
+DoorKey-8x8 & $8 \times 8$ & Tương tự DoorKey-5x5, không gian lớn hơn \\
+\hline
+LavaCrossing-S9N1 & $9 \times 9$ & Điều hướng qua 1 vùng dung nham \\
+\hline
+LavaCrossing-S9N2 & $9 \times 9$ & Điều hướng qua 2 vùng dung nham \\
+\hline
+LavaCrossing-S9N3 & $9 \times 9$ & Điều hướng qua 3 vùng dung nham \\
+\hline
+KeyCorridor-S3R1 & $3 \times 3$ rooms & Khám phá nhiều phòng, nhặt chìa khóa \\
+\hline
+KeyCorridor-S3R2 & $3 \times 3$ rooms & Tương tự S3R1, phức tạp hơn \\
+\hline
+\end{tabular}
+\label{tab:environments}
+\end{table}
 
 \subsection{Cấu hình siêu tham số}
 
 Các siêu tham số của thuật toán PPO và module RND được giữ cố định trong toàn bộ thực nghiệm, ngoại trừ hệ số $\lambda$ được khảo sát với ba giá trị: $\lambda \in \{1.0, 0.1, 0.01\}$. Mỗi cấu hình thực nghiệm được huấn luyện trong tổng cộng $10^6$ bước thời gian (timesteps), với tần suất cập nhật chính sách mỗi 4000 bước.
 
-Bảng 4.1 và Bảng 4.2 trình bày chi tiết các siêu tham số của PPO và RND.
+Bảng 4.2 và Bảng 4.3 trình bày chi tiết các siêu tham số của PPO và RND.
 
-\begin{table}{Siêu tham số PPO}
+\begin{table}[H]{Siêu tham số PPO}
 \centering
 \begin{tabular}{|l|c|l|}
 \hline
@@ -598,7 +624,7 @@ Max episode length & 1000 & Độ dài tối đa mỗi episode \\
 \label{tab:ppo-params}
 \end{table}
 
-\begin{table}{Siêu tham số RND}
+\begin{table}[H]{Siêu tham số RND}
 \centering
 \begin{tabular}{|l|c|l|}
 \hline
@@ -616,32 +642,6 @@ Embedding dim & 32 & Chiều không gian embedding \\
 \hline
 \end{tabular}
 \label{tab:rnd-params}
-\end{table}
-
-\begin{table}{Các môi trường MiniGrid được sử dụng}
-\centering
-\begin{tabular}{|l|l|p{7cm}|}
-\hline
-\textbf{Môi trường} & \textbf{Kích thước} & \textbf{Mô tả} \\
-\hline
-DoorKey-5x5 & $5 \times 5$ & Nhặt chìa khóa, mở cửa, đến đích \\
-\hline
-DoorKey-6x6 & $6 \times 6$ & Tương tự DoorKey-5x5, không gian lớn hơn \\
-\hline
-DoorKey-8x8 & $8 \times 8$ & Tương tự DoorKey-5x5, không gian lớn hơn \\
-\hline
-LavaCrossing-S9N1 & $9 \times 9$ & Điều hướng qua 1 vùng dung nham \\
-\hline
-LavaCrossing-S9N2 & $9 \times 9$ & Điều hướng qua 2 vùng dung nham \\
-\hline
-LavaCrossing-S9N3 & $9 \times 9$ & Điều hướng qua 3 vùng dung nham \\
-\hline
-KeyCorridor-S3R1 & $3 \times 3$ rooms & Khám phá nhiều phòng, nhặt chìa khóa \\
-\hline
-KeyCorridor-S3R2 & $3 \times 3$ rooms & Tương tự S3R1, phức tạp hơn \\
-\hline
-\end{tabular}
-\label{tab:environments}
 \end{table}
 
 \subsection{Các giải pháp so sánh}
