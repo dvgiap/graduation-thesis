@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.17.1 (MiKTeX 24.1) (format=lualatex 2025.12.22)  24 DEC 2025 23:40
+This is LuaHBTeX, Version 1.17.1 (MiKTeX 24.1) (format=lualatex 2025.12.22)  11 JAN 2026 22:01
  restricted system commands enabled.
  file:line:error style messages enabled.
 **d:/Workspace/graduation-thesis/graduation-thesis/main
@@ -949,4 +949,539 @@ LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <13> not available
 
 
 LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <6.5> not available
-(Font)              size <6> substituted on 
+(Font)              size <6> substituted on input line 54.
+
+LaTeX Font Info:    Trying to load font information for U+msa on input line 54.
+
+("D:/Program Files/MiKTeX/tex/latex/amsfonts/umsa.fd"
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 54.
+
+
+("D:/Program Files/MiKTeX/tex/latex/amsfonts/umsb.fd"
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+) [3
+
+
+] [4
+
+]
+Package mathfont Info: Adjusting font LMRoman12-Italic.
+Package mathfont Info: Adjusting font LMRoman10-BoldItalic. [5
+
+]
+Package mathfont Info: Adjusting font LMRoman17-Regular.
+Package mathfont Info: Adjusting font LMRoman12-Bold. (./main.toc
+LaTeX Font Info:    Calculating math sizes for size <13.00003> on input line 1.
+
+
+
+LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <13.00003> not available
+(Font)              size <12> substituted on input line 1.
+
+
+LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <6.50002> not available
+(Font)              size <7> substituted on input line 1.
+
+
+LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <13.00003> not available
+(Font)              size <12> substituted on input line 1.
+
+
+LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <6.50002> not available
+(Font)              size <7> substituted on input line 1.
+
+
+LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <13.00003> not available
+(Font)              size <12> substituted on input line 1.
+
+
+LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <6.50002> not available
+(Font)              size <7> substituted on input line 1.
+
+[6
+
+] [7])
+\tf@toc=\write5
+
+\openout5 = main.toc
+ [8] (./main.lof)
+\tf@lof=\write6
+
+\openout6 = main.lof
+ [9
+
+] (./main.lot)
+\tf@lot=\write7
+
+\openout7 = main.lot
+ [10
+
+] [11
+
+]
+Package mathfont Info: Adjusting font LMRoman17-Regular.
+Package mathfont Info: Adjusting font LMRoman12-Bold. [1
+
+
+
+] [2]
+Package mathfont Info: Adjusting font LMRoman17-Regular.
+Package mathfont Info: Adjusting font LMRoman12-Bold.
+Underfull \hbox (badness 10000) in paragraph at lines 156--156
+\TU/lmr/bx/n/15.60004 1.2.1. Phương pháp dựa trên đếm (Count-based
+ []
+
+[3] [4] [5] [6]
+Package mathfont Info: Adjusting font LMRoman12-Italic. [7
+
+]
+Underfull \hbox (badness 1365) in paragraph at lines 240--240
+\TU/lmr/bx/n/15.60004 2.1.4. Hàm giá trị (Value Function) và Hàm lợi th
+ế
+ []
+
+[8]
+Underfull \hbox (badness 1436) in paragraph at lines 277--277
+\TU/lmr/bx/n/18.20004 2.2. Thuật toán Proximal Policy Optimization
+ []
+
+Package mathfont Info: Adjusting font LMRoman9-Regular.
+Package mathfont Info: Adjusting font LMRoman7-Regular. [9] [10] [11] [12] [13]
+ [14
+
+] [15] [16]
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
+put line 513.
+Package mathfont Info: Adjusting font LMRoman10-Regular. [17] [18] [19
+
+]
+Package mathfont Info: Adjusting font LMRoman12-Regular.
+Package mathfont Info: Adjusting font LMRoman12-Bold.
+Package hyperref Info: bookmark level for unknown a@table defaults to 0 on inpu
+t line 572.
+ [20]
+Overfull \hbox (11.84497pt too wide) in paragraph at lines 632--648
+ [][] 
+ []
+
+Package mathfont Info: Adjusting font LMMono12-Regular.
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 660.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\lambda' on input line 660.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 660.
+
+LaTeX Font Info:    Calculating math sizes for size <15.60004> on input line 66
+0.
+
+LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <15.60004> not available
+(Font)              size <14.4> substituted on input line 660.
+
+
+LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <15.60004> not available
+(Font)              size <14.4> substituted on input line 660.
+
+
+LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <15.60004> not available
+(Font)              size <14.4> substituted on input line 660.
+
+[21]
+<figs/MiniGrid-DoorKey-5x5-v0/obs_coverage.png, id=577, 722.7pt x 433.62pt>
+File: figs/MiniGrid-DoorKey-5x5-v0/obs_coverage.png Graphic file (type png)
+<use figs/MiniGrid-DoorKey-5x5-v0/obs_coverage.png>
+Package luatex.def Info: figs/MiniGrid-DoorKey-5x5-v0/obs_coverage.png  used on
+ input line 682.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+<figs/MiniGrid-DoorKey-6x6-v0/obs_coverage.png, id=578, 722.7pt x 433.62pt>
+File: figs/MiniGrid-DoorKey-6x6-v0/obs_coverage.png Graphic file (type png)
+<use figs/MiniGrid-DoorKey-6x6-v0/obs_coverage.png>
+Package luatex.def Info: figs/MiniGrid-DoorKey-6x6-v0/obs_coverage.png  used on
+ input line 687.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+<figs/MiniGrid-DoorKey-8x8-v0/obs_coverage.png, id=579, 722.7pt x 433.62pt>
+File: figs/MiniGrid-DoorKey-8x8-v0/obs_coverage.png Graphic file (type png)
+<use figs/MiniGrid-DoorKey-8x8-v0/obs_coverage.png>
+Package luatex.def Info: figs/MiniGrid-DoorKey-8x8-v0/obs_coverage.png  used on
+ input line 694.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+<figs/MiniGrid-KeyCorridorS3R1-v0/obs_coverage.png, id=580, 722.7pt x 433.62pt>
+
+File: figs/MiniGrid-KeyCorridorS3R1-v0/obs_coverage.png Graphic file (type png)
+
+<use figs/MiniGrid-KeyCorridorS3R1-v0/obs_coverage.png>
+Package luatex.def Info: figs/MiniGrid-KeyCorridorS3R1-v0/obs_coverage.png  use
+d on input line 699.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+<figs/MiniGrid-KeyCorridorS3R2-v0/obs_coverage.png, id=581, 722.7pt x 433.62pt>
+
+File: figs/MiniGrid-KeyCorridorS3R2-v0/obs_coverage.png Graphic file (type png)
+
+<use figs/MiniGrid-KeyCorridorS3R2-v0/obs_coverage.png>
+Package luatex.def Info: figs/MiniGrid-KeyCorridorS3R2-v0/obs_coverage.png  use
+d on input line 706.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+<figs/MiniGrid-LavaCrossingS9N1-v0/obs_coverage.png, id=582, 722.7pt x 433.62pt
+>
+File: figs/MiniGrid-LavaCrossingS9N1-v0/obs_coverage.png Graphic file (type png
+)
+<use figs/MiniGrid-LavaCrossingS9N1-v0/obs_coverage.png>
+Package luatex.def Info: figs/MiniGrid-LavaCrossingS9N1-v0/obs_coverage.png  us
+ed on input line 711.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+<figs/MiniGrid-LavaCrossingS9N2-v0/obs_coverage.png, id=583, 722.7pt x 433.62pt
+>
+File: figs/MiniGrid-LavaCrossingS9N2-v0/obs_coverage.png Graphic file (type png
+)
+<use figs/MiniGrid-LavaCrossingS9N2-v0/obs_coverage.png>
+Package luatex.def Info: figs/MiniGrid-LavaCrossingS9N2-v0/obs_coverage.png  us
+ed on input line 718.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+<figs/MiniGrid-LavaCrossingS9N3-v0/obs_coverage.png, id=584, 722.7pt x 433.62pt
+>
+File: figs/MiniGrid-LavaCrossingS9N3-v0/obs_coverage.png Graphic file (type png
+)
+<use figs/MiniGrid-LavaCrossingS9N3-v0/obs_coverage.png>
+Package luatex.def Info: figs/MiniGrid-LavaCrossingS9N3-v0/obs_coverage.png  us
+ed on input line 723.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+Package hyperref Info: bookmark level for unknown a@figure defaults to 0 on inp
+ut line 725.
+ [22]
+<figs/MiniGrid-DoorKey-5x5-v0/pos_coverage.png, id=590, 722.7pt x 433.62pt>
+File: figs/MiniGrid-DoorKey-5x5-v0/pos_coverage.png Graphic file (type png)
+<use figs/MiniGrid-DoorKey-5x5-v0/pos_coverage.png>
+Package luatex.def Info: figs/MiniGrid-DoorKey-5x5-v0/pos_coverage.png  used on
+ input line 735.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+<figs/MiniGrid-DoorKey-6x6-v0/pos_coverage.png, id=591, 722.7pt x 433.62pt>
+File: figs/MiniGrid-DoorKey-6x6-v0/pos_coverage.png Graphic file (type png)
+<use figs/MiniGrid-DoorKey-6x6-v0/pos_coverage.png>
+Package luatex.def Info: figs/MiniGrid-DoorKey-6x6-v0/pos_coverage.png  used on
+ input line 740.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+<figs/MiniGrid-DoorKey-8x8-v0/pos_coverage.png, id=592, 722.7pt x 433.62pt>
+File: figs/MiniGrid-DoorKey-8x8-v0/pos_coverage.png Graphic file (type png)
+<use figs/MiniGrid-DoorKey-8x8-v0/pos_coverage.png>
+Package luatex.def Info: figs/MiniGrid-DoorKey-8x8-v0/pos_coverage.png  used on
+ input line 747.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+<figs/MiniGrid-KeyCorridorS3R1-v0/pos_coverage.png, id=593, 722.7pt x 433.62pt>
+
+File: figs/MiniGrid-KeyCorridorS3R1-v0/pos_coverage.png Graphic file (type png)
+
+<use figs/MiniGrid-KeyCorridorS3R1-v0/pos_coverage.png>
+Package luatex.def Info: figs/MiniGrid-KeyCorridorS3R1-v0/pos_coverage.png  use
+d on input line 752.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+<figs/MiniGrid-KeyCorridorS3R2-v0/pos_coverage.png, id=594, 722.7pt x 433.62pt>
+
+File: figs/MiniGrid-KeyCorridorS3R2-v0/pos_coverage.png Graphic file (type png)
+
+<use figs/MiniGrid-KeyCorridorS3R2-v0/pos_coverage.png>
+Package luatex.def Info: figs/MiniGrid-KeyCorridorS3R2-v0/pos_coverage.png  use
+d on input line 759.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+<figs/MiniGrid-LavaCrossingS9N1-v0/pos_coverage.png, id=595, 722.7pt x 433.62pt
+>
+File: figs/MiniGrid-LavaCrossingS9N1-v0/pos_coverage.png Graphic file (type png
+)
+<use figs/MiniGrid-LavaCrossingS9N1-v0/pos_coverage.png>
+Package luatex.def Info: figs/MiniGrid-LavaCrossingS9N1-v0/pos_coverage.png  us
+ed on input line 764.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+<figs/MiniGrid-LavaCrossingS9N2-v0/pos_coverage.png, id=596, 722.7pt x 433.62pt
+>
+File: figs/MiniGrid-LavaCrossingS9N2-v0/pos_coverage.png Graphic file (type png
+)
+<use figs/MiniGrid-LavaCrossingS9N2-v0/pos_coverage.png>
+Package luatex.def Info: figs/MiniGrid-LavaCrossingS9N2-v0/pos_coverage.png  us
+ed on input line 771.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+<figs/MiniGrid-LavaCrossingS9N3-v0/pos_coverage.png, id=597, 722.7pt x 433.62pt
+>
+File: figs/MiniGrid-LavaCrossingS9N3-v0/pos_coverage.png Graphic file (type png
+)
+<use figs/MiniGrid-LavaCrossingS9N3-v0/pos_coverage.png>
+Package luatex.def Info: figs/MiniGrid-LavaCrossingS9N3-v0/pos_coverage.png  us
+ed on input line 776.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+ [23<./figs/MiniGrid-DoorKey-5x5-v0/obs_coverage.png><./figs/MiniGrid-DoorKey-6x
+6-v0/obs_coverage.png><./figs/MiniGrid-DoorKey-8x8-v0/obs_coverage.png><./figs/M
+iniGrid-KeyCorridorS3R1-v0/obs_coverage.png><./figs/MiniGrid-KeyCorridorS3R2-v0/
+obs_coverage.png><./figs/MiniGrid-LavaCrossingS9N1-v0/obs_coverage.png><./figs/M
+iniGrid-LavaCrossingS9N2-v0/obs_coverage.png><./figs/MiniGrid-LavaCrossingS9N3-v
+0/obs_coverage.png>]
+<figs/MiniGrid-DoorKey-5x5-v0/episode_reward.png, id=611, 722.7pt x 433.62pt>
+File: figs/MiniGrid-DoorKey-5x5-v0/episode_reward.png Graphic file (type png)
+<use figs/MiniGrid-DoorKey-5x5-v0/episode_reward.png>
+Package luatex.def Info: figs/MiniGrid-DoorKey-5x5-v0/episode_reward.png  used 
+on input line 788.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+<figs/MiniGrid-DoorKey-6x6-v0/episode_reward.png, id=612, 722.7pt x 433.62pt>
+File: figs/MiniGrid-DoorKey-6x6-v0/episode_reward.png Graphic file (type png)
+<use figs/MiniGrid-DoorKey-6x6-v0/episode_reward.png>
+Package luatex.def Info: figs/MiniGrid-DoorKey-6x6-v0/episode_reward.png  used 
+on input line 793.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+<figs/MiniGrid-DoorKey-8x8-v0/episode_reward.png, id=613, 722.7pt x 433.62pt>
+File: figs/MiniGrid-DoorKey-8x8-v0/episode_reward.png Graphic file (type png)
+<use figs/MiniGrid-DoorKey-8x8-v0/episode_reward.png>
+Package luatex.def Info: figs/MiniGrid-DoorKey-8x8-v0/episode_reward.png  used 
+on input line 800.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+<figs/MiniGrid-KeyCorridorS3R1-v0/episode_reward.png, id=614, 722.7pt x 433.62p
+t>
+File: figs/MiniGrid-KeyCorridorS3R1-v0/episode_reward.png Graphic file (type pn
+g)
+<use figs/MiniGrid-KeyCorridorS3R1-v0/episode_reward.png>
+Package luatex.def Info: figs/MiniGrid-KeyCorridorS3R1-v0/episode_reward.png  u
+sed on input line 805.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+<figs/MiniGrid-KeyCorridorS3R2-v0/episode_reward.png, id=615, 722.7pt x 433.62p
+t>
+File: figs/MiniGrid-KeyCorridorS3R2-v0/episode_reward.png Graphic file (type pn
+g)
+<use figs/MiniGrid-KeyCorridorS3R2-v0/episode_reward.png>
+Package luatex.def Info: figs/MiniGrid-KeyCorridorS3R2-v0/episode_reward.png  u
+sed on input line 812.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+<figs/MiniGrid-LavaCrossingS9N1-v0/episode_reward.png, id=616, 722.7pt x 433.62
+pt>
+File: figs/MiniGrid-LavaCrossingS9N1-v0/episode_reward.png Graphic file (type p
+ng)
+<use figs/MiniGrid-LavaCrossingS9N1-v0/episode_reward.png>
+Package luatex.def Info: figs/MiniGrid-LavaCrossingS9N1-v0/episode_reward.png  
+used on input line 817.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+<figs/MiniGrid-LavaCrossingS9N2-v0/episode_reward.png, id=617, 722.7pt x 433.62
+pt>
+File: figs/MiniGrid-LavaCrossingS9N2-v0/episode_reward.png Graphic file (type p
+ng)
+<use figs/MiniGrid-LavaCrossingS9N2-v0/episode_reward.png>
+Package luatex.def Info: figs/MiniGrid-LavaCrossingS9N2-v0/episode_reward.png  
+used on input line 824.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+<figs/MiniGrid-LavaCrossingS9N3-v0/episode_reward.png, id=618, 722.7pt x 433.62
+pt>
+File: figs/MiniGrid-LavaCrossingS9N3-v0/episode_reward.png Graphic file (type p
+ng)
+<use figs/MiniGrid-LavaCrossingS9N3-v0/episode_reward.png>
+Package luatex.def Info: figs/MiniGrid-LavaCrossingS9N3-v0/episode_reward.png  
+used on input line 829.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+ [24<./figs/MiniGrid-DoorKey-5x5-v0/pos_coverage.png><./figs/MiniGrid-DoorKey-6x
+6-v0/pos_coverage.png><./figs/MiniGrid-DoorKey-8x8-v0/pos_coverage.png><./figs/M
+iniGrid-KeyCorridorS3R1-v0/pos_coverage.png><./figs/MiniGrid-KeyCorridorS3R2-v0/
+pos_coverage.png><./figs/MiniGrid-LavaCrossingS9N1-v0/pos_coverage.png><./figs/M
+iniGrid-LavaCrossingS9N2-v0/pos_coverage.png><./figs/MiniGrid-LavaCrossingS9N3-v
+0/pos_coverage.png>]
+<figs/MiniGrid-DoorKey-5x5-v0/avg_entropy.png, id=632, 722.7pt x 433.62pt>
+File: figs/MiniGrid-DoorKey-5x5-v0/avg_entropy.png Graphic file (type png)
+<use figs/MiniGrid-DoorKey-5x5-v0/avg_entropy.png>
+Package luatex.def Info: figs/MiniGrid-DoorKey-5x5-v0/avg_entropy.png  used on 
+input line 841.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+<figs/MiniGrid-DoorKey-6x6-v0/avg_entropy.png, id=633, 722.7pt x 433.62pt>
+File: figs/MiniGrid-DoorKey-6x6-v0/avg_entropy.png Graphic file (type png)
+<use figs/MiniGrid-DoorKey-6x6-v0/avg_entropy.png>
+Package luatex.def Info: figs/MiniGrid-DoorKey-6x6-v0/avg_entropy.png  used on 
+input line 846.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+<figs/MiniGrid-DoorKey-8x8-v0/avg_entropy.png, id=634, 722.7pt x 433.62pt>
+File: figs/MiniGrid-DoorKey-8x8-v0/avg_entropy.png Graphic file (type png)
+<use figs/MiniGrid-DoorKey-8x8-v0/avg_entropy.png>
+Package luatex.def Info: figs/MiniGrid-DoorKey-8x8-v0/avg_entropy.png  used on 
+input line 853.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+<figs/MiniGrid-KeyCorridorS3R1-v0/avg_entropy.png, id=635, 722.7pt x 433.62pt>
+File: figs/MiniGrid-KeyCorridorS3R1-v0/avg_entropy.png Graphic file (type png)
+<use figs/MiniGrid-KeyCorridorS3R1-v0/avg_entropy.png>
+Package luatex.def Info: figs/MiniGrid-KeyCorridorS3R1-v0/avg_entropy.png  used
+ on input line 858.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+<figs/MiniGrid-KeyCorridorS3R2-v0/avg_entropy.png, id=636, 722.7pt x 433.62pt>
+File: figs/MiniGrid-KeyCorridorS3R2-v0/avg_entropy.png Graphic file (type png)
+<use figs/MiniGrid-KeyCorridorS3R2-v0/avg_entropy.png>
+Package luatex.def Info: figs/MiniGrid-KeyCorridorS3R2-v0/avg_entropy.png  used
+ on input line 865.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+<figs/MiniGrid-LavaCrossingS9N1-v0/avg_entropy.png, id=637, 722.7pt x 433.62pt>
+
+File: figs/MiniGrid-LavaCrossingS9N1-v0/avg_entropy.png Graphic file (type png)
+
+<use figs/MiniGrid-LavaCrossingS9N1-v0/avg_entropy.png>
+Package luatex.def Info: figs/MiniGrid-LavaCrossingS9N1-v0/avg_entropy.png  use
+d on input line 870.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+<figs/MiniGrid-LavaCrossingS9N2-v0/avg_entropy.png, id=638, 722.7pt x 433.62pt>
+
+File: figs/MiniGrid-LavaCrossingS9N2-v0/avg_entropy.png Graphic file (type png)
+
+<use figs/MiniGrid-LavaCrossingS9N2-v0/avg_entropy.png>
+Package luatex.def Info: figs/MiniGrid-LavaCrossingS9N2-v0/avg_entropy.png  use
+d on input line 877.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+<figs/MiniGrid-LavaCrossingS9N3-v0/avg_entropy.png, id=639, 722.7pt x 433.62pt>
+
+File: figs/MiniGrid-LavaCrossingS9N3-v0/avg_entropy.png Graphic file (type png)
+
+<use figs/MiniGrid-LavaCrossingS9N3-v0/avg_entropy.png>
+Package luatex.def Info: figs/MiniGrid-LavaCrossingS9N3-v0/avg_entropy.png  use
+d on input line 882.
+(luatex.def)             Requested size: 204.85846pt x 122.91472pt.
+ [25<./figs/MiniGrid-DoorKey-5x5-v0/episode_reward.png><./figs/MiniGrid-DoorKey-
+6x6-v0/episode_reward.png><./figs/MiniGrid-DoorKey-8x8-v0/episode_reward.png><./
+figs/MiniGrid-KeyCorridorS3R1-v0/episode_reward.png><./figs/MiniGrid-KeyCorridor
+S3R2-v0/episode_reward.png><./figs/MiniGrid-LavaCrossingS9N1-v0/episode_reward.p
+ng><./figs/MiniGrid-LavaCrossingS9N2-v0/episode_reward.png><./figs/MiniGrid-Lava
+CrossingS9N3-v0/episode_reward.png>] [26<./figs/MiniGrid-DoorKey-5x5-v0/avg_entr
+opy.png><./figs/MiniGrid-DoorKey-6x6-v0/avg_entropy.png><./figs/MiniGrid-DoorKey
+-8x8-v0/avg_entropy.png><./figs/MiniGrid-KeyCorridorS3R1-v0/avg_entropy.png><./f
+igs/MiniGrid-KeyCorridorS3R2-v0/avg_entropy.png><./figs/MiniGrid-LavaCrossingS9N
+1-v0/avg_entropy.png><./figs/MiniGrid-LavaCrossingS9N2-v0/avg_entropy.png><./fig
+s/MiniGrid-LavaCrossingS9N3-v0/avg_entropy.png>] [27] [28]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 942.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\lambda' on input line 942.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 942.
+
+[29] [30
+
+] [31]
+Underfull \hbox (badness 7203) in paragraph at lines 1008--1011
+[]\TU/lmr/m/n/13.00003 Aya Kayal, Eduardo Pignatelli, and Laura Toni. \TU/lmr/m
+/it/13.00003 The impact of
+ []
+
+
+Underfull \hbox (badness 3281) in paragraph at lines 1013--1016
+[]\TU/lmr/m/n/13.00003 John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radf
+ord, and
+ []
+
+
+Underfull \hbox (badness 1226) in paragraph at lines 1013--1016
+\TU/lmr/m/n/13.00003 Oleg Klimov. \TU/lmr/m/it/13.00003 Proximal Policy Optimiza
+tion Algorithms\TU/lmr/m/n/13.00003 . arXiv preprint
+ []
+
+
+Underfull \hbox (badness 1226) in paragraph at lines 1018--1021
+\TU/lmr/m/it/13.00003 by Random Network Distillation\TU/lmr/m/n/13.00003 . Inter
+national Conference on Learning
+ []
+
+
+Underfull \hbox (badness 1194) in paragraph at lines 1023--1026
+[]\TU/lmr/m/n/13.00003 Yuri Burda, Harrison Edwards, Deepak Pathak, Amos Storkey
+, Trevor
+ []
+
+
+Underfull \hbox (badness 1168) in paragraph at lines 1038--1041
+[]\TU/lmr/m/n/13.00003 Jarryd Martin, Suraj Narayanan Sasikumar, Tom Everitt, an
+d Marcus
+ []
+
+
+Underfull \hbox (badness 2680) in paragraph at lines 1038--1041
+\TU/lmr/m/n/13.00003 Hutter. \TU/lmr/m/it/13.00003 Count-Based Exploration in Fe
+ature Space for Reinforcement
+ []
+
+
+Underfull \hbox (badness 1354) in paragraph at lines 1043--1046
+[]\TU/lmr/m/n/13.00003 Deepak Pathak, Pulkit Agrawal, Alexei A. Efros, and Trevo
+r Darrell.
+ []
+
+
+Underfull \hbox (badness 3396) in paragraph at lines 1053--1056
+[]\TU/lmr/m/n/13.00003 John Schulman, Sergey Levine, Pieter Abbeel, Michael Jord
+an, and
+ []
+
+[32
+
+] [33] (./main.aux)
+ ***********
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-01-04>
+ ***********
+
+
+LaTeX Font Warning: Size substitutions with differences
+(Font)              up to 1.20004pt have occurred.
+
+Package rerunfilecheck Info: File `main.out' has not changed.
+(rerunfilecheck)             Checksum: A4C047EC337C9234C1293580756501A7;16245.
+)
+
+Here is how much of LuaTeX's memory you used:
+ 30759 strings out of 476497
+ 125217,1977958 words of node,token memory allocated
+ 640 words of node memory still in use:
+   6 hlist, 2 vlist, 2 rule, 2 glue, 4 kern, 1 glyph, 33 attribute, 55 glue_spec
+, 33 attribute_list, 2 write, 5 pdf_action nodes
+   avail lists: 1:1,2:580,3:197,4:132,5:328,6:89,7:6043,8:47,9:710,10:19,11:22
+ 51898 multiletter control sequences out of 65536+600000
+ 100 fonts using 10649695 bytes
+ 99i,10n,102p,1587b,1082s stack positions out of 10000i,1000n,20000p,200000b,200000s
+
+warning  (pdf backend): unreferenced destination with name 'cite.schulman2017'
+
+warning  (pdf backend): unreferenced destination with name 'cite.sutton2018'
+
+warning  (pdf backend): unreferenced destination with name 'cite.kayal2025'
+
+warning  (pdf backend): unreferenced destination with name 'cite.eysenbach2019'
+
+warning  (pdf backend): unreferenced destination with name 'cite.burda2019curios
+ity'
+
+warning  (pdf backend): unreferenced destination with name 'cite.pathak2017'
+
+warning  (pdf backend): unreferenced destination with name 'cite.martin2017'
+
+warning  (pdf backend): unreferenced destination with name 'cite.bellemare2016'
+
+warning  (pdf backend): unreferenced destination with name 'cite.andres2022'
+
+warning  (pdf backend): unreferenced destination with name 'cite.burda2019'
+<//?/d:/program files/miktex/fonts/opentype/public/lm/lmmono12-regular.otf><//?/
+d:/program files/miktex/fonts/opentype/public/lm/lmroman10-regular.otf><//?/d:/p
+rogram files/miktex/fonts/opentype/public/lm/lmroman7-regular.otf><//?/d:/progra
+m files/miktex/fonts/opentype/public/lm/lmroman9-regular.otf><//?/d:/program fil
+es/miktex/fonts/opentype/public/lm/lmroman12-italic.otf><//?/d:/program files/mi
+ktex/fonts/opentype/public/lm/lmroman10-bolditalic.otf><//?/d:/program files/mik
+tex/fonts/opentype/public/lm/lmroman12-regular.otf><//?/d:/program files/miktex/
+fonts/opentype/public/lm/lmroman12-bold.otf><D:/Program Files/MiKTeX/fonts/type1
+/public/amsfonts/cm/cmex10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfo
+nts/cm/cmmi12.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.
+pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi9.pfb><D:/Progra
+m Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><D:/Program Files/MiKTeX
+/fonts/type1/public/amsfonts/cm/cmr9.pfb><D:/Program Files/MiKTeX/fonts/type1/pu
+blic/amsfonts/cm/cmsy10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts
+/cm/cmsy9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm1
+0.pfb>
+Output written on main.pdf (44 pages, 10619300 bytes).
+
+PDF statistics: 790 PDF objects out of 1000 (max. 8388607)
+ 156 named destinations out of 1000 (max. 131072)
+ 520 words of extra memory for PDF output out of 10000 (max. 100000000)
+
