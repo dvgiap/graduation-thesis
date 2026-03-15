@@ -1,18 +1,35 @@
-\chapter{Cơ sở lý thuyết}
+\chapter{Literature Review}
 
-Trong chương này cần trình bày được các kiến thức cơ sở là nền tảng cần thiết để người đọc hiểu đầy đủ các phương pháp được trình bày ở các chương sau. Chương này thường bao gồm các nội dung sau:
-\begin{itemize}
-    \item Các khái niệm, định nghĩa cơ bản
-    \item Các mô hình, phương pháp, thuật toán nền tảng
-    \item Các công cụ, công nghệ, nền tảng liên quan
-    \item Các giải pháp/nghiên cứu liên quan
-    
-\end{itemize}
+\section{Reinforcement Learning in Sparse-Reward Environments}
+An episodic reinforcement learning problem is commonly modeled as a Markov Decision Process (MDP) defined by the tuple $(\mathcal{S}, \mathcal{A}, P, R, \gamma, \rho_0)$, where $\mathcal{S}$ is the state space, $\mathcal{A}$ is the action space, $P$ denotes the transition dynamics, $R$ is the reward function, $\gamma \in [0,1)$ is the discount factor, and $\rho_0$ is the initial state distribution \cite{sutton2018rl}. The goal is to learn a policy $\pi_\theta(a \mid s)$ that maximizes the expected discounted return:
+\begin{equation}
+J(\theta) = \mathbb{E}_{\tau \sim (\pi_\theta, P)} \left[\sum_{t=0}^{T-1} \gamma^t R_t^E \right].
+\end{equation}
 
-Lưu ý:
+Although this formulation is standard, learning becomes difficult when rewards are sparse. In such cases, the agent may take many actions before receiving any meaningful signal indicating whether the trajectory is promising. Classical exploration strategies such as $\epsilon$-greedy can provide randomization, but they do not explicitly guide the agent toward informative experiences when the state space is large or partially observable \cite{francois2018deep}.
 
-\begin{itemize}
-    \item Cần tham chiếu đến các tài liệu tham khảo \textbf{đúng} và \textbf{đủ}. Thiếu tham chiếu đến tài liệu tham khảo coi như sao chép.
-    \item \textbf{Không} chép lại nội dung từ các tài liệu tham khảo, SV cần diễn đạt lại các nội dung tương ứng phù hợp với bài toán và phạm vi của KLTN
-    \item Đối với các KLTN xây dựng hệ thống, nội dung của chương này chỉ tập trung trình bày các công cụ/công nghệ sử dụng (không đi sâu lý thuyết/thuật toán) thì có thể đổi tên tiêu đề thành ``Nền tảng và công nghệ sử dụng''
-\end{itemize}
+\section{Intrinsic Motivation for Exploration}
+Intrinsic motivation addresses sparse rewards by supplementing the environment reward with an additional exploration bonus \cite{oudeyer2007intrinsic,schmidhuber2010formal}. In general, the agent receives both an extrinsic reward $R_t^E$ and an intrinsic reward $R_t^I$, and optimization is performed on a combined objective:
+\begin{equation}
+\bar{r}_t = R_t^E + \beta R_t^I,
+\end{equation}
+where $\beta \ge 0$ controls the importance of intrinsic motivation.
+
+\subsection{Count-Based Exploration}
+Count-based methods encourage exploration by assigning larger rewards to states that have been visited less frequently. In tabular settings, the intrinsic reward is often inversely proportional to the square root of the visit count. This idea has been extended to high-dimensional observations through pseudo-counts and density models \cite{bellemare2016count,tang2017exploration,ostrovski2017count}. These approaches are conceptually simple and often effective, but the quality of the reward signal depends on the ability to estimate novelty reliably in complex observation spaces.
+
+\subsection{Curiosity-Driven Exploration}
+Curiosity-driven methods define intrinsic rewards through prediction error. The Intrinsic Curiosity Module (ICM) learns a compact state representation and predicts the next latent feature from the current feature and action \cite{pathak2017curiosity}. The prediction error of this forward model becomes an intrinsic bonus. Random Network Distillation (RND) uses the discrepancy between a fixed random target network and a learned predictor as a novelty measure \cite{burda2019rnd}. RIDE rewards changes in a learned representation that are causally induced by the agent's actions \cite{raileanu2020ride}. A common advantage of these methods is that intrinsic rewards tend to decrease naturally as states become familiar, reducing repeated exploration of the same region.
+
+\section{Adaptive Weighting of Intrinsic Rewards}
+Despite the success of intrinsic motivation, many methods still depend on a manually chosen coefficient $\beta$ \cite{pathak2017curiosity,burda2019rnd}. This fixed coefficient creates an important limitation. If $\beta$ is too small, the intrinsic reward becomes negligible and exploration remains weak. If $\beta$ is too large, curiosity may dominate the training signal and distract the agent from the task objective. Since the optimal trade-off differs across environments and over the course of training, fixed weighting lacks flexibility.
+
+Several studies have attempted to overcome this issue. Extrinsic-Intrinsic Policy Optimization (EIPO) treats the trade-off as a constrained optimization problem and adapts the influence of intrinsic rewards at a global level \cite{chen2022eipo}. Automatic Intrinsic Reward Shaping (AIRS) frames the selection among different intrinsic reward functions as a bandit-style decision process \cite{yuan2023airs}. Population-based approaches such as Never Give Up and Agent57 coordinate multiple policies with different exploration strengths and discount factors \cite{badia2020ngu,badia2020agent57}. These methods improve adaptability, but their modulation is usually global, policy-level, or stage-level rather than state-dependent.
+
+\section{Research Gap}
+The literature suggests that intrinsic motivation is effective when the exploration bonus is aligned with future task success. However, existing methods often lack a direct mechanism for deciding \textit{where} intrinsic rewards should be emphasized. Two states can have similar novelty scores while contributing very differently to downstream extrinsic return. A uniform or globally adapted coefficient cannot express this difference.
+
+The central gap addressed in this thesis is therefore the absence of a lightweight, state-dependent scaling mechanism that modulates intrinsic rewards according to how well they predict future extrinsic outcomes. The ACWI framework fills this gap by learning a scaling function $\beta(s_t)$ and optimizing it using a correlation-based objective. This design allows the agent to strengthen exploration when it is likely to be beneficial and reduce it when exploitation should dominate.
+
+\section{Chapter Summary}
+This chapter reviewed the foundations required for the proposed work. Reinforcement learning in sparse-reward environments is challenging because standard exploration methods provide weak guidance. Intrinsic motivation methods such as count-based bonuses, ICM, RND, and RIDE improve exploration but usually depend on a fixed weighting coefficient. Prior adaptive methods alleviate this problem only partially because they operate at a coarse granularity. These observations motivate the methodology presented in the next chapter, where intrinsic reward scaling is learned directly as a state-dependent function.

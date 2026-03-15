@@ -1,4 +1,8 @@
-\chapter*{Kết luận}
-\addcontentsline{toc}{chapter}{Kết luận}
+\chapter*{Conclusion and Future Work}
+\addcontentsline{toc}{chapter}{Conclusion and Future Work}
 
-Tóm tắt bài toán, giải pháp và các kết quả đạt được
+This thesis presented an English thesis-style adaptation of the paper \textit{Adaptive Correlation-Weighted Intrinsic Rewards for Reinforcement Learning}. The work addressed the limitation of fixed intrinsic reward coefficients in sparse-reward reinforcement learning and introduced ACWI, a lightweight framework that predicts a state-dependent scaling factor for intrinsic rewards. By aligning the scaled intrinsic signal with discounted future extrinsic return, ACWI provides a practical way to balance exploration and exploitation online without relying on expensive meta-gradient procedures.
+
+The experimental study on MiniGrid environments shows that ACWI improves learning stability and sample efficiency in several sparse-reward tasks, especially when extrinsic signals are infrequent but still informative. Compared with manually tuned fixed coefficients, the adaptive mechanism is more robust across environments and random seeds. At the same time, the results also reveal an important limitation: when extrinsic rewards are almost always absent, the correlation objective becomes weak and the learned scaling factor behaves similarly to a fixed coefficient.
+
+Several directions can extend this work in the future. First, ACWI can be integrated with intrinsic reward modules beyond ICM, such as RND or RIDE. Second, the method can be tested in broader settings including continuous control, multi-task reinforcement learning, and embodied navigation. Third, a more formal theoretical analysis of the correlation objective could clarify when the adaptive scaling mechanism is guaranteed to be beneficial. These directions would further strengthen the role of adaptive intrinsic reward weighting in reinforcement learning research.

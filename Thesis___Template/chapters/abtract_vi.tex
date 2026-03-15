@@ -1,15 +1,17 @@
 \begin{center}
-\textbf{\large{Tóm tắt}	}
+\textbf{\large{Tóm tắt}}
 \end{center}
 
 \addcontentsline{toc}{chapter}{Tóm tắt}
-
 \begin{small}
 
-Tóm tắt nội dung KL tốt nghiệp: Bài toán, phương pháp giải quyết, kết quả đạt được 
+\textit{Adaptive Correlation-Weighted Intrinsic Rewards for Reinforcement Learning} nghiên cứu bài toán học tăng cường trong môi trường phần thưởng thưa, nơi tác tử rất khó khám phá do tín hiệu phản hồi từ môi trường xuất hiện không thường xuyên. Nhiều phương pháp hiện nay kết hợp phần thưởng ngoại sinh với phần thưởng nội tại dựa trên tò mò hoặc độ mới, nhưng thường phải dùng một hệ số cố định để cân bằng hai nguồn phần thưởng này. Hệ số cố định dễ nhạy với từng bài toán và không phản ánh được việc ở những trạng thái khác nhau thì nhu cầu khám phá cũng khác nhau.
 
+Khóa luận trình bày ACWI, một cơ chế điều chỉnh phần thưởng nội tại theo từng trạng thái thông qua một Beta Network gọn nhẹ. Mạng này được huấn luyện bằng mục tiêu tương quan nhằm làm cho phần thưởng nội tại sau khi được scale có quan hệ chặt chẽ hơn với tổng phần thưởng ngoại sinh trong tương lai. Phương pháp được kết hợp với PPO và Intrinsic Curiosity Module để vừa tăng cường khả năng khám phá, vừa giữ được tính ổn định trong quá trình huấn luyện.
+
+Kết quả thực nghiệm trên năm môi trường MiniGrid cho thấy ACWI cải thiện hiệu quả mẫu và giảm độ dao động so với PPO thuần túy cũng như PPO kết hợp ICM với hệ số cố định. Phương pháp đặc biệt hiệu quả trong các môi trường có phần thưởng thưa nhưng vẫn còn tín hiệu ngoại sinh mang tính định hướng. Trong những bài toán quá thưa, ACWI suy giảm một cách ổn định về gần hành vi của hệ số cố định thay vì gây mất ổn định cho quá trình học.
 
 \vspace*{1cm}
-\textbf{Từ khóa}: Liệt kê 3-5 từ khoá liên quan
+\textbf{Từ khóa}: học tăng cường, phần thưởng thưa, phần thưởng nội tại, khám phá dựa trên tò mò, điều chỉnh phần thưởng thích ứng
 
 \end{small}

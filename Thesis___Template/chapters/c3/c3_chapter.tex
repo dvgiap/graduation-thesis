@@ -1,36 +1,110 @@
+\chapter{Methodology}
 
+\section{Problem Formulation}
+This thesis considers episodic reinforcement learning with both extrinsic and intrinsic rewards. At time step $t$, the agent observes state $s_t$, samples action $a_t \sim \pi_\theta(\cdot \mid s_t)$, receives extrinsic reward $R_t^E$, and transitions to the next state $s_{t+1}$. Let $R_t^I$ denote the intrinsic reward produced by an exploration module. Instead of using a constant coefficient, the proposed method introduces a state-dependent scaling function $\beta_\psi(s_t)$ so that the shaped reward becomes
+\begin{equation}
+\bar{r}_t = R_t^E + \alpha \beta_\psi(s_t) R_t^I,
+\label{eq:shaped_reward}
+\end{equation}
+where $\alpha > 0$ is a global intrinsic-strength hyperparameter and $\beta_\psi(s_t)$ is learned online.
 
+The intuition is straightforward. If exploration from state $s_t$ tends to lead to higher future extrinsic return, the method should increase the influence of intrinsic reward in that state. If exploration is unhelpful or noisy, the influence should be reduced. ACWI operationalizes this idea through a lightweight Beta Network trained with a correlation-based objective.
 
-\chapter{Phương pháp đề xuất}
+\section{Base Reinforcement Learning Algorithm}
+The policy optimization backbone used in this thesis is Proximal Policy Optimization (PPO) \cite{schulman2017ppo}. PPO is widely adopted because it offers stable on-policy optimization with relatively simple implementation. It updates the policy by maximizing a clipped surrogate objective:
+\begin{equation}
+L^{\text{PPO}}(\theta) =
+\mathbb{E}_t \left[
+\min \left(
+\rho_t(\theta) \hat{A}_t,
+\text{clip}(\rho_t(\theta), 1-\epsilon, 1+\epsilon)\hat{A}_t
+\right)\right],
+\end{equation}
+where $\rho_t(\theta) = \frac{\pi_\theta(a_t \mid s_t)}{\pi_{\theta_{\text{old}}}(a_t \mid s_t)}$ is the importance ratio and $\hat{A}_t$ is the advantage estimate. The advantages are computed with Generalized Advantage Estimation (GAE) \cite{schulman2016gae} using the shaped reward in Equation \ref{eq:shaped_reward}.
 
-\paragraph{Đối với các KLTN giải quyết bài toán nghiên cứu:}
-
+\section{Intrinsic Curiosity Module}
+To generate intrinsic rewards, the thesis adopts the Intrinsic Curiosity Module (ICM) \cite{pathak2017curiosity}. ICM first encodes each state into a latent representation $\phi(s_t) \in \mathbb{R}^d$. It then uses two auxiliary models:
 \begin{itemize}
-    \item Tiêu đề của chương thường là ``Phương pháp đề xuất/Mô hình đề xuất cho bài toán XYZ''. 
-    \item Chương này cần trình bày được:
-    \begin{itemize}
-        \item Tổng quan phương pháp/Kiến trúc tổng thể
-        \item Mô hình/thuật toán/phương pháp chi tiết
-        \item Cần lý giải được vì sao giải quyết bài toán như vậy, phân tích ưu, nhược điểm 
-    \end{itemize}
+    \item a forward dynamics model $f^F_\eta$ that predicts the next latent feature from the current feature and action;
+    \item an inverse dynamics model $f^I_\eta$ that predicts the action from two consecutive latent states.
 \end{itemize}
 
-\paragraph{Đối với các KTLN xây dựng hệ thống:}
-\begin{itemize}
-    \item Tiêu đề của chương thường là ``Phân tích và thiết kế hệ thống XYZ''.
-    \item Chương này cần trình bày được:
-    \begin{itemize}
-        \item Phân tích yêu cầu
-        \item Kiến trúc tổng quan của hệ thống
-        \item Thiết kế hệ thống chi tiết: Biểu đồ ca sử dụng, các biểu đồ tuần tự, biểu đồ luồng hoạt động, biểu đồ lớp cho các ca sử dụng chính
-        \item Thiết kế CSDL
-    \end{itemize}
-\end{itemize}
+The ICM loss is a weighted combination of the forward and inverse losses:
+\begin{equation}
+L_{\text{ICM}}(\eta) =
+\alpha_F \mathbb{E}\left[\frac{1}{2}\left\|f^F_\eta(\phi_t, a_t) - \phi_{t+1}\right\|_2^2\right]
++ \alpha_I \mathbb{E}\left[-\log p_\eta(a_t \mid \phi_t, \phi_{t+1})\right].
+\end{equation}
 
-Lưu ý:
-\begin{itemize}
-    \item \textbf{Không} đưa các bảng biểu/hình ảnh không liên quan vào KLTN
-    \item Tiêu đề Bảng đặt trên bảng, tiêu đề Hình đặt dưới hình
-    \item Toàn bộ hình ảnh, bảng biểu phải được tham chiếu và giải thích rõ ràng. \textbf{Không} chấp nhận các KLTN với các mục chỉ có hình/bảng không có giải thích/mô tả/thảo luận. 
-    \item \textbf{Không} viết KLTN theo dạng ``gạch đầu dòng'' để đảm bảo rõ ràng và liền mạch trong việc giải thích và lập luận.
-\end{itemize}
+The raw intrinsic reward is defined as the forward prediction error:
+\begin{equation}
+I_t = \frac{1}{2}\left\|f^F_\eta(\phi_t, a_t) - \phi_{t+1}\right\|_2^2.
+\end{equation}
+
+To improve stability, the reward is standardized within each minibatch and then rectified:
+\begin{equation}
+I_t^+ = \max \left(0, \frac{I_t - \mu_I}{\sigma_I + \varepsilon} \right),
+\end{equation}
+where $\mu_I$ and $\sigma_I$ are the minibatch mean and standard deviation. This preprocessing suppresses transitions whose prediction errors are below the batch average and retains relatively surprising transitions.
+
+\section{Adaptive Correlation-Weighted Intrinsic Scaling}
+
+\subsection{Beta Network}
+The core contribution of the thesis is a Beta Network $\beta_\psi: \mathcal{S} \rightarrow \mathbb{R}_+$ that predicts a positive intrinsic reward multiplier from the current state. The network is intentionally lightweight to keep the computational overhead low. In the experiments adapted from the paper, the network uses an encoder depth of 2, an embedding size of 256, and clips its output to the interval $[0.1, 2.0]$.
+
+The scaled intrinsic reward is
+\begin{equation}
+\tilde{I}_t = \beta_\psi(s_t) I_t^+,
+\end{equation}
+and the final reward used by PPO is
+\begin{equation}
+\bar{r}_t = R_t^E + \alpha \tilde{I}_t.
+\end{equation}
+
+\subsection{Correlation-Based Objective}
+Training $\beta_\psi$ with meta-gradients would be computationally expensive. Instead, ACWI introduces a first-order objective that directly aligns the scaled intrinsic reward with discounted future extrinsic return. Let
+\begin{equation}
+G_t^E = \sum_{k=t}^{T} \gamma^{k-t} R_k^E
+\end{equation}
+denote the discounted extrinsic return from time step $t$ onward.
+
+Within a minibatch, both the scaled intrinsic reward and the extrinsic return are standardized:
+\begin{equation}
+\hat{I}_t = \frac{\tilde{I}_t - \mu_{\tilde{I}}}{\sigma_{\tilde{I}}}, \qquad
+\hat{G}_t = \frac{G_t^E - \mu_G}{\sigma_G}.
+\end{equation}
+
+The correlation loss is then defined as
+\begin{equation}
+L_{\text{corr}}(\psi) = - \mathbb{E}[\hat{I}_t \hat{G}_t].
+\end{equation}
+Minimizing this loss encourages $\beta_\psi(s_t)$ to be larger in states where intrinsic exploration is positively associated with future extrinsic success.
+
+To avoid unstable or degenerate scaling, ACWI also uses a regularization term in log-space:
+\begin{equation}
+L_{\text{reg}}(\psi) = \mathbb{E}\left[\left(\log \beta_\psi(s_t) - \log \beta_0 \right)^2\right],
+\end{equation}
+where $\beta_0 = 1.0$ is the reference value. The complete objective is
+\begin{equation}
+L_\beta(\psi) = L_{\text{corr}}(\psi) + \lambda_{\text{reg}} L_{\text{reg}}(\psi).
+\end{equation}
+
+\section{Training Procedure}
+The complete training loop integrates PPO, ICM, and ACWI as follows:
+\begin{enumerate}
+    \item collect on-policy trajectories using the current policy;
+    \item update the ICM module on the collected batch to compute intrinsic rewards;
+    \item standardize and rectify the intrinsic reward signal;
+    \item compute discounted extrinsic returns for each time step;
+    \item update the Beta Network by minimizing the correlation-based objective;
+    \item construct the shaped reward with the learned state-dependent scaling;
+    \item compute GAE advantages from the shaped reward;
+    \item update the policy and value networks with PPO for several epochs.
+\end{enumerate}
+
+This procedure preserves compatibility with conventional PPO training while adding only a small auxiliary network and a simple optimization step before each PPO update cycle.
+
+\section{Discussion}
+The methodology offers three important advantages. First, it avoids manual selection of a single intrinsic reward coefficient for all states. Second, it remains computationally efficient because it does not require unrolled policy optimization or high-order differentiation. Third, it is modular: the scaling mechanism is agnostic to the base RL algorithm and can be paired with other intrinsic reward generators besides ICM.
+
+At the same time, the method assumes that at least some correlation exists between local exploration and future extrinsic return. When the environment is so sparse that extrinsic signals remain near zero for long periods, the Beta Network receives little informative supervision. In such cases, the method is expected to behave similarly to a fixed scaling strategy rather than producing strong adaptation. This limitation becomes important in the empirical analysis of Chapter 4.

@@ -1,13 +1,15 @@
 \begin{center}
-\textbf{\large{Abstract}	}
+\textbf{\large{Abstract}}
 \end{center}
 
 \addcontentsline{toc}{chapter}{Abstract}
 \begin{small}
+Sparse-reward reinforcement learning remains difficult because agents receive limited feedback about whether their behavior is useful. A common solution is to augment the environment reward with intrinsic motivation signals such as curiosity or novelty, but most existing methods rely on a fixed coefficient to balance intrinsic and extrinsic rewards. This fixed weighting is highly sensitive to task characteristics and cannot distinguish between states where exploration is beneficial and states where it becomes distracting.
 
-Summary of the graduation thesis: The problem statement, the proposed approach, and the achieved results.
+This thesis studies an adaptive alternative based on the paper \textit{Adaptive Correlation-Weighted Intrinsic Rewards for Reinforcement Learning}. The proposed framework, ACWI, learns a state-dependent scaling factor through a lightweight Beta Network. The network is trained with a correlation-based objective that aligns scaled intrinsic rewards with discounted future extrinsic returns. In the implemented framework, ACWI is combined with Proximal Policy Optimization and the Intrinsic Curiosity Module, allowing the agent to adjust exploration pressure online while preserving training stability.
 
+Experiments on five sparse-reward MiniGrid environments show that ACWI improves sample efficiency and reduces variance compared with PPO without intrinsic rewards and PPO with fixed intrinsic coefficients. The method is particularly effective in environments where sparse extrinsic rewards still provide occasional informative feedback. In extremely sparse settings, ACWI degrades gracefully to near-fixed scaling rather than becoming unstable. Overall, the thesis demonstrates that state-dependent intrinsic reward modulation is a practical and effective direction for improving exploration in reinforcement learning.
 
 \vspace*{1cm}
-\textbf{Keywords}: Liệt kê 3-5 từ khoá liên quan
+\textbf{Keywords}: reinforcement learning, sparse rewards, intrinsic motivation, curiosity-driven exploration, adaptive reward scaling
 \end{small}

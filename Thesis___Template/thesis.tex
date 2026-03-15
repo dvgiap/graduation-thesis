@@ -45,27 +45,31 @@
 \makeatletter
 \def\l@figure{\@dottedtocline{1}{1em}{2.2em}}
 \def\l@table{\@dottedtocline{1}{1em}{2.2em}}
-\renewcommand*{\ALG@name}{Thuật toán}
+\renewcommand*{\ALG@name}{Algorithm}
 \makeatother
 
 \sectionfont{\fontsize{15}{15}\selectfont}
 \subsectionfont{\fontsize{13}{15}\selectfont}
 
-\titleformat{\chapter}[display]   
-{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{0pt}{\LARGE}
+\titleformat{\chapter}[display]
+{\normalfont\huge\bfseries}{Chapter \thechapter}{0pt}{\LARGE}
 \titlespacing*{\chapter}{0cm}{-\topskip}{0pt}[0pt]
 
 \renewcommand{\baselinestretch}{1.3}
-%\renewcommand{\cftsecpresnum}{Chương\space}
-\renewcommand{\cftchappresnum}{Chương }
-\AtBeginDocument{\addtolength\cftchapnumwidth{\widthof{\bfseries Chương }}}
+\renewcommand{\chaptername}{Chapter}
+\renewcommand{\chaptertitlename}{Chapter}
+\renewcommand{\cftchappresnum}{Chapter }
+\AtBeginDocument{\addtolength\cftchapnumwidth{\widthof{\bfseries Chapter }}}
 \setlength{\parskip}{0.4em}
 \setlength{\parindent}{0pt}
-%
-\title{Tiêu đề khoá luận}	%% title
-\author{Nguyễn Văn A}			%% author's name
+\renewcommand{\contentsname}{Contents}
+\renewcommand{\listfigurename}{List of Figures}
+\renewcommand{\listtablename}{List of Tables}
+\renewcommand{\bibname}{References}
 
-%
+\title{Adaptive Correlation-Weighted Intrinsic Rewards for Reinforcement Learning}
+\author{Doan Van Giap}
+
 \newcommand{\argmax}{\arg\!\max}
 
 
@@ -79,7 +83,7 @@
 \definecolor{darkred}{rgb}{0.6,0.0,0.0}
 \definecolor{bg_gray}{RGB}{242, 242, 235}
 
-\renewcommand{\lstlistingname}{Hình}
+\renewcommand{\lstlistingname}{Listing}
 \newcommand{\cev}[1]{\reflectbox{\ensuremath{\vec{\reflectbox{\ensuremath{#1}}}}}}
 
 \lstset{
@@ -105,7 +109,6 @@
   commentstyle=\color{gray}\upshape
 }
 
-
 \lstdefinelanguage{XML}
 {
   morestring=[s][\color{mauve}]{"}{"},
@@ -115,7 +118,7 @@
   stringstyle=\color{black},
   identifierstyle=\color{lightblue},
   keywordstyle=\color{red},
-  morekeywords={xmlns,xsi,noNamespaceSchemaLocation,type,id,x,y,source,target,version,tool,transRef,roleRef,objective,eventually}% list your attributes here
+  morekeywords={xmlns,xsi,noNamespaceSchemaLocation,type,id,x,y,source,target,version,tool,transRef,roleRef,objective,eventually}
 }
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
@@ -126,17 +129,13 @@
 \begin{document}
 \input{cover}\newpage\cleardoublepage
 
-% Acknowledgement
 \input{chapters/acknowledgement}\newpage\cleardoublepage
-% Assurance
 \input{chapters/assurance}\newpage\cleardoublepage
-% Abstract Vietnamese
 \input{chapters/abtract_vi}\newpage\cleardoublepage
-% Abstract English
 \input{chapters/abtract_en}\newpage\cleardoublepage
-\addcontentsline{toc}{chapter}{Mục lục}
+
+\addcontentsline{toc}{chapter}{Contents}
 \tableofcontents\newpage\cleardoublepage
-%
 
 \newpage
 \addcontentsline{toc}{chapter}{\listfigurename}
@@ -148,21 +147,17 @@
 
 \newpage
 \input{chapters/glossary}\newpage\cleardoublepage
-% \listoftables
 
 \setcounter{page}{1}
 \pagenumbering{arabic}
 
-% \input{chapters/introduction}\newpage\cleardoublepage
 \input{chapters/c1/c1_introduction}\newpage\cleardoublepage
 \input{chapters/c2/c2_chapter}\newpage\cleardoublepage
 \input{chapters/c3/c3_chapter}\newpage\cleardoublepage
 \input{chapters/c4/c4_chapter}\newpage\cleardoublepage
 \input{chapters/conclusion}\newpage\cleardoublepage
 
-%\nocite{*}
-\phantomsection 
-\addcontentsline{toc}{chapter}{Tài liệu tham khảo}
+\phantomsection
+\addcontentsline{toc}{chapter}{References}
 \bibliography{references}\newpage\cleardoublepage
-\bibliographystyle{plain}
 \end{document}

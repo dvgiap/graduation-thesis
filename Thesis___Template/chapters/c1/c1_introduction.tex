@@ -1,11 +1,42 @@
-\chapter{Đặt vấn đề}
+\chapter{Introduction}
 
-Chương này cần trình bày được:
+\section{Background and Motivation}
+Reinforcement learning (RL) has become a central paradigm for training agents to solve sequential decision-making problems, with influential successes in Atari games, Go, and robotic control \cite{mnih2015human,silver2016go,sutton2018rl}. In many of these achievements, the learning process benefits from dense reward signals that provide frequent guidance about which behaviors are desirable. However, many practical environments are sparse-reward: the agent receives useful feedback only after a long sequence of actions, making exploration substantially harder \cite{francois2018deep}.
+
+To mitigate this problem, a large body of research augments the extrinsic reward supplied by the environment with an intrinsic reward that encourages exploration \cite{oudeyer2007intrinsic,schmidhuber2010formal}. Count-based methods reward the agent for visiting rarely explored states \cite{bellemare2016count,tang2017exploration,ostrovski2017count}. Curiosity-driven methods instead derive intrinsic rewards from prediction errors or representation discrepancies, as in the Intrinsic Curiosity Module (ICM) \cite{pathak2017curiosity}, Random Network Distillation (RND) \cite{burda2019rnd}, and Rewarding Impact-Driven Exploration (RIDE) \cite{raileanu2020ride}. These methods often improve exploration, but they still rely on a crucial design choice: how strongly intrinsic rewards should be weighted relative to extrinsic rewards.
+
+In many existing approaches, the balance between the two reward sources is controlled by a fixed scalar coefficient. This choice is usually tuned manually for each environment, and the best value can vary significantly across tasks and training stages \cite{chen2022eipo,yuan2023airs}. A constant coefficient cannot distinguish between states where continued exploration is useful and states where exploration has become distracting. This limitation motivates a more adaptive mechanism that can modulate intrinsic rewards according to the current state and the long-term usefulness of exploration.
+
+\section{Research Problem}
+This thesis investigates the following problem: how can intrinsic rewards be scaled adaptively so that they promote useful exploration in sparse-reward reinforcement learning without destabilizing policy optimization?
+
+More specifically, the thesis focuses on state-dependent reward modulation. Let the agent receive an extrinsic reward $R_t^E$ from the environment and an intrinsic reward $R_t^I$ from an exploration module. Standard methods optimize a shaped reward of the form
+\begin{equation}
+\bar{r}_t = R_t^E + \beta R_t^I,
+\end{equation}
+where $\beta$ is a fixed hyperparameter. The limitation of this formulation is that the same intrinsic scaling is applied uniformly to all states, even though the value of exploration may differ substantially across the state space.
+
+The core research question of this thesis is therefore:
+\begin{quote}
+Can we learn a state-dependent scaling factor for intrinsic rewards that is automatically adjusted online according to its relationship with future extrinsic return?
+\end{quote}
+
+\section{Research Objectives and Scope}
+The objective of the thesis is to adapt the paper \textit{Adaptive Correlation-Weighted Intrinsic Rewards for Reinforcement Learning} into a thesis-style study and present a complete method for adaptive intrinsic reward scaling. The specific objectives are as follows:
 \begin{itemize}
-    \item Bối cảnh và lý do chọn đề tài: Bài toán KLTN giải quyết là gì, trong bối cảnh Khoa học/kỹ thuật/thực tiễn như thế nào? Vì sao đề tài này quan trọng và có ý nghĩa?
-
-    \item Mô tả bài toán: Phát biểu rõ ràng bài toán mà KLTN giải quyết, gồm đầu vào, đầu ra, phạm vi và các giả định (nếu có)
-
-    \item Mục tiêu và phạm vi nghiên cứu của KLTN
-    \item Cấu trúc KLTN
+    \item analyze the limitation of fixed intrinsic reward coefficients in sparse-reward reinforcement learning;
+    \item review existing intrinsic motivation methods and adaptive reward weighting approaches;
+    \item present ACWI, a framework that learns a state-dependent scaling factor through a lightweight Beta Network;
+    \item describe how ACWI is integrated with PPO and ICM for practical training;
+    \item evaluate the method on sparse-reward MiniGrid environments and discuss its strengths and limitations.
 \end{itemize}
+
+The scope of the thesis is limited to episodic RL tasks with sparse rewards, using PPO as the base policy optimization algorithm and ICM as the intrinsic reward generator. The experiments focus on benchmark MiniGrid environments rather than real-world robotics or continuous-control tasks. Likewise, this thesis emphasizes empirical performance and methodological clarity instead of a full theoretical proof for convergence or optimality.
+
+\section{Research Methodology}
+The work follows a research-oriented methodology. First, the thesis surveys foundational RL literature and exploration methods to identify the gap addressed by the proposed approach. Second, it formulates ACWI as an adaptive scaling mechanism that predicts a positive coefficient $\beta(s_t)$ from the current state. Third, the method is integrated into the PPO training loop with ICM-derived intrinsic rewards. Finally, the approach is validated experimentally on multiple sparse-reward tasks in MiniGrid by comparing it against PPO without intrinsic rewards and PPO with ICM under several fixed coefficients.
+
+The evaluation criteria emphasize sample efficiency, learning stability, robustness across environments, and the qualitative behavior of the learned adaptive scaling policy. This combination of theoretical grounding, algorithmic design, and empirical validation is consistent with the structure of a machine learning graduation thesis.
+
+\section{Thesis Structure}
+The remainder of this thesis is organized as follows. Chapter 2 reviews reinforcement learning with intrinsic motivation, sparse-reward exploration methods, and prior attempts to adapt the weighting of intrinsic rewards. Chapter 3 presents the proposed methodology, including the background formulation, the ICM module, the Adaptive Correlation-Weighted Intrinsic (ACWI) framework, and the training algorithm. Chapter 4 describes the experimental setup and analyzes the results on MiniGrid benchmark environments. Finally, the conclusion summarizes the main findings, discusses limitations, and outlines future research directions.
