@@ -21,24 +21,28 @@ KeyCorridorS3R3 & A longer-horizon task with multiple rooms, keys, and locked do
 These tasks share several useful properties: sparse terminal rewards, egocentric partial observations, step penalties that discourage random motion, and stochastic initialization over multiple random seeds. Together, they form a suitable test bed for evaluating whether adaptive intrinsic reward scaling improves both efficiency and robustness.
 
 \section{Baselines and Evaluation Criteria}
-The proposed ACWI method is compared against two categories of baselines:
+The experimental framing of this thesis treats ACWI as an adaptive layer that can be placed on top of representative intrinsic reward modules. The three module families emphasized throughout the thesis are count-based bonuses, ICM, and RIDE. In the present implementation, the reported quantitative experiments instantiate the ICM branch of this framing, because it provides a controlled and computationally manageable case for measuring the effect of adaptive scaling.
+
+Under that implementation, the proposed ACWI method is compared against two categories of baselines:
 \begin{itemize}
     \item PPO trained only with extrinsic rewards;
     \item PPO combined with ICM using fixed intrinsic coefficients $\beta \in \{0.1, 0.2, 0.5, 1, 2\}$.
 \end{itemize}
 
-This comparison is important because it isolates the contribution of adaptive scaling from the contribution of intrinsic motivation itself. PPO provides a lower bound on exploration ability, while fixed-coefficient PPO+ICM shows how sensitive performance is to manual tuning.
+This comparison is important because it isolates the contribution of adaptive scaling from the contribution of intrinsic motivation itself. PPO provides a lower bound on exploration ability, while fixed-coefficient PPO+ICM shows how sensitive performance is to manual tuning. From the perspective of the broader thesis framing, the comparison also serves as the primary case study for understanding how ACWI affects an intrinsic reward module once the module's raw signal is held fixed.
 
 The evaluation focuses on four aspects:
 \begin{itemize}
     \item episode return over training time;
     \item sample efficiency in the early and middle stages of learning;
     \item variance across random seeds;
-    \item qualitative behavior of the learned scaling coefficient $\beta(s)$.
+    \item qualitative behavior of the learned scaling coefficient $\beta(s)$ and what it reveals about module-dependent exploration control.
 \end{itemize}
 
 \section{Experimental Configuration}
-All methods share the same PPO backbone and ICM architecture so that the comparison is fair. The adapted paper fixes the global intrinsic coefficient at $\alpha = 0.001$ and clips the learned Beta Network output to $[0.1, 2.0]$. The Beta Network uses a hidden representation size of 256 with encoder depth 2. The regularization weight for the correlation objective is $\lambda_{\text{reg}} = 10^{-3}$, the reference value is $\beta_0 = 1.0$, gradient clipping is set to 1.0, and weight decay is $10^{-6}$.
+All reported runs share the same PPO backbone and ICM architecture so that the comparison is fair. The adapted paper fixes the global intrinsic coefficient at $\alpha = 0.001$ and clips the learned Beta Network output to $[0.1, 2.0]$. The Beta Network uses a hidden representation size of 256 with encoder depth 2. The regularization weight for the correlation objective is $\lambda_{\text{reg}} = 10^{-3}$, the reference value is $\beta_0 = 1.0$, gradient clipping is set to 1.0, and weight decay is $10^{-6}$.
+
+Although the current implementation focuses on ICM, the same ACWI formulation would be applied to count-based and RIDE modules by replacing the raw intrinsic reward source while keeping the state-dependent scaling and correlation objective unchanged. This is why the chapter is written not only as a report of one implementation, but also as an empirical framing for studying ACWI across intrinsic reward modules.
 
 \begin{table}[H]
 \centering
@@ -60,16 +64,16 @@ Weight decay & $10^{-6}$ \\ \hline
 The results are reported over five random seeds. This setup is sufficient to assess whether adaptive scaling consistently improves learning behavior rather than benefiting from a single favorable initialization.
 
 \section{Results}
-The experiments show several consistent trends. First, ACWI performs strongly across environments with sparse but still informative extrinsic rewards. In DoorKey-8x8, RedBlueDoors-8x8, UnlockPickup, and KeyCorridorS3R3, the adaptive approach achieves faster learning and lower variance than most fixed-coefficient baselines. This result indicates that ACWI improves sample efficiency and makes exploration behavior more stable across runs.
+The quantitative experiments reported in this thesis correspond to the ICM instantiation of ACWI. Within that setting, the results show several consistent trends. First, ACWI performs strongly across environments with sparse but still informative extrinsic rewards. In DoorKey-8x8, RedBlueDoors-8x8, UnlockPickup, and KeyCorridorS3R3, the adaptive approach achieves faster learning and lower variance than most fixed-coefficient baselines. This result indicates that ACWI improves sample efficiency and makes exploration behavior more stable across runs.
 
-Second, the comparison against fixed-coefficient PPO+ICM highlights the difficulty of manual tuning. A coefficient that works well in one environment can be too small or too large in another. Small values underemphasize exploration and slow down learning, while large values can inject excessive noise and interfere with exploitation. ACWI mitigates both problems by learning to amplify intrinsic rewards only in states where they correlate with future extrinsic success.
+Second, the comparison against fixed-coefficient PPO+ICM highlights the difficulty of manual tuning. A coefficient that works well in one environment can be too small or too large in another. Small values underemphasize exploration and slow down learning, while large values can inject excessive noise and interfere with exploitation. ACWI mitigates both problems by learning to amplify intrinsic rewards only in states where they correlate with future extrinsic success. In the broader module-level framing of this thesis, this result supports the hypothesis that ACWI is most useful when an intrinsic reward signal is informative but unevenly relevant across the state space.
 
 Third, the method exhibits a natural transition from exploration to exploitation. As training progresses and the policy begins to discover task-relevant behaviors, the effective intrinsic contribution tends to decrease. This suggests that ACWI does not merely add curiosity-driven noise, but instead learns to reduce exploration pressure once the task structure becomes clearer.
 
 \section{Analysis of the Learned Scaling Behavior}
 The paper reports that the learned distribution of $\beta(s)$ evolves differently across environments. In DoorKey-8x8 and RedBlueDoors-8x8, the distribution is initially concentrated near its reference value, then gradually broadens and becomes more structured. This pattern suggests that the Beta Network learns to partition the state space into regions where different exploration intensities are appropriate. Toward the end of training, the distribution shifts toward lower values, reflecting the decreasing marginal value of intrinsic rewards once the policy has matured.
 
-In contrast, Empty-16x16 behaves differently. Because extrinsic rewards remain almost zero for most trajectories, the correlation objective receives very weak supervision. As a result, the Beta Network stays close to its initialization and exhibits limited adaptation. Importantly, this failure mode is graceful rather than unstable: the method effectively defaults to a nearly fixed intrinsic coefficient instead of diverging. This observation confirms both a strength and a limitation of ACWI. The method is robust when correlation signals are weak, but meaningful adaptation requires at least occasional extrinsic feedback.
+In contrast, Empty-16x16 behaves differently. Because extrinsic rewards remain almost zero for most trajectories, the correlation objective receives very weak supervision. As a result, the Beta Network stays close to its initialization and exhibits limited adaptation. Importantly, this failure mode is graceful rather than unstable: the method effectively defaults to a nearly fixed intrinsic coefficient instead of diverging. This observation confirms both a strength and a limitation of ACWI. The method is robust when correlation signals are weak, but meaningful adaptation requires at least occasional extrinsic feedback. From a module-level perspective, this also suggests that ACWI will be most effective for intrinsic reward modules whose signals can be related to eventual task progress often enough for the correlation objective to learn from experience.
 
 \section{Discussion}
-Overall, the empirical evidence supports the main claim of the thesis: state-dependent intrinsic reward scaling can improve sparse-reward reinforcement learning when the environment provides enough structure for the agent to relate exploration to eventual success. ACWI is especially beneficial in environments where exploration needs change across states and over time. The method is less effective in extremely sparse tasks where the extrinsic return is too weak to supervise adaptation. Therefore, ACWI should be viewed as a practical middle ground between fixed intrinsic scaling and more expensive meta-learning approaches.
+Overall, the empirical evidence supports the main claim of the thesis: state-dependent intrinsic reward scaling can improve sparse-reward reinforcement learning when the environment provides enough structure for the agent to relate exploration to eventual success. In the implemented ICM case study, ACWI is especially beneficial in environments where exploration needs change across states and over time. The method is less effective in extremely sparse tasks where the extrinsic return is too weak to supervise adaptation. Therefore, ACWI should be viewed as a practical middle ground between fixed intrinsic scaling and more expensive meta-learning approaches, and as a promising adaptive wrapper for broader module families such as count-based bonuses and RIDE.

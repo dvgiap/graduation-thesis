@@ -1,14 +1,14 @@
 \chapter{Methodology}
 
 \section{Problem Formulation}
-This thesis considers episodic reinforcement learning with both extrinsic and intrinsic rewards. At time step $t$, the agent observes state $s_t$, samples action $a_t \sim \pi_\theta(\cdot \mid s_t)$, receives extrinsic reward $R_t^E$, and transitions to the next state $s_{t+1}$. Let $R_t^I$ denote the intrinsic reward produced by an exploration module. Instead of using a constant coefficient, the proposed method introduces a state-dependent scaling function $\beta_\psi(s_t)$ so that the shaped reward becomes
+This thesis considers episodic reinforcement learning with both extrinsic and intrinsic rewards. At time step $t$, the agent observes state $s_t$, samples action $a_t \sim \pi_\theta(\cdot \mid s_t)$, receives extrinsic reward $R_t^E$, and transitions to the next state $s_{t+1}$. Let $R_t^{I,m}$ denote the intrinsic reward produced by intrinsic reward module $m$, where $m$ may correspond to a count-based bonus, ICM, or RIDE. Instead of using a constant coefficient, the proposed method introduces a state-dependent scaling function $\beta_\psi(s_t)$ so that the shaped reward becomes
 \begin{equation}
-\bar{r}_t = R_t^E + \alpha \beta_\psi(s_t) R_t^I,
+\bar{r}_t = R_t^E + \alpha \beta_\psi(s_t) R_t^{I,m},
 \label{eq:shaped_reward}
 \end{equation}
 where $\alpha > 0$ is a global intrinsic-strength hyperparameter and $\beta_\psi(s_t)$ is learned online.
 
-The intuition is straightforward. If exploration from state $s_t$ tends to lead to higher future extrinsic return, the method should increase the influence of intrinsic reward in that state. If exploration is unhelpful or noisy, the influence should be reduced. ACWI operationalizes this idea through a lightweight Beta Network trained with a correlation-based objective.
+The intuition is straightforward. If exploration from state $s_t$ tends to lead to higher future extrinsic return, the method should increase the influence of intrinsic reward in that state. If exploration is unhelpful or noisy, the influence should be reduced. ACWI operationalizes this idea through a lightweight Beta Network trained with a correlation-based objective. This formulation deliberately separates the adaptive scaling mechanism from the underlying intrinsic reward generator so that the same ACWI layer can be studied across different module families.
 
 \section{Base Reinforcement Learning Algorithm}
 The policy optimization backbone used in this thesis is Proximal Policy Optimization (PPO) \cite{schulman2017ppo}. PPO is widely adopted because it offers stable on-policy optimization with relatively simple implementation. It updates the policy by maximizing a clipped surrogate objective:
@@ -22,8 +22,18 @@ L^{\text{PPO}}(\theta) =
 \end{equation}
 where $\rho_t(\theta) = \frac{\pi_\theta(a_t \mid s_t)}{\pi_{\theta_{\text{old}}}(a_t \mid s_t)}$ is the importance ratio and $\hat{A}_t$ is the advantage estimate. The advantages are computed with Generalized Advantage Estimation (GAE) \cite{schulman2016gae} using the shaped reward in Equation \ref{eq:shaped_reward}.
 
-\section{Intrinsic Curiosity Module}
-To generate intrinsic rewards, the thesis adopts the Intrinsic Curiosity Module (ICM) \cite{pathak2017curiosity}. ICM first encodes each state into a latent representation $\phi(s_t) \in \mathbb{R}^d$. It then uses two auxiliary models:
+\section{Representative Intrinsic Reward Modules}
+To make the experimental framing explicit, this thesis treats ACWI as a wrapper around representative intrinsic reward modules rather than as an ICM-specific add-on. The discussion centers on three module families:
+\begin{itemize}
+    \item \textbf{Count-based exploration}: intrinsic reward is derived from state novelty, typically using inverse visit frequency or pseudo-counts.
+    \item \textbf{Intrinsic Curiosity Module (ICM)}: intrinsic reward is derived from forward prediction error in a learned latent space.
+    \item \textbf{Rewarding Impact-Driven Exploration (RIDE)}: intrinsic reward emphasizes transitions that produce meaningful changes in the learned state representation through the agent's actions.
+\end{itemize}
+
+These modules generate different exploration signals, but all of them can be combined with ACWI through the same shaped reward in Equation \ref{eq:shaped_reward}. Among them, ICM is used as the concrete implementation in this thesis because it provides a clean and computationally efficient test case for quantitative evaluation.
+
+\subsection{ICM Instantiation}
+To generate intrinsic rewards in the implemented system, the thesis adopts the Intrinsic Curiosity Module (ICM) \cite{pathak2017curiosity}. ICM first encodes each state into a latent representation $\phi(s_t) \in \mathbb{R}^d$. It then uses two auxiliary models:
 \begin{itemize}
     \item a forward dynamics model $f^F_\eta$ that predicts the next latent feature from the current feature and action;
     \item an inverse dynamics model $f^I_\eta$ that predicts the action from two consecutive latent states.
@@ -52,14 +62,16 @@ where $\mu_I$ and $\sigma_I$ are the minibatch mean and standard deviation. This
 \subsection{Beta Network}
 The core contribution of the thesis is a Beta Network $\beta_\psi: \mathcal{S} \rightarrow \mathbb{R}_+$ that predicts a positive intrinsic reward multiplier from the current state. The network is intentionally lightweight to keep the computational overhead low. In the experiments adapted from the paper, the network uses an encoder depth of 2, an embedding size of 256, and clips its output to the interval $[0.1, 2.0]$.
 
-The scaled intrinsic reward is
+For a chosen intrinsic reward module $m$, the scaled intrinsic reward is
 \begin{equation}
-\tilde{I}_t = \beta_\psi(s_t) I_t^+,
+\tilde{I}_t^{\,m} = \beta_\psi(s_t) I_t^{+,m},
 \end{equation}
 and the final reward used by PPO is
 \begin{equation}
-\bar{r}_t = R_t^E + \alpha \tilde{I}_t.
+\bar{r}_t = R_t^E + \alpha \tilde{I}_t^{\,m}.
 \end{equation}
+
+This notation emphasizes that ACWI does not define novelty by itself. Instead, it adaptively regulates the contribution of whichever intrinsic module supplies the raw bonus. In the present implementation, $I_t^{+,m}$ corresponds to the standardized ICM reward.
 
 \subsection{Correlation-Based Objective}
 Training $\beta_\psi$ with meta-gradients would be computationally expensive. Instead, ACWI introduces a first-order objective that directly aligns the scaled intrinsic reward with discounted future extrinsic return. Let
@@ -70,13 +82,13 @@ denote the discounted extrinsic return from time step $t$ onward.
 
 Within a minibatch, both the scaled intrinsic reward and the extrinsic return are standardized:
 \begin{equation}
-\hat{I}_t = \frac{\tilde{I}_t - \mu_{\tilde{I}}}{\sigma_{\tilde{I}}}, \qquad
+\hat{I}_t^{\,m} = \frac{\tilde{I}_t^{\,m} - \mu_{\tilde{I}^{\,m}}}{\sigma_{\tilde{I}^{\,m}}}, \qquad
 \hat{G}_t = \frac{G_t^E - \mu_G}{\sigma_G}.
 \end{equation}
 
 The correlation loss is then defined as
 \begin{equation}
-L_{\text{corr}}(\psi) = - \mathbb{E}[\hat{I}_t \hat{G}_t].
+L_{\text{corr}}(\psi) = - \mathbb{E}[\hat{I}_t^{\,m} \hat{G}_t].
 \end{equation}
 Minimizing this loss encourages $\beta_\psi(s_t)$ to be larger in states where intrinsic exploration is positively associated with future extrinsic success.
 
@@ -90,11 +102,11 @@ L_\beta(\psi) = L_{\text{corr}}(\psi) + \lambda_{\text{reg}} L_{\text{reg}}(\psi
 \end{equation}
 
 \section{Training Procedure}
-The complete training loop integrates PPO, ICM, and ACWI as follows:
+The complete training loop integrates PPO, an intrinsic reward module, and ACWI as follows:
 \begin{enumerate}
     \item collect on-policy trajectories using the current policy;
-    \item update the ICM module on the collected batch to compute intrinsic rewards;
-    \item standardize and rectify the intrinsic reward signal;
+    \item update the chosen intrinsic reward module on the collected batch to compute intrinsic rewards;
+    \item standardize and rectify the intrinsic reward signal for that module;
     \item compute discounted extrinsic returns for each time step;
     \item update the Beta Network by minimizing the correlation-based objective;
     \item construct the shaped reward with the learned state-dependent scaling;
@@ -102,9 +114,9 @@ The complete training loop integrates PPO, ICM, and ACWI as follows:
     \item update the policy and value networks with PPO for several epochs.
 \end{enumerate}
 
-This procedure preserves compatibility with conventional PPO training while adding only a small auxiliary network and a simple optimization step before each PPO update cycle.
+This procedure preserves compatibility with conventional PPO training while adding only a small auxiliary network and a simple optimization step before each PPO update cycle. In the implemented experiments, the intrinsic module in Step 2 is ICM.
 
 \section{Discussion}
-The methodology offers three important advantages. First, it avoids manual selection of a single intrinsic reward coefficient for all states. Second, it remains computationally efficient because it does not require unrolled policy optimization or high-order differentiation. Third, it is modular: the scaling mechanism is agnostic to the base RL algorithm and can be paired with other intrinsic reward generators besides ICM.
+The methodology offers three important advantages. First, it avoids manual selection of a single intrinsic reward coefficient for all states. Second, it remains computationally efficient because it does not require unrolled policy optimization or high-order differentiation. Third, it is modular: the scaling mechanism is agnostic to the base RL algorithm and can be paired with other intrinsic reward generators besides ICM. This modularity is central to the thesis framing because it allows ACWI to be analyzed as a common adaptive layer for count-based, ICM, and RIDE-style exploration signals.
 
-At the same time, the method assumes that at least some correlation exists between local exploration and future extrinsic return. When the environment is so sparse that extrinsic signals remain near zero for long periods, the Beta Network receives little informative supervision. In such cases, the method is expected to behave similarly to a fixed scaling strategy rather than producing strong adaptation. This limitation becomes important in the empirical analysis of Chapter 4.
+At the same time, the method assumes that at least some correlation exists between local exploration and future extrinsic return. When the environment is so sparse that extrinsic signals remain near zero for long periods, the Beta Network receives little informative supervision. In such cases, the method is expected to behave similarly to a fixed scaling strategy rather than producing strong adaptation. This limitation becomes important in the empirical analysis of Chapter 4 and helps explain why the impact of ACWI may differ across intrinsic reward modules.

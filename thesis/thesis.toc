@@ -11,7 +11,7 @@
 \contentsline {section}{\numberline {1.2}Research Problem}{2}{section.1.2}%
 \contentsline {section}{\numberline {1.3}Research Objectives and Scope}{2}{section.1.3}%
 \contentsline {section}{\numberline {1.4}Research Methodology}{3}{section.1.4}%
-\contentsline {section}{\numberline {1.5}Thesis Structure}{3}{section.1.5}%
+\contentsline {section}{\numberline {1.5}Thesis Structure}{4}{section.1.5}%
 \contentsline {chapter}{\numberline {2}Literature Review}{5}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Reinforcement Learning in Sparse-Reward Environments}{5}{section.2.1}%
 \contentsline {section}{\numberline {2.2}Intrinsic Motivation for Exploration}{5}{section.2.2}%
@@ -19,22 +19,23 @@
 \contentsline {subsection}{\numberline {2.2.2}Curiosity-Driven Exploration}{6}{subsection.2.2.2}%
 \contentsline {section}{\numberline {2.3}Adaptive Weighting of Intrinsic Rewards}{6}{section.2.3}%
 \contentsline {section}{\numberline {2.4}Research Gap}{7}{section.2.4}%
-\contentsline {section}{\numberline {2.5}Chapter Summary}{7}{section.2.5}%
-\contentsline {chapter}{\numberline {3}Methodology}{8}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Problem Formulation}{8}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Base Reinforcement Learning Algorithm}{8}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Intrinsic Curiosity Module}{9}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Adaptive Correlation-Weighted Intrinsic Scaling}{9}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Beta Network}{9}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}Correlation-Based Objective}{10}{subsection.3.4.2}%
-\contentsline {section}{\numberline {3.5}Training Procedure}{10}{section.3.5}%
-\contentsline {section}{\numberline {3.6}Discussion}{11}{section.3.6}%
-\contentsline {chapter}{\numberline {4}Experimental Setup and Results}{12}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Benchmark Environments}{12}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Baselines and Evaluation Criteria}{13}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Experimental Configuration}{13}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Results}{14}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Analysis of the Learned Scaling Behavior}{15}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Discussion}{15}{section.4.6}%
-\contentsline {chapter}{Conclusion and Future Work}{16}{chapter*.4}%
-\contentsline {chapter}{References}{17}{section*.5}%
+\contentsline {section}{\numberline {2.5}Chapter Summary}{8}{section.2.5}%
+\contentsline {chapter}{\numberline {3}Methodology}{9}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Problem Formulation}{9}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Base Reinforcement Learning Algorithm}{9}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Representative Intrinsic Reward Modules}{10}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}ICM Instantiation}{10}{subsection.3.3.1}%
+\contentsline {section}{\numberline {3.4}Adaptive Correlation-Weighted Intrinsic Scaling}{11}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Beta Network}{11}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Correlation-Based Objective}{12}{subsection.3.4.2}%
+\contentsline {section}{\numberline {3.5}Training Procedure}{12}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Discussion}{13}{section.3.6}%
+\contentsline {chapter}{\numberline {4}Experimental Setup and Results}{14}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Benchmark Environments}{14}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Baselines and Evaluation Criteria}{15}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Experimental Configuration}{15}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Results}{16}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Analysis of the Learned Scaling Behavior}{17}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Discussion}{18}{section.4.6}%
+\contentsline {chapter}{Conclusion and Future Work}{19}{chapter*.4}%
+\contentsline {chapter}{References}{20}{section*.5}%

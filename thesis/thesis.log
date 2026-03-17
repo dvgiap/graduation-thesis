@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.15)  17 MAR 2026 22:48
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.15)  18 MAR 2026 00:40
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -923,7 +923,7 @@ Package hyperref Info: Link coloring OFF on input line 129.
 
 \c@lstlisting=\count367
 (cover.tex
-<figures/uet.jpg, id=160, 1125.20375pt x 1125.20375pt>
+<figures/uet.jpg, id=164, 1125.20375pt x 1125.20375pt>
 File: figures/uet.jpg Graphic file (type jpg)
 <use figures/uet.jpg>
 Package pdftex.def Info: figures/uet.jpg  used on input line 22.
@@ -1070,53 +1070,48 @@ LaTeX Font Warning: Font shape `TS1/cmr/m/n' in size <13> not available
 (Font)              size <12> substituted on input line 27.
 
 
-Overfull \hbox (6.59943pt too wide) in paragraph at lines 29--30
-[]\T5/cmr/m/n/13 present ACWI, a frame-work that learns a state-dependent scal-ing fac-tor through
+Overfull \hbox (0.90125pt too wide) in paragraph at lines 28--29
+[]\T5/cmr/m/n/13 review count-based ex-plo-ration, ICM, RIDE, and prior adap-tive re-ward weight-
  []
 
-[2]) [3] [4] (chapters/c2/c2_chapter.tex
+[2] [3]) [4] (chapters/c2/c2_chapter.tex
 Ch\uhorn \ohorn ng 2.
 [5
 
 
 
-] [6]) [7] (chapters/c3/c3_chapter.tex
+] [6]) [7] [8] (chapters/c3/c3_chapter.tex
 Ch\uhorn \ohorn ng 3.
-[8
+[9
 
 
 
-] [9] [10]
-Overfull \hbox (5.22076pt too wide) in paragraph at lines 105--106
+] [10] [11] [12]
+Overfull \hbox (5.22076pt too wide) in paragraph at lines 117--118
 []\T5/cmr/m/n/13 This pro-ce-dure pre-serves com-pat-i-bil-ity with con-ven-tional PPO train-ing while adding
  []
 
-) [11] (chapters/c4/c4_chapter.tex
+) [13] (chapters/c4/c4_chapter.tex
 Ch\uhorn \ohorn ng 4.
 
 Underfull \hbox (badness 1087) in paragraph at lines 16--16
 \T5/cmr/m/n/13 ma-nip-u-la-tion stage, cre-at-ing a hi-er-ar-chi-cal
  []
 
-[12
+[14
 
 
 
-] [13]
-Overfull \hbox (1.5037pt too wide) in paragraph at lines 63--64
-\T5/cmr/m/n/13 across en-vi-ron-ments with sparse but still in-for-ma-tive ex-trin-sic re-wards. In DoorKey-
- []
-
-[14])
-Overfull \hbox (9.2567pt too wide) in paragraph at lines 75--160
+] [15] [16] [17])
+Overfull \hbox (9.2567pt too wide) in paragraph at lines 79--160
 \T5/cmr/m/n/13 Overall, the em-pir-i-cal ev-i-dence sup-ports the main claim of the the-sis: state-dependent
  []
 
-[15] (chapters/conclusion.tex) [16
+[18] (chapters/conclusion.tex) [19
 
 
 
-] (thesis.bbl [17
+] (thesis.bbl [20
 
 
 
@@ -1130,7 +1125,7 @@ Underfull \hbox (badness 3168) in paragraph at lines 107--110
 []\T5/cmr/m/n/13 John Schul-man, Filip Wol-ski, Pra-fulla Dhari-wal, Alec Rad-ford, and
  []
 
-[18]) [19] (thesis.aux)
+[21]) [22] (thesis.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -1141,20 +1136,20 @@ LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
 
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: C1373CE2198389016CD2E265B0E04A1D;6552.
+(rerunfilecheck)             Checksum: FE208A37ABAD2A0054FDEF744CF7E7B6;6770.
  ) 
 Here is how much of TeX's memory you used:
- 27190 strings out of 467867
- 487222 string characters out of 5428410
- 900913 words of memory out of 5000000
- 55467 multiletter control sequences out of 15000+600000
+ 27195 strings out of 467867
+ 487277 string characters out of 5428410
+ 902911 words of memory out of 5000000
+ 55468 multiletter control sequences out of 15000+600000
  650953 words of font info for 78 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 108i,15n,107p,986b,621s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 108i,15n,107p,1007b,621s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\JS\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnbx12.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr12.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr7.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr9.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnti12.pfb>
-Output written on thesis.pdf (31 pages, 347667 bytes).
+Output written on thesis.pdf (34 pages, 357861 bytes).
 PDF statistics:
- 507 PDF objects out of 1000 (max. 8388607)
- 107 named destinations out of 1000 (max. 500000)
- 338 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 527 PDF objects out of 1000 (max. 8388607)
+ 111 named destinations out of 1000 (max. 500000)
+ 346 words of extra memory for PDF output out of 10000 (max. 10000000)
 
