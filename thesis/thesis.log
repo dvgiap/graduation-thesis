@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.15)  16 MAR 2026 02:25
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.15)  17 MAR 2026 22:48
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**d:/Workspace/graduation-thesis/graduation-thesis/Thesis___Template/thesis.tex
-(d:/Workspace/graduation-thesis/graduation-thesis/Thesis___Template/thesis.tex
+**d:/Workspace/graduation-thesis/graduation-thesis/thesis/thesis.tex
+(d:/Workspace/graduation-thesis/graduation-thesis/thesis/thesis.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
 (D:\Program Files\MiKTeX\tex/latex/base\report.cls
@@ -963,8 +963,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 15--17
  []
 
 
-Overfull \hbox (8.03883pt too wide) in paragraph at lines 20--21
-[]\T5/cmr/m/n/13 Nguyen Van A 
+Overfull \hbox (12.9051pt too wide) in paragraph at lines 20--21
+[]\T5/cmr/m/n/13 Doan Van Giap 
  []
 
 ) [1
@@ -1024,12 +1024,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
  [6
 
 
-]
-
-Package hyperref Warning: Glyph not defined in PU encoding,
-(hyperref)                removing `\h' on input line 145.
-
-(thesis.lot)
+] (thesis.lot)
 \tf@lot=\write7
 \openout7 = `thesis.lot'.
 
@@ -1113,7 +1108,7 @@ Overfull \hbox (1.5037pt too wide) in paragraph at lines 63--64
  []
 
 [14])
-Overfull \hbox (9.2567pt too wide) in paragraph at lines 75--157
+Overfull \hbox (9.2567pt too wide) in paragraph at lines 75--160
 \T5/cmr/m/n/13 Overall, the em-pir-i-cal ev-i-dence sup-ports the main claim of the the-sis: state-dependent
  []
 
@@ -1146,18 +1141,18 @@ LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
 
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 1F384F7056FF7C8F53D5AB9BE0C82FAC;6577.
+(rerunfilecheck)             Checksum: C1373CE2198389016CD2E265B0E04A1D;6552.
  ) 
 Here is how much of TeX's memory you used:
- 27191 strings out of 467867
- 487545 string characters out of 5428410
- 900912 words of memory out of 5000000
- 55468 multiletter control sequences out of 15000+600000
+ 27190 strings out of 467867
+ 487222 string characters out of 5428410
+ 900913 words of memory out of 5000000
+ 55467 multiletter control sequences out of 15000+600000
  650953 words of font info for 78 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 108i,15n,107p,997b,621s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 108i,15n,107p,986b,621s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\JS\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnbx12.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr12.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr7.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr9.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnti12.pfb>
-Output written on thesis.pdf (31 pages, 347465 bytes).
+Output written on thesis.pdf (31 pages, 347667 bytes).
 PDF statistics:
  507 PDF objects out of 1000 (max. 8388607)
  107 named destinations out of 1000 (max. 500000)

@@ -3,8 +3,8 @@
 \contentsline {chapter}{Tóm tắt}{ii}{Doc-Start}%
 \contentsline {chapter}{Abstract}{iii}{Doc-Start}%
 \contentsline {chapter}{Contents}{iv}{Doc-Start}%
-\contentsline {chapter}{Danh s\'ach h\`inh v\~e}{vi}{Doc-Start}%
-\contentsline {chapter}{Danh s\'ach b\h {a}ng}{vii}{Doc-Start}%
+\contentsline {chapter}{List of Figures}{vi}{Doc-Start}%
+\contentsline {chapter}{List of Tables}{vii}{Doc-Start}%
 \contentsline {chapter}{List of Acronyms}{viii}{chapter*.1}%
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Background and Motivation}{1}{section.1.1}%
