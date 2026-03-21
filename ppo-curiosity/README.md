@@ -27,7 +27,7 @@ UnlockPickup:
 
 ## Training
 
-You can start training with the [PIPELINE](https://colab.research.google.com/drive/1KSAabc_XWtDO3a4qssGMxvzEOwI3H_x8)
+You can start training with the [PIPELINE](https://colab.research.google.com/drive/1oBcsHoY81DZ_x9poIW-CsWmBY5-Q-HmA)
 
 ## TODO
 
