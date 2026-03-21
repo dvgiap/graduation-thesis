@@ -1,4 +1,0 @@
-\contentsline {a@figure}{\numberline {4.1.}{\ignorespaces So sánh Observation Coverage giữa PPO baseline và các cấu hình PPO+RND trên các môi trường khác nhau}}{23}{a@figure.caption.4}%
-\contentsline {a@figure}{\numberline {4.2.}{\ignorespaces So sánh Position Coverage giữa PPO baseline và các cấu hình PPO+RND trên các môi trường khác nhau}}{24}{a@figure.caption.5}%
-\contentsline {a@figure}{\numberline {4.3.}{\ignorespaces So sánh Episode Reward giữa PPO baseline và các cấu hình PPO+RND trên các môi trường khác nhau}}{25}{a@figure.caption.6}%
-\contentsline {a@figure}{\numberline {4.4.}{\ignorespaces So sánh Average Policy Entropy giữa PPO baseline và các cấu hình PPO+RND trên các môi trường khác nhau}}{26}{a@figure.caption.7}%

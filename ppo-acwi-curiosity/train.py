@@ -1,0 +1,303 @@
+import os
+import time
+import random
+from datetime import datetime
+import argparse
+
+import torch
+import numpy as np
+
+import gymnasium as gym
+import minigrid
+from minigrid.wrappers import FlatObsWrapper
+
+
+def train(
+    exploration_method='none',  # 'none', 'icm', 'count', 'ride'
+    random_seed=1,
+    env_name="MiniGrid-DoorKey-8x8-v0",
+    max_training_timesteps=int(1e6),
+    seeds_range=(1, 5)
+):
+    """
+    Unified training function for PPO with different exploration methods.
+    
+    Args:
+        exploration_method: 'none', 'icm', 'count', or 'ride'
+        random_seed: Starting random seed
+        env_name: Gymnasium environment name
+        max_training_timesteps: Maximum timesteps per seed
+        seeds_range: Tuple of (start_seed, end_seed) inclusive
+    """
+    
+    print("============================================================================================")
+
+    # Import the appropriate PPO implementation
+    if exploration_method == 'none':
+        from ppo import PPO
+    elif exploration_method == 'icm':
+        from ppo_icm import PPO
+    elif exploration_method == 'count':
+        from ppo_count import PPO  # assumes count-based is in base ppo
+    elif exploration_method == 'ride':
+        from ppo_ride import PPO  # assumes RIDE is in base ppo
+    else:
+        raise ValueError(f"Unknown exploration method: {exploration_method}")
+
+    ####### Environment hyperparameters ######
+    has_continuous_action_space = False
+    max_ep_len = 1000
+    print_freq = max_ep_len * 10
+    log_freq = max_ep_len * 2
+    save_model_freq = int(1e5)
+
+    ####### PPO hyperparameters ######
+    update_timestep = max_ep_len * 4
+    K_epochs = 80
+    eps_clip = 0.2
+    gamma = 0.99
+    gae_lambda = 0.95
+    lr_actor = 0.0003
+    lr_critic = 0.001
+
+    ####### Exploration-specific hyperparameters ######
+    # ICM
+    icm_lr = 0.001
+    icm_epochs = 4
+    icm_batch_size = 64
+    icm_intr_strength = 0.001
+    
+    # Count-based
+    hash_dim = 32
+    bonus_type = 'inverse_sqrt'
+    count_intr_strength = 0.001
+    
+    # RIDE
+    ride_lr = 0.001
+    ride_epochs = 4
+    ride_batch_size = 64
+    ride_intr_strength = 0.001
+    episodic_memory_size = 1000
+    global_memory_size = 50000
+    k_neighbors = 10
+
+    # Create environment
+    env = gym.make(env_name)
+    env = FlatObsWrapper(env)
+    
+    state_dim = env.observation_space.shape[0]
+    action_dim = env.action_space.n if not has_continuous_action_space else env.action_space.shape[0]
+
+    # Setup logging and checkpointing
+    suffix_map = {
+        'none': '',
+        'icm': '_ICM',
+        'count': '_COUNT',
+        'ride': '_RIDE'
+    }
+    suffix = suffix_map[exploration_method]
+    
+    log_dir = os.path.join("logs", env_name)
+    os.makedirs(log_dir, exist_ok=True)
+    
+    model_dir = os.path.join("models", env_name)
+    os.makedirs(model_dir, exist_ok=True)
+
+    # Print hyperparameters
+    print(f"Training environment: {env_name}")
+    print(f"Exploration method: {exploration_method.upper()}")
+    print("--------------------------------------------------------------------------------------------")
+    print(f"Max training timesteps: {max_training_timesteps}")
+    print(f"Max timesteps per episode: {max_ep_len}")
+    print(f"Model saving frequency: {save_model_freq} timesteps")
+    print(f"State dim: {state_dim}, Action dim: {action_dim}")
+    print("--------------------------------------------------------------------------------------------")
+    print(f"PPO update frequency: {update_timestep} timesteps")
+    print(f"K epochs: {K_epochs}, eps_clip: {eps_clip}, gamma: {gamma}, GAE lambda: {gae_lambda}")
+    print(f"LR actor: {lr_actor}, LR critic: {lr_critic}")
+    
+    if exploration_method == 'icm':
+        print("--------------------------------------------------------------------------------------------")
+        print(f"ICM - lr: {icm_lr}, epochs: {icm_epochs}, batch: {icm_batch_size}, strength: {icm_intr_strength}")
+    elif exploration_method == 'count':
+        print("--------------------------------------------------------------------------------------------")
+        print(f"Count-Based - hash_dim: {hash_dim}, bonus_type: {bonus_type}, strength: {count_intr_strength}")
+    elif exploration_method == 'ride':
+        print("--------------------------------------------------------------------------------------------")
+        print(f"RIDE - lr: {ride_lr}, epochs: {ride_epochs}, batch: {ride_batch_size}, strength: {ride_intr_strength}")
+        print(f"Episodic memory: {episodic_memory_size}, Global memory: {global_memory_size}, k: {k_neighbors}")
+    
+    print("============================================================================================")
+
+    # Training loop over seeds
+    start_time_all = datetime.now().replace(microsecond=0)
+    
+    for seed in range(seeds_range[0], seeds_range[1] + 1):
+        print(f"\n\n########## STARTING RUN FOR SEED {seed} ##########\n")
+        
+        # Setup paths for this seed
+        log_f_name = os.path.join(log_dir, f'PPO{suffix}_{env_name}_seed_{seed}.csv')
+        checkpoint_path = os.path.join(model_dir, f'PPO{suffix}_{env_name}_seed_{seed}.pth')
+        
+        print(f"Logging at: {log_f_name}")
+        print(f"Checkpoint path: {checkpoint_path}")
+        
+        # Set random seeds
+        torch.manual_seed(seed)
+        if torch.cuda.is_available():
+            torch.cuda.manual_seed_all(seed)
+        np.random.seed(seed)
+        random.seed(seed)
+        try:
+            env.reset(seed=seed)
+            env.action_space.seed(seed)
+        except Exception:
+            pass
+        
+        # Initialize PPO agent based on exploration method
+        if exploration_method == 'none':
+            ppo_agent = PPO(state_dim, action_dim, lr_actor, lr_critic, gamma, 
+                          K_epochs, eps_clip, has_continuous_action_space)
+        elif exploration_method == 'icm':
+            ppo_agent = PPO(state_dim, action_dim, lr_actor, lr_critic, gamma,
+                          K_epochs, eps_clip, has_continuous_action_space,
+                          use_icm=True, icm_lr=icm_lr, icm_epochs=icm_epochs,
+                          icm_batch_size=icm_batch_size, intr_reward_strength=icm_intr_strength,
+                          gae_lambda=gae_lambda)
+        elif exploration_method == 'count':
+            ppo_agent = PPO(state_dim, action_dim, lr_actor, lr_critic, gamma,
+                          K_epochs, eps_clip, has_continuous_action_space,
+                          use_count_based=True, hash_dim=hash_dim, bonus_type=bonus_type,
+                          intr_reward_strength=count_intr_strength, gae_lambda=gae_lambda)
+        elif exploration_method == 'ride':
+            ppo_agent = PPO(state_dim, action_dim, lr_actor, lr_critic, gamma,
+                          K_epochs, eps_clip, has_continuous_action_space,
+                          use_ride=True, ride_lr=ride_lr, ride_epochs=ride_epochs,
+                          ride_batch_size=ride_batch_size, intr_reward_strength=ride_intr_strength,
+                          gae_lambda=gae_lambda, episodic_memory_size=episodic_memory_size,
+                          global_memory_size=global_memory_size, k_neighbors=k_neighbors)
+        
+        # Training variables
+        start_time = datetime.now().replace(microsecond=0)
+        print(f"Started training at: {start_time}")
+        
+        log_f = open(log_f_name, "w+")
+        log_f.write('episode,timestep,reward\n')
+        
+        print_running_reward = 0
+        print_running_episodes = 0
+        log_running_reward = 0
+        log_running_episodes = 0
+        time_step = 0
+        i_episode = 0
+        
+        # Episode loop
+        while time_step <= max_training_timesteps:
+            # Reset episodic memory for RIDE
+            if exploration_method == 'ride':
+                try:
+                    ppo_agent.reset_episodic_memory()
+                except AttributeError:
+                    pass
+            
+            state, _ = env.reset()
+            current_ep_reward = 0
+            
+            for t in range(1, max_ep_len + 1):
+                # Select and execute action
+                action = ppo_agent.select_action(state)
+                next_state, reward, terminated, truncated, _ = env.step(action)
+                done = terminated or truncated
+                
+                # Store transition
+                ppo_agent.buffer.rewards.append(reward)
+                ppo_agent.buffer.is_terminals.append(done)
+                
+                # Store next_state for exploration methods that need it
+                if exploration_method in ['icm', 'count', 'ride']:
+                    device = next(ppo_agent.policy.actor.parameters()).device
+                    ppo_agent.buffer.next_states.append(torch.FloatTensor(next_state).to(device))
+                
+                time_step += 1
+                current_ep_reward += reward
+                state = next_state
+                
+                # Update policy
+                if time_step % update_timestep == 0:
+                    ppo_agent.update()
+                
+                # Logging
+                if time_step % log_freq == 0:
+                    log_avg_reward = log_running_reward / log_running_episodes if log_running_episodes > 0 else 0
+                    log_f.write(f'{i_episode},{time_step},{round(log_avg_reward, 4)}\n')
+                    log_f.flush()
+                    log_running_reward = 0
+                    log_running_episodes = 0
+                
+                # Printing
+                if time_step % print_freq == 0:
+                    print_avg_reward = print_running_reward / print_running_episodes if print_running_episodes > 0 else 0
+                    print(f"Episode: {i_episode} \t Timestep: {time_step} \t Avg Reward: {round(print_avg_reward, 2)}")
+                    print_running_reward = 0
+                    print_running_episodes = 0
+                
+                # Save model
+                if time_step % save_model_freq == 0:
+                    print("--------------------------------------------------------------------------------------------")
+                    print(f"Saving model at: {checkpoint_path}")
+                    ppo_agent.save(checkpoint_path)
+                    print(f"Elapsed time: {datetime.now().replace(microsecond=0) - start_time}")
+                    print("--------------------------------------------------------------------------------------------")
+                
+                if done:
+                    break
+            
+            # Episode finished - update RIDE global memory
+            if exploration_method == 'ride':
+                try:
+                    ppo_agent.update_global_memory()
+                except AttributeError:
+                    pass
+            
+            print_running_reward += current_ep_reward
+            print_running_episodes += 1
+            log_running_reward += current_ep_reward
+            log_running_episodes += 1
+            i_episode += 1
+        
+        # Seed finished
+        log_f.close()
+        end_time = datetime.now().replace(microsecond=0)
+        print("============================================================================================")
+        print(f"Seed {seed} - Started: {start_time}, Finished: {end_time}")
+        print(f"Training time: {end_time - start_time}")
+        print("============================================================================================")
+        time.sleep(2)  # Brief pause between seeds
+    
+    env.close()
+    print(f"\nALL SEEDS COMPLETED. Total time: {datetime.now().replace(microsecond=0) - start_time_all}")
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description="Unified PPO training with exploration methods")
+    parser.add_argument("--method", type=str, default="none", 
+                       choices=['none', 'icm', 'count', 'ride'],
+                       help="Exploration method to use")
+    parser.add_argument("--env", type=str, default="MiniGrid-DoorKey-8x8-v0",
+                       help="Gymnasium environment name")
+    parser.add_argument("--seed_start", type=int, default=1,
+                       help="Starting seed (inclusive)")
+    parser.add_argument("--seed_end", type=int, default=5,
+                       help="Ending seed (inclusive)")
+    parser.add_argument("--max_steps", type=int, default=int(1e6),
+                       help="Max training timesteps per seed")
+    
+    args = parser.parse_args()
+    
+    train(
+        exploration_method=args.method,
+        random_seed=args.seed_start,
+        env_name=args.env,
+        max_training_timesteps=args.max_steps,
+        seeds_range=(args.seed_start, args.seed_end)
+    )
