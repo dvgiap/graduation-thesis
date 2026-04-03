@@ -43,7 +43,7 @@ def save_graph():
 
     fig_save_path = figures_dir + '/PPO_' + env_name + '_fig_' + str(fig_num) + '.png'
 
-    # get number of log files in directory
+    # get log files in directory by glob pattern
     log_dir = "logs" + '/' + env_name + '/'
 
     if not os.path.exists(log_dir):
@@ -51,23 +51,21 @@ def save_graph():
         print("Please train the model first to generate log files.")
         return
 
-    current_num_files = next(os.walk(log_dir))[2]
-    num_runs = len(current_num_files)
+    import glob
+    csv_files = sorted(glob.glob(os.path.join(log_dir, "PPO*_" + env_name + "_seed_*.csv")))
 
-    if num_runs == 0:
+    if len(csv_files) == 0:
         print(f"Error: No log files found in {log_dir}")
         print("Please train the model first to generate log files.")
         return
 
-    print(f"Found {num_runs} log file(s)")
+    print(f"Found {len(csv_files)} log file(s)")
 
     all_runs = []
 
-    for run_num in range(num_runs):
-
-        log_f_name = log_dir + '/PPO_' + env_name + "_log_" + str(run_num) + ".csv"
+    for log_f_name in csv_files:
         print("loading data from : " + log_f_name)
-        
+
         try:
             data = pd.read_csv(log_f_name)
             data = pd.DataFrame(data)
@@ -76,7 +74,7 @@ def save_graph():
         except Exception as e:
             print(f"Error loading {log_f_name}: {e}")
             continue
-            
+
         print("--------------------------------------------------------------------------------------------")
 
     if len(all_runs) == 0:
