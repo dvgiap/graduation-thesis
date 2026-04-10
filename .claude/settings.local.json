@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(grep -l \"class.*PPO\\\\|def.*update\\\\|class.*ActorCritic\" /d/Workspace/graduation-thesis/graduation-thesis/ppo-acwi-curiosity/*.py)"
+      "Bash(grep -l \"class.*PPO\\\\|def.*update\\\\|class.*ActorCritic\" /d/Workspace/graduation-thesis/graduation-thesis/ppo-acwi-curiosity/*.py)",
+      "Bash(wc -l /d/Workspace/graduation-thesis/graduation-thesis/ppo-acwi-curiosity/*.py)"
     ]
   }
 }
