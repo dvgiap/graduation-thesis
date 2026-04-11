@@ -65,7 +65,7 @@ def train(
     icm_lr = 0.001
     icm_epochs = 4
     icm_batch_size = 64
-    icm_intr_strength = 0.01
+    icm_intr_strength = 0.001
     
     # Count-based
     hash_dim = 32
