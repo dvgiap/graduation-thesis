@@ -408,8 +408,6 @@ class PPO:
         beta_value_scalar = 1.0
 
         if self.meta_use_correlation:
-            R_ext_from_t = self._compute_discounted_returns_from(extrinsic_rewards, is_terminals)
-
             if self.use_state_dependent_beta:
                 beta_for_loss = self.beta_net(old_states).squeeze()
                 b_intr = beta_for_loss * intrinsic_icm_pos
@@ -417,7 +415,7 @@ class PPO:
                 beta_for_loss = torch.exp(self.beta_log)
                 b_intr = beta_for_loss * intrinsic_icm_pos
 
-            # normalize
+            # normalize b_intr
             if b_intr.numel() > 1:
                 b_mean = b_intr.mean()
                 b_std = b_intr.std(unbiased=False) + 1e-8
@@ -425,15 +423,11 @@ class PPO:
             else:
                 b_intr_norm = b_intr - b_intr.mean()
 
-            if R_ext_from_t.numel() > 1:
-                r_mean = R_ext_from_t.mean()
-                r_std = R_ext_from_t.std(unbiased=False) + 1e-8
-                R_ext_norm = (R_ext_from_t - r_mean) / r_std
-            else:
-                R_ext_norm = R_ext_from_t - R_ext_from_t.mean()
+            # use GAE advantages (already normalized) instead of raw discounted returns
+            adv_norm = advantages_ext.detach()
 
             # correlation loss
-            loss_corr = - (b_intr_norm * R_ext_norm).mean()
+            loss_corr = - (b_intr_norm * adv_norm).mean()
 
             # regularization
             if self.use_state_dependent_beta:
@@ -487,7 +481,7 @@ class PPO:
 
             # LOG array metrics (b_intr, R_ext) for correlation scatter plots
             self.logger.log_array('b_intr', b_intr.detach())
-            self.logger.log_array('R_ext', R_ext_from_t.detach())
+            self.logger.log_array('R_ext', adv_norm.detach())
 
         else:
             # no meta update

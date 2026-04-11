@@ -53,7 +53,7 @@ def train(
 
     ####### PPO hyperparameters ######
     update_timestep = max_ep_len * 4
-    K_epochs = 80
+    K_epochs = 20
     eps_clip = 0.2
     gamma = 0.99
     gae_lambda = 0.95
@@ -65,7 +65,7 @@ def train(
     icm_lr = 0.001
     icm_epochs = 4
     icm_batch_size = 64
-    icm_intr_strength = 0.001
+    icm_intr_strength = 0.01
     
     # Count-based
     hash_dim = 32
