@@ -53,7 +53,7 @@ def train(
 
     ####### PPO hyperparameters ######
     update_timestep = max_ep_len * 4
-    K_epochs = 20
+    K_epochs = 80
     eps_clip = 0.2
     gamma = 0.99
     gae_lambda = 0.95
