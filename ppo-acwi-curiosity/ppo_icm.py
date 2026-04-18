@@ -426,8 +426,10 @@ class PPO:
             # use GAE advantages (already normalized) instead of raw discounted returns
             adv_norm = advantages_ext.detach()
 
-            # correlation loss
-            loss_corr = - (b_intr_norm * adv_norm).mean()
+            # correlation loss — exclude timeout-terminals, keep goal-reaching terminals
+            mask = 1.0 - is_terminals * (extrinsic_rewards <= 0).float()
+            n_valid = mask.sum().clamp(min=1.0)
+            loss_corr = - (b_intr_norm * adv_norm * mask).sum() / n_valid
 
             # regularization
             if self.use_state_dependent_beta:

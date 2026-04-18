@@ -360,8 +360,10 @@ class PPO:
             else:
                 R_ext_norm = R_ext_from_t - R_ext_from_t.mean()
 
-            # Correlation loss (maximize positive correlation)
-            loss_corr = -(b_intr_norm * R_ext_norm).mean()
+            # Correlation loss — exclude timeout-terminals, keep goal-reaching terminals
+            mask = 1.0 - is_terminals * (extrinsic_rewards <= 0).float()
+            n_valid = mask.sum().clamp(min=1.0)
+            loss_corr = -(b_intr_norm * R_ext_norm * mask).sum() / n_valid
 
             # Regularization: keep beta near center
             if self.use_state_dependent_beta:
