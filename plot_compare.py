@@ -1,5 +1,5 @@
 """
-Compare baseline ICM (ppo-curiosity) vs ACWI-ICM (ppo-acwi-curiosity).
+Compare baseline (ppo-curiosity) vs ACWI (ppo-acwi-curiosity) for ICM and COUNT.
 Run from the repo root:  python plot_compare.py
 """
 
@@ -7,7 +7,6 @@ import os
 import glob
 import pandas as pd
 import matplotlib.pyplot as plt
-import matplotlib.gridspec as gridspec
 
 # ── CONFIG ────────────────────────────────────────────────────────────────────
 ENVS = [
@@ -19,15 +18,17 @@ ENVS = [
     'MiniGrid-UnlockPickup-v0',
 ]
 
-WINDOW = 20   # smoothing window (triangular)
+WINDOW = 20  # smoothing window (triangular)
 
 SERIES = [
-    # (sub_dir,            suffix, display_label, color,  linestyle)
-    ('ppo-curiosity',      '_ICM', 'ICM (baseline)', 'steelblue',   '-'),
-    ('ppo-acwi-curiosity', '_ICM', 'ACWI-ICM',       'darkorange',  '--'),
+    # (sub_dir,            suffix,   display_label,       color,         linestyle)
+    ('ppo-curiosity',      '_ICM',   'ICM (baseline)',    'steelblue',   '-'),
+    ('ppo-acwi-curiosity', '_ICM',   'ACWI-ICM',          'darkorange',  '--'),
+    ('ppo-curiosity',      '_COUNT', 'COUNT (baseline)',  'seagreen',    '-'),
+    ('ppo-acwi-curiosity', '_COUNT', 'ACWI-COUNT',        'crimson',     '--'),
 ]
 
-OUT_DIR = os.path.join('figs', 'compare_icm')
+OUT_DIR = os.path.join('figs', 'compare')
 # ─────────────────────────────────────────────────────────────────────────────
 
 
@@ -58,7 +59,8 @@ def plot_all_envs():
     ncols = 3
     nrows = 2
     fig, axes = plt.subplots(nrows, ncols, figsize=(18, 10))
-    fig.suptitle('ICM Baseline vs ACWI-ICM — All Environments', fontsize=16, fontweight='bold', y=1.01)
+    fig.suptitle('Baseline vs ACWI (ICM & COUNT) — All Environments',
+                 fontsize=15, fontweight='bold', y=1.01)
 
     for idx, env in enumerate(ENVS):
         ax = axes[idx // ncols][idx % ncols]
@@ -72,20 +74,20 @@ def plot_all_envs():
 
             data = average_runs(runs)
             data['smooth'] = smooth(data['reward'], WINDOW)
-            data['band']   = smooth(data['reward'], 5)
+            data['band'] = smooth(data['reward'], 5)
 
             ax.plot(data['timestep'], data['smooth'],
                     label=f'{label} (n={len(runs)})',
                     color=color, linestyle=ls, linewidth=2)
             ax.fill_between(data['timestep'], data['band'], data['smooth'],
-                            color=color, alpha=0.12)
+                            color=color, alpha=0.10)
             plotted = True
 
         env_short = env.replace('MiniGrid-', '').replace('-v0', '')
         ax.set_title(env_short, fontsize=11, fontweight='bold')
         ax.set_xlabel('Timesteps', fontsize=9)
         ax.set_ylabel('Avg Reward', fontsize=9)
-        ax.legend(fontsize=8)
+        ax.legend(fontsize=7.5)
         ax.grid(color='gray', linestyle='-', linewidth=0.5, alpha=0.3)
         ax.ticklabel_format(style='sci', axis='x', scilimits=(0, 0))
 
@@ -94,51 +96,73 @@ def plot_all_envs():
                     transform=ax.transAxes, fontsize=12, color='gray')
 
     fig.tight_layout()
-    out_path = os.path.join(OUT_DIR, 'all_envs_icm_vs_acwi.png')
+    out_path = os.path.join(OUT_DIR, 'all_envs_baseline_vs_acwi.png')
     fig.savefig(out_path, dpi=150, bbox_inches='tight')
     print(f"Saved: {out_path}")
     plt.show()
 
 
 def plot_per_env():
-    """Also save individual high-res plots per environment."""
+    """Save individual high-res plots per environment (2-panel: ICM | COUNT)."""
     for env in ENVS:
-        fig, ax = plt.subplots(figsize=(9, 5))
-        plotted = False
-
-        for sub_dir, suffix, label, color, ls in SERIES:
-            runs = load_seeds(sub_dir, env, suffix)
-            if not runs:
-                continue
-
-            data = average_runs(runs)
-            data['smooth'] = smooth(data['reward'], WINDOW)
-            data['band']   = smooth(data['reward'], 5)
-
-            ax.plot(data['timestep'], data['smooth'],
-                    label=f'{label} (n={len(runs)})',
-                    color=color, linestyle=ls, linewidth=2)
-            ax.fill_between(data['timestep'], data['band'], data['smooth'],
-                            color=color, alpha=0.12)
-            plotted = True
-
-        if not plotted:
-            plt.close(fig)
-            continue
-
+        fig, axes = plt.subplots(1, 2, figsize=(14, 5))
         env_short = env.replace('MiniGrid-', '').replace('-v0', '')
-        ax.set_title(f'{env_short}: ICM Baseline vs ACWI-ICM', fontsize=13, fontweight='bold')
-        ax.set_xlabel('Timesteps', fontsize=11)
-        ax.set_ylabel('Average Reward', fontsize=11)
-        ax.legend(fontsize=10)
-        ax.grid(color='gray', linestyle='-', linewidth=0.5, alpha=0.3)
-        ax.ticklabel_format(style='sci', axis='x', scilimits=(0, 0))
+        fig.suptitle(f'{env_short}: Baseline vs ACWI', fontsize=13, fontweight='bold')
+
+        method_groups = [
+            ('ICM',   [s for s in SERIES if '_ICM' in s[1]]),
+            ('COUNT', [s for s in SERIES if '_COUNT' in s[1]]),
+        ]
+
+        for ax, (method_name, series_subset) in zip(axes, method_groups):
+            plotted = False
+            for sub_dir, suffix, label, color, ls in series_subset:
+                runs = load_seeds(sub_dir, env, suffix)
+                if not runs:
+                    continue
+                data = average_runs(runs)
+                data['smooth'] = smooth(data['reward'], WINDOW)
+                data['band'] = smooth(data['reward'], 5)
+                ax.plot(data['timestep'], data['smooth'],
+                        label=f'{label} (n={len(runs)})',
+                        color=color, linestyle=ls, linewidth=2)
+                ax.fill_between(data['timestep'], data['band'], data['smooth'],
+                                color=color, alpha=0.12)
+                plotted = True
+
+            ax.set_title(method_name, fontsize=11)
+            ax.set_xlabel('Timesteps', fontsize=10)
+            ax.set_ylabel('Average Reward', fontsize=10)
+            ax.legend(fontsize=9)
+            ax.grid(color='gray', linestyle='-', linewidth=0.5, alpha=0.3)
+            ax.ticklabel_format(style='sci', axis='x', scilimits=(0, 0))
+            if not plotted:
+                ax.text(0.5, 0.5, 'No data', ha='center', va='center',
+                        transform=ax.transAxes, fontsize=12, color='gray')
 
         fig.tight_layout()
-        out_path = os.path.join(OUT_DIR, f'{env}_icm_vs_acwi.png')
+        out_path = os.path.join(OUT_DIR, f'{env}_baseline_vs_acwi.png')
         fig.savefig(out_path, dpi=150, bbox_inches='tight')
         print(f"Saved: {out_path}")
         plt.close(fig)
+
+
+def print_summary():
+    """Print final-timestep average reward for each series/env."""
+    print("\n=== Summary: mean reward at final timestep ===")
+    header = f"{'Env':<35} {'Series':<22} {'Seeds':>5} {'Final Reward':>13}"
+    print(header)
+    print("-" * len(header))
+    for env in ENVS:
+        env_short = env.replace('MiniGrid-', '').replace('-v0', '')
+        for sub_dir, suffix, label, _, _ in SERIES:
+            runs = load_seeds(sub_dir, env, suffix)
+            if not runs:
+                continue
+            data = average_runs(runs)
+            final = data['reward'].iloc[-10:].mean()
+            print(f"{env_short:<35} {label:<22} {len(runs):>5} {final:>13.4f}")
+        print()
 
 
 if __name__ == '__main__':
@@ -146,4 +170,5 @@ if __name__ == '__main__':
     plot_all_envs()
     print("\n=== Saving individual plots per environment ===")
     plot_per_env()
+    print_summary()
     print("\nDone.")
