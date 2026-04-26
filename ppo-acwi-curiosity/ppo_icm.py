@@ -400,14 +400,13 @@ class PPO:
             intrinsic_icm_pos = torch.zeros(N, device=device)
             avg_fwd, avg_inv = 0.0, 0.0
 
-        # compute extrinsic advantages
-        advantages_ext = self.compute_extrinsic_advantages(extrinsic_rewards, old_state_values, is_terminals)
-
         # ---------------- Meta-update (correlation proxy) ----------------
         meta_loss_value = 0.0
         beta_value_scalar = 1.0
 
         if self.meta_use_correlation:
+            R_ext_from_t = self._compute_discounted_returns_from(extrinsic_rewards, is_terminals)
+
             if self.use_state_dependent_beta:
                 beta_for_loss = self.beta_net(old_states).squeeze()
                 b_intr = beta_for_loss * intrinsic_icm_pos
@@ -423,13 +422,16 @@ class PPO:
             else:
                 b_intr_norm = b_intr - b_intr.mean()
 
-            # use GAE advantages (already normalized) instead of raw discounted returns
-            adv_norm = advantages_ext.detach()
+            # normalize R_ext_from_t
+            if R_ext_from_t.numel() > 1:
+                r_mean = R_ext_from_t.mean()
+                r_std = R_ext_from_t.std(unbiased=False) + 1e-8
+                R_ext_norm = (R_ext_from_t - r_mean) / r_std
+            else:
+                R_ext_norm = R_ext_from_t - R_ext_from_t.mean()
 
-            # correlation loss — exclude timeout-terminals, keep goal-reaching terminals
-            mask = 1.0 - is_terminals * (extrinsic_rewards <= 0).float()
-            n_valid = mask.sum().clamp(min=1.0)
-            loss_corr = - (b_intr_norm * adv_norm * mask).sum() / n_valid
+            # correlation loss
+            loss_corr = - (b_intr_norm * R_ext_norm).mean()
 
             # regularization
             if self.use_state_dependent_beta:
@@ -483,7 +485,7 @@ class PPO:
 
             # LOG array metrics (b_intr, R_ext) for correlation scatter plots
             self.logger.log_array('b_intr', b_intr.detach())
-            self.logger.log_array('R_ext', adv_norm.detach())
+            self.logger.log_array('R_ext', R_ext_from_t.detach())
 
         else:
             # no meta update
