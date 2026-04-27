@@ -62,9 +62,11 @@ class ICM(nn.Module):
         # Inverse loss (cross-entropy)
         inverse_loss = nn.CrossEntropyLoss()(predicted_action_logits, action)
         
-        # Forward model: predict next state encoding
+        # Forward model: predict next state encoding.
+        # Detach encoded_state so the forward loss does NOT propagate into the encoder
+        # (paper §2.2, eq. 7: encoder θ_I is trained only by the inverse loss L_I).
         action_one_hot = nn.functional.one_hot(action, num_classes=self.action_dim).float()
-        forward_input = torch.cat([encoded_state, action_one_hot], dim=-1)
+        forward_input = torch.cat([encoded_state.detach(), action_one_hot], dim=-1)
         predicted_next_encoded_state = self.forward_model(forward_input)
         
         # Forward loss (MSE) - this is also the intrinsic reward

@@ -13,7 +13,7 @@ from minigrid.wrappers import FlatObsWrapper
 
 
 def train(
-    exploration_method='none',  # 'none', 'icm', 'count', 'ride'
+    exploration_method='none',  # 'none', 'icm', 'count', 'rnd'
     random_seed=1,
     env_name="MiniGrid-DoorKey-8x8-v0",
     max_training_timesteps=int(1e6),
@@ -21,15 +21,15 @@ def train(
 ):
     """
     Unified training function for PPO with different exploration methods.
-    
+
     Args:
-        exploration_method: 'none', 'icm', 'count', or 'ride'
+        exploration_method: 'none', 'icm', 'count', or 'rnd'
         random_seed: Starting random seed
         env_name: Gymnasium environment name
         max_training_timesteps: Maximum timesteps per seed
         seeds_range: Tuple of (start_seed, end_seed) inclusive
     """
-    
+
     print("============================================================================================")
 
     # Import the appropriate PPO implementation
@@ -39,8 +39,8 @@ def train(
         from ppo_icm import PPO
     elif exploration_method == 'count':
         from ppo_count import PPO  # assumes count-based is in base ppo
-    elif exploration_method == 'ride':
-        from ppo_ride import PPO  # assumes RIDE is in base ppo
+    elif exploration_method == 'rnd':
+        from ppo_rnd import PPO
     else:
         raise ValueError(f"Unknown exploration method: {exploration_method}")
 
@@ -72,14 +72,11 @@ def train(
     bonus_type = 'inverse_sqrt'
     count_intr_strength = 0.001
     
-    # RIDE
-    ride_lr = 0.001
-    ride_epochs = 4
-    ride_batch_size = 64
-    ride_intr_strength = 0.001
-    episodic_memory_size = 1000
-    global_memory_size = 50000
-    k_neighbors = 10
+    # RND
+    rnd_lr = 0.001
+    rnd_epochs = 4
+    rnd_batch_size = 64
+    rnd_intr_strength = 0.001
 
     # Create environment
     env = gym.make(env_name)
@@ -93,7 +90,7 @@ def train(
         'none': '',
         'icm': '_ICM',
         'count': '_COUNT',
-        'ride': '_RIDE'
+        'rnd': '_RND'
     }
     suffix = suffix_map[exploration_method]
     
@@ -122,10 +119,9 @@ def train(
     elif exploration_method == 'count':
         print("--------------------------------------------------------------------------------------------")
         print(f"Count-Based - hash_dim: {hash_dim}, bonus_type: {bonus_type}, strength: {count_intr_strength}")
-    elif exploration_method == 'ride':
+    elif exploration_method == 'rnd':
         print("--------------------------------------------------------------------------------------------")
-        print(f"RIDE - lr: {ride_lr}, epochs: {ride_epochs}, batch: {ride_batch_size}, strength: {ride_intr_strength}")
-        print(f"Episodic memory: {episodic_memory_size}, Global memory: {global_memory_size}, k: {k_neighbors}")
+        print(f"RND - lr: {rnd_lr}, epochs: {rnd_epochs}, batch: {rnd_batch_size}, strength: {rnd_intr_strength}")
     
     print("============================================================================================")
 
@@ -169,13 +165,12 @@ def train(
                           K_epochs, eps_clip, has_continuous_action_space,
                           use_count_based=True, hash_dim=hash_dim, bonus_type=bonus_type,
                           intr_reward_strength=count_intr_strength, gae_lambda=gae_lambda)
-        elif exploration_method == 'ride':
+        elif exploration_method == 'rnd':
             ppo_agent = PPO(state_dim, action_dim, lr_actor, lr_critic, gamma,
                           K_epochs, eps_clip, has_continuous_action_space,
-                          use_ride=True, ride_lr=ride_lr, ride_epochs=ride_epochs,
-                          ride_batch_size=ride_batch_size, intr_reward_strength=ride_intr_strength,
-                          gae_lambda=gae_lambda, episodic_memory_size=episodic_memory_size,
-                          global_memory_size=global_memory_size, k_neighbors=k_neighbors)
+                          use_rnd=True, rnd_lr=rnd_lr, rnd_epochs=rnd_epochs,
+                          rnd_batch_size=rnd_batch_size, intr_reward_strength=rnd_intr_strength,
+                          gae_lambda=gae_lambda)
         
         # Training variables
         start_time = datetime.now().replace(microsecond=0)
@@ -193,13 +188,6 @@ def train(
         
         # Episode loop
         while time_step <= max_training_timesteps:
-            # Reset episodic memory for RIDE
-            if exploration_method == 'ride':
-                try:
-                    ppo_agent.reset_episodic_memory()
-                except AttributeError:
-                    pass
-            
             state, _ = env.reset()
             current_ep_reward = 0
             
@@ -214,7 +202,7 @@ def train(
                 ppo_agent.buffer.is_terminals.append(done)
                 
                 # Store next_state for exploration methods that need it
-                if exploration_method in ['icm', 'count', 'ride']:
+                if exploration_method in ['icm', 'count', 'rnd']:
                     device = next(ppo_agent.policy.actor.parameters()).device
                     ppo_agent.buffer.next_states.append(torch.FloatTensor(next_state).to(device))
                 
@@ -252,13 +240,6 @@ def train(
                 if done:
                     break
             
-            # Episode finished - update RIDE global memory
-            if exploration_method == 'ride':
-                try:
-                    ppo_agent.update_global_memory()
-                except AttributeError:
-                    pass
-            
             print_running_reward += current_ep_reward
             print_running_episodes += 1
             log_running_reward += current_ep_reward
@@ -280,8 +261,8 @@ def train(
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Unified PPO training with exploration methods")
-    parser.add_argument("--method", type=str, default="none", 
-                       choices=['none', 'icm', 'count', 'ride'],
+    parser.add_argument("--method", type=str, default="none",
+                       choices=['none', 'icm', 'count', 'rnd'],
                        help="Exploration method to use")
     parser.add_argument("--env", type=str, default="MiniGrid-DoorKey-8x8-v0",
                        help="Gymnasium environment name")

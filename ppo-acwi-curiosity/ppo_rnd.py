@@ -1,38 +1,38 @@
 import math
+import os
+import numpy as np
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from torch.distributions import MultivariateNormal, Categorical
-import numpy as np
-from curiosity.ride import RIDE
 from training_logger import TrainingLogger
+from curiosity.rnd import RND
 
-################################## set device ##################################
-print("============================================================================================")
+# ---------------- device ----------------
 device = torch.device('cpu')
 if torch.cuda.is_available():
     device = torch.device('cuda:0')
     torch.cuda.empty_cache()
     try:
-        print("Device set to : " + str(torch.cuda.get_device_name(device)))
-    except:
+        print("Device set to :", torch.cuda.get_device_name(0))
+    except Exception:
         print("Device set to : cuda")
 else:
     print("Device set to : cpu")
-print("============================================================================================")
 
 
-################################## BetaNetwork ##################################
+# ---------------- BetaNetwork  ----------------
 class BetaNetwork(nn.Module):
     """
-    State-dependent beta network matching ICM encoder architecture
+    Beta network that mirrors the RND encoder design
     """
     def __init__(self, state_dim, encoding_size=256, num_layers=2, head_hidden=128,
                  min_beta=1e-3, max_beta=10.0):
         super(BetaNetwork, self).__init__()
         self.min = float(min_beta)
         self.max = float(max_beta)
-        
         layers = []
+
         layers.append(nn.Linear(state_dim, encoding_size))
         nn.init.normal_(layers[-1].weight, mean=0.0, std=np.sqrt(1.0 / max(1, state_dim)))
         layers.append(nn.Tanh())
@@ -49,8 +49,7 @@ class BetaNetwork(nn.Module):
             nn.Tanh(),
             nn.Linear(head_hidden, 1)
         )
-        
-        # Initialize head to output beta ~1.0 initially
+
         with torch.no_grad():
             try:
                 nn.init.constant_(self.head[-1].bias, math.log(1.0))
@@ -68,7 +67,7 @@ class BetaNetwork(nn.Module):
         return beta
 
 
-################################## PPO Policy ##################################
+# ---------------- Rollout buffer ----------------
 class RolloutBuffer:
     def __init__(self):
         self.actions = []
@@ -89,15 +88,15 @@ class RolloutBuffer:
         del self.next_states[:]
 
 
+# ---------------- ActorCritic ----------------
 class ActorCritic(nn.Module):
-    def __init__(self, state_dim, action_dim, has_continuous_action_space, action_std_init):
+    def __init__(self, state_dim, action_dim, has_continuous_action_space, action_std_init=0.6):
         super(ActorCritic, self).__init__()
-
         self.has_continuous_action_space = has_continuous_action_space
 
         if has_continuous_action_space:
-            self.action_dim = action_dim
-            self.action_var = torch.full((action_dim,), action_std_init * action_std_init).to(device)
+            self.action_dim = int(action_dim)
+            self.action_var = torch.full((self.action_dim,), action_std_init * action_std_init).to(device)
 
         # actor
         if has_continuous_action_space:
@@ -106,7 +105,7 @@ class ActorCritic(nn.Module):
                 nn.Tanh(),
                 nn.Linear(64, 64),
                 nn.Tanh(),
-                nn.Linear(64, action_dim),
+                nn.Linear(64, self.action_dim),
                 nn.Tanh()
             )
         else:
@@ -115,8 +114,7 @@ class ActorCritic(nn.Module):
                 nn.Tanh(),
                 nn.Linear(64, 64),
                 nn.Tanh(),
-                nn.Linear(64, action_dim),
-                nn.Softmax(dim=-1)
+                nn.Linear(64, int(action_dim)),
             )
 
         # critic
@@ -130,65 +128,74 @@ class ActorCritic(nn.Module):
 
     def set_action_std(self, new_action_std):
         if self.has_continuous_action_space:
-            self.action_var = torch.full((self.action_var.shape[0],), new_action_std * new_action_std).to(device)
+            self.action_var = torch.full((self.action_dim,), new_action_std * new_action_std).to(device)
 
     def forward(self):
         raise NotImplementedError
 
     def act(self, state):
+        single = False
         if state.dim() == 1:
             state = state.unsqueeze(0)
+            single = True
 
-        state = state.to(device).float()
         if self.has_continuous_action_space:
             action_mean = self.actor(state)
-            cov_mat = torch.diag(self.action_var).unsqueeze(0)
+            action_var = self.action_var.expand_as(action_mean)
+            cov_mat = torch.diag_embed(action_var).to(state.device)
             dist = MultivariateNormal(action_mean, cov_mat)
         else:
-            action_probs = self.actor(state)
-            dist = Categorical(action_probs)
+            logits = self.actor(state)
+            dist = Categorical(logits=logits)
 
         action = dist.sample()
         action_logprob = dist.log_prob(action)
         state_val = self.critic(state)
 
-        return action.detach().squeeze(), action_logprob.detach().squeeze(), state_val.detach().squeeze()
+        if single:
+            return action.squeeze(0), action_logprob.squeeze(0), state_val.squeeze(0)
+        return action, action_logprob, state_val
 
     def evaluate(self, state, action):
         if self.has_continuous_action_space:
             action_mean = self.actor(state)
             action_var = self.action_var.expand_as(action_mean)
-            cov_mat = torch.diag_embed(action_var).to(device)
+            cov_mat = torch.diag_embed(action_var).to(state.device)
             dist = MultivariateNormal(action_mean, cov_mat)
             if action.dim() == 1:
-                action = action.view(-1, self.action_dim)
+                action = action.reshape(-1, self.action_dim)
         else:
-            action_probs = self.actor(state)
-            dist = Categorical(action_probs)
+            logits = self.actor(state)
+            dist = Categorical(logits=logits)
 
         action_logprobs = dist.log_prob(action)
         dist_entropy = dist.entropy()
-        state_values = self.critic(state).squeeze(-1)
+        state_values = self.critic(state)
 
         return action_logprobs, state_values, dist_entropy
 
 
-################################## PPO ##################################
+# ---------------- PPO ----------------
 class PPO:
-    def __init__(self, state_dim, action_dim, lr_actor, lr_critic, gamma, K_epochs, eps_clip,
-                 has_continuous_action_space=False, action_std_init=0.6,
-                 # RIDE params
-                 use_ride=True,
-                 ride_lr=0.001,
-                 ride_epochs=4,
-                 ride_batch_size=64,
-                 intr_reward_strength=0.02,
-                 episodic_memory_size=1000,
-                 global_memory_size=50000,
-                 k_neighbors=10,
+    def __init__(self,
+                 state_dim,
+                 action_dim,
+                 lr_actor=3e-4,
+                 lr_critic=3e-4,
+                 gamma=0.99,
+                 K_epochs=4,
+                 eps_clip=0.2,
+                 has_continuous_action_space=False,
+                 action_std_init=0.6,
+                 # RND
+                 use_rnd=True,
+                 rnd_lr=1e-3,
+                 rnd_epochs=4,
+                 rnd_batch_size=64,
+                 intr_reward_strength=0.1,
                  # GAE
                  gae_lambda=0.95,
-                 # Adaptive Beta params
+                 # meta-beta
                  beta_lr=5e-4,
                  use_state_dependent_beta=True,
                  beta_init=1.0,
@@ -196,20 +203,22 @@ class PPO:
                  beta_num_layers=2,
                  beta_head_hidden=128,
                  beta_min=0.1,
-                 beta_max=2.0,
-                 # Meta options
-                 meta_use_correlation=True,
-                 meta_corr_weight=1.0,
+                 beta_max=2,
+                 # meta options (Learning-Progress)
+                 meta_use_progress=True,
+                 meta_progress_weight=1.0,
                  meta_reg_weight=1e-3,
-                 meta_corr_beta_center=1.0,
-                 # Logging
+                 meta_reg_beta_center=1.0,
+                 # logging
                  sample_states_per_update=256,
-                 sample_every_n_updates=1):
+                 sample_every_n_updates=1,
+                 debug=False):
 
         self.has_continuous_action_space = has_continuous_action_space
         if has_continuous_action_space:
             self.action_std = action_std_init
 
+        # basics
         self.gamma = gamma
         self.eps_clip = eps_clip
         self.K_epochs = K_epochs
@@ -217,130 +226,144 @@ class PPO:
 
         self.buffer = RolloutBuffer()
 
-        # Actor-Critic
+        # networks
         self.policy = ActorCritic(state_dim, action_dim, has_continuous_action_space, action_std_init).to(device)
+        self.policy_old = ActorCritic(state_dim, action_dim, has_continuous_action_space, action_std_init).to(device)
+        self.policy_old.load_state_dict(self.policy.state_dict())
+
         self.optimizer = torch.optim.Adam([
             {'params': self.policy.actor.parameters(), 'lr': lr_actor},
             {'params': self.policy.critic.parameters(), 'lr': lr_critic}
         ])
 
-        self.policy_old = ActorCritic(state_dim, action_dim, has_continuous_action_space, action_std_init).to(device)
-        self.policy_old.load_state_dict(self.policy.state_dict())
-
         self.MseLoss = nn.MSELoss()
 
-        # RIDE setup
-        self.use_ride = use_ride
+        # RND
+        self.use_rnd = use_rnd and (RND is not None)
         self.intr_reward_strength = intr_reward_strength
-        self.ride_epochs = ride_epochs
-        self.ride_batch_size = ride_batch_size
+        self.rnd_epochs = rnd_epochs
+        self.rnd_batch_size = rnd_batch_size
+        if self.use_rnd:
+            self.rnd = RND(state_dim, encoding_size=beta_encoding_size, num_layers=beta_num_layers,
+                           gamma_int=gamma).to(device)
+            self.optimizer_rnd = torch.optim.Adam(self.rnd.predictor.parameters(), lr=rnd_lr)
 
-        if self.use_ride:
-            self.ride = RIDE(state_dim, action_dim,
-                           episodic_memory_size=episodic_memory_size,
-                           global_memory_size=global_memory_size,
-                           k_neighbors=k_neighbors).to(device)
-            self.optimizer_ride = torch.optim.Adam(self.ride.parameters(), lr=ride_lr)
-
-        # Adaptive Beta
+        # meta-beta
         self.use_state_dependent_beta = use_state_dependent_beta
         if not use_state_dependent_beta:
-            # Scalar beta (log parameterization)
             self.beta_log = nn.Parameter(torch.tensor([math.log(beta_init)], dtype=torch.float32, device=device))
             self.beta_optimizer = torch.optim.Adam([self.beta_log], lr=beta_lr)
         else:
-            # State-dependent beta network
-            self.beta_net = BetaNetwork(
-                state_dim,
-                encoding_size=beta_encoding_size,
-                num_layers=beta_num_layers,
-                head_hidden=beta_head_hidden,
-                min_beta=beta_min,
-                max_beta=beta_max
-            ).to(device)
+            self.beta_net = BetaNetwork(state_dim,
+                                        encoding_size=beta_encoding_size,
+                                        num_layers=beta_num_layers,
+                                        head_hidden=beta_head_hidden,
+                                        min_beta=beta_min,
+                                        max_beta=beta_max).to(device)
             self.beta_optimizer = torch.optim.Adam(self.beta_net.parameters(), lr=beta_lr, weight_decay=1e-6)
 
-        # Meta options
-        self.meta_use_correlation = meta_use_correlation
-        self.meta_corr_weight = meta_corr_weight
+        # meta options (Learning-Progress)
+        self.meta_use_progress = meta_use_progress
+        self.meta_progress_weight = meta_progress_weight
         self.meta_reg_weight = meta_reg_weight
-        self.meta_corr_beta_center = float(meta_corr_beta_center)
+        self.meta_reg_beta_center = float(meta_reg_beta_center)
+        self.beta_init = float(beta_init)
 
-        # Logger
+        # LOGGER
         self.logger = TrainingLogger(
             sample_states_per_update=sample_states_per_update,
             sample_every_n_updates=sample_every_n_updates,
             auto_convert_to_numpy=True
         )
 
+        # debug
+        self.debug = debug
+
+    # ---------------- action std helpers ----------------
     def set_action_std(self, new_action_std):
         if self.has_continuous_action_space:
             self.action_std = new_action_std
             self.policy.set_action_std(new_action_std)
             self.policy_old.set_action_std(new_action_std)
 
+    def decay_action_std(self, action_std_decay_rate, min_action_std):
+        if self.has_continuous_action_space:
+            self.action_std = max(self.action_std - action_std_decay_rate, min_action_std)
+            self.set_action_std(self.action_std)
+
+    # ---------------- select action ----------------
     def select_action(self, state):
         state_t = torch.FloatTensor(state).to(device)
-        action, action_logprob, state_val = self.policy_old.act(state_t)
+        with torch.no_grad():
+            action, action_logprob, state_val = self.policy_old.act(state_t)
 
-        # Store in buffer as CPU tensors
-        self.buffer.states.append(state_t.detach().cpu())
-        self.buffer.actions.append(action.detach().cpu())
-        self.buffer.logprobs.append(action_logprob.detach().cpu())
-        self.buffer.state_values.append(state_val.detach().cpu())
+        self.buffer.states.append(state_t)
+        self.buffer.actions.append(action)
+        self.buffer.logprobs.append(action_logprob)
+        self.buffer.state_values.append(state_val)
 
         if self.has_continuous_action_space:
-            return action.detach().cpu().numpy().flatten()
+            return action.cpu().numpy().flatten()
         else:
-            return int(action.detach().cpu().item())
+            return int(action.item())
 
-    def reset_episodic_memory(self):
-        """Clear episodic memory at the start of each episode"""
-        if self.use_ride:
-            self.ride.clear_episodic_memory()
-
-    def update_global_memory(self):
-        """Add episode states to global memory at episode end"""
-        if self.use_ride and len(self.buffer.next_states) > 0:
-            next_states = torch.stack(self.buffer.next_states, dim=0).cpu()
-            with torch.no_grad():
-                encoded = self.ride.encode(next_states.to(device))
-                self.ride.add_to_global_memory(encoded.detach())
-
-    def ride_update(self, states, next_states, actions):
-        """Train RIDE on collected transitions"""
-        total_forward_loss = 0.0
-        total_inverse_loss = 0.0
+    # ---------------- RND update ----------------
+    def rnd_update(self, next_states):
+        total_predictor_loss = 0.0
         num_updates = 0
-        dataset_size = states.shape[0]
-        beta = 0.2  # forward weight
 
-        for _ in range(self.ride_epochs):
+        dataset_size = next_states.shape[0]
+        if dataset_size == 0 or (not self.use_rnd):
+            return 0.0
+
+        for _ in range(self.rnd_epochs):
             indices = np.random.permutation(dataset_size)
-            for start_idx in range(0, dataset_size, self.ride_batch_size):
+            for start in range(0, dataset_size, self.rnd_batch_size):
                 num_updates += 1
-                batch_idx = indices[start_idx:start_idx + self.ride_batch_size]
-                batch_idx = torch.LongTensor(batch_idx).to(device)
-                batch_states = states[batch_idx]
+                batch_idx = indices[start:start + self.rnd_batch_size]
                 batch_next_states = next_states[batch_idx]
-                batch_actions = actions[batch_idx]
+                _, predictor_loss = self.rnd(batch_next_states)
+                self.optimizer_rnd.zero_grad()
+                predictor_loss.backward()
+                self.optimizer_rnd.step()
+                total_predictor_loss += predictor_loss.item()
 
-                _, inverse_loss, forward_loss = self.ride(batch_states, batch_next_states, batch_actions)
-                ride_loss = beta * forward_loss + (1.0 - beta) * inverse_loss
+        return total_predictor_loss / num_updates if num_updates > 0 else 0.0
 
-                self.optimizer_ride.zero_grad()
-                ride_loss.backward()
-                self.optimizer_ride.step()
+    # ---------------- compute intrinsic rewards ----------------
+    def compute_intrinsic(self, next_states):
+        """Paper §2.4: obs-normalized RND error, divided by running std of intrinsic returns."""
+        if not self.use_rnd:
+            return torch.zeros(next_states.shape[0], device=device)
+        self.rnd.update_obs_rms(next_states)
+        with torch.no_grad():
+            intr_raw, _ = self.rnd(next_states)
+        intr_norm_np = self.rnd.normalize_intrinsic(intr_raw.detach().cpu().numpy())
+        return torch.as_tensor(intr_norm_np, dtype=torch.float32, device=device)
 
-                total_forward_loss += forward_loss.item()
-                total_inverse_loss += inverse_loss.item()
+    # ---------------- compute extrinsic advantages ----------------
+    def compute_extrinsic_advantages(self, extrinsic_rewards, state_values, is_terminals):
+        T = len(extrinsic_rewards)
+        advantages = torch.zeros(T, device=device)
+        deltas = torch.zeros(T, device=device)
+        last_gae = 0.0
+        for t in reversed(range(T)):
+            if t == T - 1:
+                next_value = 0.0
+            else:
+                next_value = state_values[t + 1]
+            delta = extrinsic_rewards[t] + self.gamma * next_value * (1 - is_terminals[t]) - state_values[t]
+            deltas[t] = delta
+            last_gae = delta + self.gamma * self.gae_lambda * (1 - is_terminals[t]) * last_gae
+            advantages[t] = last_gae
+        if advantages.std().item() > 1e-8:
+            advantages = (advantages - advantages.mean()) / (advantages.std() + 1e-8)
+        else:
+            advantages = advantages - advantages.mean()
+        return advantages, deltas
 
-        avg_forward_loss = total_forward_loss / num_updates if num_updates > 0 else 0.0
-        avg_inverse_loss = total_inverse_loss / num_updates if num_updates > 0 else 0.0
-        return avg_forward_loss, avg_inverse_loss
-
+    # ---------------- discounted returns helper ----------------
     def _compute_discounted_returns_from(self, rewards, is_terminals):
-        """Compute discounted future returns from each timestep"""
         N = len(rewards)
         R = torch.zeros_like(rewards, device=device)
         Rt = 0.0
@@ -349,96 +372,86 @@ class PPO:
             R[t] = Rt
         return R
 
+    # ---------------- main update ----------------
     def update(self):
-        if len(self.buffer.states) == 0:
+        if len(self.buffer.rewards) == 0:
             return
 
-        # Stack buffer to tensors
-        old_states = torch.stack(self.buffer.states, dim=0).to(device)
-        old_actions = torch.stack(self.buffer.actions, dim=0).to(device)
-        old_logprobs = torch.stack(self.buffer.logprobs, dim=0).to(device)
-        old_state_values = torch.stack(self.buffer.state_values, dim=0).to(device)
-        old_state_values = old_state_values.view(-1)
+        old_states = torch.squeeze(torch.stack(self.buffer.states, dim=0)).detach().to(device)
+        old_actions = torch.squeeze(torch.stack(self.buffer.actions, dim=0)).detach().to(device)
+        old_logprobs = torch.squeeze(torch.stack(self.buffer.logprobs, dim=0)).detach().to(device)
+        old_state_values = torch.squeeze(torch.stack(self.buffer.state_values, dim=0)).detach().to(device)
         extrinsic_rewards = torch.tensor(self.buffer.rewards, dtype=torch.float32).to(device)
         is_terminals = torch.tensor(self.buffer.is_terminals, dtype=torch.float32).to(device)
 
         N = len(extrinsic_rewards)
 
-        # Compute intrinsic rewards using RIDE
-        intrinsic_rewards = torch.zeros(N, device=device)
-
-        if self.use_ride and len(self.buffer.next_states) > 0:
-            old_next_states = torch.stack(self.buffer.next_states, dim=0).to(device)
-            
-            with torch.no_grad():
-                intr_rewards, _, _ = self.ride(old_states, old_next_states, old_actions)
-                intrinsic_ride = intr_rewards.detach().squeeze().to(device)
-                
-                # Normalize
-                ride_mean = intrinsic_ride.mean()
-                ride_std = intrinsic_ride.std(unbiased=False) + 1e-8
-                intrinsic_ride_norm = (intrinsic_ride - ride_mean) / ride_std
-                intrinsic_ride_pos = torch.relu(intrinsic_ride_norm)
-                intrinsic_rewards = intrinsic_ride_pos.clone()
-
-            # Train RIDE
-            avg_forward_loss, avg_inverse_loss = self.ride_update(old_states, old_next_states, old_actions)
+        # compute intrinsic
+        if self.use_rnd and len(self.buffer.next_states) > 0:
+            old_next_states = torch.squeeze(torch.stack(self.buffer.next_states, dim=0)).detach().to(device)
+            intrinsic_rnd_pos = self.compute_intrinsic(old_next_states)
+            avg_pred_loss = self.rnd_update(old_next_states)
         else:
-            avg_forward_loss = avg_inverse_loss = 0.0
+            intrinsic_rnd_pos = torch.zeros(N, device=device)
+            avg_pred_loss = 0.0
 
-        # ============ Meta-Update (Correlation-based Beta Adaptation) ============
+        # ---------------- Post-rollout extrinsic statistics ----------------
+        # Tính 1 lần / update, dùng buffer CHRONOLOGICAL (chưa shuffle).
+        # Bất kỳ mini-batch loop nào sau này đều phải nằm SAU dòng này.
+        advantages_ext, deltas_ext = self.compute_extrinsic_advantages(
+            extrinsic_rewards, old_state_values, is_terminals
+        )
+
+        # ---------------- Meta-update (Learning-Progress) ----------------
         meta_loss_value = 0.0
         beta_value_scalar = 1.0
 
-        if self.meta_use_correlation:
-            # Compute future extrinsic returns
-            R_ext_from_t = self._compute_discounted_returns_from(extrinsic_rewards, is_terminals)
+        if self.meta_use_progress:
+            # 1. Đọc δ_ext đã tính sẵn ở post-rollout step (KHÔNG gọi lại GAE)
+            delta_abs = deltas_ext.abs().detach()
+            delta_max = delta_abs.max()
 
-            # Get beta outputs
+            # 2. β(s) hiện tại
             if self.use_state_dependent_beta:
                 beta_for_loss = self.beta_net(old_states).squeeze()
-                b_intr = beta_for_loss * intrinsic_rewards
             else:
                 beta_for_loss = torch.exp(self.beta_log)
-                b_intr = beta_for_loss * intrinsic_rewards
 
-            # Normalize signals
-            if b_intr.numel() > 1:
-                b_mean = b_intr.mean()
-                b_std = b_intr.std(unbiased=False) + 1e-8
-                b_intr_norm = (b_intr - b_mean) / b_std
+            # 3. Target từ |δ| (cold-start fallback dựa trên extrinsic reward signal)
+            # Triết lý: nếu batch không có reward ngoại tại nào, không tồn tại
+            # "extrinsic learning progress" — mọi biến thiên |δ| chỉ là nhiễu V_init.
+            if extrinsic_rewards.max().item() <= 0.0:
+                target = torch.full_like(beta_for_loss, self.beta_init)
+                cold_start = True
             else:
-                b_intr_norm = b_intr - b_intr.mean()
+                delta_norm = delta_abs / (delta_max + 1e-8)
+                if self.use_state_dependent_beta:
+                    b_min = self.beta_net.min
+                    b_max = self.beta_net.max
+                else:
+                    b_min, b_max = 1e-3, 10.0
+                target = b_min + (b_max - b_min) * delta_norm
+                cold_start = False
 
-            if R_ext_from_t.numel() > 1:
-                r_mean = R_ext_from_t.mean()
-                r_std = R_ext_from_t.std(unbiased=False) + 1e-8
-                R_ext_norm = (R_ext_from_t - r_mean) / r_std
-            else:
-                R_ext_norm = R_ext_from_t - R_ext_from_t.mean()
+            # 4. Progress loss (MSE regression)
+            loss_progress = ((beta_for_loss - target.detach()) ** 2).mean()
 
-            # Correlation loss — exclude timeout-terminals, keep goal-reaching terminals
-            mask = 1.0 - is_terminals * (extrinsic_rewards <= 0).float()
-            n_valid = mask.sum().clamp(min=1.0)
-            loss_corr = -(b_intr_norm * R_ext_norm * mask).sum() / n_valid
-
-            # Regularization: keep beta near center
+            # 5. Regularization
             if self.use_state_dependent_beta:
-                beta_vals = torch.log(beta_for_loss + 1e-8)
-                reg_center = math.log(max(1e-8, self.meta_corr_beta_center))
-                loss_reg = ((beta_vals - reg_center) ** 2).mean()
+                beta_log_vals = torch.log(beta_for_loss + 1e-8)
+                reg_center = math.log(max(1e-8, self.meta_reg_beta_center))
+                loss_reg = ((beta_log_vals - reg_center) ** 2).mean()
             else:
-                reg_center = math.log(max(1e-8, self.meta_corr_beta_center))
+                reg_center = math.log(max(1e-8, self.meta_reg_beta_center))
                 loss_reg = (self.beta_log - reg_center) ** 2
 
-            # Total meta loss
-            loss_meta = self.meta_corr_weight * loss_corr + self.meta_reg_weight * loss_reg
+            loss_meta = self.meta_progress_weight * loss_progress + self.meta_reg_weight * loss_reg
 
-            # Optimize beta
+            # 6. Optimize
             self.beta_optimizer.zero_grad()
             loss_meta.backward()
 
-            # Compute gradient norm
+            # gradient norm logging
             total_norm = 0.0
             if self.use_state_dependent_beta:
                 for p in self.beta_net.parameters():
@@ -449,11 +462,9 @@ class PPO:
                 if self.beta_log.grad is not None:
                     total_norm = float(self.beta_log.grad.data.norm(2).item() ** 2)
             total_norm = math.sqrt(total_norm) if total_norm > 0 else 0.0
-
-            # Log gradient norm
             self.logger.log_scalar('beta_gradient_norm', total_norm)
 
-            # Clip and step
+            # clip and step
             if not self.use_state_dependent_beta:
                 torch.nn.utils.clip_grad_norm_([self.beta_log], 1.0)
             else:
@@ -462,7 +473,15 @@ class PPO:
 
             meta_loss_value = float(loss_meta.detach().cpu().item())
 
-            # Get beta scalar for logging
+            # 7. Logging
+            self.logger.log_scalar('delta_max', float(delta_max.item()))
+            self.logger.log_scalar('delta_mean', float(delta_abs.mean().item()))
+            self.logger.log_scalar('cold_start', float(cold_start))
+            self.logger.log_scalar('loss_progress', float(loss_progress.detach().cpu().item()))
+            self.logger.log_array('delta_abs', delta_abs)
+            self.logger.log_array('beta_target', target.detach())
+
+            # beta scalar
             if self.use_state_dependent_beta:
                 with torch.no_grad():
                     try:
@@ -473,12 +492,8 @@ class PPO:
                 with torch.no_grad():
                     beta_value_scalar = float(torch.exp(self.beta_log).detach().cpu().item())
 
-            # Log array metrics for correlation analysis
-            self.logger.log_array('b_intr', b_intr.detach())
-            self.logger.log_array('R_ext', R_ext_from_t.detach())
-
         else:
-            # No meta update - just get current beta
+            # no meta update
             if self.use_state_dependent_beta:
                 with torch.no_grad():
                     try:
@@ -492,23 +507,20 @@ class PPO:
                     except Exception:
                         beta_value_scalar = 1.0
 
-        # Log beta
+        # LOG scalar metrics
         self.logger.log_scalar('beta', beta_value_scalar)
         self.logger.log_scalar('meta_loss', meta_loss_value)
 
-        # Sample state->beta pairs for visualization
+        # ---------------- sample state->beta for visualization ----------------
         if self.use_state_dependent_beta:
-            self.logger.sample_and_log(
-                old_states,
-                self.beta_net(old_states).squeeze().detach(),
-                name='beta'
-            )
+            self.logger.sample_and_log(old_states,
+                                      self.beta_net(old_states).squeeze().detach(),
+                                      name='beta')
         else:
             beta_arr = torch.full((old_states.shape[0],), beta_value_scalar, device=device)
             self.logger.sample_and_log(old_states, beta_arr, name='beta')
 
-        # ============ Combine Rewards ============
-        # Get beta for all states
+        # ---------------- Combine rewards and PPO update ----------------
         if self.use_state_dependent_beta:
             with torch.no_grad():
                 beta_full = self.beta_net(old_states).squeeze().to(device)
@@ -516,21 +528,18 @@ class PPO:
             with torch.no_grad():
                 beta_full = torch.exp(self.beta_log).detach().cpu().item()
 
-        # Combined rewards
         if isinstance(beta_full, float) or isinstance(beta_full, int):
-            combined_rewards = extrinsic_rewards + self.intr_reward_strength * float(beta_full) * intrinsic_rewards
+            combined_rewards = extrinsic_rewards + self.intr_reward_strength * float(beta_full) * intrinsic_rnd_pos
         else:
-            combined_rewards = extrinsic_rewards + self.intr_reward_strength * beta_full * intrinsic_rewards
+            combined_rewards = extrinsic_rewards + self.intr_reward_strength * beta_full * intrinsic_rnd_pos
         combined_rewards = combined_rewards.to(device)
 
-        # ============ GAE Computation ============
-        T = len(combined_rewards)
-        advantages = torch.zeros(T, device=device)
-        last_gae = torch.tensor(0.0, device=device)
-
-        for t in reversed(range(T)):
-            if t == T - 1:
-                next_value = torch.tensor(0.0, device=device)
+        # GAE on combined rewards
+        advantages = torch.zeros_like(combined_rewards).to(device)
+        last_gae = 0.0
+        for t in reversed(range(len(combined_rewards))):
+            if t == len(combined_rewards) - 1:
+                next_value = 0.0
             else:
                 next_value = old_state_values[t + 1]
             delta = combined_rewards[t] + self.gamma * next_value * (1 - is_terminals[t]) - old_state_values[t]
@@ -539,105 +548,79 @@ class PPO:
 
         returns = advantages + old_state_values
 
-        # Normalize advantages
-        adv_mean = advantages.mean()
-        adv_std = advantages.std() + 1e-7
-        advantages = (advantages - adv_mean) / adv_std
+        if advantages.std().item() > 1e-7:
+            advantages = (advantages - advantages.mean()) / (advantages.std() + 1e-7)
+        else:
+            advantages = advantages - advantages.mean()
 
-        # ============ PPO Update ============
+        # PPO epochs
         for _ in range(self.K_epochs):
             logprobs, state_values, dist_entropy = self.policy.evaluate(old_states, old_actions)
             state_values = torch.squeeze(state_values)
-
             ratios = torch.exp(logprobs - old_logprobs.detach())
             surr1 = ratios * advantages
             surr2 = torch.clamp(ratios, 1 - self.eps_clip, 1 + self.eps_clip) * advantages
-
-            loss = -torch.min(surr1, surr2) + 0.5 * self.MseLoss(state_values, returns) - 0.01 * dist_entropy
-
+            loss = -torch.min(surr1, surr2) + 0.5 * self.MseLoss(state_values, returns.detach()) - 0.01 * dist_entropy
             self.optimizer.zero_grad()
             loss.mean().backward()
             self.optimizer.step()
 
-        # ============ Logging ============
+        # LOG averaged metrics
         try:
             avg_ext = float(extrinsic_rewards.mean().cpu().item())
-            avg_int = float(intrinsic_rewards.mean().cpu().item())
+            avg_int = float(intrinsic_rnd_pos.mean().cpu().item())
         except Exception:
             avg_ext, avg_int = 0.0, 0.0
 
-        # Log metrics
         self.logger.log_scalars({
-            'avg_extrinsic_reward': avg_ext,
+            'rnd_predictor_loss': avg_pred_loss,
             'avg_intrinsic_reward': avg_int,
-            'ride_forward_loss': avg_forward_loss,
-            'ride_inverse_loss': avg_inverse_loss,
+            'avg_extrinsic_reward': avg_ext,
         })
 
-        # RIDE memory statistics
-        if self.use_ride:
-            episodic_size = len(self.ride.episodic_memory) if hasattr(self.ride, 'episodic_memory') else 0
-            global_size = len(self.ride.global_memory) if hasattr(self.ride, 'global_memory') else 0
-            self.logger.log_scalars({
-                'ride_episodic_memory_size': episodic_size,
-                'ride_global_memory_size': global_size,
-            })
-
-        # Print summary
         print(f"Update {self.logger.update_count}: AvgExt {avg_ext:.4f}, AvgInt {avg_int:.4f}, Beta {beta_value_scalar:.4f}, MetaLoss {meta_loss_value:.6f}")
-        if self.use_ride:
-            print(f"  RIDE - Fwd: {avg_forward_loss:.4f}, Inv: {avg_inverse_loss:.4f}, EpiMem: {episodic_size}, GlobalMem: {global_size}")
+        print(f"  RND predictor loss: {avg_pred_loss:.4f}")
 
-        # Copy weights to old policy
+        # copy weights to old policy
         self.policy_old.load_state_dict(self.policy.state_dict())
 
-        # Increment update counter
+        # increment logger update count
         self.logger.step_update()
 
-        # Clear buffer
+        # clear buffer
         self.buffer.clear()
 
+    # ---------------- save / load ----------------
     def save(self, checkpoint_path):
         save_dict = {
             'policy_state_dict': self.policy_old.state_dict(),
             'update_count': self.logger.update_count,
         }
-        
-        # Save RIDE
-        if self.use_ride:
-            save_dict['ride_state_dict'] = self.ride.state_dict()
-        
-        # Save beta
+        if self.use_rnd:
+            save_dict['rnd_state_dict'] = self.rnd.state_dict()
         if not self.use_state_dependent_beta:
             save_dict['beta_log'] = self.beta_log.detach().cpu()
             save_dict['beta_optimizer_state'] = self.beta_optimizer.state_dict()
         else:
             save_dict['beta_net_state_dict'] = self.beta_net.state_dict()
             save_dict['beta_optimizer_state'] = self.beta_optimizer.state_dict()
-        
+
         torch.save(save_dict, checkpoint_path)
-        
-        # Export logger data
+
         self.logger.export_logs(checkpoint_path)
 
     def load(self, checkpoint_path):
         checkpoint = torch.load(checkpoint_path, map_location=lambda storage, loc: storage)
-        
         if 'policy_state_dict' in checkpoint:
             self.policy_old.load_state_dict(checkpoint['policy_state_dict'])
             self.policy.load_state_dict(checkpoint['policy_state_dict'])
-        
         if 'update_count' in checkpoint:
             self.logger.update_count = checkpoint['update_count']
-        
-        # Load RIDE
-        if self.use_ride and 'ride_state_dict' in checkpoint:
+        if self.use_rnd and 'rnd_state_dict' in checkpoint:
             try:
-                self.ride.load_state_dict(checkpoint['ride_state_dict'])
+                self.rnd.load_state_dict(checkpoint['rnd_state_dict'])
             except Exception:
                 pass
-        
-        # Load beta
         if not self.use_state_dependent_beta and 'beta_log' in checkpoint:
             try:
                 loaded_log = checkpoint['beta_log'].to(device)
@@ -654,14 +637,14 @@ class PPO:
                     self.beta_optimizer.load_state_dict(checkpoint['beta_optimizer_state'])
             except Exception:
                 pass
-        
-        # Load logger data
+
         self.logger.load_logs(checkpoint_path)
 
+    # ---------------- convenience exports ----------------
     def export_logs(self, path_prefix):
-        """Export logs separately"""
+        """Export logs separately (wrapper around logger.export_logs)"""
         self.logger.export_logs(path_prefix)
 
     def print_training_summary(self):
-        """Print training summary"""
+        """Print training summary (wrapper)"""
         self.logger.print_summary()

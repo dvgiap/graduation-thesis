@@ -190,11 +190,11 @@ class PPO:
                  beta_head_hidden=128,
                  beta_min=0.1,
                  beta_max=2.0,
-                 # Meta options
-                 meta_use_correlation=True,
-                 meta_corr_weight=1.0,
+                 # Meta options (Learning-Progress)
+                 meta_use_progress=True,
+                 meta_progress_weight=1.0,
                  meta_reg_weight=1e-3,
-                 meta_corr_beta_center=1.0,
+                 meta_reg_beta_center=1.0,
                  # Logging
                  sample_states_per_update=256,
                  sample_every_n_updates=1):
@@ -252,11 +252,12 @@ class PPO:
             ).to(device)
             self.beta_optimizer = torch.optim.Adam(self.beta_net.parameters(), lr=beta_lr, weight_decay=1e-6)
 
-        # Meta options
-        self.meta_use_correlation = meta_use_correlation
-        self.meta_corr_weight = meta_corr_weight
+        # Meta options (Learning-Progress)
+        self.meta_use_progress = meta_use_progress
+        self.meta_progress_weight = meta_progress_weight
         self.meta_reg_weight = meta_reg_weight
-        self.meta_corr_beta_center = float(meta_corr_beta_center)
+        self.meta_reg_beta_center = float(meta_reg_beta_center)
+        self.beta_init = float(beta_init)
 
         # Logger
         self.logger = TrainingLogger(
@@ -302,6 +303,27 @@ class PPO:
             R[t] = Rt
         return R
 
+    def compute_extrinsic_advantages(self, extrinsic_rewards, state_values, is_terminals):
+        """GAE on extrinsic rewards. Returns (normalized advantages, raw deltas)."""
+        T = len(extrinsic_rewards)
+        advantages = torch.zeros(T, device=device)
+        deltas = torch.zeros(T, device=device)
+        last_gae = 0.0
+        for t in reversed(range(T)):
+            if t == T - 1:
+                next_value = 0.0
+            else:
+                next_value = state_values[t + 1]
+            delta = extrinsic_rewards[t] + self.gamma * next_value * (1 - is_terminals[t]) - state_values[t]
+            deltas[t] = delta
+            last_gae = delta + self.gamma * self.gae_lambda * (1 - is_terminals[t]) * last_gae
+            advantages[t] = last_gae
+        if advantages.std().item() > 1e-8:
+            advantages = (advantages - advantages.mean()) / (advantages.std() + 1e-8)
+        else:
+            advantages = advantages - advantages.mean()
+        return advantages, deltas
+
     def update(self):
         # Convert buffer to tensors
         old_states = torch.squeeze(torch.stack(self.buffer.states, dim=0)).detach().to(device)
@@ -329,59 +351,63 @@ class PPO:
         
         intrinsic_rewards = torch.tensor(intrinsic_raw, dtype=torch.float32).to(device)
 
-        # ============ Meta-Update (Correlation-based Beta Adaptation) ============
+        # ============ Post-rollout extrinsic statistics ============
+        # Tính 1 lần / update, dùng buffer CHRONOLOGICAL (chưa shuffle).
+        # Bất kỳ mini-batch loop nào sau này đều phải nằm SAU dòng này.
+        advantages_ext, deltas_ext = self.compute_extrinsic_advantages(
+            extrinsic_rewards, old_state_values, is_terminals
+        )
+
+        # ============ Meta-Update (Learning-Progress) ============
         meta_loss_value = 0.0
         beta_value_scalar = 1.0
 
-        if self.meta_use_correlation:
-            # Compute future extrinsic returns
-            R_ext_from_t = self._compute_discounted_returns_from(extrinsic_rewards, is_terminals)
+        if self.meta_use_progress:
+            # 1. Đọc δ_ext đã tính sẵn ở post-rollout step (KHÔNG gọi lại GAE)
+            delta_abs = deltas_ext.abs().detach()
+            delta_max = delta_abs.max()
 
-            # Get beta outputs
+            # 2. β(s) hiện tại
             if self.use_state_dependent_beta:
                 beta_for_loss = self.beta_net(old_states).squeeze()
-                b_intr = beta_for_loss * intrinsic_rewards
             else:
                 beta_for_loss = torch.exp(self.beta_log)
-                b_intr = beta_for_loss * intrinsic_rewards
 
-            # Normalize signals
-            if b_intr.numel() > 1:
-                b_mean = b_intr.mean()
-                b_std = b_intr.std(unbiased=False) + 1e-8
-                b_intr_norm = (b_intr - b_mean) / b_std
+            # 3. Target từ |δ| (cold-start fallback dựa trên extrinsic reward signal)
+            # Triết lý: nếu batch không có reward ngoại tại nào, không tồn tại
+            # "extrinsic learning progress" — mọi biến thiên |δ| chỉ là nhiễu V_init.
+            if extrinsic_rewards.max().item() <= 0.0:
+                target = torch.full_like(beta_for_loss, self.beta_init)
+                cold_start = True
             else:
-                b_intr_norm = b_intr - b_intr.mean()
+                delta_norm = delta_abs / (delta_max + 1e-8)
+                if self.use_state_dependent_beta:
+                    b_min = self.beta_net.min
+                    b_max = self.beta_net.max
+                else:
+                    b_min, b_max = 1e-3, 10.0
+                target = b_min + (b_max - b_min) * delta_norm
+                cold_start = False
 
-            if R_ext_from_t.numel() > 1:
-                r_mean = R_ext_from_t.mean()
-                r_std = R_ext_from_t.std(unbiased=False) + 1e-8
-                R_ext_norm = (R_ext_from_t - r_mean) / r_std
-            else:
-                R_ext_norm = R_ext_from_t - R_ext_from_t.mean()
+            # 4. Progress loss (MSE regression)
+            loss_progress = ((beta_for_loss - target.detach()) ** 2).mean()
 
-            # Correlation loss — exclude timeout-terminals, keep goal-reaching terminals
-            mask = 1.0 - is_terminals * (extrinsic_rewards <= 0).float()
-            n_valid = mask.sum().clamp(min=1.0)
-            loss_corr = -(b_intr_norm * R_ext_norm * mask).sum() / n_valid
-
-            # Regularization: keep beta near center
+            # 5. Regularization: keep beta near center
             if self.use_state_dependent_beta:
-                beta_vals = torch.log(beta_for_loss + 1e-8)
-                reg_center = math.log(max(1e-8, self.meta_corr_beta_center))
-                loss_reg = ((beta_vals - reg_center) ** 2).mean()
+                beta_log_vals = torch.log(beta_for_loss + 1e-8)
+                reg_center = math.log(max(1e-8, self.meta_reg_beta_center))
+                loss_reg = ((beta_log_vals - reg_center) ** 2).mean()
             else:
-                reg_center = math.log(max(1e-8, self.meta_corr_beta_center))
+                reg_center = math.log(max(1e-8, self.meta_reg_beta_center))
                 loss_reg = (self.beta_log - reg_center) ** 2
 
-            # Total meta loss
-            loss_meta = self.meta_corr_weight * loss_corr + self.meta_reg_weight * loss_reg
+            loss_meta = self.meta_progress_weight * loss_progress + self.meta_reg_weight * loss_reg
 
-            # Optimize beta
+            # 6. Optimize
             self.beta_optimizer.zero_grad()
             loss_meta.backward()
 
-            # Compute gradient norm
+            # gradient norm logging
             total_norm = 0.0
             if self.use_state_dependent_beta:
                 for p in self.beta_net.parameters():
@@ -392,11 +418,9 @@ class PPO:
                 if self.beta_log.grad is not None:
                     total_norm = float(self.beta_log.grad.data.norm(2).item() ** 2)
             total_norm = math.sqrt(total_norm) if total_norm > 0 else 0.0
-
-            # Log gradient norm
             self.logger.log_scalar('beta_gradient_norm', total_norm)
 
-            # Clip and step
+            # clip and step
             if not self.use_state_dependent_beta:
                 torch.nn.utils.clip_grad_norm_([self.beta_log], 1.0)
             else:
@@ -405,7 +429,15 @@ class PPO:
 
             meta_loss_value = float(loss_meta.detach().cpu().item())
 
-            # Get beta scalar for logging
+            # 7. Logging
+            self.logger.log_scalar('delta_max', float(delta_max.item()))
+            self.logger.log_scalar('delta_mean', float(delta_abs.mean().item()))
+            self.logger.log_scalar('cold_start', float(cold_start))
+            self.logger.log_scalar('loss_progress', float(loss_progress.detach().cpu().item()))
+            self.logger.log_array('delta_abs', delta_abs)
+            self.logger.log_array('beta_target', target.detach())
+
+            # beta scalar
             if self.use_state_dependent_beta:
                 with torch.no_grad():
                     try:
@@ -415,10 +447,6 @@ class PPO:
             else:
                 with torch.no_grad():
                     beta_value_scalar = float(torch.exp(self.beta_log).detach().cpu().item())
-
-            # Log array metrics for correlation analysis
-            self.logger.log_array('b_intr', b_intr.detach())
-            self.logger.log_array('R_ext', R_ext_from_t.detach())
 
         else:
             # No meta update - just get current beta
