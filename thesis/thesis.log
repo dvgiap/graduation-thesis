@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.15)  18 MAR 2026 00:40
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.15)  27 APR 2026 11:58
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1032,8 +1032,8 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 
 ] (chapters/glossary.tex
-Underfull \hbox (badness 10000) in paragraph at lines 8--8
-[]|\T5/cmr/m/n/13 Adaptive Correlation-
+Underfull \hbox (badness 6559) in paragraph at lines 8--8
+[]|\T5/cmr/m/n/13 Correlation-Aware Re-ward
  []
 
 
@@ -1136,18 +1136,18 @@ LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
 
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: FE208A37ABAD2A0054FDEF744CF7E7B6;6770.
+(rerunfilecheck)             Checksum: 1FB38013BC4B3871C76B6FC87965EE58;6712.
  ) 
 Here is how much of TeX's memory you used:
  27195 strings out of 467867
  487277 string characters out of 5428410
- 902911 words of memory out of 5000000
+ 902902 words of memory out of 5000000
  55468 multiletter control sequences out of 15000+600000
  650953 words of font info for 78 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  108i,15n,107p,1007b,621s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\JS\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnbx12.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr12.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr7.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr9.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnti12.pfb>
-Output written on thesis.pdf (34 pages, 357861 bytes).
+Output written on thesis.pdf (34 pages, 357902 bytes).
 PDF statistics:
  527 PDF objects out of 1000 (max. 8388607)
  111 named destinations out of 1000 (max. 500000)

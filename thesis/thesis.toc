@@ -25,7 +25,7 @@
 \contentsline {section}{\numberline {3.2}Base Reinforcement Learning Algorithm}{9}{section.3.2}%
 \contentsline {section}{\numberline {3.3}Representative Intrinsic Reward Modules}{10}{section.3.3}%
 \contentsline {subsection}{\numberline {3.3.1}ICM Instantiation}{10}{subsection.3.3.1}%
-\contentsline {section}{\numberline {3.4}Adaptive Correlation-Weighted Intrinsic Scaling}{11}{section.3.4}%
+\contentsline {section}{\numberline {3.4}Correlation-Aware Reward Exploration}{11}{section.3.4}%
 \contentsline {subsection}{\numberline {3.4.1}Beta Network}{11}{subsection.3.4.1}%
 \contentsline {subsection}{\numberline {3.4.2}Correlation-Based Objective}{12}{subsection.3.4.2}%
 \contentsline {section}{\numberline {3.5}Training Procedure}{12}{section.3.5}%

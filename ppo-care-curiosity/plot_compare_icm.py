@@ -1,5 +1,5 @@
 """
-Compare ACWI vs Baseline for ICM and COUNT across 6 environments.
+Compare CARE vs Baseline for ICM and COUNT across 6 environments.
 Layout: 6 rows x 2 cols (left=ICM, right=COUNT).
 """
 import os
@@ -41,12 +41,12 @@ SEEDS = [1, 2, 3, 4, 5]
 WINDOW_SMOOTH = 20
 WINDOW_VAR = 5
 
-ACWI_ROOT     = "logs"
+CARE_ROOT     = "logs"
 BASELINE_ROOT = os.path.join("..", "ppo-curiosity", "logs")
 
 METHODS = {
-    "ICM":   {"suffix": "_ICM",   "color_acwi": "#1f77b4", "color_base": "#aec7e8"},
-    "COUNT": {"suffix": "_COUNT", "color_acwi": "#d62728", "color_base": "#f5b8a8"},
+    "ICM":   {"suffix": "_ICM",   "color_care": "#1f77b4", "color_base": "#aec7e8"},
+    "COUNT": {"suffix": "_COUNT", "color_care": "#d62728", "color_base": "#f5b8a8"},
 }
 
 
@@ -66,10 +66,10 @@ def smooth(series, window, min_periods=1):
     return series.rolling(window=window, win_type="triang", min_periods=min_periods).mean()
 
 
-def plot_pair(ax, env, suffix, color_acwi, color_base):
+def plot_pair(ax, env, suffix, color_care, color_base):
     configs = [
         (BASELINE_ROOT, "Baseline", color_base,  "-",  0.9),
-        (ACWI_ROOT,     "ACWI",     color_acwi, "--",  1.0),
+        (CARE_ROOT,     "CARE",     color_care, "--",  1.0),
     ]
     for log_root, label, color, ls, alpha in configs:
         frames = load_seeds(log_root, env, suffix)
@@ -114,15 +114,15 @@ def main():
     for row, env in enumerate(ENVS):
         for col, (method_label, cfg) in enumerate(method_list):
             ax = axes[row][col]
-            plot_pair(ax, env, cfg["suffix"], cfg["color_acwi"], cfg["color_base"])
+            plot_pair(ax, env, cfg["suffix"], cfg["color_care"], cfg["color_base"])
             format_ax(ax, env, method_label)
 
-    fig.suptitle("ACWI vs Baseline — 6 Environments", fontsize=14, fontweight="bold", y=1.002)
+    fig.suptitle("CARE vs Baseline — 6 Environments", fontsize=14, fontweight="bold", y=1.002)
     plt.tight_layout(h_pad=3.5, w_pad=3.0)
 
     figs_dir = "figs"
     os.makedirs(figs_dir, exist_ok=True)
-    save_path = os.path.join(figs_dir, "compare_acwi_vs_baseline_all_envs.png")
+    save_path = os.path.join(figs_dir, "compare_care_vs_baseline_all_envs.png")
     plt.savefig(save_path, dpi=150, bbox_inches="tight")
     print(f"Figure saved: {save_path}")
     plt.show()

@@ -8,7 +8,7 @@ This thesis considers episodic reinforcement learning with both extrinsic and in
 \end{equation}
 where $\alpha > 0$ is a global intrinsic-strength hyperparameter and $\beta_\psi(s_t)$ is learned online.
 
-The intuition is straightforward. If exploration from state $s_t$ tends to lead to higher future extrinsic return, the method should increase the influence of intrinsic reward in that state. If exploration is unhelpful or noisy, the influence should be reduced. ACWI operationalizes this idea through a lightweight Beta Network trained with a correlation-based objective. This formulation deliberately separates the adaptive scaling mechanism from the underlying intrinsic reward generator so that the same ACWI layer can be studied across different module families.
+The intuition is straightforward. If exploration from state $s_t$ tends to lead to higher future extrinsic return, the method should increase the influence of intrinsic reward in that state. If exploration is unhelpful or noisy, the influence should be reduced. CARE operationalizes this idea through a lightweight Beta Network trained with a correlation-based objective. This formulation deliberately separates the adaptive scaling mechanism from the underlying intrinsic reward generator so that the same CARE layer can be studied across different module families.
 
 \section{Base Reinforcement Learning Algorithm}
 The policy optimization backbone used in this thesis is Proximal Policy Optimization (PPO) \cite{schulman2017ppo}. PPO is widely adopted because it offers stable on-policy optimization with relatively simple implementation. It updates the policy by maximizing a clipped surrogate objective:
@@ -23,14 +23,14 @@ L^{\text{PPO}}(\theta) =
 where $\rho_t(\theta) = \frac{\pi_\theta(a_t \mid s_t)}{\pi_{\theta_{\text{old}}}(a_t \mid s_t)}$ is the importance ratio and $\hat{A}_t$ is the advantage estimate. The advantages are computed with Generalized Advantage Estimation (GAE) \cite{schulman2016gae} using the shaped reward in Equation \ref{eq:shaped_reward}.
 
 \section{Representative Intrinsic Reward Modules}
-To make the experimental framing explicit, this thesis treats ACWI as a wrapper around representative intrinsic reward modules rather than as an ICM-specific add-on. The discussion centers on three module families:
+To make the experimental framing explicit, this thesis treats CARE as a wrapper around representative intrinsic reward modules rather than as an ICM-specific add-on. The discussion centers on three module families:
 \begin{itemize}
     \item \textbf{Count-based exploration}: intrinsic reward is derived from state novelty, typically using inverse visit frequency or pseudo-counts.
     \item \textbf{Intrinsic Curiosity Module (ICM)}: intrinsic reward is derived from forward prediction error in a learned latent space.
     \item \textbf{Rewarding Impact-Driven Exploration (RIDE)}: intrinsic reward emphasizes transitions that produce meaningful changes in the learned state representation through the agent's actions.
 \end{itemize}
 
-These modules generate different exploration signals, but all of them can be combined with ACWI through the same shaped reward in Equation \ref{eq:shaped_reward}. Among them, ICM is used as the concrete implementation in this thesis because it provides a clean and computationally efficient test case for quantitative evaluation.
+These modules generate different exploration signals, but all of them can be combined with CARE through the same shaped reward in Equation \ref{eq:shaped_reward}. Among them, ICM is used as the concrete implementation in this thesis because it provides a clean and computationally efficient test case for quantitative evaluation.
 
 \subsection{ICM Instantiation}
 To generate intrinsic rewards in the implemented system, the thesis adopts the Intrinsic Curiosity Module (ICM) \cite{pathak2017curiosity}. ICM first encodes each state into a latent representation $\phi(s_t) \in \mathbb{R}^d$. It then uses two auxiliary models:
@@ -57,7 +57,7 @@ I_t^+ = \max \left(0, \frac{I_t - \mu_I}{\sigma_I + \varepsilon} \right),
 \end{equation}
 where $\mu_I$ and $\sigma_I$ are the minibatch mean and standard deviation. This preprocessing suppresses transitions whose prediction errors are below the batch average and retains relatively surprising transitions.
 
-\section{Adaptive Correlation-Weighted Intrinsic Scaling}
+\section{Correlation-Aware Reward Exploration}
 
 \subsection{Beta Network}
 The core contribution of the thesis is a Beta Network $\beta_\psi: \mathcal{S} \rightarrow \mathbb{R}_+$ that predicts a positive intrinsic reward multiplier from the current state. The network is intentionally lightweight to keep the computational overhead low. In the experiments adapted from the paper, the network uses an encoder depth of 2, an embedding size of 256, and clips its output to the interval $[0.1, 2.0]$.
@@ -71,10 +71,10 @@ and the final reward used by PPO is
 \bar{r}_t = R_t^E + \alpha \tilde{I}_t^{\,m}.
 \end{equation}
 
-This notation emphasizes that ACWI does not define novelty by itself. Instead, it adaptively regulates the contribution of whichever intrinsic module supplies the raw bonus. In the present implementation, $I_t^{+,m}$ corresponds to the standardized ICM reward.
+This notation emphasizes that CARE does not define novelty by itself. Instead, it adaptively regulates the contribution of whichever intrinsic module supplies the raw bonus. In the present implementation, $I_t^{+,m}$ corresponds to the standardized ICM reward.
 
 \subsection{Correlation-Based Objective}
-Training $\beta_\psi$ with meta-gradients would be computationally expensive. Instead, ACWI introduces a first-order objective that directly aligns the scaled intrinsic reward with discounted future extrinsic return. Let
+Training $\beta_\psi$ with meta-gradients would be computationally expensive. Instead, CARE introduces a first-order objective that directly aligns the scaled intrinsic reward with discounted future extrinsic return. Let
 \begin{equation}
 G_t^E = \sum_{k=t}^{T} \gamma^{k-t} R_k^E
 \end{equation}
@@ -92,7 +92,7 @@ L_{\text{corr}}(\psi) = - \mathbb{E}[\hat{I}_t^{\,m} \hat{G}_t].
 \end{equation}
 Minimizing this loss encourages $\beta_\psi(s_t)$ to be larger in states where intrinsic exploration is positively associated with future extrinsic success.
 
-To avoid unstable or degenerate scaling, ACWI also uses a regularization term in log-space:
+To avoid unstable or degenerate scaling, CARE also uses a regularization term in log-space:
 \begin{equation}
 L_{\text{reg}}(\psi) = \mathbb{E}\left[\left(\log \beta_\psi(s_t) - \log \beta_0 \right)^2\right],
 \end{equation}
@@ -102,7 +102,7 @@ L_\beta(\psi) = L_{\text{corr}}(\psi) + \lambda_{\text{reg}} L_{\text{reg}}(\psi
 \end{equation}
 
 \section{Training Procedure}
-The complete training loop integrates PPO, an intrinsic reward module, and ACWI as follows:
+The complete training loop integrates PPO, an intrinsic reward module, and CARE as follows:
 \begin{enumerate}
     \item collect on-policy trajectories using the current policy;
     \item update the chosen intrinsic reward module on the collected batch to compute intrinsic rewards;
@@ -117,6 +117,6 @@ The complete training loop integrates PPO, an intrinsic reward module, and ACWI 
 This procedure preserves compatibility with conventional PPO training while adding only a small auxiliary network and a simple optimization step before each PPO update cycle. In the implemented experiments, the intrinsic module in Step 2 is ICM.
 
 \section{Discussion}
-The methodology offers three important advantages. First, it avoids manual selection of a single intrinsic reward coefficient for all states. Second, it remains computationally efficient because it does not require unrolled policy optimization or high-order differentiation. Third, it is modular: the scaling mechanism is agnostic to the base RL algorithm and can be paired with other intrinsic reward generators besides ICM. This modularity is central to the thesis framing because it allows ACWI to be analyzed as a common adaptive layer for count-based, ICM, and RIDE-style exploration signals.
+The methodology offers three important advantages. First, it avoids manual selection of a single intrinsic reward coefficient for all states. Second, it remains computationally efficient because it does not require unrolled policy optimization or high-order differentiation. Third, it is modular: the scaling mechanism is agnostic to the base RL algorithm and can be paired with other intrinsic reward generators besides ICM. This modularity is central to the thesis framing because it allows CARE to be analyzed as a common adaptive layer for count-based, ICM, and RIDE-style exploration signals.
 
-At the same time, the method assumes that at least some correlation exists between local exploration and future extrinsic return. When the environment is so sparse that extrinsic signals remain near zero for long periods, the Beta Network receives little informative supervision. In such cases, the method is expected to behave similarly to a fixed scaling strategy rather than producing strong adaptation. This limitation becomes important in the empirical analysis of Chapter 4 and helps explain why the impact of ACWI may differ across intrinsic reward modules.
+At the same time, the method assumes that at least some correlation exists between local exploration and future extrinsic return. When the environment is so sparse that extrinsic signals remain near zero for long periods, the Beta Network receives little informative supervision. In such cases, the method is expected to behave similarly to a fixed scaling strategy rather than producing strong adaptation. This limitation becomes important in the empirical analysis of Chapter 4 and helps explain why the impact of CARE may differ across intrinsic reward modules.

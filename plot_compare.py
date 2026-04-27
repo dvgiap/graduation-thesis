@@ -1,5 +1,5 @@
 """
-Compare baseline (ppo-curiosity) vs ACWI (ppo-acwi-curiosity) for ICM and COUNT.
+Compare baseline (ppo-curiosity) vs CARE (ppo-care-curiosity) for ICM and COUNT.
 Run from the repo root:  python plot_compare.py
 """
 
@@ -23,9 +23,9 @@ WINDOW = 20  # smoothing window (triangular)
 SERIES = [
     # (sub_dir,            suffix,   display_label,       color,         linestyle)
     ('ppo-curiosity',      '_ICM',   'ICM (baseline)',    'steelblue',   '-'),
-    ('ppo-acwi-curiosity', '_ICM',   'ACWI-ICM',          'darkorange',  '--'),
+    ('ppo-care-curiosity', '_ICM',   'CARE-ICM',          'darkorange',  '--'),
     ('ppo-curiosity',      '_COUNT', 'COUNT (baseline)',  'seagreen',    '-'),
-    ('ppo-acwi-curiosity', '_COUNT', 'ACWI-COUNT',        'crimson',     '--'),
+    ('ppo-care-curiosity', '_COUNT', 'CARE-COUNT',        'crimson',     '--'),
 ]
 
 OUT_DIR = os.path.join('figs', 'compare')
@@ -59,7 +59,7 @@ def plot_all_envs():
     ncols = 3
     nrows = 2
     fig, axes = plt.subplots(nrows, ncols, figsize=(18, 10))
-    fig.suptitle('Baseline vs ACWI (ICM & COUNT) — All Environments',
+    fig.suptitle('Baseline vs CARE (ICM & COUNT) — All Environments',
                  fontsize=15, fontweight='bold', y=1.01)
 
     for idx, env in enumerate(ENVS):
@@ -96,7 +96,7 @@ def plot_all_envs():
                     transform=ax.transAxes, fontsize=12, color='gray')
 
     fig.tight_layout()
-    out_path = os.path.join(OUT_DIR, 'all_envs_baseline_vs_acwi.png')
+    out_path = os.path.join(OUT_DIR, 'all_envs_baseline_vs_care.png')
     fig.savefig(out_path, dpi=150, bbox_inches='tight')
     print(f"Saved: {out_path}")
     plt.show()
@@ -107,7 +107,7 @@ def plot_per_env():
     for env in ENVS:
         fig, axes = plt.subplots(1, 2, figsize=(14, 5))
         env_short = env.replace('MiniGrid-', '').replace('-v0', '')
-        fig.suptitle(f'{env_short}: Baseline vs ACWI', fontsize=13, fontweight='bold')
+        fig.suptitle(f'{env_short}: Baseline vs CARE', fontsize=13, fontweight='bold')
 
         method_groups = [
             ('ICM',   [s for s in SERIES if '_ICM' in s[1]]),
@@ -141,7 +141,7 @@ def plot_per_env():
                         transform=ax.transAxes, fontsize=12, color='gray')
 
         fig.tight_layout()
-        out_path = os.path.join(OUT_DIR, f'{env}_baseline_vs_acwi.png')
+        out_path = os.path.join(OUT_DIR, f'{env}_baseline_vs_care.png')
         fig.savefig(out_path, dpi=150, bbox_inches='tight')
         print(f"Saved: {out_path}")
         plt.close(fig)
