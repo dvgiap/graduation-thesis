@@ -42,10 +42,18 @@ INPUT D:\Program Files\MiKTeX\tex\latex\amsfonts\amsfonts.sty
 INPUT D:\Program Files\MiKTeX\tex\latex\amsfonts\amsfonts.sty
 INPUT D:\Program Files\MiKTeX\tex\latex\amsfonts\amssymb.sty
 INPUT D:\Program Files\MiKTeX\tex\latex\amsfonts\amssymb.sty
-INPUT D:\Program Files\MiKTeX\tex\latex\graphics\graphicx.sty
-INPUT D:\Program Files\MiKTeX\tex\latex\graphics\graphicx.sty
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\amscls\amsthm.sty
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\amscls\amsthm.sty
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\mathtools\mathtools.sty
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\mathtools\mathtools.sty
 INPUT D:\Program Files\MiKTeX\tex\latex\graphics\keyval.sty
 INPUT D:\Program Files\MiKTeX\tex\latex\graphics\keyval.sty
+INPUT D:\Program Files\MiKTeX\tex\latex\tools\calc.sty
+INPUT D:\Program Files\MiKTeX\tex\latex\tools\calc.sty
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\mathtools\mhsetup.sty
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\mathtools\mhsetup.sty
+INPUT D:\Program Files\MiKTeX\tex\latex\graphics\graphicx.sty
+INPUT D:\Program Files\MiKTeX\tex\latex\graphics\graphicx.sty
 INPUT D:\Program Files\MiKTeX\tex\latex\graphics\graphics.sty
 INPUT D:\Program Files\MiKTeX\tex\latex\graphics\graphics.sty
 INPUT D:\Program Files\MiKTeX\tex\latex\graphics\trig.sty
@@ -253,8 +261,6 @@ INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\sectsty\sectsty.sty
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\sectsty\sectsty.sty
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\tocloft\tocloft.sty
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\tocloft\tocloft.sty
-INPUT D:\Program Files\MiKTeX\tex\latex\tools\calc.sty
-INPUT D:\Program Files\MiKTeX\tex\latex\tools\calc.sty
 INPUT D:\Program Files\MiKTeX\tex\latex\listings\listings.sty
 INPUT D:\Program Files\MiKTeX\tex\latex\listings\listings.sty
 INPUT D:\Program Files\MiKTeX\tex\latex\listings\lstpatch.sty
@@ -274,8 +280,17 @@ INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\natbib\natbib.sty
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\natbib\natbib.sty
 INPUT D:\Program Files\MiKTeX\tex\generic\pgf\frontendlayer\tikz\libraries\tikzlibrarycalc.code.tex
 INPUT D:\Program Files\MiKTeX\tex\generic\pgf\frontendlayer\tikz\libraries\tikzlibrarycalc.code.tex
+INPUT D:\Program Files\MiKTeX\tex\generic\pgf\frontendlayer\tikz\libraries\tikzlibrarypositioning.code.tex
+INPUT D:\Program Files\MiKTeX\tex\generic\pgf\frontendlayer\tikz\libraries\tikzlibrarypositioning.code.tex
+INPUT D:\Program Files\MiKTeX\tex\generic\pgf\libraries\pgflibraryarrows.meta.code.tex
+INPUT D:\Program Files\MiKTeX\tex\generic\pgf\libraries\pgflibraryarrows.meta.code.tex
+INPUT D:\Program Files\MiKTeX\tex\generic\pgf\libraries\pgflibraryarrows.meta.code.tex
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\algorithms\algorithm.sty
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\algorithms\algorithm.sty
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\algorithmicx\algpseudocode.sty
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\algorithmicx\algpseudocode.sty
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\algorithmicx\algorithmicx.sty
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\algorithmicx\algorithmicx.sty
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\caption\subcaption.sty
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\caption\subcaption.sty
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\threeparttable\threeparttable.sty
@@ -395,6 +410,14 @@ INPUT chapters\glossary.tex
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnr17.tfm
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnbx12.tfm
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnbx12.tfm
+INPUT .\chapters\notations.tex
+INPUT .\chapters\notations.tex
+INPUT .\chapters\notations.tex
+INPUT .\chapters\notations.tex
+INPUT chapters\notations.tex
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnti12.tfm
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnr9.tfm
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnr7.tfm
 INPUT .\chapters\c1\c1_introduction.tex
 INPUT .\chapters\c1\c1_introduction.tex
 INPUT .\chapters\c1\c1_introduction.tex
@@ -403,7 +426,6 @@ INPUT chapters\c1\c1_introduction.tex
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnr17.tfm
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnbx12.tfm
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnbx12.tfm
-INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnti12.tfm
 INPUT D:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\tcrm1200.tfm
 INPUT .\chapters\c2\c2_chapter.tex
 INPUT .\chapters\c2\c2_chapter.tex
@@ -415,8 +437,37 @@ INPUT .\chapters\c3\c3_chapter.tex
 INPUT .\chapters\c3\c3_chapter.tex
 INPUT .\chapters\c3\c3_chapter.tex
 INPUT chapters\c3\c3_chapter.tex
-INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnr9.tfm
-INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnr7.tfm
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnr10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmr10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmr8.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmmi10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmmi8.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmsy10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmsy8.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmex10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex8.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam7.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam5.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm7.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm5.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmex10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex8.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam5.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm5.tfm
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnr8.tfm
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnr6.tfm
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnti9.tfm
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnti7.tfm
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnbx9.tfm
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnbx7.tfm
 INPUT .\chapters\c4\c4_chapter.tex
 INPUT .\chapters\c4\c4_chapter.tex
 INPUT .\chapters\c4\c4_chapter.tex
@@ -430,21 +481,47 @@ INPUT chapters\conclusion.tex
 INPUT .\thesis.bbl
 INPUT .\thesis.bbl
 INPUT thesis.bbl
+INPUT .\chapters\appendix_a.tex
+INPUT .\chapters\appendix_a.tex
+INPUT .\chapters\appendix_a.tex
+INPUT .\chapters\appendix_a.tex
+INPUT chapters\appendix_a.tex
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmbx12.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmbx9.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmbx6.tfm
+INPUT .\chapters\appendix_b.tex
+INPUT .\chapters\appendix_b.tex
+INPUT .\chapters\appendix_b.tex
+INPUT .\chapters\appendix_b.tex
+INPUT chapters\appendix_b.tex
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmbx8.tfm
 INPUT thesis.aux
 INPUT .\thesis.out
 INPUT .\thesis.out
 INPUT C:\Users\JS\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\tcrm1200.pk
 INPUT C:\Users\JS\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\tcrm1200.pk
+INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmbx12.pfb
+INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmbx12.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmex10.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmex10.pfb
+INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi10.pfb
+INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi10.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi12.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi12.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi6.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi6.pfb
+INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi8.pfb
+INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi8.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi9.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi9.pfb
+INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr10.pfb
+INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr10.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr12.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr12.pfb
+INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr6.pfb
+INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr6.pfb
+INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr8.pfb
+INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr8.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr9.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr9.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb
@@ -455,11 +532,19 @@ INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\symbols\msbm10.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\symbols\msbm10.pfb
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\type1\vntex\vnr\vnbx12.pfb
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\type1\vntex\vnr\vnbx12.pfb
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\type1\vntex\vnr\vnbx9.pfb
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\type1\vntex\vnr\vnbx9.pfb
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\type1\vntex\vnr\vnr10.pfb
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\type1\vntex\vnr\vnr10.pfb
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\type1\vntex\vnr\vnr12.pfb
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\type1\vntex\vnr\vnr12.pfb
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\type1\vntex\vnr\vnr7.pfb
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\type1\vntex\vnr\vnr7.pfb
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\type1\vntex\vnr\vnr8.pfb
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\type1\vntex\vnr\vnr8.pfb
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\type1\vntex\vnr\vnr9.pfb
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\type1\vntex\vnr\vnr9.pfb
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\type1\vntex\vnr\vnti12.pfb
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\type1\vntex\vnr\vnti12.pfb
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\type1\vntex\vnr\vnti9.pfb
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\type1\vntex\vnr\vnti9.pfb

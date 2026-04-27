@@ -1,0 +1,138 @@
+\chapter{Mathematical Proofs}
+\label{app:proofs}
+
+This appendix collects the full proofs of the formal results stated in Chapter~\ref{ch:methodology}. Each section below corresponds to a single proposition, lemma, or corollary, and may be read independently of the others. Throughout the appendix, expectations are taken with respect to the on-policy distribution induced by the current policy $\pi_\theta$ unless stated otherwise; standard regularity conditions (existence of first and second moments, measurability of $\beta_\psi$) are assumed.
+
+\section{Proof of Proposition 3.1: Correlation Equivalence}
+\label{app:proof_pearson}
+
+\begin{proof}
+Let $\tilde I_t \equiv \tilde I_t^{\,m}$ denote the scaled intrinsic reward and let $G_t \equiv G_t^E$ denote the discounted extrinsic return. Both random variables are assumed to have finite, nonzero variance under the on-policy distribution. From Equations~\eqref{eq:standardization} and~\eqref{eq:corr_loss},
+\begin{equation*}
+L_\text{corr}(\psi) \;=\; -\, \mathbb{E}\!\left[ \hat I_t\, \hat G_t \right]
+\;=\; -\, \mathbb{E}\!\left[ \frac{\tilde I_t - \mu_{\tilde I}}{\sigma_{\tilde I}} \cdot \frac{G_t - \mu_G}{\sigma_G} \right].
+\end{equation*}
+Pulling the constants $\sigma_{\tilde I}$ and $\sigma_G$ out of the expectation, which is valid because they are non-random in the population limit,
+\begin{equation*}
+L_\text{corr}(\psi) \;=\; -\, \frac{1}{\sigma_{\tilde I}\, \sigma_G} \; \mathbb{E}\!\left[ \bigl(\tilde I_t - \mu_{\tilde I}\bigr) \bigl(G_t - \mu_G\bigr) \right]
+\;=\; -\, \frac{\mathrm{Cov}(\tilde I_t,\, G_t)}{\sigma_{\tilde I}\, \sigma_G}.
+\end{equation*}
+The right-hand side is precisely the negative Pearson correlation coefficient,
+\begin{equation*}
+L_\text{corr}(\psi) \;=\; -\, \rho\!\left( \tilde I_t,\, G_t \right).
+\end{equation*}
+In a finite minibatch, the empirical estimator $\widehat L_\text{corr}$ replaces $\mu_{\tilde I}, \mu_G, \sigma_{\tilde I}, \sigma_G$ with sample analogues. By the strong law of large numbers and the continuous mapping theorem applied to the ratio of sample covariance and sample standard deviations, $\widehat L_\text{corr} \xrightarrow{\text{a.s.}} -\rho(\tilde I_t, G_t)$ as the minibatch size tends to infinity, which establishes the claim.
+\end{proof}
+
+\section{Proof of Proposition 3.2: Gradient Direction}
+\label{app:proof_gradient}
+
+\begin{proof}
+Fix a state $s \in \mathcal{S}$ visited with positive probability, and consider an infinitesimal perturbation of $\beta_\psi$ at $s$. By assumption, this perturbation has negligible effect on the batch statistics $\mu_{\tilde I}$ and $\sigma_{\tilde I}$, so for the purpose of computing the partial derivative they may be treated as constants. The same applies to $\mu_G$ and $\sigma_G$, which do not depend on $\psi$ at all.
+
+Recall that $\tilde I_t = \beta_\psi(s_t)\, I_t^+$, where we write $I_t^+ \equiv I_t^{+,m}$ for brevity. Differentiating Equation~\eqref{eq:corr_loss} with respect to the value of $\beta_\psi$ at the specific state $s$,
+\begin{align*}
+\frac{\partial L_\text{corr}}{\partial \beta_\psi(s)}
+&\;=\; -\, \frac{\partial}{\partial \beta_\psi(s)}\, \mathbb{E}\!\left[ \frac{\tilde I_t - \mu_{\tilde I}}{\sigma_{\tilde I}} \cdot \hat G_t \right] \\
+&\;=\; -\, \frac{1}{\sigma_{\tilde I}}\, \mathbb{E}\!\left[ \mathbf{1}\{s_t = s\}\, I_t^+\, \hat G_t \right] \\
+&\;=\; -\, \frac{\mathbb{P}(s_t = s)}{\sigma_{\tilde I}}\, \mathbb{E}\!\left[ I_t^+\, \hat G_t \,\big|\, s_t = s \right].
+\end{align*}
+Using $\hat G_t = (G_t - \mu_G) / \sigma_G$ and the fact that $\mu_G = \mathbb{E}[G_t]$ does not depend on conditioning on $s_t = s$ within the standardization step,
+\begin{equation*}
+\mathbb{E}\!\left[ I_t^+\, \hat G_t \,\big|\, s_t = s \right]
+\;=\; \frac{1}{\sigma_G}\, \Bigl( \mathbb{E}[I_t^+\, G_t \mid s_t = s] - \mu_G\, \mathbb{E}[I_t^+ \mid s_t = s] \Bigr).
+\end{equation*}
+Therefore, since $\sigma_{\tilde I}, \sigma_G, \mathbb{P}(s_t = s) > 0$, the sign of $\partial L_\text{corr}/\partial \beta_\psi(s)$ is opposite to the sign of
+\begin{equation*}
+\Delta(s) \;\coloneqq\; \mathbb{E}[I_t^+\, G_t \mid s_t = s] \;-\; \mathbb{E}[G_t]\, \mathbb{E}[I_t^+ \mid s_t = s].
+\end{equation*}
+Under the additional simplifying assumption that the conditional and marginal distributions of $I_t^+$ have approximately the same mean (which holds in the large-batch limit when $s$ is one of many visited states), $\mathbb{E}[I_t^+ \mid s_t = s] \approx \mathbb{E}[I_t^+]$, and the criterion reduces to
+\begin{equation*}
+\frac{\partial L_\text{corr}}{\partial \beta_\psi(s)} \;<\; 0
+\quad\Longleftrightarrow\quad
+\mathbb{E}[I_t^+\, G_t \mid s_t = s] \;>\; \mathbb{E}[I_t^+]\, \mathbb{E}[G_t].
+\end{equation*}
+The right-hand side is exactly the conditional positive-correlation condition stated in Proposition~\ref{prop:gradient_direction}.
+\end{proof}
+
+\section{Proof of Lemma 3.1: Bounded Shaped Reward}
+\label{app:proof_bounded}
+
+\begin{proof}
+By Equation~\eqref{eq:combined_reward},
+\begin{equation*}
+\bar r_t - R_t^E \;=\; \alpha\, \beta_\psi(s_t)\, I_t^{+,m}.
+\end{equation*}
+Taking absolute values and using $\alpha > 0$,
+\begin{equation*}
+\left| \bar r_t - R_t^E \right| \;=\; \alpha\, \left| \beta_\psi(s_t) \right|\, \left| I_t^{+,m} \right|.
+\end{equation*}
+By Definition~\ref{def:beta_network}, $\beta_\psi(s_t) \in [\beta_\text{min}, \beta_\text{max}]$ with $\beta_\text{min} > 0$, so $|\beta_\psi(s_t)| \le \beta_\text{max}$. By assumption, $|I_t^{+,m}| \le M$ almost surely. Combining these bounds,
+\begin{equation*}
+\left| \bar r_t - R_t^E \right| \;\le\; \alpha\, \beta_\text{max}\, M,
+\end{equation*}
+which establishes the claim.
+\end{proof}
+
+\section{Proof of Proposition 3.3: Computational Cost Comparison}
+\label{app:proof_cost}
+
+\begin{proof}
+We measure cost in scalar floating-point operations and ignore lower-order terms.
+
+\textbf{Meta-gradient training step.} A meta-gradient training step for a parameterized intrinsic reward function (LIRPG \cite{zheng2018lirpg}) consists of the following operations on a buffer of $T$ transitions:
+(i) compute the policy gradient at the current parameters and apply $K$ inner update steps to obtain a perturbed policy $\theta'$, each of which costs $O(T\, |\theta|)$ to evaluate the policy gradient and $O(|\theta|)$ to apply the update; and
+(ii) backpropagate the meta-objective evaluated at $\theta'$ through the chain of $K$ inner updates to obtain a gradient with respect to the intrinsic reward parameters. The backward pass through $K$ unrolled updates costs $O(K\, T\, |\theta|)$ in time and $O(K\, |\theta|)$ in memory because each inner step must be cached. Summing the forward and backward costs, the worst-case time complexity per buffer update is
+\begin{equation*}
+C_\text{meta} \;=\; O(K\, T\, |\theta|).
+\end{equation*}
+
+\textbf{CARE training step.} A CARE training step for the Beta Network on the same buffer of $T$ transitions consists of:
+(i) one forward pass through $\beta_\psi$ for each of the $T$ states, at total cost $O(T\, |\psi|)$;
+(ii) computation of $\tilde I_t$ and $\hat I_t$, $\hat G_t$, all of which take $O(T)$ time; and
+(iii) one backward pass through $\beta_\psi$ to compute $\nabla_\psi L_\beta$, at cost $O(T\, |\psi|)$.
+The total time complexity per buffer update is therefore
+\begin{equation*}
+C_\text{CARE} \;=\; O(T\, |\psi|).
+\end{equation*}
+
+\textbf{Asymptotic ratio.} Taking the ratio,
+\begin{equation*}
+\frac{C_\text{meta}}{C_\text{CARE}} \;=\; \Theta\!\left( \frac{K\, |\theta|}{|\psi|} \right).
+\end{equation*}
+When $|\psi| \ll |\theta|$ and $K \ge 1$, this ratio is large, which is what the proposition asserts.
+\end{proof}
+
+\section{Proof of Corollary 3.1: Degeneration to Fixed Coefficient}
+\label{app:proof_degeneration}
+
+\begin{proof}
+Recall from Equation~\eqref{eq:beta_loss} that
+\begin{equation*}
+L_\beta(\psi) \;=\; L_\text{corr}(\psi) \;+\; \lambda_\text{reg}\, L_\text{reg}(\psi),
+\end{equation*}
+with $L_\text{reg}(\psi) = \mathbb{E}\!\left[ (\log \beta_\psi(s_t) - \log \beta_0)^2 \right]$ and $\beta_0 = 1$. By Proposition~\ref{prop:pearson_equiv}, $L_\text{corr}(\psi) = -\rho(\tilde I_t, G_t) \in [-1, 1]$, so $L_\text{corr}$ is uniformly bounded. The regularizer $L_\text{reg}(\psi)$ is non-negative and equals zero if and only if $\beta_\psi(s) = 1$ almost everywhere with respect to the state-visitation distribution.
+
+Let $\psi^\star_\lambda$ denote any minimizer of $L_\beta$ with regularization weight $\lambda \equiv \lambda_\text{reg}$. By optimality,
+\begin{equation*}
+L_\text{corr}(\psi^\star_\lambda) \;+\; \lambda\, L_\text{reg}(\psi^\star_\lambda)
+\;\le\; L_\text{corr}(\psi_0) \;+\; \lambda\, L_\text{reg}(\psi_0),
+\end{equation*}
+where $\psi_0$ is any reference parameter satisfying $\beta_{\psi_0}(s) \equiv 1$, for which $L_\text{reg}(\psi_0) = 0$. Rearranging and using the bound $|L_\text{corr}| \le 1$,
+\begin{equation*}
+\lambda\, L_\text{reg}(\psi^\star_\lambda)
+\;\le\; L_\text{corr}(\psi_0) - L_\text{corr}(\psi^\star_\lambda)
+\;\le\; 2.
+\end{equation*}
+Dividing by $\lambda > 0$,
+\begin{equation*}
+L_\text{reg}(\psi^\star_\lambda) \;\le\; \frac{2}{\lambda} \;\xrightarrow[\lambda \to \infty]{}\; 0.
+\end{equation*}
+Since $L_\text{reg}(\psi^\star_\lambda) \to 0$, the squared deviation $(\log \beta_{\psi^\star_\lambda}(s_t) - 0)^2$ has expectation tending to zero. Therefore $\log \beta_{\psi^\star_\lambda}(s_t) \to 0$ in $L^2$ under the state-visitation distribution, which implies $\beta_{\psi^\star_\lambda}(s) \to 1$ in $L^2$ on the support of that distribution.
+
+Substituting $\beta_\psi(s) = 1$ into the shaped reward of Equation~\eqref{eq:combined_reward} yields
+\begin{equation*}
+\bar r_t \;=\; R_t^E \;+\; \alpha\, \cdot\, 1\, \cdot\, I_t^{+,m} \;=\; R_t^E \;+\; \alpha\, I_t^{+,m},
+\end{equation*}
+which is exactly the fixed-coefficient PPO+ICM update with intrinsic strength $\alpha$.
+\end{proof}

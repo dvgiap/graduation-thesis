@@ -1,4 +1,8 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Standard agent--environment interaction loop in reinforcement learning. The agent observes a state, executes an action sampled from its policy, and receives a new state along with an extrinsic reward from the environment.}}{6}{figure.caption.3}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces CARE system architecture. Solid arrows denote the forward computation that produces the shaped reward $\bar {r}_t$ used by PPO. Dashed arrows indicate the auxiliary signals used to update the Beta Network $\beta _\psi $ via the correlation-based objective $L_\beta $.}}{13}{figure.caption.4}%
+\addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

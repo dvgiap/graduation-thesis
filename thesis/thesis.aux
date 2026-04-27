@@ -12,9 +12,10 @@
 \@writefile{toc}{\contentsline {chapter}{Tóm tắt}{ii}{Doc-Start}\protected@file@percent }
 \@writefile{toc}{\contentsline {chapter}{Abstract}{iii}{Doc-Start}\protected@file@percent }
 \@writefile{toc}{\contentsline {chapter}{Contents}{iv}{Doc-Start}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{List of Figures}{vi}{Doc-Start}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{List of Tables}{vii}{Doc-Start}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{List of Acronyms}{viii}{chapter*.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{List of Figures}{vii}{Doc-Start}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{List of Tables}{viii}{Doc-Start}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{List of Acronyms}{ix}{chapter*.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{List of Notations}{xi}{chapter*.2}\protected@file@percent }
 \citation{mnih2015human,silver2016go,sutton2018rl}
 \citation{francois2018deep}
 \citation{oudeyer2007intrinsic,schmidhuber2010formal}
@@ -22,70 +23,123 @@
 \citation{pathak2017curiosity}
 \citation{burda2019rnd}
 \citation{raileanu2020ride}
-\citation{chen2022eipo,yuan2023airs}
-\pp@pagectr{footnote}{1}{13}{1}
+\pp@pagectr{footnote}{1}{16}{1}
 \@writefile{toc}{\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {1.1}Background and Motivation}{1}{section.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {1.1}Background and Research Motivation}{1}{section.1.1}\protected@file@percent }
+\citation{chen2022eipo,yuan2023airs}
 \@writefile{toc}{\contentsline {section}{\numberline {1.2}Research Problem}{2}{section.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {1.3}Research Objectives and Scope}{2}{section.1.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {1.4}Research Methodology}{3}{section.1.4}\protected@file@percent }
+\citation{chevalier2018minigrid}
+\@writefile{toc}{\contentsline {section}{\numberline {1.3}Research Objectives and Scope}{3}{section.1.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {1.4}Research Methodology}{4}{section.1.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {1.5}Thesis Structure}{4}{section.1.5}\protected@file@percent }
 \citation{sutton2018rl}
-\citation{francois2018deep}
-\citation{oudeyer2007intrinsic,schmidhuber2010formal}
-\citation{bellemare2016count,tang2017exploration,ostrovski2017count}
-\pp@pagectr{footnote}{2}{17}{5}
-\@writefile{toc}{\contentsline {chapter}{\numberline {2}Literature Review}{5}{chapter.2}\protected@file@percent }
+\pp@pagectr{footnote}{2}{21}{6}
+\@writefile{toc}{\contentsline {chapter}{\numberline {2}Literature Review}{6}{chapter.2}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {2.1}Reinforcement Learning in Sparse-Reward Environments}{5}{section.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2.2}Intrinsic Motivation for Exploration}{5}{section.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.1}Reinforcement Learning in Sparse-Reward Environments}{6}{section.2.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2.1}{\ignorespaces Standard agent--environment interaction loop in reinforcement learning. The agent observes a state, executes an action sampled from its policy, and receives a new state along with an extrinsic reward from the environment.}}{6}{figure.caption.3}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:rl_loop}{{2.1}{6}{Standard agent--environment interaction loop in reinforcement learning. The agent observes a state, executes an action sampled from its policy, and receives a new state along with an extrinsic reward from the environment}{figure.caption.3}{}}
+\citation{francois2018deep}
+\citation{oudeyer2007intrinsic,schmidhuber2010formal}
+\citation{aubret2023intrinsic}
+\citation{bellemare2016count}
+\citation{tang2017exploration}
+\citation{ostrovski2017count}
+\newlabel{eq:rl_objective}{{2.1}{7}{Reinforcement Learning in Sparse-Reward Environments}{equation.2.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.2}Intrinsic Motivation for Exploration}{7}{section.2.2}\protected@file@percent }
+\newlabel{eq:shaped_reward_lit}{{2.2}{7}{Intrinsic Motivation for Exploration}{equation.2.2}{}}
 \citation{pathak2017curiosity}
 \citation{burda2019rnd}
 \citation{raileanu2020ride}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.1}Count-Based Exploration}{8}{subsection.2.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.2}Curiosity-Driven Exploration}{8}{subsection.2.2.2}\protected@file@percent }
 \citation{pathak2017curiosity,burda2019rnd}
 \citation{chen2022eipo}
 \citation{yuan2023airs}
-\citation{badia2020ngu,badia2020agent57}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.1}Count-Based Exploration}{6}{subsection.2.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2.2}Curiosity-Driven Exploration}{6}{subsection.2.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2.3}Adaptive Weighting of Intrinsic Rewards}{6}{section.2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2.4}Research Gap}{7}{section.2.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2.5}Chapter Summary}{8}{section.2.5}\protected@file@percent }
-\citation{schulman2017ppo}
-\citation{schulman2016gae}
-\pp@pagectr{footnote}{3}{21}{9}
-\@writefile{toc}{\contentsline {chapter}{\numberline {3}Methodology}{9}{chapter.3}\protected@file@percent }
+\citation{badia2020ngu}
+\citation{badia2020agent57}
+\@writefile{toc}{\contentsline {section}{\numberline {2.3}Adaptive Weighting of Intrinsic Rewards}{9}{section.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.1}Global-Level Adaptation}{9}{subsection.2.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.2}Population-Level Adaptation}{9}{subsection.2.3.2}\protected@file@percent }
+\citation{zheng2018lirpg}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.3}Toward State-Level Adaptation}{10}{subsection.2.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.4}Summary and Research Gap}{10}{section.2.4}\protected@file@percent }
+\pp@pagectr{footnote}{3}{27}{12}
+\@writefile{toc}{\contentsline {chapter}{\numberline {3}Methodology}{12}{chapter.3}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {3.1}Problem Formulation}{9}{section.3.1}\protected@file@percent }
-\newlabel{eq:shaped_reward}{{3.1}{9}{Problem Formulation}{equation.3.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.2}Base Reinforcement Learning Algorithm}{9}{section.3.2}\protected@file@percent }
+\newlabel{ch:methodology}{{3}{12}{Methodology}{chapter.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.1}System Architecture}{12}{section.3.1}\protected@file@percent }
+\newlabel{sec:system_architecture}{{3.1}{12}{System Architecture}{section.3.1}{}}
+\newlabel{def:augmented_mdp}{{3.1}{12}{Intrinsic-Augmented MDP}{definition.3.1}{}}
+\newlabel{def:reward_shaping}{{3.2}{12}{State-Dependent Reward Shaping}{definition.3.2}{}}
+\newlabel{eq:shaped_reward}{{3.1}{12}{State-Dependent Reward Shaping}{equation.3.1}{}}
 \citation{pathak2017curiosity}
-\@writefile{toc}{\contentsline {section}{\numberline {3.3}Representative Intrinsic Reward Modules}{10}{section.3.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}ICM Instantiation}{10}{subsection.3.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3.4}Correlation-Aware Reward Exploration}{11}{section.3.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.1}Beta Network}{11}{subsection.3.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.2}Correlation-Based Objective}{12}{subsection.3.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3.5}Training Procedure}{12}{section.3.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3.6}Discussion}{13}{section.3.6}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces CARE system architecture. Solid arrows denote the forward computation that produces the shaped reward $\bar  {r}_t$ used by PPO. Dashed arrows indicate the auxiliary signals used to update the Beta Network $\beta _\psi $ via the correlation-based objective $L_\beta $.}}{13}{figure.caption.4}\protected@file@percent }
+\newlabel{fig:care_arch}{{3.1}{13}{CARE system architecture. Solid arrows denote the forward computation that produces the shaped reward $\bar {r}_t$ used by PPO. Dashed arrows indicate the auxiliary signals used to update the Beta Network $\beta _\psi $ via the correlation-based objective $L_\beta $}{figure.caption.4}{}}
+\newlabel{eq:combined_reward}{{3.2}{13}{System Architecture}{equation.3.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.2}Intrinsic Reward Generation: ICM Instantiation}{13}{section.3.2}\protected@file@percent }
+\newlabel{sec:icm}{{3.2}{13}{Intrinsic Reward Generation: ICM Instantiation}{section.3.2}{}}
+\newlabel{eq:icm_loss}{{3.3}{14}{Intrinsic Reward Generation: ICM Instantiation}{equation.3.3}{}}
+\newlabel{eq:icm_raw}{{3.4}{14}{Intrinsic Reward Generation: ICM Instantiation}{equation.3.4}{}}
+\newlabel{def:standardized_intrinsic}{{3.3}{14}{Standardized Intrinsic Reward}{definition.3.3}{}}
+\newlabel{eq:icm_standardized}{{3.5}{14}{Standardized Intrinsic Reward}{equation.3.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}Correlation-Aware Reward Exploration}{14}{section.3.3}\protected@file@percent }
+\newlabel{sec:care}{{3.3}{14}{Correlation-Aware Reward Exploration}{section.3.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Beta Network}{15}{subsection.3.3.1}\protected@file@percent }
+\newlabel{sec:beta_network}{{3.3.1}{15}{Beta Network}{subsection.3.3.1}{}}
+\newlabel{def:beta_network}{{3.4}{15}{Beta Network}{definition.3.4}{}}
+\newlabel{eq:beta_network}{{3.6}{15}{Beta Network}{equation.3.6}{}}
+\newlabel{eq:scaled_intrinsic}{{3.7}{15}{Beta Network}{equation.3.7}{}}
+\newlabel{lem:bounded_shaped}{{3.1}{15}{Bounded Shaped Reward}{lemma.3.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}Correlation-Based Objective}{15}{subsection.3.3.2}\protected@file@percent }
+\newlabel{sec:correlation_loss}{{3.3.2}{15}{Correlation-Based Objective}{subsection.3.3.2}{}}
+\newlabel{eq:extrinsic_return}{{3.8}{16}{Correlation-Based Objective}{equation.3.8}{}}
+\newlabel{eq:standardization}{{3.9}{16}{Correlation-Based Objective}{equation.3.9}{}}
+\newlabel{eq:corr_loss}{{3.10}{16}{Correlation-Based Objective}{equation.3.10}{}}
+\newlabel{eq:reg_loss}{{3.11}{16}{Correlation-Based Objective}{equation.3.11}{}}
+\newlabel{eq:beta_loss}{{3.12}{16}{Correlation-Based Objective}{equation.3.12}{}}
+\newlabel{prop:pearson_equiv}{{3.1}{16}{Pearson Equivalence}{proposition.3.1}{}}
+\newlabel{prop:gradient_direction}{{3.2}{16}{Gradient Direction}{proposition.3.2}{}}
+\citation{zheng2018lirpg}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3.3}First-Order Optimization vs. Meta-Gradient}{17}{subsection.3.3.3}\protected@file@percent }
+\newlabel{sec:first_order}{{3.3.3}{17}{First-Order Optimization vs. Meta-Gradient}{subsection.3.3.3}{}}
+\newlabel{prop:cost}{{3.3}{17}{Computational Cost}{proposition.3.3}{}}
+\newlabel{cor:degeneration}{{3.1}{18}{Degeneration to Fixed Coefficient}{corollary.3.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.4}Algorithm}{18}{section.3.4}\protected@file@percent }
+\newlabel{sec:algorithm}{{3.4}{18}{Algorithm}{section.3.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.1}Rollout Buffer}{18}{subsection.3.4.1}\protected@file@percent }
+\newlabel{sec:rollout_buffer}{{3.4.1}{18}{Rollout Buffer}{subsection.3.4.1}{}}
+\newlabel{eq:transition_tuple}{{3.13}{18}{Rollout Buffer}{equation.3.13}{}}
+\citation{schulman2016gae}
+\citation{schulman2017ppo}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.2}Loss Functions}{19}{subsection.3.4.2}\protected@file@percent }
+\newlabel{sec:loss_functions}{{3.4.2}{19}{Loss Functions}{subsection.3.4.2}{}}
+\newlabel{eq:ppo_loss}{{3.14}{19}{Loss Functions}{equation.3.14}{}}
+\newlabel{eq:critic_loss}{{3.15}{19}{Loss Functions}{equation.3.15}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.3}Training Procedure}{19}{subsection.3.4.3}\protected@file@percent }
+\newlabel{sec:training_procedure}{{3.4.3}{19}{Training Procedure}{subsection.3.4.3}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces CARE training loop with PPO and ICM.}}{20}{algorithm.1}\protected@file@percent }
+\newlabel{alg:care}{{1}{20}{CARE training loop with PPO and ICM}{algorithm.1}{}}
 \citation{chevalier2018minigrid}
-\pp@pagectr{footnote}{4}{26}{14}
-\@writefile{toc}{\contentsline {chapter}{\numberline {4}Experimental Setup and Results}{14}{chapter.4}\protected@file@percent }
+\pp@pagectr{footnote}{4}{36}{21}
+\@writefile{toc}{\contentsline {chapter}{\numberline {4}Experimental Setup and Results}{21}{chapter.4}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{chap:experiment}{{4}{14}{Experimental Setup and Results}{chapter.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.1}Benchmark Environments}{14}{section.4.1}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces MiniGrid environments used in the experiments}}{14}{table.caption.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.2}Baselines and Evaluation Criteria}{15}{section.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.3}Experimental Configuration}{15}{section.4.3}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {4.2}{\ignorespaces Key hyperparameters reported for CARE}}{16}{table.caption.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.4}Results}{16}{section.4.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.5}Analysis of the Learned Scaling Behavior}{17}{section.4.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4.6}Discussion}{18}{section.4.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{Conclusion and Future Work}{19}{chapter*.4}\protected@file@percent }
+\newlabel{chap:experiment}{{4}{21}{Experimental Setup and Results}{chapter.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.1}Benchmark Environments}{21}{section.4.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces MiniGrid environments used in the experiments}}{21}{table.caption.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.2}Baselines and Evaluation Criteria}{22}{section.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.3}Experimental Configuration}{23}{section.4.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {4.2}{\ignorespaces Key hyperparameters reported for CARE}}{23}{table.caption.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.4}Results}{24}{section.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.5}Analysis of the Learned Scaling Behavior}{24}{section.4.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4.6}Discussion}{25}{section.4.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Conclusion and Future Work}{26}{chapter*.7}\protected@file@percent }
 \bibdata{references}
 \bibcite{mnih2015human}{{1}{}{{}}{{}}}
 \bibcite{silver2016go}{{2}{}{{}}{{}}}
@@ -96,16 +150,59 @@
 \bibcite{bellemare2016count}{{7}{}{{}}{{}}}
 \bibcite{tang2017exploration}{{8}{}{{}}{{}}}
 \bibcite{ostrovski2017count}{{9}{}{{}}{{}}}
-\@writefile{toc}{\contentsline {chapter}{References}{20}{section*.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{References}{27}{section*.8}\protected@file@percent }
 \bibcite{pathak2017curiosity}{{10}{}{{}}{{}}}
 \bibcite{burda2019rnd}{{11}{}{{}}{{}}}
 \bibcite{raileanu2020ride}{{12}{}{{}}{{}}}
 \bibcite{chen2022eipo}{{13}{}{{}}{{}}}
 \bibcite{yuan2023airs}{{14}{}{{}}{{}}}
-\bibcite{badia2020ngu}{{15}{}{{}}{{}}}
-\bibcite{badia2020agent57}{{16}{}{{}}{{}}}
-\bibcite{schulman2017ppo}{{17}{}{{}}{{}}}
-\bibcite{schulman2016gae}{{18}{}{{}}{{}}}
-\bibcite{chevalier2018minigrid}{{19}{}{{}}{{}}}
+\bibcite{chevalier2018minigrid}{{15}{}{{}}{{}}}
+\bibcite{aubret2023intrinsic}{{16}{}{{}}{{}}}
+\bibcite{badia2020ngu}{{17}{}{{}}{{}}}
+\bibcite{badia2020agent57}{{18}{}{{}}{{}}}
+\bibcite{zheng2018lirpg}{{19}{}{{}}{{}}}
+\bibcite{schulman2016gae}{{20}{}{{}}{{}}}
+\bibcite{schulman2017ppo}{{21}{}{{}}{{}}}
+\pp@pagectr{footnote}{5}{45}{30}
+\@writefile{toc}{\contentsline {chapter}{\numberline {A}Mathematical Proofs}{30}{appendix.A}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\newlabel{app:proofs}{{A}{30}{Mathematical Proofs}{appendix.A}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {A.1}Proof of Proposition 3.1: Correlation Equivalence}{30}{section.A.1}\protected@file@percent }
+\newlabel{app:proof_pearson}{{A.1}{30}{Proof of Proposition 3.1: Correlation Equivalence}{section.A.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {A.2}Proof of Proposition 3.2: Gradient Direction}{31}{section.A.2}\protected@file@percent }
+\newlabel{app:proof_gradient}{{A.2}{31}{Proof of Proposition 3.2: Gradient Direction}{section.A.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {A.3}Proof of Lemma 3.1: Bounded Shaped Reward}{31}{section.A.3}\protected@file@percent }
+\newlabel{app:proof_bounded}{{A.3}{31}{Proof of Lemma 3.1: Bounded Shaped Reward}{section.A.3}{}}
+\citation{zheng2018lirpg}
+\@writefile{toc}{\contentsline {section}{\numberline {A.4}Proof of Proposition 3.3: Computational Cost Comparison}{32}{section.A.4}\protected@file@percent }
+\newlabel{app:proof_cost}{{A.4}{32}{Proof of Proposition 3.3: Computational Cost Comparison}{section.A.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {A.5}Proof of Corollary 3.1: Degeneration to Fixed Coefficient}{33}{section.A.5}\protected@file@percent }
+\newlabel{app:proof_degeneration}{{A.5}{33}{Proof of Corollary 3.1: Degeneration to Fixed Coefficient}{section.A.5}{}}
+\pp@pagectr{footnote}{6}{49}{34}
+\@writefile{toc}{\contentsline {chapter}{\numberline {B}Implementation Details}{34}{appendix.B}\protected@file@percent }
+\@writefile{lof}{\addvspace {10\p@ }}
+\@writefile{lot}{\addvspace {10\p@ }}
+\newlabel{app:implementation}{{B}{34}{Implementation Details}{appendix.B}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.1}Network Architectures}{34}{section.B.1}\protected@file@percent }
+\newlabel{app:architectures}{{B.1}{34}{Network Architectures}{section.B.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.1}{\ignorespaces Beta Network $\beta _\psi $ architecture.}}{34}{table.caption.10}\protected@file@percent }
+\newlabel{tab:beta_arch}{{B.1}{34}{Beta Network $\beta _\psi $ architecture}{table.caption.10}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.2}{\ignorespaces Intrinsic Curiosity Module (ICM) architecture.}}{35}{table.caption.11}\protected@file@percent }
+\newlabel{tab:icm_arch}{{B.2}{35}{Intrinsic Curiosity Module (ICM) architecture}{table.caption.11}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.3}{\ignorespaces Actor and critic network architectures used by PPO.}}{35}{table.caption.12}\protected@file@percent }
+\newlabel{tab:ppo_arch}{{B.3}{35}{Actor and critic network architectures used by PPO}{table.caption.12}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.2}Hyperparameters}{36}{section.B.2}\protected@file@percent }
+\newlabel{app:hyperparameters}{{B.2}{36}{Hyperparameters}{section.B.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.4}{\ignorespaces PPO hyperparameters.}}{36}{table.caption.13}\protected@file@percent }
+\newlabel{tab:ppo_hparams}{{B.4}{36}{PPO hyperparameters}{table.caption.13}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.5}{\ignorespaces ICM hyperparameters.}}{36}{table.caption.14}\protected@file@percent }
+\newlabel{tab:icm_hparams}{{B.5}{36}{ICM hyperparameters}{table.caption.14}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.6}{\ignorespaces CARE hyperparameters and intrinsic reward strengths.}}{37}{table.caption.15}\protected@file@percent }
+\newlabel{tab:care_hparams}{{B.6}{37}{CARE hyperparameters and intrinsic reward strengths}{table.caption.15}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.7}{\ignorespaces Other count-based and RND hyperparameters.}}{37}{table.caption.16}\protected@file@percent }
+\newlabel{tab:other_hparams}{{B.7}{37}{Other count-based and RND hyperparameters}{table.caption.16}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.8}{\ignorespaces Training schedule.}}{38}{table.caption.17}\protected@file@percent }
+\newlabel{tab:training_schedule}{{B.8}{38}{Training schedule}{table.caption.17}{}}
 \providecommand\NAT@force@numbers{}\NAT@force@numbers
-\gdef \@abspage@last{34}
+\gdef \@abspage@last{53}

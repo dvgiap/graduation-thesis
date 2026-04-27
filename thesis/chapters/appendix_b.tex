@@ -1,0 +1,210 @@
+\chapter{Implementation Details}
+\label{app:implementation}
+
+This appendix records the network architectures, hyperparameters, and training schedule used in the experiments reported in Chapter~\ref{ch:methodology} and Chapter 4. All values reflect the canonical settings adopted across the six benchmark MiniGrid environments and are extracted from the project source code.
+
+\section{Network Architectures}
+\label{app:architectures}
+
+\begin{table}[H]
+\centering
+\caption{Beta Network $\beta_\psi$ architecture.}
+\label{tab:beta_arch}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Component} & \textbf{Specification} \\
+\hline
+Input & state $s_t$ flattened to $\mathbb{R}^{d_s}$ \\
+\hline
+Encoder layer 1 & Linear($d_s \to 256$), Tanh \\
+\hline
+Encoder layer 2 & Linear($256 \to 256$), Tanh \\
+\hline
+Head layer 1 & Linear($256 \to 128$), Tanh \\
+\hline
+Head output & Linear($128 \to 1$) producing $\log \beta_\psi(s_t)$ \\
+\hline
+Output bound & $\beta_\psi(s_t) = \exp\!\bigl( \mathrm{clamp}(\log \beta_\psi,\, \log \beta_\text{min},\, \log \beta_\text{max}) \bigr)$ \\
+\hline
+$[\beta_\text{min}, \beta_\text{max}]$ & $[0.1,\, 2.0]$ \\
+\hline
+Encoder weight init & $\mathcal{N}(0,\, 1/\sqrt{d_\text{in}})$ \\
+\hline
+Output bias init & $\log(1.0) = 0$ (so $\beta_\psi \approx 1$ at initialization) \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Intrinsic Curiosity Module (ICM) architecture.}
+\label{tab:icm_arch}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Component} & \textbf{Specification} \\
+\hline
+Encoder $\phi$ layer 1 & Linear($d_s \to 256$), Tanh \\
+\hline
+Encoder $\phi$ layer 2 & Linear($256 \to 256$), Tanh \\
+\hline
+Latent dimension & $256$ \\
+\hline
+Forward model $f^F_\eta$ & Linear($256 + |\mathcal{A}| \to 256$), Tanh, Linear($256 \to 256$) \\
+\hline
+Inverse model $f^I_\eta$ & Linear($512 \to 256$), Tanh, Linear($256 \to |\mathcal{A}|$) \\
+\hline
+Forward weight $\alpha_F$ in $L_\text{ICM}$ & $0.2$ \\
+\hline
+Inverse weight $\alpha_I$ in $L_\text{ICM}$ & $0.8$ \\
+\hline
+Action representation in forward model & one-hot $\in \mathbb{R}^{|\mathcal{A}|}$ \\
+\hline
+Encoder gradient flow & inverse loss only (forward loss detached) \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Actor and critic network architectures used by PPO.}
+\label{tab:ppo_arch}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Component} & \textbf{Specification} \\
+\hline
+Actor body & Linear($d_s \to 64$), Tanh, Linear($64 \to 64$), Tanh \\
+\hline
+Actor head & Linear($64 \to |\mathcal{A}|$) producing logits; sampling via $\text{Categorical}(\text{logits})$ \\
+\hline
+Critic body & Linear($d_s \to 64$), Tanh, Linear($64 \to 64$), Tanh \\
+\hline
+Critic head & Linear($64 \to 1$) \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Hyperparameters}
+\label{app:hyperparameters}
+
+\begin{table}[H]
+\centering
+\caption{PPO hyperparameters.}
+\label{tab:ppo_hparams}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Symbol} & \textbf{Description} & \textbf{Value} \\
+\hline
+$K$ & Number of PPO gradient epochs per update & $80$ \\
+\hline
+$\epsilon$ & PPO clip parameter & $0.2$ \\
+\hline
+$\gamma$ & Discount factor & $0.99$ \\
+\hline
+$\lambda$ & GAE bias-variance trade-off & $0.95$ \\
+\hline
+$\theta_\text{lr}$ & Actor learning rate & $3 \times 10^{-4}$ \\
+\hline
+$\mu_\text{lr}$ & Critic learning rate & $1 \times 10^{-3}$ \\
+\hline
+Entropy coefficient & Weight on $-\,H[\pi_\theta]$ in PPO loss & $0.01$ \\
+\hline
+Value loss coefficient & Weight on critic loss in joint update & $0.5$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{ICM hyperparameters.}
+\label{tab:icm_hparams}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Symbol} & \textbf{Description} & \textbf{Value} \\
+\hline
+$\eta_\text{lr}$ & ICM learning rate & $1 \times 10^{-3}$ \\
+\hline
+ICM epochs & Number of gradient epochs per buffer update & $4$ \\
+\hline
+ICM batch size & Mini-batch size within each epoch & $64$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{CARE hyperparameters and intrinsic reward strengths.}
+\label{tab:care_hparams}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Symbol} & \textbf{Description} & \textbf{Value} \\
+\hline
+$\alpha$ (ICM) & Global intrinsic strength for ICM & $1 \times 10^{-3}$ \\
+\hline
+$\alpha$ (count) & Global intrinsic strength for count-based & $1 \times 10^{-3}$ \\
+\hline
+$\alpha$ (RND) & Global intrinsic strength for RND & $1 \times 10^{-3}$ \\
+\hline
+$\beta_\text{min}$ & Lower bound on Beta Network output & $0.1$ \\
+\hline
+$\beta_\text{max}$ & Upper bound on Beta Network output & $2.0$ \\
+\hline
+$\beta_0$ & Reference value for log-space regularization & $1.0$ \\
+\hline
+$\lambda_\text{reg}$ & Regularization weight in $L_\beta$ & $1 \times 10^{-3}$ \\
+\hline
+$\psi_\text{lr}$ & Beta Network learning rate & $5 \times 10^{-4}$ \\
+\hline
+Weight decay ($\psi$) & $L_2$ weight decay on Beta Network & $1 \times 10^{-6}$ \\
+\hline
+Gradient clipping ($\psi$) & Max $L_2$ norm on $\nabla_\psi L_\beta$ & $1.0$ \\
+\hline
+$\varepsilon$ & Numerical stability constant in standardization & $1 \times 10^{-8}$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Other count-based and RND hyperparameters.}
+\label{tab:other_hparams}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Symbol} & \textbf{Description} & \textbf{Value} \\
+\hline
+$d_\text{hash}$ & Hash dimension for count-based exploration & $32$ \\
+\hline
+Bonus type (count) & Form of count-based bonus & $1/\sqrt{N(s)}$ \\
+\hline
+RND learning rate & Predictor network learning rate & $1 \times 10^{-3}$ \\
+\hline
+RND epochs & Number of gradient epochs per buffer update & $4$ \\
+\hline
+RND batch size & Mini-batch size within each epoch & $64$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Training schedule.}
+\label{tab:training_schedule}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Symbol} & \textbf{Description} & \textbf{Value} \\
+\hline
+$\text{max\_ep\_len}$ & Maximum steps per episode & $1{,}000$ \\
+\hline
+$T$ & Rollout buffer length (PPO update period) & $4{,}000$ \\
+\hline
+$\text{max\_steps}$ & Total environment interaction steps per seed & $1{,}000{,}000$ \\
+\hline
+$U$ & Total number of PPO updates per seed & $250$ \\
+\hline
+$\text{seeds}$ & Independent training seeds per configuration & $\{1, 2, 3, 4, 5\}$ \\
+\hline
+Checkpoint interval & Frequency of model and trajectory saving & every $100{,}000$ steps \\
+\hline
+\end{tabular}
+\end{table}
+
+The values listed in Tables~\ref{tab:beta_arch}--\ref{tab:training_schedule} are the canonical settings adopted across all benchmark MiniGrid environments. Environment-specific overrides, when present, are reported in Chapter 4.

@@ -2,5 +2,15 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces MiniGrid environments used in the experiments}}{14}{table.caption.2}%
-\contentsline {table}{\numberline {4.2}{\ignorespaces Key hyperparameters reported for CARE}}{16}{table.caption.3}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces MiniGrid environments used in the experiments}}{21}{table.caption.5}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Key hyperparameters reported for CARE}}{23}{table.caption.6}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {B.1}{\ignorespaces Beta Network $\beta _\psi $ architecture.}}{34}{table.caption.10}%
+\contentsline {table}{\numberline {B.2}{\ignorespaces Intrinsic Curiosity Module (ICM) architecture.}}{35}{table.caption.11}%
+\contentsline {table}{\numberline {B.3}{\ignorespaces Actor and critic network architectures used by PPO.}}{35}{table.caption.12}%
+\contentsline {table}{\numberline {B.4}{\ignorespaces PPO hyperparameters.}}{36}{table.caption.13}%
+\contentsline {table}{\numberline {B.5}{\ignorespaces ICM hyperparameters.}}{36}{table.caption.14}%
+\contentsline {table}{\numberline {B.6}{\ignorespaces CARE hyperparameters and intrinsic reward strengths.}}{37}{table.caption.15}%
+\contentsline {table}{\numberline {B.7}{\ignorespaces Other count-based and RND hyperparameters.}}{37}{table.caption.16}%
+\contentsline {table}{\numberline {B.8}{\ignorespaces Training schedule.}}{38}{table.caption.17}%

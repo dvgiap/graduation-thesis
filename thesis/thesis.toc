@@ -3,39 +3,52 @@
 \contentsline {chapter}{Tóm tắt}{ii}{Doc-Start}%
 \contentsline {chapter}{Abstract}{iii}{Doc-Start}%
 \contentsline {chapter}{Contents}{iv}{Doc-Start}%
-\contentsline {chapter}{List of Figures}{vi}{Doc-Start}%
-\contentsline {chapter}{List of Tables}{vii}{Doc-Start}%
-\contentsline {chapter}{List of Acronyms}{viii}{chapter*.1}%
+\contentsline {chapter}{List of Figures}{vii}{Doc-Start}%
+\contentsline {chapter}{List of Tables}{viii}{Doc-Start}%
+\contentsline {chapter}{List of Acronyms}{ix}{chapter*.1}%
+\contentsline {chapter}{List of Notations}{xi}{chapter*.2}%
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Background and Motivation}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.1}Background and Research Motivation}{1}{section.1.1}%
 \contentsline {section}{\numberline {1.2}Research Problem}{2}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Research Objectives and Scope}{2}{section.1.3}%
-\contentsline {section}{\numberline {1.4}Research Methodology}{3}{section.1.4}%
+\contentsline {section}{\numberline {1.3}Research Objectives and Scope}{3}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Research Methodology}{4}{section.1.4}%
 \contentsline {section}{\numberline {1.5}Thesis Structure}{4}{section.1.5}%
-\contentsline {chapter}{\numberline {2}Literature Review}{5}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Reinforcement Learning in Sparse-Reward Environments}{5}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Intrinsic Motivation for Exploration}{5}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Count-Based Exploration}{6}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Curiosity-Driven Exploration}{6}{subsection.2.2.2}%
-\contentsline {section}{\numberline {2.3}Adaptive Weighting of Intrinsic Rewards}{6}{section.2.3}%
-\contentsline {section}{\numberline {2.4}Research Gap}{7}{section.2.4}%
-\contentsline {section}{\numberline {2.5}Chapter Summary}{8}{section.2.5}%
-\contentsline {chapter}{\numberline {3}Methodology}{9}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Problem Formulation}{9}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Base Reinforcement Learning Algorithm}{9}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Representative Intrinsic Reward Modules}{10}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}ICM Instantiation}{10}{subsection.3.3.1}%
-\contentsline {section}{\numberline {3.4}Correlation-Aware Reward Exploration}{11}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Beta Network}{11}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}Correlation-Based Objective}{12}{subsection.3.4.2}%
-\contentsline {section}{\numberline {3.5}Training Procedure}{12}{section.3.5}%
-\contentsline {section}{\numberline {3.6}Discussion}{13}{section.3.6}%
-\contentsline {chapter}{\numberline {4}Experimental Setup and Results}{14}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Benchmark Environments}{14}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Baselines and Evaluation Criteria}{15}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Experimental Configuration}{15}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Results}{16}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Analysis of the Learned Scaling Behavior}{17}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Discussion}{18}{section.4.6}%
-\contentsline {chapter}{Conclusion and Future Work}{19}{chapter*.4}%
-\contentsline {chapter}{References}{20}{section*.5}%
+\contentsline {chapter}{\numberline {2}Literature Review}{6}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Reinforcement Learning in Sparse-Reward Environments}{6}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Intrinsic Motivation for Exploration}{7}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Count-Based Exploration}{8}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Curiosity-Driven Exploration}{8}{subsection.2.2.2}%
+\contentsline {section}{\numberline {2.3}Adaptive Weighting of Intrinsic Rewards}{9}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Global-Level Adaptation}{9}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Population-Level Adaptation}{9}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}Toward State-Level Adaptation}{10}{subsection.2.3.3}%
+\contentsline {section}{\numberline {2.4}Summary and Research Gap}{10}{section.2.4}%
+\contentsline {chapter}{\numberline {3}Methodology}{12}{chapter.3}%
+\contentsline {section}{\numberline {3.1}System Architecture}{12}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Intrinsic Reward Generation: ICM Instantiation}{13}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Correlation-Aware Reward Exploration}{14}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Beta Network}{15}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Correlation-Based Objective}{15}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}First-Order Optimization vs. Meta-Gradient}{17}{subsection.3.3.3}%
+\contentsline {section}{\numberline {3.4}Algorithm}{18}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Rollout Buffer}{18}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Loss Functions}{19}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Training Procedure}{19}{subsection.3.4.3}%
+\contentsline {chapter}{\numberline {4}Experimental Setup and Results}{21}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Benchmark Environments}{21}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Baselines and Evaluation Criteria}{22}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Experimental Configuration}{23}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Results}{24}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Analysis of the Learned Scaling Behavior}{24}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Discussion}{25}{section.4.6}%
+\contentsline {chapter}{Conclusion and Future Work}{26}{chapter*.7}%
+\contentsline {chapter}{References}{27}{section*.8}%
+\contentsline {chapter}{\numberline {A}Mathematical Proofs}{30}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Proof of Proposition 3.1: Correlation Equivalence}{30}{section.A.1}%
+\contentsline {section}{\numberline {A.2}Proof of Proposition 3.2: Gradient Direction}{31}{section.A.2}%
+\contentsline {section}{\numberline {A.3}Proof of Lemma 3.1: Bounded Shaped Reward}{31}{section.A.3}%
+\contentsline {section}{\numberline {A.4}Proof of Proposition 3.3: Computational Cost Comparison}{32}{section.A.4}%
+\contentsline {section}{\numberline {A.5}Proof of Corollary 3.1: Degeneration to Fixed Coefficient}{33}{section.A.5}%
+\contentsline {chapter}{\numberline {B}Implementation Details}{34}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Network Architectures}{34}{section.B.1}%
+\contentsline {section}{\numberline {B.2}Hyperparameters}{36}{section.B.2}%

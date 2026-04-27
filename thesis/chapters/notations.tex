@@ -1,0 +1,95 @@
+\chapter*{List of Notations}
+\addcontentsline{toc}{chapter}{List of Notations}
+
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{|m{2.6cm}|m{11.5cm}|}
+\hline
+\textbf{Symbol} & \textbf{Meaning} \\
+\hline
+\multicolumn{2}{|c|}{\emph{Markov decision process and policy}} \\
+\hline
+$\mathcal{S}, \mathcal{A}$ & State space and action space \\
+\hline
+$P(s' \mid s, a)$ & State transition kernel \\
+\hline
+$\rho_0$ & Initial state distribution \\
+\hline
+$\gamma \in [0,1)$ & Discount factor \\
+\hline
+$\pi_\theta(a \mid s)$ & Stochastic policy with parameters $\theta$ \\
+\hline
+$V_\mu(s)$ & State-value function with parameters $\mu$ \\
+\hline
+$\hat A_t$ & Generalized advantage estimate at time $t$ \\
+\hline
+$\rho_t(\theta)$ & PPO importance ratio $\pi_\theta(a_t \mid s_t) / \pi_{\theta_\text{old}}(a_t \mid s_t)$ \\
+\hline
+\multicolumn{2}{|c|}{\emph{Reward signals}} \\
+\hline
+$R^E_t$ & Extrinsic reward from the environment at time $t$ \\
+\hline
+$R^I_t$ & Generic intrinsic reward at time $t$ (any module) \\
+\hline
+$R^{I,m}_t$ & Intrinsic reward at time $t$ produced by module $m$ \\
+\hline
+$I_t$ & Raw intrinsic reward (forward prediction error in the ICM case) \\
+\hline
+$I^+_t,\; I^{+,m}_t$ & Standardized and rectified intrinsic reward (generic / module-specific) \\
+\hline
+$\tilde I^{\,m}_t$ & Scaled intrinsic reward $\beta_\psi(s_t)\, I^{+,m}_t$ \\
+\hline
+$\bar r_t$ & Shaped reward used by PPO \\
+\hline
+$G^E_t$ & Discounted extrinsic return from time $t$ \\
+\hline
+$\hat I^{\,m}_t,\; \hat G_t$ & Within-batch standardized scaled intrinsic and extrinsic return \\
+\hline
+\multicolumn{2}{|c|}{\emph{ICM components}} \\
+\hline
+$\phi(s_t)$ & ICM state encoder \\
+\hline
+$f^F_\eta$ & ICM forward dynamics model with parameters $\eta$ \\
+\hline
+$f^I_\eta$ & ICM inverse dynamics model with parameters $\eta$ \\
+\hline
+$\alpha_F, \alpha_I$ & Forward and inverse loss weights in $L_\text{ICM}$ \\
+\hline
+\multicolumn{2}{|c|}{\emph{CARE components}} \\
+\hline
+$\alpha$ & Global intrinsic-strength hyperparameter \\
+\hline
+$\beta_\psi(s)$ & State-dependent scaling function with parameters $\psi$ \\
+\hline
+$[\beta_\text{min}, \beta_\text{max}]$ & Output range of the Beta Network \\
+\hline
+$\beta_0$ & Reference value for log-space regularization \\
+\hline
+$\lambda_\text{reg}$ & Regularization weight in the Beta loss \\
+\hline
+\multicolumn{2}{|c|}{\emph{Loss functions}} \\
+\hline
+$L^\text{PPO}(\theta)$ & PPO clipped surrogate actor loss \\
+\hline
+$L^V(\mu)$ & Critic mean-squared-error loss \\
+\hline
+$L_\text{ICM}(\eta)$ & ICM combined forward + inverse loss \\
+\hline
+$L_\text{corr}(\psi)$ & Correlation-based component of the Beta loss \\
+\hline
+$L_\text{reg}(\psi)$ & Log-space regularization component of the Beta loss \\
+\hline
+$L_\beta(\psi)$ & Total Beta-Network loss $L_\text{corr} + \lambda_\text{reg}\, L_\text{reg}$ \\
+\hline
+\multicolumn{2}{|c|}{\emph{Sample-level / training schedule}} \\
+\hline
+$T$ & Rollout buffer length \\
+\hline
+$U$ & Total number of PPO updates \\
+\hline
+$K$ & Number of PPO gradient epochs per update \\
+\hline
+$\xi_t$ & Single transition tuple stored in the rollout buffer \\
+\hline
+$\rho(X, Y)$ & Pearson correlation coefficient between random variables $X$ and $Y$ \\
+\hline
+\end{tabular}

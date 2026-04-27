@@ -89,6 +89,17 @@ Minghao Yuan, Bowen Li, Xiaoming Jin, and Wei Zeng.
 \newblock In {\em Proceedings of the 40th International Conference on Machine
   Learning}, volume 202, pages 40356--40375, 2023.
 
+\bibitem{chevalier2018minigrid}
+Maxime Chevalier-Boisvert, Lucas Willems, and Suman Pal.
+\newblock Minimalistic gridworld environment for openai gym.
+\newblock In {\em ICLR Workshop on Representation Learning for RL}, 2018.
+
+\bibitem{aubret2023intrinsic}
+Arthur Aubret, Laetitia Matignon, and Salima Hassas.
+\newblock An information-theoretic perspective on intrinsic motivation in
+  reinforcement learning: A survey.
+\newblock {\em Entropy}, 25(2):327, 2023.
+
 \bibitem{badia2020ngu}
 Adri{\`a}~Puigdom{\`e}nech Badia, Pablo Sprechmann, Alex Vitvitskyi, Daniel
   Guo, Charles Blundell, Timothy Lillicrap, and Bilal Piot.
@@ -103,10 +114,11 @@ Adri{\`a}~Puigdom{\`e}nech Badia, Bilal Hu, Julian Schrittwieser, Pablo
 \newblock In {\em Proceedings of the 37th International Conference on Machine
   Learning}, volume 119, pages 507--517, 2020.
 
-\bibitem{schulman2017ppo}
-John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov.
-\newblock Proximal policy optimization algorithms.
-\newblock {\em arXiv preprint arXiv:1707.06347}, 2017.
+\bibitem{zheng2018lirpg}
+Zeyu Zheng, Junhyuk Oh, and Satinder Singh.
+\newblock On learning intrinsic rewards for policy gradient methods.
+\newblock In {\em Advances in Neural Information Processing Systems},
+  volume~31, pages 4644--4654, 2018.
 
 \bibitem{schulman2016gae}
 John Schulman, Philipp Moritz, Sergey Levine, Michael Jordan, and Pieter
@@ -115,9 +127,9 @@ John Schulman, Philipp Moritz, Sergey Levine, Michael Jordan, and Pieter
   estimation.
 \newblock In {\em International Conference on Learning Representations}, 2016.
 
-\bibitem{chevalier2018minigrid}
-Maxime Chevalier-Boisvert, Lucas Willems, and Suman Pal.
-\newblock Minimalistic gridworld environment for openai gym.
-\newblock In {\em ICLR Workshop on Representation Learning for RL}, 2018.
+\bibitem{schulman2017ppo}
+John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov.
+\newblock Proximal policy optimization algorithms.
+\newblock {\em arXiv preprint arXiv:1707.06347}, 2017.
 
 \end{thebibliography}
