@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.15)  27 APR 2026 13:30
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.15)  28 APR 2026 01:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1145,7 +1145,7 @@ Package hyperref Info: Link coloring OFF on input line 140.
 
 \c@lstlisting=\count380
 (cover.tex
-<figures/uet.jpg, id=216, 1125.20375pt x 1125.20375pt>
+<figures/uet.jpg, id=248, 1125.20375pt x 1125.20375pt>
 File: figures/uet.jpg Graphic file (type jpg)
 <use figures/uet.jpg>
 Package pdftex.def Info: figures/uet.jpg  used on input line 22.
@@ -1247,11 +1247,11 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [4
 
 
-])
+] [5])
 \tf@toc=\write5
 \openout5 = `thesis.toc'.
 
- [5] [6] (thesis.lof)
+ [6] (thesis.lof)
 \tf@lof=\write6
 \openout6 = `thesis.lof'.
 
@@ -1293,20 +1293,11 @@ Underfull \hbox (badness 1087) in paragraph at lines 20--21
 
 ) [9
 
-] (chapters/notations.tex
-Underfull \hbox (badness 1377) in paragraph at lines 37--38
-[]|\T5/cmr/m/n/13 Standardized and rec-ti-fied in-trin-sic re-ward (generic /
- []
-
-) [10
+] (chapters/notations.tex [10
 
 
 
-]
-Overfull \vbox (488.46083pt too high) has occurred while \output is active []
-
-
-[11] (chapters/c1/c1_introduction.tex
+]) [11] [12] (chapters/c1/c1_introduction.tex
 Ch\uhorn \ohorn ng 1.
 [1
 
@@ -1331,68 +1322,96 @@ y mod-eled as a Markov
 
 ] [7] [8] [9] [10]) [11] (chapters/c3/c3_chapter.tex
 Ch\uhorn \ohorn ng 3.
-LaTeX Font Info:    Calculating math sizes for size <10.83347> on input line 41
-.
-
-LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <7.58339> not available
-(Font)              size <8> substituted on input line 41.
-
-
-LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <5.41673> not available
-(Font)              size <5> substituted on input line 41.
-
-
-LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <7.58339> not available
-(Font)              size <8> substituted on input line 41.
-
-
-LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <5.41673> not available
-(Font)              size <5> substituted on input line 41.
-
-
-LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <7.58339> not available
-(Font)              size <8> substituted on input line 41.
-
-
-LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <5.41673> not available
-(Font)              size <5> substituted on input line 41.
-
-LaTeX Font Info:    Calculating math sizes for size <11.86258> on input line 56
-.
-
-Overfull \hbox (92.79185pt too wide) in paragraph at lines 74--75
- [][] 
- []
-
 [12
 
 
 
-] [13] [14] [15] [16] [17] [18]
+]
+LaTeX Font Info:    Calculating math sizes for size <11.86258> on input line 41
+.
+LaTeX Font Info:    Calculating math sizes for size <10.83347> on input line 43
+.
+
+
+LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <7.58339> not available
+(Font)              size <8> substituted on input line 43.
+
+
+LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <5.41673> not available
+(Font)              size <5> substituted on input line 43.
+
+
+LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <7.58339> not available
+(Font)              size <8> substituted on input line 43.
+
+
+LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <5.41673> not available
+(Font)              size <5> substituted on input line 43.
+
+
+LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <7.58339> not available
+(Font)              size <8> substituted on input line 43.
+
+
+LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <5.41673> not available
+(Font)              size <5> substituted on input line 43.
+
+[13] [14] [15] [16] [17] [18] [19] [20]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 294.
- [19]) [20] (chapters/c4/c4_chapter.tex
+put line 331.
+ [21]) [22] (chapters/c4/c4_chapter.tex
 Ch\uhorn \ohorn ng 4.
 
-Underfull \hbox (badness 1087) in paragraph at lines 16--16
+Overfull \hbox (6.8529pt too wide) in paragraph at lines 4--5
+\T5/cmr/m/n/13 This chap-ter de-scribes the ex-per-i-men-tal setup used to eval
+-u-ate the pro-posed method-
+ []
+
+
+Underfull \hbox (badness 1087) in paragraph at lines 23--23
 \T5/cmr/m/n/13 ma-nip-u-la-tion stage, cre-at-ing a hi-er-ar-chi-cal
  []
 
-[21
+[23
 
 
 
-] [22] [23] [24])
-Overfull \hbox (9.2567pt too wide) in paragraph at lines 79--174
-\T5/cmr/m/n/13 Overall, the em-pir-i-cal ev-i-dence sup-ports the main claim of
- the the-sis: state-dependent
+]
+LaTeX Font Info:    Trying to load font information for T5+cmtt on input line 3
+4.
+ (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/vntex\t5cmtt.fd
+File: t5cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+) [24]
+[25]
+Underfull \hbox (badness 1215) in paragraph at lines 63--63
+[]|\T5/cmr/m/n/13 Lower bound on ex-plo-ration abil-ity
  []
 
-[25] (chapters/conclusion.tex) [26
+
+Underfull \hbox (badness 2922) in paragraph at lines 64--64
+[]|\T5/cmr/m/n/13 Count-based ex-plo-ration with fixed
+ []
+
+
+Underfull \hbox (badness 1675) in paragraph at lines 66--66
+[]|\T5/cmr/m/n/13 PPO + RND with
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 68--68
+[]|\T5/cmr/m/n/13 PPO + ICM +
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 69--69
+[]|\T5/cmr/m/n/13 PPO + RND +
+ []
+
+[26] [27]) [28] (chapters/conclusion.tex) [29
 
 
 
-] (thesis.bbl [27
+] (thesis.bbl [30
 
 
 
@@ -1402,35 +1421,34 @@ Underfull \hbox (badness 1297) in paragraph at lines 63--67
 -rell.
  []
 
-[28]
+[31]
 Underfull \hbox (badness 3168) in paragraph at lines 131--134
 []\T5/cmr/m/n/13 John Schul-man, Filip Wol-ski, Pra-fulla Dhari-wal, Alec Rad-f
 ord, and
  []
 
-) [29] (chapters/appendix_a.tex
+) [32] (chapters/appendix_a.tex
 Ph\d {u} l\d {u}c A.
-[30
+
+Overfull \hbox (22.96526pt too wide) in paragraph at lines 13--15
+\OML/cmm/m/it/12 ^^U[] \OT1/cmr/m/n/12 = 0$ \T5/cmr/m/n/13 in Equa-tion [] re-d
+uces the Beta-network ob-jec-tive to $\OML/cmm/m/it/12 L[]\OT1/cmr/m/n/12 (\OML
+/cmm/m/it/12  \OT1/cmr/m/n/12 ) = \OML/cmm/m/it/12 ^^M[] L[]\OT1/cmr/m/n/12 (\O
+ML/cmm/m/it/12  \OT1/cmr/m/n/12 )$\T5/cmr/m/n/13 ,
+ []
+
+[33
 
 
 
-]
-
-LaTeX Font Warning: Font shape `OT1/cmr/bx/n' in size <13> not available
-(Font)              size <12> substituted on input line 39.
-
-
-LaTeX Font Warning: Font shape `OT1/cmr/bx/n' in size <6.5> not available
-(Font)              size <6> substituted on input line 39.
-
-[31] [32]) [33] (chapters/appendix_b.tex
+] [34] [35] [36]) [37] (chapters/appendix_b.tex
 Ph\d {u} l\d {u}c B.
 
 Overfull \hbox (62.77873pt too wide) in paragraph at lines 42--65
  [][] 
  []
 
-[34
+[38
 
 
 
@@ -1439,17 +1457,17 @@ Overfull \hbox (14.14755pt too wide) in paragraph at lines 71--84
  [][] 
  []
 
-[35]
+[39]
 Overfull \hbox (9.68867pt too wide) in paragraph at lines 137--164
  [][] 
  []
 
-[36]
+[40]
 Overfull \hbox (44.64226pt too wide) in paragraph at lines 191--208
  [][] 
  []
 
-[37]) [38] (thesis.aux)
+[41]) [42] (thesis.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -1460,41 +1478,43 @@ LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
 
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: A8C34F5AD3ADE79BF8B8F6987A57BA95;9807.
+(rerunfilecheck)             Checksum: 7DD8DB8309C055460A77F77C85A1A26A;11128.
  ) 
 Here is how much of TeX's memory you used:
- 29159 strings out of 467867
- 524667 string characters out of 5428410
- 953767 words of memory out of 5000000
- 57335 multiletter control sequences out of 15000+600000
- 664370 words of font info for 113 fonts, out of 8000000 for 9000
+ 29173 strings out of 467867
+ 524956 string characters out of 5428410
+ 946875 words of memory out of 5000000
+ 57331 multiletter control sequences out of 15000+600000
+ 664279 words of font info for 111 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 108i,15n,107p,1352b,1277s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 108i,14n,107p,1352b,851s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\JS\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm120
-0.pk><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><D:/Pro
-gram Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><D:/Program Files/M
-iKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><D:/Program Files/MiKTeX/fonts/
-type1/public/amsfonts/cm/cmmi12.pfb><D:/Program Files/MiKTeX/fonts/type1/public
-/amsfonts/cm/cmmi6.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/
-cmmi8.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi9.pfb><D:
-/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><D:/Program File
-s/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><D:/Program Files/MiKTeX/font
-s/type1/public/amsfonts/cm/cmr6.pfb><D:/Program Files/MiKTeX/fonts/type1/public
-/amsfonts/cm/cmr8.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/c
-mr9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><D:/
-Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy9.pfb><D:/Program Files
-/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb><C:/Users/JS/AppData/Roa
-ming/MiKTeX/fonts/type1/vntex/vnr/vnbx12.pfb><C:/Users/JS/AppData/Roaming/MiKTe
-X/fonts/type1/vntex/vnr/vnbx9.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/typ
-e1/vntex/vnr/vnr10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vn
-r/vnr12.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr7.pfb>
-<C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr8.pfb><C:/Users/JS
-/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr9.pfb><C:/Users/JS/AppData/Roa
-ming/MiKTeX/fonts/type1/vntex/vnr/vnti12.pfb><C:/Users/JS/AppData/Roaming/MiKTe
-X/fonts/type1/vntex/vnr/vnti9.pfb>
-Output written on thesis.pdf (53 pages, 545194 bytes).
+0.pk><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><D:/Pro
+gram Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><D:/Program Files/M
+iKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><D:/Program Files/MiKTeX/fonts/
+type1/public/amsfonts/cm/cmmi6.pfb><D:/Program Files/MiKTeX/fonts/type1/public/
+amsfonts/cm/cmmi8.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/c
+mmi9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><D:/
+Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><D:/Program Files
+/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><D:/Program Files/MiKTeX/fonts/
+type1/public/amsfonts/cm/cmr8.pfb><D:/Program Files/MiKTeX/fonts/type1/public/a
+msfonts/cm/cmr9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cms
+y10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb><D:/P
+rogram Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy9.pfb><D:/Program Files/
+MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb><C:/Users/JS/AppData/Roam
+ing/MiKTeX/fonts/type1/vntex/vnr/vnbx12.pfb><C:/Users/JS/AppData/Roaming/MiKTeX
+/fonts/type1/vntex/vnr/vnbx9.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type
+1/vntex/vnr/vnbxti10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/
+vnr/vnr10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr12.p
+fb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr7.pfb><C:/Users
+/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr8.pfb><C:/Users/JS/AppData/
+Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr9.pfb><C:/Users/JS/AppData/Roaming/MiKT
+eX/fonts/type1/vntex/vnr/vnti12.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/t
+ype1/vntex/vnr/vnti9.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/
+vnr/vntt12.pfb>
+Output written on thesis.pdf (58 pages, 593226 bytes).
 PDF statistics:
- 814 PDF objects out of 1000 (max. 8388607)
- 160 named destinations out of 1000 (max. 500000)
- 450 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 918 PDF objects out of 1000 (max. 8388607)
+ 177 named destinations out of 1000 (max. 500000)
+ 514 words of extra memory for PDF output out of 10000 (max. 10000000)
 

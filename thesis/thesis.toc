@@ -6,7 +6,7 @@
 \contentsline {chapter}{List of Figures}{vii}{Doc-Start}%
 \contentsline {chapter}{List of Tables}{viii}{Doc-Start}%
 \contentsline {chapter}{List of Acronyms}{ix}{chapter*.1}%
-\contentsline {chapter}{List of Notations}{xi}{chapter*.2}%
+\contentsline {chapter}{List of Notations}{x}{chapter*.2}%
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Background and Research Motivation}{1}{section.1.1}%
 \contentsline {section}{\numberline {1.2}Research Problem}{2}{section.1.2}%
@@ -25,30 +25,38 @@
 \contentsline {section}{\numberline {2.4}Summary and Research Gap}{10}{section.2.4}%
 \contentsline {chapter}{\numberline {3}Methodology}{12}{chapter.3}%
 \contentsline {section}{\numberline {3.1}System Architecture}{12}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Intrinsic Reward Generation: ICM Instantiation}{13}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Correlation-Aware Reward Exploration}{14}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Beta Network}{15}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Correlation-Based Objective}{15}{subsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.3.3}First-Order Optimization vs. Meta-Gradient}{17}{subsection.3.3.3}%
-\contentsline {section}{\numberline {3.4}Algorithm}{18}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Rollout Buffer}{18}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}Loss Functions}{19}{subsection.3.4.2}%
-\contentsline {subsection}{\numberline {3.4.3}Training Procedure}{19}{subsection.3.4.3}%
-\contentsline {chapter}{\numberline {4}Experimental Setup and Results}{21}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Benchmark Environments}{21}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Baselines and Evaluation Criteria}{22}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Experimental Configuration}{23}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Results}{24}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Analysis of the Learned Scaling Behavior}{24}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Discussion}{25}{section.4.6}%
-\contentsline {chapter}{Conclusion and Future Work}{26}{chapter*.7}%
-\contentsline {chapter}{References}{27}{section*.8}%
-\contentsline {chapter}{\numberline {A}Mathematical Proofs}{30}{appendix.A}%
-\contentsline {section}{\numberline {A.1}Proof of Proposition 3.1: Correlation Equivalence}{30}{section.A.1}%
-\contentsline {section}{\numberline {A.2}Proof of Proposition 3.2: Gradient Direction}{31}{section.A.2}%
-\contentsline {section}{\numberline {A.3}Proof of Lemma 3.1: Bounded Shaped Reward}{31}{section.A.3}%
-\contentsline {section}{\numberline {A.4}Proof of Proposition 3.3: Computational Cost Comparison}{32}{section.A.4}%
-\contentsline {section}{\numberline {A.5}Proof of Corollary 3.1: Degeneration to Fixed Coefficient}{33}{section.A.5}%
-\contentsline {chapter}{\numberline {B}Implementation Details}{34}{appendix.B}%
-\contentsline {section}{\numberline {B.1}Network Architectures}{34}{section.B.1}%
-\contentsline {section}{\numberline {B.2}Hyperparameters}{36}{section.B.2}%
+\contentsline {section}{\numberline {3.2}Intrinsic Reward Generation}{13}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}ICM Instantiation}{14}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Count-Based Exploration}{14}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Random Network Distillation}{15}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.4}Standardization and Rectification}{15}{subsection.3.2.4}%
+\contentsline {section}{\numberline {3.3}Correlation-Aware Reward Exploration}{16}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Beta Network}{16}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Learning-Progress Objective}{17}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}First-Order Optimization vs. Meta-Gradient}{19}{subsection.3.3.3}%
+\contentsline {section}{\numberline {3.4}Algorithm}{20}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Rollout Buffer}{20}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Loss Functions}{21}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Training Procedure}{21}{subsection.3.4.3}%
+\contentsline {chapter}{\numberline {4}Experimental Setup and Results}{23}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Benchmark Environments}{23}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Computing Environment}{24}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Experimental Configuration}{25}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Baselines}{26}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Performance Evaluation Metrics}{27}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Empirical Results}{28}{section.4.6}%
+\contentsline {subsection}{\numberline {4.6.1}Module-Level Results}{28}{subsection.4.6.1}%
+\contentsline {subsection}{\numberline {4.6.2}Effect of CARE Across Modules}{28}{subsection.4.6.2}%
+\contentsline {subsection}{\numberline {4.6.3}Behavior of the Learned Scaling Function}{28}{subsection.4.6.3}%
+\contentsline {subsection}{\numberline {4.6.4}Discussion}{28}{subsection.4.6.4}%
+\contentsline {chapter}{Conclusion and Future Work}{29}{chapter*.7}%
+\contentsline {chapter}{References}{30}{section*.8}%
+\contentsline {chapter}{\numberline {A}Mathematical Proofs}{33}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Proof of Proposition 3.1: Target Recovery}{33}{section.A.1}%
+\contentsline {section}{\numberline {A.2}Proof of Proposition 3.2: Gradient Direction}{34}{section.A.2}%
+\contentsline {section}{\numberline {A.3}Proof of Lemma 3.1: Bounded Shaped Reward}{34}{section.A.3}%
+\contentsline {section}{\numberline {A.4}Proof of Proposition 3.3: Computational Cost Comparison}{35}{section.A.4}%
+\contentsline {section}{\numberline {A.5}Proof of Corollary 3.1: Degeneration to Fixed Coefficient}{36}{section.A.5}%
+\contentsline {chapter}{\numberline {B}Implementation Details}{38}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Network Architectures}{38}{section.B.1}%
+\contentsline {section}{\numberline {B.2}Hyperparameters}{40}{section.B.2}%

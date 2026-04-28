@@ -1,79 +1,118 @@
 \chapter{Experimental Setup and Results}
 \label{chap:experiment}
 
+This chapter describes the experimental setup used to evaluate the proposed methodology. It first presents the benchmark environments and the computing infrastructure, then specifies the experimental configuration, the baselines, and the performance evaluation metrics. The empirical evaluation across all three intrinsic reward families (count-based, ICM, and RND) is the subject of Section~\ref{sec:empirical_results}. Settings reported here are the canonical configuration shared by every reported run; the underlying hyperparameter values are tabulated in Appendix~\ref{app:implementation}.
+
 \section{Benchmark Environments}
-The empirical evaluation is conducted on five sparse-reward MiniGrid environments \cite{chevalier2018minigrid}. These environments are chosen because they represent different forms of exploration difficulty while maintaining a common gridworld interface.
+\label{sec:benchmark_environments}
+
+The empirical evaluation is conducted on six sparse-reward MiniGrid environments \cite{chevalier2018minigrid}. These environments are chosen because they cover qualitatively different forms of exploration difficulty while sharing a common gridworld interface, which keeps the comparison across intrinsic reward modules controlled.
 
 \begin{table}[H]
 \centering
-\caption{MiniGrid environments used in the experiments}
+\caption{MiniGrid environments used in the experiments.}
+\label{tab:envs}
 \begin{tabular}{|m{4cm}|m{9cm}|}
 \hline
 \textbf{Environment} & \textbf{Purpose in the evaluation} \\ \hline
 DoorKey-8x8 & Tests whether the agent can discover a key, unlock a door, and shift from exploration to goal-directed behavior. \\ \hline
 Empty-16x16 & Represents an extreme sparse-reward setting with almost no intermediate feedback before the goal is reached. \\ \hline
+KeyCorridor-S3R3 & A multi-room layout with several keys and locked doors; assesses sustained exploration over a longer horizon. \\ \hline
+LavaCrossing-S9N3 & Requires safe navigation around lava; penalizes irrelevant exploration that leads to early termination. \\ \hline
 RedBlueDoors-8x8 & Requires opening two doors in the correct order, testing whether the method can suppress irrelevant exploration. \\ \hline
 UnlockPickup & Extends DoorKey with an additional object manipulation stage, creating a hierarchical sparse-reward task. \\ \hline
-KeyCorridorS3R3 & A longer-horizon task with multiple rooms, keys, and locked doors, used to assess sustained exploration ability. \\ \hline
 \end{tabular}
 \end{table}
 
-These tasks share several useful properties: sparse terminal rewards, egocentric partial observations, step penalties that discourage random motion, and stochastic initialization over multiple random seeds. Together, they form a suitable test bed for evaluating whether adaptive intrinsic reward scaling improves both efficiency and robustness.
+These tasks share several useful properties for studying adaptive intrinsic reward scaling: sparse terminal rewards, egocentric partial observations, step penalties that discourage random motion, and stochastic initialization across random seeds. Together, they form a test bed in which different intrinsic reward modules can be compared under the same policy optimization backbone and the same observation interface.
 
-\section{Baselines and Evaluation Criteria}
-The experimental framing of this thesis treats CARE as an adaptive layer that can be placed on top of representative intrinsic reward modules. The three module families emphasized throughout the thesis are count-based bonuses, ICM, and RIDE. In the present implementation, the reported quantitative experiments instantiate the ICM branch of this framing, because it provides a controlled and computationally manageable case for measuring the effect of adaptive scaling.
+\section{Computing Environment}
+\label{sec:computing_environment}
 
-Under that implementation, the proposed CARE method is compared against two categories of baselines:
+All experiments were carried out on a single machine with the following configuration:
 \begin{itemize}
-    \item PPO trained only with extrinsic rewards;
-    \item PPO combined with ICM using fixed intrinsic coefficients $\beta \in \{0.1, 0.2, 0.5, 1, 2\}$.
+    \item \textbf{Hardware}: \texttt{[CPU model, e.g., Intel Core i7-13700K, 16 cores]}; \texttt{[GPU model, e.g., NVIDIA RTX 4070, 12 GB VRAM]}; \texttt{[RAM, e.g., 32 GB]}.
+    \item \textbf{Operating system}: Windows 11.
+    \item \textbf{Software stack}: Python 3.12, PyTorch with CUDA support, \texttt{gymnasium} with the \texttt{minigrid} extension, \texttt{numpy}, \texttt{pandas}, and \texttt{matplotlib}.
+    \item \textbf{Wall-clock budget}: each seeded run consists of $10^6$ environment steps; the approximate runtime per seed is \texttt{[\,\!\!fill in after benchmarking,\!\!]} hours on the configuration above.
 \end{itemize}
 
-This comparison is important because it isolates the contribution of adaptive scaling from the contribution of intrinsic motivation itself. PPO provides a lower bound on exploration ability, while fixed-coefficient PPO+ICM shows how sensitive performance is to manual tuning. From the perspective of the broader thesis framing, the comparison also serves as the primary case study for understanding how CARE affects an intrinsic reward module once the module's raw signal is held fixed.
-
-The evaluation focuses on four aspects:
-\begin{itemize}
-    \item episode return over training time;
-    \item sample efficiency in the early and middle stages of learning;
-    \item variance across random seeds;
-    \item qualitative behavior of the learned scaling coefficient $\beta(s)$ and what it reveals about module-dependent exploration control.
-\end{itemize}
+The training scripts automatically dispatch the policy and auxiliary networks to GPU when CUDA is available and fall back to CPU otherwise. All experiments use deterministic random seeds for reproducibility, and all training logs and checkpoint files are saved to disk every $10^5$ steps.
 
 \section{Experimental Configuration}
-All reported runs share the same PPO backbone and ICM architecture so that the comparison is fair. The adapted paper fixes the global intrinsic coefficient at $\alpha = 0.001$ and clips the learned Beta Network output to $[0.1, 2.0]$. The Beta Network uses a hidden representation size of 256 with encoder depth 2. The regularization weight for the correlation objective is $\lambda_{\text{reg}} = 10^{-3}$, the reference value is $\beta_0 = 1.0$, gradient clipping is set to 1.0, and weight decay is $10^{-6}$.
+\label{sec:experimental_config}
 
-Although the current implementation focuses on ICM, the same CARE formulation would be applied to count-based and RIDE modules by replacing the raw intrinsic reward source while keeping the state-dependent scaling and correlation objective unchanged. This is why the chapter is written not only as a report of one implementation, but also as an empirical framing for studying CARE across intrinsic reward modules.
+All reported runs share the same PPO backbone and the same Beta Network architecture so that the comparison across intrinsic reward modules is fair. The complete set of hyperparameter values is tabulated in Appendix~\ref{app:hyperparameters}; the most relevant high-level settings are summarized here.
+
+The global intrinsic strength is fixed at $\alpha = 10^{-3}$ for every intrinsic reward module. The Beta Network in CARE is realized as a two-layer encoder of dimension $256$ followed by a $128$-unit head producing $\log \beta_\psi$, which is clipped so that $\beta_\psi(s_t) \in [\beta_\text{min}, \beta_\text{max}] = [0.1, 2.0]$. The learning-progress objective in Equation~\eqref{eq:beta_loss} uses regularization weight $\lambda_\text{reg} = 10^{-3}$, reference value $\beta_0 = 1.0$, gradient clipping at $L_2$ norm $1.0$, and $L_2$ weight decay of $10^{-6}$ on the Beta Network parameters. The Beta Network is updated with Adam at learning rate $5 \times 10^{-4}$.
+
+The base PPO algorithm uses $K = 80$ epochs per update, clip parameter $\epsilon = 0.2$, discount factor $\gamma = 0.99$, GAE bias-variance trade-off $\lambda = 0.95$, actor learning rate $3 \times 10^{-4}$, and critic learning rate $10^{-3}$. The rollout buffer length is $T = 4{,}000$ steps, and each seed is trained for $10^6$ environment steps. Each configuration is repeated over five independent random seeds $\{1, 2, 3, 4, 5\}$.
+
+\section{Baselines}
+\label{sec:baselines}
+
+The experimental framing of this thesis treats CARE as a module-agnostic adaptive layer that can be paired with any of the three representative intrinsic reward families: count-based bonuses, the Intrinsic Curiosity Module (ICM), and Random Network Distillation (RND). To isolate the contribution of CARE from the contribution of the underlying intrinsic signal, the baselines are organized into a $1 + 3 + 3$ matrix as listed in Table~\ref{tab:baselines}.
 
 \begin{table}[H]
 \centering
-\caption{Key hyperparameters reported for CARE}
-\begin{tabular}{|m{6cm}|m{4cm}|}
+\caption{Baseline conditions evaluated on every environment.}
+\label{tab:baselines}
+\begin{tabular}{|m{1.6cm}|m{4.2cm}|m{7.6cm}|}
 \hline
-\textbf{Hyperparameter} & \textbf{Value} \\ \hline
-Intrinsic strength $\alpha$ & 0.001 \\ \hline
-Beta output bounds & $[0.1, 2.0]$ \\ \hline
-Encoder size & 256 \\ \hline
-Encoder depth & 2 \\ \hline
-Regularization weight $\lambda_{\text{reg}}$ & $10^{-3}$ \\ \hline
-Reference value $\beta_0$ & 1.0 \\ \hline
-Gradient clipping & 1.0 \\ \hline
-Weight decay & $10^{-6}$ \\ \hline
+\textbf{Label} & \textbf{Configuration} & \textbf{Purpose in the comparison} \\ \hline
+$B_0$ & PPO (no intrinsic reward) & Lower bound on exploration ability without any curiosity signal. \\ \hline
+$B_\text{Count}$ & PPO + count-based with $\beta \equiv 1$ & Count-based exploration with fixed unit coefficient (no learned scaling). \\ \hline
+$B_\text{ICM}$ & PPO + ICM with $\beta \equiv 1$ & ICM exploration with fixed unit coefficient. \\ \hline
+$B_\text{RND}$ & PPO + RND with $\beta \equiv 1$ & RND exploration with fixed unit coefficient. \\ \hline
+$C_\text{Count}$ & PPO + count-based + CARE & Count-based bonus with learned $\beta_\psi(s_t)$ from the Beta Network. \\ \hline
+$C_\text{ICM}$ & PPO + ICM + CARE & ICM bonus with learned $\beta_\psi(s_t)$. \\ \hline
+$C_\text{RND}$ & PPO + RND + CARE & RND bonus with learned $\beta_\psi(s_t)$. \\ \hline
 \end{tabular}
 \end{table}
 
-The results are reported over five random seeds. This setup is sufficient to assess whether adaptive scaling consistently improves learning behavior rather than benefiting from a single favorable initialization.
+This design isolates three distinct effects:
+\begin{itemize}
+    \item \textbf{$B_0$ vs $B_m$ (for any $m$)} measures the contribution of intrinsic motivation in module $m$ on top of the extrinsic-only PPO baseline.
+    \item \textbf{$B_m$ vs $C_m$} measures the contribution of CARE's adaptive scaling, holding the underlying intrinsic signal fixed. This is the cleanest test of whether learned, state-dependent $\beta_\psi$ is preferable to a fixed unit coefficient.
+    \item \textbf{$C_\text{Count}$ vs $C_\text{ICM}$ vs $C_\text{RND}$} reveals how the same CARE layer interacts with structurally different intrinsic generators, addressing the research question of module-agnosticism stated in Chapter~1.
+\end{itemize}
 
-\section{Results}
-The quantitative experiments reported in this thesis correspond to the ICM instantiation of CARE. Within that setting, the results show several consistent trends. First, CARE performs strongly across environments with sparse but still informative extrinsic rewards. In DoorKey-8x8, RedBlueDoors-8x8, UnlockPickup, and KeyCorridorS3R3, the adaptive approach achieves faster learning and lower variance than most fixed-coefficient baselines. This result indicates that CARE improves sample efficiency and makes exploration behavior more stable across runs.
+With seven conditions per environment and five seeds per condition, the full evaluation comprises $7 \times 5 = 35$ runs per environment and $35 \times 6 = 210$ runs across the six environments.
 
-Second, the comparison against fixed-coefficient PPO+ICM highlights the difficulty of manual tuning. A coefficient that works well in one environment can be too small or too large in another. Small values underemphasize exploration and slow down learning, while large values can inject excessive noise and interfere with exploitation. CARE mitigates both problems by learning to amplify intrinsic rewards only in states where they correlate with future extrinsic success. In the broader module-level framing of this thesis, this result supports the hypothesis that CARE is most useful when an intrinsic reward signal is informative but unevenly relevant across the state space.
+\section{Performance Evaluation Metrics}
+\label{sec:metrics}
 
-Third, the method exhibits a natural transition from exploration to exploitation. As training progresses and the policy begins to discover task-relevant behaviors, the effective intrinsic contribution tends to decrease. This suggests that CARE does not merely add curiosity-driven noise, but instead learns to reduce exploration pressure once the task structure becomes clearer.
+Four metrics are used to quantify and compare the conditions defined above.
 
-\section{Analysis of the Learned Scaling Behavior}
-The paper reports that the learned distribution of $\beta(s)$ evolves differently across environments. In DoorKey-8x8 and RedBlueDoors-8x8, the distribution is initially concentrated near its reference value, then gradually broadens and becomes more structured. This pattern suggests that the Beta Network learns to partition the state space into regions where different exploration intensities are appropriate. Toward the end of training, the distribution shifts toward lower values, reflecting the decreasing marginal value of intrinsic rewards once the policy has matured.
+\textbf{Episode return.} Let $R^E_t$ be the extrinsic reward at time $t$ in evaluation episode $e$. The episode return for that episode is $\mathcal{R}_e = \sum_t R^E_t$. The reported curves are the mean of $\mathcal{R}_e$ over a sliding window of evaluation episodes around each checkpoint, averaged across the five seeds. Episode return is the primary metric of task success.
 
-In contrast, Empty-16x16 behaves differently. Because extrinsic rewards remain almost zero for most trajectories, the correlation objective receives very weak supervision. As a result, the Beta Network stays close to its initialization and exhibits limited adaptation. Importantly, this failure mode is graceful rather than unstable: the method effectively defaults to a nearly fixed intrinsic coefficient instead of diverging. This observation confirms both a strength and a limitation of CARE. The method is robust when correlation signals are weak, but meaningful adaptation requires at least occasional extrinsic feedback. From a module-level perspective, this also suggests that CARE will be most effective for intrinsic reward modules whose signals can be related to eventual task progress often enough for the correlation objective to learn from experience.
+\textbf{Sample efficiency.} For each environment, a target return $r^\star$ is fixed at a fraction (typically $0.7$) of the asymptotic return achieved by the strongest baseline. The sample efficiency of a method is then the smallest number of environment steps $n^\star$ at which its mean evaluation return first reaches $r^\star$:
+\begin{equation*}
+n^\star \;=\; \min\bigl\{ n : \overline{\mathcal{R}}(n) \ge r^\star \bigr\},
+\end{equation*}
+with $n^\star = +\infty$ if the threshold is never reached within the $10^6$-step budget. Lower values of $n^\star$ indicate faster learning.
 
-\section{Discussion}
-Overall, the empirical evidence supports the main claim of the thesis: state-dependent intrinsic reward scaling can improve sparse-reward reinforcement learning when the environment provides enough structure for the agent to relate exploration to eventual success. In the implemented ICM case study, CARE is especially beneficial in environments where exploration needs change across states and over time. The method is less effective in extremely sparse tasks where the extrinsic return is too weak to supervise adaptation. Therefore, CARE should be viewed as a practical middle ground between fixed intrinsic scaling and more expensive meta-learning approaches, and as a promising adaptive wrapper for broader module families such as count-based bonuses and RIDE.
+\textbf{Learning stability.} For each method and each timestep $n$, the learning stability is reported as the across-seed standard deviation $\sigma(n)$ of the mean evaluation return at that timestep:
+\begin{equation*}
+\sigma(n) \;=\; \sqrt{\frac{1}{|S| - 1} \sum_{s \in S} \bigl( \overline{\mathcal{R}}_s(n) - \overline{\mathcal{R}}(n) \bigr)^2},
+\end{equation*}
+where $S$ is the set of seeds. Lower $\sigma(n)$ indicates more reproducible behavior.
+
+\textbf{Learned scaling behavior.} The learned function $\beta_\psi$ is analyzed both globally and locally. Globally, the empirical distribution of $\beta_\psi(s_t)$ over the rollout buffer is summarized by its mean and selected percentiles ($25\%, 50\%, 75\%$) at fixed checkpoints throughout training. Locally, per-environment heatmaps of $\beta_\psi(s)$ projected onto the agent's two-dimensional position are produced from the trajectory data saved every $10^5$ steps, providing a qualitative view of where in state space CARE allocates more exploration influence.
+
+\section{Empirical Results}
+\label{sec:empirical_results}
+
+\textit{Empirical results across the six benchmark environments and the seven conditions defined in Section~\ref{sec:baselines} will be reported here once the experimental runs are complete. The remainder of this section is organized into the following subsections, which will be populated with reward curves, summary tables, and qualitative analyses of $\beta_\psi(s)$.}
+
+\subsection{Module-Level Results}
+\textit{Per-module reward curves and summary statistics for $B_m$ vs $C_m$ across all six environments.}
+
+\subsection{Effect of CARE Across Modules}
+\textit{Cross-module comparison summarizing where CARE provides the largest gain, where it is neutral, and where the cold-start fallback dominates.}
+
+\subsection{Behavior of the Learned Scaling Function}
+\textit{Distributional and trajectory-level analysis of $\beta_\psi(s_t)$, including evolution over training and qualitative state heatmaps.}
+
+\subsection{Discussion}
+\textit{Synthesis of the empirical findings in light of the formal results in Chapter~3 and the literature reviewed in Chapter~2.}

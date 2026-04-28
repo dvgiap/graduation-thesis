@@ -1,7 +1,7 @@
 \chapter{Methodology}
 \label{ch:methodology}
 
-This chapter presents the proposed methodology in formal terms. It first defines the underlying intrinsic-augmented decision process and the overall system architecture. It then specifies the intrinsic reward generator used in the implemented system, formulates the Correlation-Aware Reward Exploration (CARE) framework with its Beta Network and correlation-based objective, and concludes with the complete training algorithm. Five formal results (Propositions 3.1--3.3, Lemma 3.1, Corollary 3.1) are stated in this chapter and proved in Appendix A.
+This chapter presents the proposed methodology in formal terms. It first defines the underlying intrinsic-augmented decision process and the overall system architecture. It then specifies the intrinsic reward generator used in the implemented system, formulates the Correlation-Aware Reward Exploration (CARE) framework with its Beta Network and learning-progress objective, and concludes with the complete training algorithm. Five formal results (Propositions 3.1--3.3, Lemma 3.1, Corollary 3.1) are stated in this chapter and proved in Appendix A.
 
 \section{System Architecture}
 \label{sec:system_architecture}
@@ -23,56 +23,45 @@ A \emph{state-dependent reward shaping function} is a measurable map $\beta : \m
 The standard fixed-coefficient formulation corresponds to the special case $\beta(s) \equiv 1$.
 \end{definition}
 
-The proposed system instantiates this formulation with a parameterized $\beta_\psi$ and a specific intrinsic reward generator (ICM in the implemented experiments). The full pipeline is shown in Figure~\ref{fig:care_arch}.
+The proposed system instantiates this formulation with a parameterized $\beta_\psi$ together with one of three intrinsic reward generators --- count-based exploration, the Intrinsic Curiosity Module, or Random Network Distillation --- all of which are evaluated in Chapter~\ref{chap:experiment}. The full pipeline is shown in Figure~\ref{fig:care_arch}.
 
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
     >=latex,
-    node distance=1.2cm,
-    box/.style={draw, rounded corners, minimum width=2.4cm, minimum height=0.9cm, align=center, font=\small},
-    smallbox/.style={draw, rounded corners, minimum width=1.7cm, minimum height=0.7cm, align=center, font=\footnotesize},
-    icm/.style={draw, dashed, rounded corners, fill=blue!5, inner sep=8pt},
-    beta/.style={box, fill=orange!15},
-    op/.style={draw, circle, minimum size=0.6cm, font=\small, inner sep=1pt},
+    node distance=1.4cm,
+    box/.style={draw, rounded corners, minimum width=2.5cm, minimum height=1.0cm, align=center, font=\small},
+    op/.style={draw, circle, minimum size=0.7cm, font=\small, inner sep=1pt},
+    arr/.style={->, thick},
+    darr/.style={->, thick, dashed},
 ]
+    % Top row: pipeline producing the intrinsic reward
     \node[box, fill=green!15] (env) {Environment};
-    \node[box, fill=gray!10, right=2cm of env] (buf) {Rollout\\Buffer};
-    \draw[->, thick] (env.east) -- node[above, font=\footnotesize]{$(s_t, a_t, R^E_t, s_{t+1})$} (buf.west);
+    \node[box, fill=gray!15, right=1.6cm of env] (buf) {Rollout\\Buffer};
+    \node[box, fill=blue!15, right=1.6cm of buf] (mod) {Intrinsic\\Module $m$};
+    \draw[arr] (env) -- node[above, font=\footnotesize]{transitions} (buf);
+    \draw[arr] (buf) -- node[above, font=\footnotesize]{$s_t,\,a_t,\,s_{t+1}$} (mod);
 
-    \node[icm, right=1.6cm of buf] (icmgroup) {
-        \begin{tikzpicture}[node distance=0.4cm, font=\footnotesize]
-            \node[smallbox] (phi) {Encoder $\phi$};
-            \node[smallbox, below=of phi, xshift=-1.0cm] (fwd) {Forward $f^F_\eta$};
-            \node[smallbox, below=of phi, xshift=1.0cm] (inv) {Inverse $f^I_\eta$};
-            \node[font=\footnotesize, below=0.55cm of phi, yshift=-0.6cm] (out) {$I_t \to I_t^+$};
-            \draw[->] (phi) -- (fwd);
-            \draw[->] (phi) -- (inv);
-            \draw[->] (fwd) -- (out);
-        \end{tikzpicture}};
-    \node[font=\small, above=0.05cm of icmgroup] {ICM};
-    \draw[->, thick] (buf.east) -- (icmgroup.west);
+    % Middle row: Beta Network and shaped-reward composition
+    \node[box, fill=orange!15, below=1.8cm of buf] (beta) {Beta Network\\$\beta_\psi(s_t)$};
+    \node[op, right=1.0cm of beta] (mult) {$\times$};
+    \node[op, right=1.0cm of mult] (plus) {$+$};
+    \node[box, fill=red!10, right=1.2cm of plus] (ppo) {PPO Update};
 
-    \node[beta, below=1.8cm of icmgroup, xshift=-0.8cm] (betanet) {Beta Network\\$\beta_\psi(s_t)$};
-    \draw[->, thick] (buf.south) |- (betanet.west);
+    \draw[arr] (buf.south) -- node[right, font=\footnotesize, near end]{$s_t$} (beta.north);
+    \draw[arr] (beta) -- node[above, font=\footnotesize]{$\beta_\psi$} (mult);
+    \draw[arr] (mod.south) |- node[right, font=\footnotesize, near end]{$I_t^{+,m}$} (mult.north);
+    \draw[arr] (mult) -- node[above, font=\footnotesize]{$\alpha\,\beta_\psi\, I_t^{+,m}$} (plus);
+    \draw[arr] (buf.east) -| node[right, font=\footnotesize, near start]{$R_t^E$} (plus.north);
+    \draw[arr] (plus) -- node[above, font=\footnotesize]{$\bar r_t$} (ppo);
 
-    \node[op, right=1.0cm of betanet] (mult) {$\times$};
-    \draw[->, thick] (betanet.east) -- (mult.west);
-    \draw[->, thick] (icmgroup.south) |- node[right, near end, font=\footnotesize]{$I_t^+$} (mult.north);
-
-    \node[op, right=0.9cm of mult] (plus) {$+$};
-    \draw[->, thick] (mult.east) -- node[above, font=\footnotesize]{$\alpha\beta I_t^+$} (plus.west);
-    \draw[->, thick] (buf.south east) |- node[right, near start, font=\footnotesize]{$R^E_t$} (plus.north);
-
-    \node[box, fill=red!10, right=1.0cm of plus] (ppo) {PPO Update\\(actor $\theta$, critic $\mu$)};
-    \draw[->, thick] (plus.east) -- node[above, font=\footnotesize]{$\bar{r}_t$} (ppo.west);
-
-    \node[box, fill=yellow!20, below=1.4cm of mult] (corr) {Correlation\\Loss $L_\text{corr}$};
-    \draw[->, thick, dashed] (mult.south) -- node[right, font=\footnotesize]{$\tilde I_t$} (corr.north);
-    \draw[->, thick, dashed] (buf.south west) ++(0,-0.1) |- node[left, near end, font=\footnotesize]{$G^E_t$} (corr.west);
-    \draw[->, thick, dashed, blue!60!black] (corr.west) -- ++(-1.6,0) |- node[left, near end, font=\footnotesize]{$\nabla_\psi L_\beta$} (betanet.south);
+    % Bottom row: Progress loss and feedback to Beta Network
+    \node[box, fill=yellow!20, below=1.6cm of mult] (loss) {Progress Loss\\$L_\text{progress}$};
+    \draw[darr] (beta.south) |- node[above, font=\footnotesize, near end]{$\beta_\psi(s_t)$} (loss.west);
+    \draw[darr] (ppo.south) |- node[right, font=\footnotesize, near end]{$\tau(s_t) \leftarrow |\delta_t|$} (loss.east);
+    \draw[darr, blue!60!black] (loss.west) -- ++(-1.6,0) |- node[left, font=\footnotesize, near end]{$\nabla_\psi L_\beta$} (beta.south west);
 \end{tikzpicture}
-\caption{CARE system architecture. Solid arrows denote the forward computation that produces the shaped reward $\bar{r}_t$ used by PPO. Dashed arrows indicate the auxiliary signals used to update the Beta Network $\beta_\psi$ via the correlation-based objective $L_\beta$.}
+\caption{CARE system architecture. The intrinsic module block stands for any of the three implementations evaluated in this thesis (count-based, ICM, or RND); the rest of the pipeline is identical across modules. Solid arrows trace the forward computation that produces the shaped reward $\bar r_t$ used by PPO. Dashed arrows indicate the auxiliary signals used to update the Beta Network $\beta_\psi$ via the learning-progress objective $L_\beta$, with the $\tau(s_t)$ target derived from the magnitude of the critic's TD error $\delta_t$.}
 \label{fig:care_arch}
 \end{figure}
 
@@ -83,10 +72,13 @@ The shaped reward used throughout this thesis follows directly from Definition~\
 \end{equation}
 Conceptually, $\beta_\psi(s_t)$ acts as a state-conditional volume control on curiosity: it amplifies intrinsic reward in states where exploration is empirically associated with future extrinsic success and attenuates it elsewhere. The remainder of this chapter formalizes this intuition.
 
-\section{Intrinsic Reward Generation: ICM Instantiation}
-\label{sec:icm}
+\section{Intrinsic Reward Generation}
+\label{sec:intrinsic_modules}
 
-In the implemented system, the intrinsic reward generator is the Intrinsic Curiosity Module (ICM) \cite{pathak2017curiosity}. Although CARE is module-agnostic, ICM provides a well-studied and computationally manageable case for quantitative evaluation.
+The proposed framework supports three intrinsic reward modules: count-based exploration \cite{bellemare2016count, tang2017exploration}, the Intrinsic Curiosity Module (ICM) \cite{pathak2017curiosity}, and Random Network Distillation (RND) \cite{burda2019rnd}. All three differ only in how the raw intrinsic signal $I_t$ is computed at each transition; the rest of the pipeline (standardization, Beta Network, and learning-progress objective) is identical. The empirical evaluation in Chapter~\ref{chap:experiment} reports on all three modules. The remainder of this section describes each module with its raw-reward formulation, followed by the shared standardization step that produces the rectified signal $I_t^+$ fed to the Beta Network.
+
+\subsection{ICM Instantiation}
+\label{sec:icm}
 
 \textbf{Forward and Inverse Dynamics Models.} ICM first encodes each state into a latent representation $\phi(s_t) \in \mathbb{R}^d$. It then trains two auxiliary models: a forward dynamics model $f^F_\eta$ that predicts the next latent feature from the current feature and action, and an inverse dynamics model $f^I_\eta$ that predicts the action from two consecutive latent states. The combined ICM loss is
 \begin{equation}
@@ -102,9 +94,41 @@ with weighting coefficients $\alpha_F, \alpha_I > 0$.
 I_t \;=\; \tfrac{1}{2}\!\left\| f^F_\eta(\phi_t, a_t) - \phi_{t+1} \right\|_2^2.
 \label{eq:icm_raw}
 \end{equation}
-Because the magnitude of $I_t$ is not stationary across training, the raw signal is preprocessed before being passed to CARE.
 
-\textbf{Standardization and Rectification.}
+\subsection{Count-Based Exploration}
+\label{sec:count_module}
+
+In the count-based instantiation, the raw intrinsic reward at state $s_t$ is a function of the empirical visit count of that state. Following \cite{tang2017exploration}, we use a random-projection hash $\phi_h : \mathcal{S} \to \mathbb{Z}^{d_h}$ that maps each state to a discrete hash code:
+\begin{equation}
+\phi_h(s_t) \;=\; \mathrm{round}\!\left( \frac{W^\top s_t}{\Delta} \right),
+\label{eq:count_hash}
+\end{equation}
+where $W \in \mathbb{R}^{d_s \times d_h}$ is a random projection matrix sampled once at initialization, $d_h$ is the hash dimension, and $\Delta > 0$ is the bin width. Let $N(\phi_h(s_t))$ denote the number of times the hash code $\phi_h(s_t)$ has been visited prior to time step $t$. The raw intrinsic reward is the inverse-square-root visitation bonus
+\begin{equation}
+I_t \;=\; \frac{1}{\sqrt{\max\{N(\phi_h(s_t)),\, 1\}}}.
+\label{eq:count_raw}
+\end{equation}
+This module has no learnable parameters; the hash table $N(\cdot)$ is updated incrementally as new states are visited.
+
+\subsection{Random Network Distillation}
+\label{sec:rnd_module}
+
+In the RND instantiation \cite{burda2019rnd}, the raw intrinsic reward is the prediction error of a learned predictor network $f^P_\eta$ relative to a fixed random target network $f^T$. Both networks share the same architecture but differ in their parameterization: $f^T$ is initialized randomly and frozen, whereas $f^P_\eta$ is trained to mimic $f^T$ on visited states. The raw intrinsic reward is
+\begin{equation}
+I_t \;=\; \tfrac{1}{2}\,\bigl\| f^P_\eta(s_t) - f^T(s_t) \bigr\|_2^2,
+\label{eq:rnd_raw}
+\end{equation}
+which is large at states for which the predictor has not yet matched the target --- typically novel states --- and decays as the predictor learns from repeated visits. The predictor is trained by mean-squared error against $f^T$:
+\begin{equation}
+L_\text{RND}(\eta) \;=\; \mathbb{E}\!\left[ \tfrac{1}{2}\,\bigl\| f^P_\eta(s_t) - f^T(s_t) \bigr\|_2^2 \right].
+\label{eq:rnd_loss}
+\end{equation}
+Following the original implementation, observations are normalized to zero mean and unit variance (clipped to $[-5, 5]$) before being passed to either network, and the raw intrinsic rewards $I_t$ are divided by the running standard deviation of the discounted intrinsic returns prior to entering the standardization step described next.
+
+\subsection{Standardization and Rectification}
+\label{sec:standardization}
+
+Regardless of the module, the raw intrinsic reward $I_t$ produced by Equation~\eqref{eq:icm_raw}, \eqref{eq:count_raw}, or \eqref{eq:rnd_raw} is non-stationary: its magnitude evolves during training as the underlying generator (forward model, hash counts, or predictor network) adapts to the agent's experience. To keep the input to the Beta Network bounded in scale and approximately stationary across updates, the same preprocessing step is applied to all three modules.
 
 \begin{definition}[Standardized Intrinsic Reward]
 \label{def:standardized_intrinsic}
@@ -115,12 +139,12 @@ I_t^+ \;=\; \max\!\left( 0,\; \frac{I_t - \mu_I}{\sigma_I + \varepsilon} \right)
 \end{equation}
 \end{definition}
 
-This preprocessing suppresses transitions whose prediction errors are below the batch average and retains relatively surprising transitions, which keeps the input to the Beta Network bounded in scale and approximately stationary across updates. In what follows, we use the generic notation $I_t^{+,m}$ to emphasize that the same construction applies to other intrinsic reward modules: replacing ICM with a count-based bonus or with Random Network Distillation (RND) requires changing the definition of $I_t$ but leaves the rest of the pipeline (standardization, Beta Network, correlation loss) unchanged.
+This preprocessing suppresses transitions whose intrinsic signal is below the batch average and retains relatively surprising transitions. We use the generic notation $I_t^{+,m}$ to emphasize that the same pipeline (standardization, Beta Network, progress loss) is applied identically across all three modules; only the upstream raw signal $I_t$ differs.
 
 \section{Correlation-Aware Reward Exploration}
 \label{sec:care}
 
-CARE introduces a state-dependent scaling function $\beta_\psi(s_t)$ between the intrinsic reward generator and the policy update. This section formalizes the network, its training objective, and the reasons for choosing a first-order optimization scheme over a meta-gradient one.
+CARE introduces a state-dependent scaling function $\beta_\psi(s_t)$ between the intrinsic reward generator and the policy update. This section formalizes the network, its learning-progress training objective, and the reasons for choosing a first-order optimization scheme over a meta-gradient one.
 
 \subsection{Beta Network}
 \label{sec:beta_network}
@@ -132,7 +156,7 @@ The \emph{Beta Network} is a parameterized map
 \beta_\psi : \mathcal{S} \to [\beta_\text{min}, \beta_\text{max}], \qquad 0 < \beta_\text{min} < \beta_\text{max} < \infty,
 \label{eq:beta_network}
 \end{equation}
-which assigns a positive, bounded scaling factor to each state. In the implemented system, $\beta_\psi$ is realized as a two-layer multilayer perceptron with embedding dimension 256, sigmoid output, and clipping to $[\beta_\text{min}, \beta_\text{max}] = [0.1, 2.0]$.
+which assigns a positive, bounded scaling factor to each state. In the implemented system, $\beta_\psi$ is realized as a feed-forward MLP with a 2-layer encoder of width $256$ and a 2-layer head of widths $[256, 128, 1]$ that produces $\log \beta_\psi(s_t)$. The output is mapped to $[\beta_\text{min}, \beta_\text{max}] = [0.1, 2.0]$ via $\beta_\psi(s_t) = \exp\bigl( \mathrm{clamp}(\log \beta_\psi(s_t),\, \log \beta_\text{min},\, \log \beta_\text{max}) \bigr)$. The complete architecture and weight initialization are listed in Appendix~\ref{app:architectures}, Table~\ref{tab:beta_arch}.
 \end{definition}
 
 For an intrinsic reward module $m$, the scaled intrinsic reward at time step $t$ is
@@ -155,68 +179,77 @@ Proof in Appendix~\ref{app:proof_bounded}.
 
 Lemma~\ref{lem:bounded_shaped} is what allows CARE to be inserted into a PPO training loop without introducing additional instability: the shaped reward differs from the extrinsic reward by a bounded perturbation, so the policy gradient remains bounded under the same regularity conditions that PPO already requires.
 
-\subsection{Correlation-Based Objective}
-\label{sec:correlation_loss}
+\subsection{Learning-Progress Objective}
+\label{sec:progress_loss}
 
-The Beta Network is trained so that the scaled intrinsic reward $\tilde I_t^{\,m}$ correlates with the discounted future extrinsic return. For a trajectory of length $T$, the discounted extrinsic return from time step $t$ is
+The Beta Network is trained so that $\beta_\psi(s_t)$ becomes large at states where the value function exhibits large temporal-difference (TD) error and small at states where the value function is well-fitted. The intuition is that a large $|\delta_t|$ marks a state where extrinsic learning is still in progress, so additional intrinsic exploration there is informative; conversely, when $|\delta_t|$ is small, the agent already has a stable value estimate and additional curiosity bonus would not improve learning.
+
+For each transition in the rollout buffer, the one-step TD error of the extrinsic value function is
 \begin{equation}
-G_t^E \;=\; \sum_{k=t}^{T-1} \gamma^{k-t}\, R_k^E.
-\label{eq:extrinsic_return}
+\delta_t \;=\; R_t^E \;+\; \gamma\, V_\mu(s_{t+1}) (1 - d_t) \;-\; V_\mu(s_t),
+\label{eq:td_error}
 \end{equation}
-Within a minibatch with empirical means $\mu_{\tilde I}, \mu_G$ and standard deviations $\sigma_{\tilde I}, \sigma_G$, both the scaled intrinsic reward and the extrinsic return are standardized:
+where $d_t \in \{0, 1\}$ is the episode termination flag and $V_\mu$ is the current critic. The per-state target $\tau(s_t)$ is then defined as a piecewise normalization of $|\delta_t|$ onto the Beta Network's output range:
 \begin{equation}
-\hat I_t^{\,m} \;=\; \frac{\tilde I_t^{\,m} - \mu_{\tilde I}}{\sigma_{\tilde I}}, \qquad
-\hat G_t \;=\; \frac{G_t^E - \mu_G}{\sigma_G}.
-\label{eq:standardization}
+\tau(s_t) \;=\; \begin{cases}
+\beta_\text{min} + (\beta_\text{max} - \beta_\text{min}) \dfrac{|\delta_t|}{\max_{t'} |\delta_{t'}| + \varepsilon}, & \text{if } \max_{t'} R^E_{t'} > 0, \\[6pt]
+\beta_0, & \text{otherwise (cold-start fallback).}
+\end{cases}
+\label{eq:beta_target}
 \end{equation}
-The correlation-based loss is then
+The cold-start fallback addresses the regime in which a batch contains no positive extrinsic reward; in that case $|\delta_t|$ reflects mainly initialization noise of the critic, and would be a poor target for $\beta_\psi$. Defaulting $\tau$ to the reference value $\beta_0 = 1$ in that regime makes CARE behave like a fixed-coefficient method until extrinsic signal becomes informative.
+
+The learning-progress loss is the mean-squared deviation of $\beta_\psi$ from this target:
 \begin{equation}
-L_\text{corr}(\psi) \;=\; -\, \mathbb{E}\!\left[ \hat I_t^{\,m}\, \hat G_t \right],
-\label{eq:corr_loss}
+L_\text{progress}(\psi) \;=\; \mathbb{E}\!\left[ \bigl( \beta_\psi(s_t) - \tau(s_t) \bigr)^2 \right].
+\label{eq:progress_loss}
 \end{equation}
-and to prevent degenerate scaling a log-space regularizer pulls $\beta_\psi$ toward a reference value $\beta_0 = 1$:
+A log-space regularizer pulls $\beta_\psi$ toward the reference value $\beta_0 = 1$ to prevent degenerate scaling and to control variance during early training:
 \begin{equation}
-L_\text{reg}(\psi) \;=\; \mathbb{E}\!\left[ \left( \log \beta_\psi(s_t) - \log \beta_0 \right)^2 \right].
+L_\text{reg}(\psi) \;=\; \mathbb{E}\!\left[ \bigl( \log \beta_\psi(s_t) - \log \beta_0 \bigr)^2 \right].
 \label{eq:reg_loss}
 \end{equation}
-The complete objective minimized at each update is
+The complete Beta-network objective is
 \begin{equation}
-L_\beta(\psi) \;=\; L_\text{corr}(\psi) \;+\; \lambda_\text{reg}\, L_\text{reg}(\psi).
+L_\beta(\psi) \;=\; \gamma_p\, L_\text{progress}(\psi) \;+\; \lambda_\text{reg}\, L_\text{reg}(\psi),
 \label{eq:beta_loss}
 \end{equation}
+with $\gamma_p > 0$ the progress weight and $\lambda_\text{reg} > 0$ the regularization weight.
 
-The correlation loss has a precise statistical interpretation, and its gradient has a precise sign condition.
+The progress loss has a clean statistical interpretation, and its gradient has a clean directional one.
 
-\begin{proposition}[Pearson Equivalence]
-\label{prop:pearson_equiv}
-In the limit of an infinitely large minibatch, the empirical estimator of $L_\text{corr}(\psi)$ in Equation~\eqref{eq:corr_loss} converges to the negative population Pearson correlation between $\tilde I_t^{\,m}$ and $G_t^E$:
+\begin{proposition}[Target Recovery]
+\label{prop:target_recovery}
+Assume the Beta Network has sufficient expressive capacity to represent any measurable function $\mathcal{S} \to [\beta_\text{min}, \beta_\text{max}]$. In the population limit and with $\lambda_\text{reg} = 0$, the unique minimizer $\psi^\star$ of $L_\beta(\psi)$ satisfies
 \begin{equation*}
-L_\text{corr}(\psi) \;=\; -\,\rho\!\left( \tilde I_t^{\,m},\, G_t^E \right).
+\beta_{\psi^\star}(s) \;=\; \mathbb{E}\!\left[\, \tau(s_t) \,\big|\, s_t = s \right]
 \end{equation*}
-Proof in Appendix~\ref{app:proof_pearson}.
+for every state $s$ visited with positive probability.
+Proof in Appendix~\ref{app:proof_target}.
 \end{proposition}
 
-Proposition~\ref{prop:pearson_equiv} clarifies that minimizing $L_\text{corr}$ is not a heuristic surrogate but is equivalent (up to a sign) to maximizing the Pearson correlation between the scaled intrinsic reward and the future extrinsic return. The next result shows that the gradient with respect to $\beta_\psi$ at a state $s$ has a clean directional interpretation.
+Proposition~\ref{prop:target_recovery} states that, in the population limit, the optimal Beta Network simply outputs the conditional mean of the target $\tau$ at each state. Because $\tau$ is a monotone normalization of $|\delta_t|$, this means that $\beta_{\psi^\star}(s)$ is large precisely at states where the extrinsic value function has, on average, larger TD error. The next result describes the gradient direction during training.
 
 \begin{proposition}[Gradient Direction]
 \label{prop:gradient_direction}
-Assume the trajectories used to estimate $L_\text{corr}(\psi)$ are sufficiently diverse so that perturbations of $\beta_\psi$ at an individual state $s$ have a negligible effect on the batch statistics $\mu_{\tilde I}, \sigma_{\tilde I}$. Then for every state $s \in \mathcal{S}$ that is visited with positive probability,
+For every state $s \in \mathcal{S}$ visited with positive probability,
 \begin{equation*}
-\frac{\partial L_\text{corr}}{\partial \beta_\psi(s)} \;<\; 0
-\quad\Longleftrightarrow\quad
-\mathbb{E}\!\left[ I_t^{+,m}\, G_t^E \,\big|\, s_t = s \right] \;>\; \mathbb{E}\!\left[ I_t^{+,m} \right]\, \mathbb{E}\!\left[ G_t^E \right].
+\frac{\partial L_\text{progress}}{\partial \beta_\psi(s)}
+\;=\;
+2\, \mathbb{P}(s_t = s)\, \Bigl( \beta_\psi(s) \;-\; \mathbb{E}[\tau(s_t) \mid s_t = s] \Bigr).
 \end{equation*}
+In particular, gradient descent on $L_\text{progress}$ moves $\beta_\psi(s)$ monotonically toward the conditional mean target $\mathbb{E}[\tau(s_t) \mid s_t = s]$.
 Proof in Appendix~\ref{app:proof_gradient}.
 \end{proposition}
 
-Proposition~\ref{prop:gradient_direction} formalizes the central design intuition of CARE: a gradient step on the correlation loss pushes $\beta_\psi(s)$ upward exactly at those states where intrinsic reward and future extrinsic return are positively correlated, and downward elsewhere. In other words, the Beta Network is supervised by the empirical correlation pattern of the agent's own experience.
+Proposition~\ref{prop:gradient_direction} makes the central design intuition of CARE explicit: a gradient step adjusts $\beta_\psi(s)$ toward the local average of $\tau$, which by Equation~\eqref{eq:beta_target} is a normalized measure of how unsettled the value function still is at state $s$. The Beta Network is therefore supervised by the agent's own learning progress as observed through the critic's TD error.
 
 \subsection{First-Order Optimization vs. Meta-Gradient}
 \label{sec:first_order}
 
-A natural alternative to the correlation-based objective is to learn the intrinsic reward weighting via meta-gradients, as in Learning Intrinsic Rewards for Policy Gradient methods (LIRPG) \cite{zheng2018lirpg}. In that approach, the parameters of the intrinsic reward function are updated so that, after a policy update using the shaped reward, the resulting policy maximizes the extrinsic objective. This requires differentiating through one or more inner policy updates, which is computationally expensive and can be unstable in deep reinforcement learning settings.
+A natural alternative to the learning-progress objective is to learn the intrinsic reward weighting via meta-gradients, as in Learning Intrinsic Rewards for Policy Gradient methods (LIRPG) \cite{zheng2018lirpg}. In that approach, the parameters of the intrinsic reward function are updated so that, after a policy update using the shaped reward, the resulting policy maximizes the extrinsic objective. This requires differentiating through one or more inner policy updates, which is computationally expensive and can be unstable in deep reinforcement learning settings.
 
-CARE replaces the meta-gradient by a first-order objective that supervises $\beta_\psi$ directly using observed correlation. The cost difference is quantified by the following result.
+CARE replaces the meta-gradient by a first-order objective that supervises $\beta_\psi$ directly through the target $\tau(s_t)$ derived from the critic's TD error. The cost difference is quantified by the following result.
 
 \begin{proposition}[Computational Cost]
 \label{prop:cost}
@@ -224,15 +257,19 @@ Per Beta-network update of size $T$, let $K$ denote the number of inner policy u
 Proof in Appendix~\ref{app:proof_cost}.
 \end{proposition}
 
-In the implemented system, $|\psi|$ is roughly two orders of magnitude smaller than $|\theta|$, so the cost reduction is substantial. The price of this efficiency is a weaker form of supervision: instead of optimizing $\beta_\psi$ directly for downstream extrinsic performance, CARE optimizes it for an empirical correlation that is a proxy for that performance. The next result describes the limit in which this proxy becomes uninformative.
+In the implemented system, $|\psi|$ is roughly two orders of magnitude smaller than $|\theta|$, so the cost reduction is substantial. The price of this efficiency is a weaker form of supervision: instead of optimizing $\beta_\psi$ directly for downstream extrinsic performance, CARE optimizes it for a TD-error-based target that serves as a proxy for that performance. The next result describes two regimes in which this proxy reduces to the trivial fixed-coefficient case.
 
 \begin{corollary}[Degeneration to Fixed Coefficient]
 \label{cor:degeneration}
-Consider the objective $L_\beta(\psi)$ in Equation~\eqref{eq:beta_loss}. As $\lambda_\text{reg} \to \infty$, every minimizer $\psi^\star$ satisfies $\beta_{\psi^\star}(s) \to \beta_0 = 1$ uniformly in $s$, and the shaped reward in Equation~\eqref{eq:combined_reward} reduces to the fixed-coefficient form $\bar r_t = R_t^E + \alpha\, I_t^{+,m}$.
+Consider the objective $L_\beta(\psi)$ in Equation~\eqref{eq:beta_loss}. There are two regimes in which every minimizer $\psi^\star$ satisfies $\beta_{\psi^\star}(s) \to \beta_0 = 1$ uniformly in $s$, and the shaped reward in Equation~\eqref{eq:combined_reward} reduces to the fixed-coefficient form $\bar r_t = R_t^E + \alpha\, I_t^{+,m}$:
+\begin{enumerate}
+    \item[(i)] \textbf{Cold-start regime}: when $\max_{t} R_t^E \le 0$ within the rollout buffer, the target $\tau$ in Equation~\eqref{eq:beta_target} reduces to $\beta_0$ by definition, and the unique minimizer of $L_\text{progress}$ is $\beta_\psi \equiv \beta_0$.
+    \item[(ii)] \textbf{Strong regularization regime}: as $\lambda_\text{reg} \to \infty$, the regularization term dominates and forces $\log \beta_\psi(s) \to 0$ in $L^2$ under the state-visitation distribution, equivalently $\beta_\psi(s) \to \beta_0 = 1$.
+\end{enumerate}
 Proof in Appendix~\ref{app:proof_degeneration}.
 \end{corollary}
 
-Corollary~\ref{cor:degeneration} has both a theoretical and a practical reading. Theoretically, it shows that CARE strictly contains fixed-coefficient PPO+ICM as a limiting case, so it cannot perform worse than that baseline once $\lambda_\text{reg}$ is tuned appropriately. Practically, it explains an empirically observed phenomenon: when extrinsic rewards are extremely sparse, $L_\text{corr}$ provides little signal, the regularizer dominates, and CARE behaves like a fixed-coefficient method instead of degrading the policy.
+Corollary~\ref{cor:degeneration} has both a theoretical and a practical reading. Theoretically, it shows that CARE strictly contains fixed-coefficient PPO+ICM as a limiting case, so the framework cannot perform worse than that baseline once the regularization is appropriately tuned and the cold-start fallback is in place. Practically, the cold-start branch is essential in extremely sparse environments: when the agent has not yet encountered any extrinsic reward, the TD error reflects only initialization noise of the critic, and falling back to $\beta_0 = 1$ prevents CARE from amplifying that noise into the policy update.
 
 \section{Algorithm}
 \label{sec:algorithm}
@@ -291,16 +328,16 @@ The four losses correspond to four parameter groups: $\theta$ (actor), $\mu$ (cr
 Algorithm~\ref{alg:care} specifies the complete CARE training loop. One iteration of the outer loop corresponds to a single PPO update cycle.
 
 \begin{algorithm}[H]
-\caption{CARE training loop with PPO and ICM.}
+\caption{CARE training loop with PPO and an intrinsic reward module.}
 \label{alg:care}
 \begin{algorithmic}[1]
-\State Initialize policy $\theta$, critic $\mu$, ICM $\eta$, Beta Network $\psi$
+\State Initialize policy $\theta$, critic $\mu$, intrinsic-module parameters $\eta$ (if any), Beta Network $\psi$
 \For{$\text{update} = 1, 2, \dots, U$}
     \State Collect $T$ on-policy transitions $\{\xi_t\}_{t=0}^{T-1}$ using $\pi_\theta$
-    \State Compute raw intrinsic rewards $I_t$ via Equation~\eqref{eq:icm_raw}
+    \State Compute raw intrinsic rewards $I_t$ via the module-specific equation in Section~\ref{sec:intrinsic_modules}
     \State Standardize and rectify to obtain $I_t^+$ via Equation~\eqref{eq:icm_standardized}
-    \State Compute discounted extrinsic returns $G_t^E$ via Equation~\eqref{eq:extrinsic_return}
-    \State Update ICM parameters: $\eta \gets \eta - \eta_\text{lr}\, \nabla_\eta L_\text{ICM}(\eta)$
+    \State Compute extrinsic TD errors $\delta_t$ via Equation~\eqref{eq:td_error} and targets $\tau(s_t)$ via Equation~\eqref{eq:beta_target}
+    \State Update intrinsic-module parameters $\eta$ (no-op if module is non-parametric, e.g., count-based)
     \State Update Beta Network: $\psi \gets \psi - \psi_\text{lr}\, \nabla_\psi L_\beta(\psi)$
     \State Compute shaped rewards $\bar r_t = R_t^E + \alpha\, \beta_\psi(s_t)\, I_t^+$
     \State Compute GAE advantages $\hat A_t$ from $\{\bar r_t\}$ and $V_\mu$

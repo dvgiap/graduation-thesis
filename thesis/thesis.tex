@@ -179,6 +179,11 @@
 \bibliography{references}\newpage\cleardoublepage
 
 \appendix
+\titleformat{\chapter}[display]
+{\normalfont\huge\bfseries}{Appendix \thechapter}{0pt}{\LARGE}
+\renewcommand{\chaptername}{Appendix}
+\renewcommand{\chaptertitlename}{Appendix}
+\renewcommand{\cftchappresnum}{Appendix\ }
 \input{chapters/appendix_a}\newpage\cleardoublepage
 \input{chapters/appendix_b}\newpage\cleardoublepage
 \end{document}
