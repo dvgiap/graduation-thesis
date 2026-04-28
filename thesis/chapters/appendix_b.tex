@@ -142,7 +142,7 @@ $\alpha$ (ICM) & Global intrinsic strength for ICM & $1 \times 10^{-3}$ \\
 \hline
 $\alpha$ (count) & Global intrinsic strength for count-based & $1 \times 10^{-3}$ \\
 \hline
-$\alpha$ (RND) & Global intrinsic strength for RND & $1 \times 10^{-3}$ \\
+$\alpha$ (RE3) & Global intrinsic strength for RE3 & $1 \times 10^{-3}$ \\
 \hline
 $\beta_\text{min}$ & Lower bound on Beta Network output & $0.1$ \\
 \hline
@@ -165,7 +165,7 @@ $\varepsilon$ & Numerical stability constant in standardization & $1 \times 10^{
 
 \begin{table}[H]
 \centering
-\caption{Other count-based and RND hyperparameters.}
+\caption{Other count-based and RE3 hyperparameters.}
 \label{tab:other_hparams}
 \begin{tabular}{|l|l|l|}
 \hline
@@ -175,11 +175,13 @@ $d_\text{hash}$ & Hash dimension for count-based exploration & $32$ \\
 \hline
 Bonus type (count) & Form of count-based bonus & $1/\sqrt{N(s)}$ \\
 \hline
-RND learning rate & Predictor network learning rate & $1 \times 10^{-3}$ \\
+RE3 encoding size & Random encoder embedding dimension & $64$ \\
 \hline
-RND epochs & Number of gradient epochs per buffer update & $4$ \\
+RE3 encoder layers & Number of layers in the random encoder & $2$ \\
 \hline
-RND batch size & Mini-batch size within each epoch & $64$ \\
+RE3 $k$ & $k$-NN order in the entropy estimator & $3$ \\
+\hline
+RE3 buffer size & FIFO buffer of past embeddings for $k$-NN search & $10{,}000$ \\
 \hline
 \end{tabular}
 \end{table}

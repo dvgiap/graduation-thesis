@@ -1,12 +1,10 @@
 import math
-import os
 import numpy as np
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 from torch.distributions import MultivariateNormal, Categorical
 from training_logger import TrainingLogger
-from curiosity.rnd import RND
+from curiosity.re3 import RE3
 
 # ---------------- device ----------------
 device = torch.device('cpu')
@@ -24,7 +22,7 @@ else:
 # ---------------- BetaNetwork  ----------------
 class BetaNetwork(nn.Module):
     """
-    Beta network that mirrors the RND encoder design
+    Beta network that mirrors the RE3 encoder design width.
     """
     def __init__(self, state_dim, encoding_size=256, num_layers=2, head_hidden=128,
                  min_beta=1e-3, max_beta=10.0):
@@ -187,11 +185,12 @@ class PPO:
                  eps_clip=0.2,
                  has_continuous_action_space=False,
                  action_std_init=0.6,
-                 # RND
-                 use_rnd=True,
-                 rnd_lr=1e-3,
-                 rnd_epochs=4,
-                 rnd_batch_size=64,
+                 # RE3
+                 use_re3=True,
+                 re3_encoding_size=64,
+                 re3_num_layers=2,
+                 re3_k=3,
+                 re3_buffer_size=10000,
                  intr_reward_strength=0.1,
                  # GAE
                  gae_lambda=0.95,
@@ -238,15 +237,15 @@ class PPO:
 
         self.MseLoss = nn.MSELoss()
 
-        # RND
-        self.use_rnd = use_rnd and (RND is not None)
+        # RE3 (no learnable parameters; encoder is random and frozen)
+        self.use_re3 = use_re3
         self.intr_reward_strength = intr_reward_strength
-        self.rnd_epochs = rnd_epochs
-        self.rnd_batch_size = rnd_batch_size
-        if self.use_rnd:
-            self.rnd = RND(state_dim, encoding_size=beta_encoding_size, num_layers=beta_num_layers,
-                           gamma_int=gamma).to(device)
-            self.optimizer_rnd = torch.optim.Adam(self.rnd.predictor.parameters(), lr=rnd_lr)
+        if self.use_re3:
+            self.re3 = RE3(state_dim,
+                           encoding_size=re3_encoding_size,
+                           num_layers=re3_num_layers,
+                           k=re3_k,
+                           buffer_size=re3_buffer_size).to(device)
 
         # meta-beta
         self.use_state_dependent_beta = use_state_dependent_beta
@@ -276,7 +275,6 @@ class PPO:
             auto_convert_to_numpy=True
         )
 
-        # debug
         self.debug = debug
 
     # ---------------- action std helpers ----------------
@@ -307,39 +305,30 @@ class PPO:
         else:
             return int(action.item())
 
-    # ---------------- RND update ----------------
-    def rnd_update(self, next_states):
-        total_predictor_loss = 0.0
-        num_updates = 0
-
-        dataset_size = next_states.shape[0]
-        if dataset_size == 0 or (not self.use_rnd):
-            return 0.0
-
-        for _ in range(self.rnd_epochs):
-            indices = np.random.permutation(dataset_size)
-            for start in range(0, dataset_size, self.rnd_batch_size):
-                num_updates += 1
-                batch_idx = indices[start:start + self.rnd_batch_size]
-                batch_next_states = next_states[batch_idx]
-                _, predictor_loss = self.rnd(batch_next_states)
-                self.optimizer_rnd.zero_grad()
-                predictor_loss.backward()
-                self.optimizer_rnd.step()
-                total_predictor_loss += predictor_loss.item()
-
-        return total_predictor_loss / num_updates if num_updates > 0 else 0.0
-
     # ---------------- compute intrinsic rewards ----------------
-    def compute_intrinsic(self, next_states):
-        """Paper §2.4: obs-normalized RND error, divided by running std of intrinsic returns."""
-        if not self.use_rnd:
-            return torch.zeros(next_states.shape[0], device=device)
-        self.rnd.update_obs_rms(next_states)
-        with torch.no_grad():
-            intr_raw, _ = self.rnd(next_states)
-        intr_norm_np = self.rnd.normalize_intrinsic(intr_raw.detach().cpu().numpy())
-        return torch.as_tensor(intr_norm_np, dtype=torch.float32, device=device)
+    def compute_intrinsic(self, states):
+        """
+        RE3 intrinsic reward = log(||y_t - y_t^{k-NN}||_2 + 1).
+
+        Computed using fixed random encoder embeddings against a FIFO buffer of past embeddings.
+        We then standardize within the batch (mean/std) and rectify (ReLU) to match
+        the standardization step described in Section~\\ref{sec:standardization} of the thesis.
+        """
+        if not self.use_re3:
+            return torch.zeros(states.shape[0], device=device)
+
+        intr_raw = self.re3.compute_intrinsic_reward(states, update_buffer=True)
+
+        # Standardization + rectification (per-batch)
+        if intr_raw.shape[0] > 0:
+            mean = intr_raw.mean()
+            std = intr_raw.std(unbiased=False) + 1e-8
+            intr_norm = (intr_raw - mean) / std
+            intr_pos = torch.relu(intr_norm)
+        else:
+            intr_pos = intr_raw
+
+        return intr_pos
 
     # ---------------- compute extrinsic advantages ----------------
     def compute_extrinsic_advantages(self, extrinsic_rewards, state_values, is_terminals):
@@ -362,16 +351,6 @@ class PPO:
             advantages = advantages - advantages.mean()
         return advantages, deltas
 
-    # ---------------- discounted returns helper ----------------
-    def _compute_discounted_returns_from(self, rewards, is_terminals):
-        N = len(rewards)
-        R = torch.zeros_like(rewards, device=device)
-        Rt = 0.0
-        for t in reversed(range(N)):
-            Rt = rewards[t] + self.gamma * Rt * (1.0 - float(is_terminals[t].item() if isinstance(is_terminals[t], torch.Tensor) else is_terminals[t]))
-            R[t] = Rt
-        return R
-
     # ---------------- main update ----------------
     def update(self):
         if len(self.buffer.rewards) == 0:
@@ -386,18 +365,13 @@ class PPO:
 
         N = len(extrinsic_rewards)
 
-        # compute intrinsic
-        if self.use_rnd and len(self.buffer.next_states) > 0:
-            old_next_states = torch.squeeze(torch.stack(self.buffer.next_states, dim=0)).detach().to(device)
-            intrinsic_rnd_pos = self.compute_intrinsic(old_next_states)
-            avg_pred_loss = self.rnd_update(old_next_states)
+        # compute intrinsic (RE3 has NO trainable parameters: nothing to update on its side)
+        if self.use_re3:
+            intrinsic_re3_pos = self.compute_intrinsic(old_states)
         else:
-            intrinsic_rnd_pos = torch.zeros(N, device=device)
-            avg_pred_loss = 0.0
+            intrinsic_re3_pos = torch.zeros(N, device=device)
 
         # ---------------- Post-rollout extrinsic statistics ----------------
-        # Tính 1 lần / update, dùng buffer CHRONOLOGICAL (chưa shuffle).
-        # Bất kỳ mini-batch loop nào sau này đều phải nằm SAU dòng này.
         advantages_ext, deltas_ext = self.compute_extrinsic_advantages(
             extrinsic_rewards, old_state_values, is_terminals
         )
@@ -407,19 +381,14 @@ class PPO:
         beta_value_scalar = 1.0
 
         if self.meta_use_progress:
-            # 1. Đọc δ_ext đã tính sẵn ở post-rollout step (KHÔNG gọi lại GAE)
             delta_abs = deltas_ext.abs().detach()
             delta_max = delta_abs.max()
 
-            # 2. β(s) hiện tại
             if self.use_state_dependent_beta:
                 beta_for_loss = self.beta_net(old_states).squeeze()
             else:
                 beta_for_loss = torch.exp(self.beta_log)
 
-            # 3. Target từ |δ| (cold-start fallback dựa trên extrinsic reward signal)
-            # Triết lý: nếu batch không có reward ngoại tại nào, không tồn tại
-            # "extrinsic learning progress" — mọi biến thiên |δ| chỉ là nhiễu V_init.
             if extrinsic_rewards.max().item() <= 0.0:
                 target = torch.full_like(beta_for_loss, self.beta_init)
                 cold_start = True
@@ -433,10 +402,8 @@ class PPO:
                 target = b_min + (b_max - b_min) * delta_norm
                 cold_start = False
 
-            # 4. Progress loss (MSE regression)
             loss_progress = ((beta_for_loss - target.detach()) ** 2).mean()
 
-            # 5. Regularization
             if self.use_state_dependent_beta:
                 beta_log_vals = torch.log(beta_for_loss + 1e-8)
                 reg_center = math.log(max(1e-8, self.meta_reg_beta_center))
@@ -447,11 +414,9 @@ class PPO:
 
             loss_meta = self.meta_progress_weight * loss_progress + self.meta_reg_weight * loss_reg
 
-            # 6. Optimize
             self.beta_optimizer.zero_grad()
             loss_meta.backward()
 
-            # gradient norm logging
             total_norm = 0.0
             if self.use_state_dependent_beta:
                 for p in self.beta_net.parameters():
@@ -464,7 +429,6 @@ class PPO:
             total_norm = math.sqrt(total_norm) if total_norm > 0 else 0.0
             self.logger.log_scalar('beta_gradient_norm', total_norm)
 
-            # clip and step
             if not self.use_state_dependent_beta:
                 torch.nn.utils.clip_grad_norm_([self.beta_log], 1.0)
             else:
@@ -473,7 +437,6 @@ class PPO:
 
             meta_loss_value = float(loss_meta.detach().cpu().item())
 
-            # 7. Logging
             self.logger.log_scalar('delta_max', float(delta_max.item()))
             self.logger.log_scalar('delta_mean', float(delta_abs.mean().item()))
             self.logger.log_scalar('cold_start', float(cold_start))
@@ -481,7 +444,6 @@ class PPO:
             self.logger.log_array('delta_abs', delta_abs)
             self.logger.log_array('beta_target', target.detach())
 
-            # beta scalar
             if self.use_state_dependent_beta:
                 with torch.no_grad():
                     try:
@@ -493,7 +455,6 @@ class PPO:
                     beta_value_scalar = float(torch.exp(self.beta_log).detach().cpu().item())
 
         else:
-            # no meta update
             if self.use_state_dependent_beta:
                 with torch.no_grad():
                     try:
@@ -507,11 +468,9 @@ class PPO:
                     except Exception:
                         beta_value_scalar = 1.0
 
-        # LOG scalar metrics
         self.logger.log_scalar('beta', beta_value_scalar)
         self.logger.log_scalar('meta_loss', meta_loss_value)
 
-        # ---------------- sample state->beta for visualization ----------------
         if self.use_state_dependent_beta:
             self.logger.sample_and_log(old_states,
                                       self.beta_net(old_states).squeeze().detach(),
@@ -529,9 +488,9 @@ class PPO:
                 beta_full = torch.exp(self.beta_log).detach().cpu().item()
 
         if isinstance(beta_full, float) or isinstance(beta_full, int):
-            combined_rewards = extrinsic_rewards + self.intr_reward_strength * float(beta_full) * intrinsic_rnd_pos
+            combined_rewards = extrinsic_rewards + self.intr_reward_strength * float(beta_full) * intrinsic_re3_pos
         else:
-            combined_rewards = extrinsic_rewards + self.intr_reward_strength * beta_full * intrinsic_rnd_pos
+            combined_rewards = extrinsic_rewards + self.intr_reward_strength * beta_full * intrinsic_re3_pos
         combined_rewards = combined_rewards.to(device)
 
         # GAE on combined rewards
@@ -553,7 +512,6 @@ class PPO:
         else:
             advantages = advantages - advantages.mean()
 
-        # PPO epochs
         for _ in range(self.K_epochs):
             logprobs, state_values, dist_entropy = self.policy.evaluate(old_states, old_actions)
             state_values = torch.squeeze(state_values)
@@ -568,26 +526,22 @@ class PPO:
         # LOG averaged metrics
         try:
             avg_ext = float(extrinsic_rewards.mean().cpu().item())
-            avg_int = float(intrinsic_rnd_pos.mean().cpu().item())
+            avg_int = float(intrinsic_re3_pos.mean().cpu().item())
         except Exception:
             avg_ext, avg_int = 0.0, 0.0
 
         self.logger.log_scalars({
-            'rnd_predictor_loss': avg_pred_loss,
             'avg_intrinsic_reward': avg_int,
             'avg_extrinsic_reward': avg_ext,
+            're3_buffer_size': float(len(self.re3.embedding_buffer)) if self.use_re3 else 0.0,
         })
 
         print(f"Update {self.logger.update_count}: AvgExt {avg_ext:.4f}, AvgInt {avg_int:.4f}, Beta {beta_value_scalar:.4f}, MetaLoss {meta_loss_value:.6f}")
-        print(f"  RND predictor loss: {avg_pred_loss:.4f}")
+        if self.use_re3:
+            print(f"  RE3 buffer size: {len(self.re3.embedding_buffer)}")
 
-        # copy weights to old policy
         self.policy_old.load_state_dict(self.policy.state_dict())
-
-        # increment logger update count
         self.logger.step_update()
-
-        # clear buffer
         self.buffer.clear()
 
     # ---------------- save / load ----------------
@@ -596,8 +550,9 @@ class PPO:
             'policy_state_dict': self.policy_old.state_dict(),
             'update_count': self.logger.update_count,
         }
-        if self.use_rnd:
-            save_dict['rnd_state_dict'] = self.rnd.state_dict()
+        if self.use_re3:
+            # The encoder is fixed and random, so we save it once for reproducibility.
+            save_dict['re3_encoder_state_dict'] = self.re3.encoder.state_dict()
         if not self.use_state_dependent_beta:
             save_dict['beta_log'] = self.beta_log.detach().cpu()
             save_dict['beta_optimizer_state'] = self.beta_optimizer.state_dict()
@@ -606,7 +561,6 @@ class PPO:
             save_dict['beta_optimizer_state'] = self.beta_optimizer.state_dict()
 
         torch.save(save_dict, checkpoint_path)
-
         self.logger.export_logs(checkpoint_path)
 
     def load(self, checkpoint_path):
@@ -616,9 +570,9 @@ class PPO:
             self.policy.load_state_dict(checkpoint['policy_state_dict'])
         if 'update_count' in checkpoint:
             self.logger.update_count = checkpoint['update_count']
-        if self.use_rnd and 'rnd_state_dict' in checkpoint:
+        if self.use_re3 and 're3_encoder_state_dict' in checkpoint:
             try:
-                self.rnd.load_state_dict(checkpoint['rnd_state_dict'])
+                self.re3.encoder.load_state_dict(checkpoint['re3_encoder_state_dict'])
             except Exception:
                 pass
         if not self.use_state_dependent_beta and 'beta_log' in checkpoint:
@@ -640,11 +594,8 @@ class PPO:
 
         self.logger.load_logs(checkpoint_path)
 
-    # ---------------- convenience exports ----------------
     def export_logs(self, path_prefix):
-        """Export logs separately (wrapper around logger.export_logs)"""
         self.logger.export_logs(path_prefix)
 
     def print_training_summary(self):
-        """Print training summary (wrapper)"""
         self.logger.print_summary()

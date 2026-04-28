@@ -61,7 +61,7 @@ The proposed system instantiates this formulation with a parameterized $\beta_\p
     \draw[darr] (ppo.south) |- node[right, font=\footnotesize, near end]{$\tau(s_t) \leftarrow |\delta_t|$} (loss.east);
     \draw[darr, blue!60!black] (loss.west) -- ++(-1.6,0) |- node[left, font=\footnotesize, near end]{$\nabla_\psi L_\beta$} (beta.south west);
 \end{tikzpicture}
-\caption{CARE system architecture. The intrinsic module block stands for any of the three implementations evaluated in this thesis (count-based, ICM, or RND); the rest of the pipeline is identical across modules. Solid arrows trace the forward computation that produces the shaped reward $\bar r_t$ used by PPO. Dashed arrows indicate the auxiliary signals used to update the Beta Network $\beta_\psi$ via the learning-progress objective $L_\beta$, with the $\tau(s_t)$ target derived from the magnitude of the critic's TD error $\delta_t$.}
+\caption{CARE system architecture. The intrinsic module block stands for any of the three implementations evaluated in this thesis (count-based, ICM, or RE3); the rest of the pipeline is identical across modules. Solid arrows trace the forward computation that produces the shaped reward $\bar r_t$ used by PPO. Dashed arrows indicate the auxiliary signals used to update the Beta Network $\beta_\psi$ via the learning-progress objective $L_\beta$, with the $\tau(s_t)$ target derived from the magnitude of the critic's TD error $\delta_t$.}
 \label{fig:care_arch}
 \end{figure}
 
@@ -75,7 +75,7 @@ Conceptually, $\beta_\psi(s_t)$ acts as a state-conditional volume control on cu
 \section{Intrinsic Reward Generation}
 \label{sec:intrinsic_modules}
 
-The proposed framework supports three intrinsic reward modules: count-based exploration \cite{bellemare2016count, tang2017exploration}, the Intrinsic Curiosity Module (ICM) \cite{pathak2017curiosity}, and Random Network Distillation (RND) \cite{burda2019rnd}. All three differ only in how the raw intrinsic signal $I_t$ is computed at each transition; the rest of the pipeline (standardization, Beta Network, and learning-progress objective) is identical. The empirical evaluation in Chapter~\ref{chap:experiment} reports on all three modules. The remainder of this section describes each module with its raw-reward formulation, followed by the shared standardization step that produces the rectified signal $I_t^+$ fed to the Beta Network.
+The proposed framework supports three intrinsic reward modules: count-based exploration \cite{bellemare2016count, tang2017exploration}, the Intrinsic Curiosity Module (ICM) \cite{pathak2017curiosity}, and Random Encoders for Efficient Exploration (RE3) \cite{seo2021re3}. All three differ only in how the raw intrinsic signal $I_t$ is computed at each transition; the rest of the pipeline (standardization, Beta Network, and learning-progress objective) is identical. The empirical evaluation in Chapter~\ref{chap:experiment} reports on all three modules. The remainder of this section describes each module with its raw-reward formulation, followed by the shared standardization step that produces the rectified signal $I_t^+$ fed to the Beta Network.
 
 \subsection{ICM Instantiation}
 \label{sec:icm}
@@ -110,25 +110,25 @@ I_t \;=\; \frac{1}{\sqrt{\max\{N(\phi_h(s_t)),\, 1\}}}.
 \end{equation}
 This module has no learnable parameters; the hash table $N(\cdot)$ is updated incrementally as new states are visited.
 
-\subsection{Random Network Distillation}
-\label{sec:rnd_module}
+\subsection{Random Encoders for Efficient Exploration}
+\label{sec:re3_module}
 
-In the RND instantiation \cite{burda2019rnd}, the raw intrinsic reward is the prediction error of a learned predictor network $f^P_\eta$ relative to a fixed random target network $f^T$. Both networks share the same architecture but differ in their parameterization: $f^T$ is initialized randomly and frozen, whereas $f^P_\eta$ is trained to mimic $f^T$ on visited states. The raw intrinsic reward is
+In the RE3 instantiation \cite{seo2021re3}, the raw intrinsic reward is derived from a $k$-nearest neighbor estimate of state entropy in the representation space of a fixed, randomly initialized encoder $f_\theta$. Unlike ICM and RND, RE3 has \emph{no learnable parameters} in its intrinsic reward branch: the encoder is initialized once at the start of training and frozen thereafter. For each visited state $s_t$, the encoder produces an embedding
 \begin{equation}
-I_t \;=\; \tfrac{1}{2}\,\bigl\| f^P_\eta(s_t) - f^T(s_t) \bigr\|_2^2,
-\label{eq:rnd_raw}
+y_t \;=\; f_\theta(s_t) \in \mathbb{R}^{d_y},
+\label{eq:re3_embed}
 \end{equation}
-which is large at states for which the predictor has not yet matched the target --- typically novel states --- and decays as the predictor learns from repeated visits. The predictor is trained by mean-squared error against $f^T$:
+which is appended to a FIFO buffer $\mathcal{B}$ of past embeddings. The raw intrinsic reward is then the log-distance to the $k$-th nearest neighbor of $y_t$ within $\mathcal{B}$:
 \begin{equation}
-L_\text{RND}(\eta) \;=\; \mathbb{E}\!\left[ \tfrac{1}{2}\,\bigl\| f^P_\eta(s_t) - f^T(s_t) \bigr\|_2^2 \right].
-\label{eq:rnd_loss}
+I_t \;=\; \log\!\bigl( \| y_t - y_t^{k\text{-NN}} \|_2 \,+\, 1 \bigr),
+\label{eq:re3_raw}
 \end{equation}
-Following the original implementation, observations are normalized to zero mean and unit variance (clipped to $[-5, 5]$) before being passed to either network, and the raw intrinsic rewards $I_t$ are divided by the running standard deviation of the discounted intrinsic returns prior to entering the standardization step described next.
+where $y_t^{k\text{-NN}} = \arg\!\!\!\min_{y \in \mathcal{B},\, \text{rank}=k} \|y_t - y\|_2$. The $\log(\cdot + 1)$ transformation matches the particle-based $k$-NN entropy estimator of \cite{seo2021re3} and ensures the signal remains bounded for small distances. Because the encoder is frozen, the geometry of the representation space does not drift during training, which yields a stable supervisory signal for downstream modules. The intuition is that states whose $k$-NN distance is large in the random feature space are rarely visited, so they should attract more exploration. The buffer is maintained even for on-policy algorithms: following the original paper's MiniGrid setup, we use $k = 3$ and a FIFO buffer of size $10{,}000$.
 
 \subsection{Standardization and Rectification}
 \label{sec:standardization}
 
-Regardless of the module, the raw intrinsic reward $I_t$ produced by Equation~\eqref{eq:icm_raw}, \eqref{eq:count_raw}, or \eqref{eq:rnd_raw} is non-stationary: its magnitude evolves during training as the underlying generator (forward model, hash counts, or predictor network) adapts to the agent's experience. To keep the input to the Beta Network bounded in scale and approximately stationary across updates, the same preprocessing step is applied to all three modules.
+Regardless of the module, the raw intrinsic reward $I_t$ produced by Equation~\eqref{eq:icm_raw}, \eqref{eq:count_raw}, or \eqref{eq:re3_raw} is non-stationary: its magnitude evolves during training as the underlying generator (forward model, hash counts, or predictor network) adapts to the agent's experience. To keep the input to the Beta Network bounded in scale and approximately stationary across updates, the same preprocessing step is applied to all three modules.
 
 \begin{definition}[Standardized Intrinsic Reward]
 \label{def:standardized_intrinsic}
@@ -349,4 +349,4 @@ Algorithm~\ref{alg:care} specifies the complete CARE training loop. One iteratio
 \end{algorithmic}
 \end{algorithm}
 
-The algorithm preserves the standard PPO update structure (lines 11--14) and inserts only two additional optimization steps (lines 7--8) before the shaped reward is computed. This modularity is important: the same template applies if ICM is replaced by a count-based bonus or by RND, with only Equations~\eqref{eq:icm_raw}--\eqref{eq:icm_standardized} being substituted by the corresponding module-specific computation. Concrete numerical values for all hyperparameters and network architectures used in the experiments are listed in Appendix~\ref{app:implementation}.
+The algorithm preserves the standard PPO update structure (lines 11--14) and inserts only two additional optimization steps (lines 7--8) before the shaped reward is computed. This modularity is important: the same template applies if ICM is replaced by a count-based bonus or by RE3, with only Equations~\eqref{eq:icm_raw}--\eqref{eq:icm_standardized} being substituted by the corresponding module-specific computation. Concrete numerical values for all hyperparameters and network architectures used in the experiments are listed in Appendix~\ref{app:implementation}.

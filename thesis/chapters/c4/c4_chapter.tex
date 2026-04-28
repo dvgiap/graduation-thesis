@@ -1,7 +1,7 @@
 \chapter{Experimental Setup and Results}
 \label{chap:experiment}
 
-This chapter describes the experimental setup used to evaluate the proposed methodology. It first presents the benchmark environments and the computing infrastructure, then specifies the experimental configuration, the baselines, and the performance evaluation metrics. The empirical evaluation across all three intrinsic reward families (count-based, ICM, and RND) is the subject of Section~\ref{sec:empirical_results}. Settings reported here are the canonical configuration shared by every reported run; the underlying hyperparameter values are tabulated in Appendix~\ref{app:implementation}.
+This chapter describes the experimental setup used to evaluate the proposed methodology. It first presents the benchmark environments and the computing infrastructure, then specifies the experimental configuration, the baselines, and the performance evaluation metrics. The empirical evaluation across all three intrinsic reward families (count-based, ICM, and RE3) is the subject of Section~\ref{sec:empirical_results}. Settings reported here are the canonical configuration shared by every reported run; the underlying hyperparameter values are tabulated in Appendix~\ref{app:implementation}.
 
 \section{Benchmark Environments}
 \label{sec:benchmark_environments}
@@ -51,7 +51,7 @@ The base PPO algorithm uses $K = 80$ epochs per update, clip parameter $\epsilon
 \section{Baselines}
 \label{sec:baselines}
 
-The experimental framing of this thesis treats CARE as a module-agnostic adaptive layer that can be paired with any of the three representative intrinsic reward families: count-based bonuses, the Intrinsic Curiosity Module (ICM), and Random Network Distillation (RND). To isolate the contribution of CARE from the contribution of the underlying intrinsic signal, the baselines are organized into a $1 + 3 + 3$ matrix as listed in Table~\ref{tab:baselines}.
+The experimental framing of this thesis treats CARE as a module-agnostic adaptive layer that can be paired with any of the three representative intrinsic reward families: count-based bonuses, the Intrinsic Curiosity Module (ICM), and Random Encoders for Efficient Exploration (RE3). To isolate the contribution of CARE from the contribution of the underlying intrinsic signal, the baselines are organized into a $1 + 3 + 3$ matrix as listed in Table~\ref{tab:baselines}.
 
 \begin{table}[H]
 \centering
@@ -63,10 +63,10 @@ The experimental framing of this thesis treats CARE as a module-agnostic adaptiv
 $B_0$ & PPO (no intrinsic reward) & Lower bound on exploration ability without any curiosity signal. \\ \hline
 $B_\text{Count}$ & PPO + count-based with $\beta \equiv 1$ & Count-based exploration with fixed unit coefficient (no learned scaling). \\ \hline
 $B_\text{ICM}$ & PPO + ICM with $\beta \equiv 1$ & ICM exploration with fixed unit coefficient. \\ \hline
-$B_\text{RND}$ & PPO + RND with $\beta \equiv 1$ & RND exploration with fixed unit coefficient. \\ \hline
+$B_\text{RE3}$ & PPO + RE3 with $\beta \equiv 1$ & RE3 exploration with fixed unit coefficient. \\ \hline
 $C_\text{Count}$ & PPO + count-based + CARE & Count-based bonus with learned $\beta_\psi(s_t)$ from the Beta Network. \\ \hline
 $C_\text{ICM}$ & PPO + ICM + CARE & ICM bonus with learned $\beta_\psi(s_t)$. \\ \hline
-$C_\text{RND}$ & PPO + RND + CARE & RND bonus with learned $\beta_\psi(s_t)$. \\ \hline
+$C_\text{RE3}$ & PPO + RE3 + CARE & RE3 bonus with learned $\beta_\psi(s_t)$. \\ \hline
 \end{tabular}
 \end{table}
 
@@ -74,7 +74,7 @@ This design isolates three distinct effects:
 \begin{itemize}
     \item \textbf{$B_0$ vs $B_m$ (for any $m$)} measures the contribution of intrinsic motivation in module $m$ on top of the extrinsic-only PPO baseline.
     \item \textbf{$B_m$ vs $C_m$} measures the contribution of CARE's adaptive scaling, holding the underlying intrinsic signal fixed. This is the cleanest test of whether learned, state-dependent $\beta_\psi$ is preferable to a fixed unit coefficient.
-    \item \textbf{$C_\text{Count}$ vs $C_\text{ICM}$ vs $C_\text{RND}$} reveals how the same CARE layer interacts with structurally different intrinsic generators, addressing the research question of module-agnosticism stated in Chapter~1.
+    \item \textbf{$C_\text{Count}$ vs $C_\text{ICM}$ vs $C_\text{RE3}$} reveals how the same CARE layer interacts with structurally different intrinsic generators, addressing the research question of module-agnosticism stated in Chapter~1.
 \end{itemize}
 
 With seven conditions per environment and five seeds per condition, the full evaluation comprises $7 \times 5 = 35$ runs per environment and $35 \times 6 = 210$ runs across the six environments.
