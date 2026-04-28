@@ -23,6 +23,7 @@
 \citation{pathak2017curiosity}
 \citation{burda2019rnd}
 \citation{raileanu2020ride}
+\citation{seo2021re3}
 \pp@pagectr{footnote}{1}{17}{1}
 \@writefile{toc}{\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
@@ -55,6 +56,7 @@
 \citation{pathak2017curiosity}
 \citation{burda2019rnd}
 \citation{raileanu2020ride}
+\citation{seo2021re3}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2.1}Count-Based Exploration}{8}{subsection.2.2.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2.2}Curiosity-Driven Exploration}{8}{subsection.2.2.2}\protected@file@percent }
 \citation{pathak2017curiosity,burda2019rnd}
@@ -64,10 +66,10 @@
 \citation{badia2020agent57}
 \@writefile{toc}{\contentsline {section}{\numberline {2.3}Adaptive Weighting of Intrinsic Rewards}{9}{section.2.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3.1}Global-Level Adaptation}{9}{subsection.2.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.2}Population-Level Adaptation}{9}{subsection.2.3.2}\protected@file@percent }
 \citation{zheng2018lirpg}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3.2}Population-Level Adaptation}{10}{subsection.2.3.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3.3}Toward State-Level Adaptation}{10}{subsection.2.3.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {2.4}Summary and Research Gap}{10}{section.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2.4}Summary and Research Gap}{11}{section.2.4}\protected@file@percent }
 \pp@pagectr{footnote}{3}{28}{12}
 \@writefile{toc}{\contentsline {chapter}{\numberline {3}Methodology}{12}{chapter.3}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
@@ -80,9 +82,9 @@
 \newlabel{eq:shaped_reward}{{3.1}{12}{State-Dependent Reward Shaping}{equation.3.1}{}}
 \citation{bellemare2016count,tang2017exploration}
 \citation{pathak2017curiosity}
-\citation{burda2019rnd}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces CARE system architecture. The intrinsic module block stands for any of the three implementations evaluated in this thesis (count-based, ICM, or RND); the rest of the pipeline is identical across modules. Solid arrows trace the forward computation that produces the shaped reward $\bar  r_t$ used by PPO. Dashed arrows indicate the auxiliary signals used to update the Beta Network $\beta _\psi $ via the learning-progress objective $L_\beta $, with the $\tau (s_t)$ target derived from the magnitude of the critic's TD error $\delta _t$.}}{13}{figure.caption.4}\protected@file@percent }
-\newlabel{fig:care_arch}{{3.1}{13}{CARE system architecture. The intrinsic module block stands for any of the three implementations evaluated in this thesis (count-based, ICM, or RND); the rest of the pipeline is identical across modules. Solid arrows trace the forward computation that produces the shaped reward $\bar r_t$ used by PPO. Dashed arrows indicate the auxiliary signals used to update the Beta Network $\beta _\psi $ via the learning-progress objective $L_\beta $, with the $\tau (s_t)$ target derived from the magnitude of the critic's TD error $\delta _t$}{figure.caption.4}{}}
+\citation{seo2021re3}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces CARE system architecture. The intrinsic module block stands for any of the three implementations evaluated in this thesis (count-based, ICM, or RE3); the rest of the pipeline is identical across modules. Solid arrows trace the forward computation that produces the shaped reward $\bar  r_t$ used by PPO. Dashed arrows indicate the auxiliary signals used to update the Beta Network $\beta _\psi $ via the learning-progress objective $L_\beta $, with the $\tau (s_t)$ target derived from the magnitude of the critic's TD error $\delta _t$.}}{13}{figure.caption.4}\protected@file@percent }
+\newlabel{fig:care_arch}{{3.1}{13}{CARE system architecture. The intrinsic module block stands for any of the three implementations evaluated in this thesis (count-based, ICM, or RE3); the rest of the pipeline is identical across modules. Solid arrows trace the forward computation that produces the shaped reward $\bar r_t$ used by PPO. Dashed arrows indicate the auxiliary signals used to update the Beta Network $\beta _\psi $ via the learning-progress objective $L_\beta $, with the $\tau (s_t)$ target derived from the magnitude of the critic's TD error $\delta _t$}{figure.caption.4}{}}
 \newlabel{eq:combined_reward}{{3.2}{13}{System Architecture}{equation.3.2}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.2}Intrinsic Reward Generation}{13}{section.3.2}\protected@file@percent }
 \newlabel{sec:intrinsic_modules}{{3.2}{13}{Intrinsic Reward Generation}{section.3.2}{}}
@@ -95,15 +97,16 @@
 \newlabel{sec:count_module}{{3.2.2}{14}{Count-Based Exploration}{subsection.3.2.2}{}}
 \newlabel{eq:count_hash}{{3.5}{14}{Count-Based Exploration}{equation.3.5}{}}
 \newlabel{eq:count_raw}{{3.6}{14}{Count-Based Exploration}{equation.3.6}{}}
-\citation{burda2019rnd}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.3}Random Network Distillation}{15}{subsection.3.2.3}\protected@file@percent }
-\newlabel{sec:rnd_module}{{3.2.3}{15}{Random Network Distillation}{subsection.3.2.3}{}}
-\newlabel{eq:rnd_raw}{{3.7}{15}{Random Network Distillation}{equation.3.7}{}}
-\newlabel{eq:rnd_loss}{{3.8}{15}{Random Network Distillation}{equation.3.8}{}}
+\citation{seo2021re3}
+\citation{seo2021re3}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.3}Random Encoders for Efficient Exploration}{15}{subsection.3.2.3}\protected@file@percent }
+\newlabel{sec:re3_module}{{3.2.3}{15}{Random Encoders for Efficient Exploration}{subsection.3.2.3}{}}
+\newlabel{eq:re3_embed}{{3.7}{15}{Random Encoders for Efficient Exploration}{equation.3.7}{}}
+\newlabel{eq:re3_raw}{{3.8}{15}{Random Encoders for Efficient Exploration}{equation.3.8}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2.4}Standardization and Rectification}{15}{subsection.3.2.4}\protected@file@percent }
 \newlabel{sec:standardization}{{3.2.4}{15}{Standardization and Rectification}{subsection.3.2.4}{}}
-\newlabel{def:standardized_intrinsic}{{3.3}{15}{Standardized Intrinsic Reward}{definition.3.3}{}}
-\newlabel{eq:icm_standardized}{{3.9}{15}{Standardized Intrinsic Reward}{equation.3.9}{}}
+\newlabel{def:standardized_intrinsic}{{3.3}{16}{Standardized Intrinsic Reward}{definition.3.3}{}}
+\newlabel{eq:icm_standardized}{{3.9}{16}{Standardized Intrinsic Reward}{equation.3.9}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.3}Correlation-Aware Reward Exploration}{16}{section.3.3}\protected@file@percent }
 \newlabel{sec:care}{{3.3}{16}{Correlation-Aware Reward Exploration}{section.3.3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.3.1}Beta Network}{16}{subsection.3.3.1}\protected@file@percent }
@@ -116,16 +119,16 @@
 \newlabel{sec:progress_loss}{{3.3.2}{17}{Learning-Progress Objective}{subsection.3.3.2}{}}
 \newlabel{eq:td_error}{{3.12}{17}{Learning-Progress Objective}{equation.3.12}{}}
 \newlabel{eq:beta_target}{{3.13}{17}{Learning-Progress Objective}{equation.3.13}{}}
-\citation{zheng2018lirpg}
 \newlabel{eq:progress_loss}{{3.14}{18}{Learning-Progress Objective}{equation.3.14}{}}
 \newlabel{eq:reg_loss}{{3.15}{18}{Learning-Progress Objective}{equation.3.15}{}}
 \newlabel{eq:beta_loss}{{3.16}{18}{Learning-Progress Objective}{equation.3.16}{}}
 \newlabel{prop:target_recovery}{{3.1}{18}{Target Recovery}{proposition.3.1}{}}
 \newlabel{prop:gradient_direction}{{3.2}{18}{Gradient Direction}{proposition.3.2}{}}
+\citation{zheng2018lirpg}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.3.3}First-Order Optimization vs. Meta-Gradient}{19}{subsection.3.3.3}\protected@file@percent }
 \newlabel{sec:first_order}{{3.3.3}{19}{First-Order Optimization vs. Meta-Gradient}{subsection.3.3.3}{}}
 \newlabel{prop:cost}{{3.3}{19}{Computational Cost}{proposition.3.3}{}}
-\newlabel{cor:degeneration}{{3.1}{19}{Degeneration to Fixed Coefficient}{corollary.3.1}{}}
+\newlabel{cor:degeneration}{{3.1}{20}{Degeneration to Fixed Coefficient}{corollary.3.1}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.4}Algorithm}{20}{section.3.4}\protected@file@percent }
 \newlabel{sec:algorithm}{{3.4}{20}{Algorithm}{section.3.4}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.4.1}Rollout Buffer}{20}{subsection.3.4.1}\protected@file@percent }
@@ -182,15 +185,16 @@
 \bibcite{pathak2017curiosity}{{10}{}{{}}{{}}}
 \bibcite{burda2019rnd}{{11}{}{{}}{{}}}
 \bibcite{raileanu2020ride}{{12}{}{{}}{{}}}
-\bibcite{chen2022eipo}{{13}{}{{}}{{}}}
-\bibcite{yuan2023airs}{{14}{}{{}}{{}}}
-\bibcite{chevalier2018minigrid}{{15}{}{{}}{{}}}
-\bibcite{aubret2023intrinsic}{{16}{}{{}}{{}}}
-\bibcite{badia2020ngu}{{17}{}{{}}{{}}}
-\bibcite{badia2020agent57}{{18}{}{{}}{{}}}
-\bibcite{zheng2018lirpg}{{19}{}{{}}{{}}}
-\bibcite{schulman2016gae}{{20}{}{{}}{{}}}
-\bibcite{schulman2017ppo}{{21}{}{{}}{{}}}
+\bibcite{seo2021re3}{{13}{}{{}}{{}}}
+\bibcite{chen2022eipo}{{14}{}{{}}{{}}}
+\bibcite{yuan2023airs}{{15}{}{{}}{{}}}
+\bibcite{chevalier2018minigrid}{{16}{}{{}}{{}}}
+\bibcite{aubret2023intrinsic}{{17}{}{{}}{{}}}
+\bibcite{badia2020ngu}{{18}{}{{}}{{}}}
+\bibcite{badia2020agent57}{{19}{}{{}}{{}}}
+\bibcite{zheng2018lirpg}{{20}{}{{}}{{}}}
+\bibcite{schulman2016gae}{{21}{}{{}}{{}}}
+\bibcite{schulman2017ppo}{{22}{}{{}}{{}}}
 \pp@pagectr{footnote}{5}{49}{33}
 \@writefile{toc}{\contentsline {chapter}{\numberline {A}Mathematical Proofs}{33}{appendix.A}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
@@ -228,8 +232,8 @@
 \newlabel{tab:icm_hparams}{{B.5}{40}{ICM hyperparameters}{table.caption.14}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {B.6}{\ignorespaces CARE hyperparameters and intrinsic reward strengths.}}{41}{table.caption.15}\protected@file@percent }
 \newlabel{tab:care_hparams}{{B.6}{41}{CARE hyperparameters and intrinsic reward strengths}{table.caption.15}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {B.7}{\ignorespaces Other count-based and RND hyperparameters.}}{41}{table.caption.16}\protected@file@percent }
-\newlabel{tab:other_hparams}{{B.7}{41}{Other count-based and RND hyperparameters}{table.caption.16}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.7}{\ignorespaces Other count-based and RE3 hyperparameters.}}{41}{table.caption.16}\protected@file@percent }
+\newlabel{tab:other_hparams}{{B.7}{41}{Other count-based and RE3 hyperparameters}{table.caption.16}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {B.8}{\ignorespaces Training schedule.}}{42}{table.caption.17}\protected@file@percent }
 \newlabel{tab:training_schedule}{{B.8}{42}{Training schedule}{table.caption.17}{}}
 \providecommand\NAT@force@numbers{}\NAT@force@numbers

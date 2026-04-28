@@ -12,5 +12,5 @@
 \contentsline {table}{\numberline {B.4}{\ignorespaces PPO hyperparameters.}}{40}{table.caption.13}%
 \contentsline {table}{\numberline {B.5}{\ignorespaces ICM hyperparameters.}}{40}{table.caption.14}%
 \contentsline {table}{\numberline {B.6}{\ignorespaces CARE hyperparameters and intrinsic reward strengths.}}{41}{table.caption.15}%
-\contentsline {table}{\numberline {B.7}{\ignorespaces Other count-based and RND hyperparameters.}}{41}{table.caption.16}%
+\contentsline {table}{\numberline {B.7}{\ignorespaces Other count-based and RE3 hyperparameters.}}{41}{table.caption.16}%
 \contentsline {table}{\numberline {B.8}{\ignorespaces Training schedule.}}{42}{table.caption.17}%

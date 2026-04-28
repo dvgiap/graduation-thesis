@@ -76,6 +76,14 @@ Roberta Raileanu and Tim Rockt{\"a}schel.
   environments.
 \newblock In {\em International Conference on Learning Representations}, 2020.
 
+\bibitem{seo2021re3}
+Younggyo Seo, Lili Chen, Jinwoo Shin, Honglak Lee, Pieter Abbeel, and Kimin
+  Lee.
+\newblock State entropy maximization with random encoders for efficient
+  exploration.
+\newblock In {\em Proceedings of the 38th International Conference on Machine
+  Learning}, volume 139, pages 9443--9454, 2021.
+
 \bibitem{chen2022eipo}
 Eric Chen, Zhang-Wei Hong, Joni Pajarinen, and Pulkit Agrawal.
 \newblock Redeeming intrinsic rewards via constrained optimization.

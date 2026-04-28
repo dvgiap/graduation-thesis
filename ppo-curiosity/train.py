@@ -39,8 +39,8 @@ def train(
         from ppo_icm import PPO
     elif exploration_method == 'count':
         from ppo_count import PPO
-    elif exploration_method == 'rnd':
-        from ppo_rnd import PPO
+    elif exploration_method == 're3':
+        from ppo_re3 import PPO
     else:
         raise ValueError(f"Unknown exploration method: {exploration_method}")
 
@@ -72,11 +72,12 @@ def train(
     bonus_type = 'inverse_sqrt'
     count_intr_strength = 0.001
     
-    # RND
-    rnd_lr = 0.001
-    rnd_epochs = 4
-    rnd_batch_size = 64
-    rnd_intr_strength = 0.001
+    # RE3 (random encoder is frozen; no learning rate / epochs needed)
+    re3_encoding_size = 64
+    re3_num_layers = 2
+    re3_k = 3
+    re3_buffer_size = 10000
+    re3_intr_strength = 0.001
 
     # Create environment
     env = gym.make(env_name)
@@ -98,7 +99,7 @@ def train(
         'none': '',
         'icm': '_ICM',
         'count': '_COUNT',
-        'rnd': '_RND'
+        're3': '_RE3'
     }
     suffix = suffix_map[exploration_method]
     
@@ -129,9 +130,9 @@ def train(
     elif exploration_method == 'count':
         print("--------------------------------------------------------------------------------------------")
         print(f"Count-Based - hash_dim: {hash_dim}, bonus_type: {bonus_type}, strength: {count_intr_strength}")
-    elif exploration_method == 'rnd':
+    elif exploration_method == 're3':
         print("--------------------------------------------------------------------------------------------")
-        print(f"RND - lr: {rnd_lr}, epochs: {rnd_epochs}, batch: {rnd_batch_size}, strength: {rnd_intr_strength}")
+        print(f"RE3 - encoding: {re3_encoding_size}, layers: {re3_num_layers}, k: {re3_k}, buffer: {re3_buffer_size}, strength: {re3_intr_strength}")
     
     print("============================================================================================")
 
@@ -182,11 +183,13 @@ def train(
                           intr_reward_strength=count_intr_strength, gae_lambda=gae_lambda,
                           enable_trajectory_logging=True,
                           trajectory_grid_shape=trajectory_grid_shape)
-        elif exploration_method == 'rnd':
+        elif exploration_method == 're3':
             ppo_agent = PPO(state_dim, action_dim, lr_actor, lr_critic, gamma,
                           K_epochs, eps_clip, has_continuous_action_space,
-                          use_rnd=True, rnd_lr=rnd_lr, rnd_epochs=rnd_epochs,
-                          rnd_batch_size=rnd_batch_size, intr_reward_strength=rnd_intr_strength,
+                          use_re3=True, re3_encoding_size=re3_encoding_size,
+                          re3_num_layers=re3_num_layers, re3_k=re3_k,
+                          re3_buffer_size=re3_buffer_size,
+                          intr_reward_strength=re3_intr_strength,
                           gae_lambda=gae_lambda,
                           enable_trajectory_logging=True,
                           trajectory_grid_shape=trajectory_grid_shape)
@@ -343,7 +346,7 @@ def train(
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Unified PPO training with exploration methods")
     parser.add_argument("--method", type=str, default="none", 
-                       choices=['none', 'icm', 'count', 'rnd'],
+                       choices=['none', 'icm', 'count', 're3'],
                        help="Exploration method to use")
     parser.add_argument("--env", type=str, default="MiniGrid-DoorKey-8x8-v0",
                        help="Gymnasium environment name")

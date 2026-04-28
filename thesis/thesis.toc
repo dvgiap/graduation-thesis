@@ -20,15 +20,15 @@
 \contentsline {subsection}{\numberline {2.2.2}Curiosity-Driven Exploration}{8}{subsection.2.2.2}%
 \contentsline {section}{\numberline {2.3}Adaptive Weighting of Intrinsic Rewards}{9}{section.2.3}%
 \contentsline {subsection}{\numberline {2.3.1}Global-Level Adaptation}{9}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Population-Level Adaptation}{9}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.2}Population-Level Adaptation}{10}{subsection.2.3.2}%
 \contentsline {subsection}{\numberline {2.3.3}Toward State-Level Adaptation}{10}{subsection.2.3.3}%
-\contentsline {section}{\numberline {2.4}Summary and Research Gap}{10}{section.2.4}%
+\contentsline {section}{\numberline {2.4}Summary and Research Gap}{11}{section.2.4}%
 \contentsline {chapter}{\numberline {3}Methodology}{12}{chapter.3}%
 \contentsline {section}{\numberline {3.1}System Architecture}{12}{section.3.1}%
 \contentsline {section}{\numberline {3.2}Intrinsic Reward Generation}{13}{section.3.2}%
 \contentsline {subsection}{\numberline {3.2.1}ICM Instantiation}{14}{subsection.3.2.1}%
 \contentsline {subsection}{\numberline {3.2.2}Count-Based Exploration}{14}{subsection.3.2.2}%
-\contentsline {subsection}{\numberline {3.2.3}Random Network Distillation}{15}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.3}Random Encoders for Efficient Exploration}{15}{subsection.3.2.3}%
 \contentsline {subsection}{\numberline {3.2.4}Standardization and Rectification}{15}{subsection.3.2.4}%
 \contentsline {section}{\numberline {3.3}Correlation-Aware Reward Exploration}{16}{section.3.3}%
 \contentsline {subsection}{\numberline {3.3.1}Beta Network}{16}{subsection.3.3.1}%

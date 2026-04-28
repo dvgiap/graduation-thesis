@@ -2,7 +2,7 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {2.1}{\ignorespaces Standard agent--environment interaction loop in reinforcement learning. The agent observes a state, executes an action sampled from its policy, and receives a new state along with an extrinsic reward from the environment.}}{6}{figure.caption.3}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces CARE system architecture. The intrinsic module block stands for any of the three implementations evaluated in this thesis (count-based, ICM, or RND); the rest of the pipeline is identical across modules. Solid arrows trace the forward computation that produces the shaped reward $\bar r_t$ used by PPO. Dashed arrows indicate the auxiliary signals used to update the Beta Network $\beta _\psi $ via the learning-progress objective $L_\beta $, with the $\tau (s_t)$ target derived from the magnitude of the critic's TD error $\delta _t$.}}{13}{figure.caption.4}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces CARE system architecture. The intrinsic module block stands for any of the three implementations evaluated in this thesis (count-based, ICM, or RE3); the rest of the pipeline is identical across modules. Solid arrows trace the forward computation that produces the shaped reward $\bar r_t$ used by PPO. Dashed arrows indicate the auxiliary signals used to update the Beta Network $\beta _\psi $ via the learning-progress objective $L_\beta $, with the $\tau (s_t)$ target derived from the magnitude of the critic's TD error $\delta _t$.}}{13}{figure.caption.4}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
