@@ -3,18 +3,18 @@ import torch
 import torch.nn as nn
 from torch.distributions import MultivariateNormal, Categorical
 import numpy as np
-from curiosity.re3 import RE3
+from curiosity.ride import RIDE
 from trajectory_logger import TrajectoryLogger
 
 ################################## set device ##################################
 print("============================================================================================")
 device = torch.device('cpu')
-if(torch.cuda.is_available()):
+if torch.cuda.is_available():
     device = torch.device('cuda:0')
     torch.cuda.empty_cache()
     try:
         print("Device set to : " + str(torch.cuda.get_device_name(device)))
-    except:
+    except Exception:
         print("Device set to : cuda")
 else:
     print("Device set to : cpu")
@@ -114,16 +114,14 @@ class ActorCritic(nn.Module):
 class PPO:
     def __init__(self, state_dim, action_dim, lr_actor, lr_critic, gamma, K_epochs, eps_clip,
                  has_continuous_action_space, action_std_init=0.6,
-                 use_re3=True, re3_encoding_size=64, re3_num_layers=2,
-                 re3_k=3, re3_buffer_size=10000,
-                 intr_reward_strength=0.02,
+                 use_ride=True, ride_lr=0.0003, ride_epochs=5, ride_batch_size=64,
+                 ride_encoding_size=256, ride_num_layers=2, ride_hash_dim=32,
+                 intr_reward_strength=0.001,
                  gae_lambda=0.95,
-                 # Trajectory logging
                  enable_trajectory_logging=True,
                  trajectory_grid_shape=None):
 
         self.has_continuous_action_space = has_continuous_action_space
-
         if has_continuous_action_space:
             self.action_std = action_std_init
 
@@ -145,16 +143,18 @@ class PPO:
 
         self.MseLoss = nn.MSELoss()
 
-        # RE3 (encoder is fixed and random; no parameters to train)
-        self.use_re3 = use_re3
+        # RIDE setup
+        self.use_ride = use_ride
         self.intr_reward_strength = intr_reward_strength
 
-        if self.use_re3:
-            self.re3 = RE3(state_dim,
-                           encoding_size=re3_encoding_size,
-                           num_layers=re3_num_layers,
-                           k=re3_k,
-                           buffer_size=re3_buffer_size).to(device)
+        if self.use_ride:
+            self.ride = RIDE(state_dim, action_dim,
+                             encoding_size=ride_encoding_size,
+                             num_layers=ride_num_layers,
+                             hash_dim=ride_hash_dim).to(device)
+            self.optimizer_ride = torch.optim.Adam(self.ride.parameters(), lr=ride_lr)
+            self.ride_epochs = ride_epochs
+            self.ride_batch_size = ride_batch_size
 
         self.enable_trajectory_logging = enable_trajectory_logging
         self.trajectory_grid_shape = trajectory_grid_shape
@@ -180,11 +180,8 @@ class PPO:
     def record_position(self, pos, episode=None, timestep=None, as_state=False):
         if self.trajectory_logger is not None:
             self.trajectory_logger.record_position(
-                pos,
-                episode=episode,
-                timestep=timestep,
-                as_state=as_state,
-                grid_shape=self.trajectory_grid_shape
+                pos, episode=episode, timestep=timestep,
+                as_state=as_state, grid_shape=self.trajectory_grid_shape
             )
 
     def select_action(self, state):
@@ -202,49 +199,86 @@ class PPO:
         else:
             return action.item()
 
-    def update(self):
-        if len(self.buffer.rewards) == 0:
-            return
+    def ride_update(self, states, next_states, actions):
+        """Train RIDE encoder via inverse + forward dynamics losses (mini-batch)."""
+        total_forward_loss = 0.0
+        total_inverse_loss = 0.0
+        num_updates = 0
+        dataset_size = states.shape[0]
 
+        for _ in range(self.ride_epochs):
+            indices = np.random.permutation(dataset_size)
+            for start_idx in range(0, dataset_size, self.ride_batch_size):
+                num_updates += 1
+                batch_indices = indices[start_idx:start_idx + self.ride_batch_size]
+                batch_states = states[batch_indices]
+                batch_next_states = next_states[batch_indices]
+                batch_actions = actions[batch_indices]
+
+                _, inverse_loss, forward_loss = self.ride(batch_states, batch_next_states, batch_actions)
+                # Same weighting as ICM (paper §2.2 default)
+                ride_loss = 0.2 * forward_loss + 0.8 * inverse_loss
+
+                self.optimizer_ride.zero_grad()
+                ride_loss.backward()
+                self.optimizer_ride.step()
+
+                total_forward_loss += forward_loss.item()
+                total_inverse_loss += inverse_loss.item()
+
+        avg_forward = total_forward_loss / num_updates if num_updates > 0 else 0.0
+        avg_inverse = total_inverse_loss / num_updates if num_updates > 0 else 0.0
+        return avg_forward, avg_inverse
+
+    def update(self):
         old_states = torch.squeeze(torch.stack(self.buffer.states, dim=0)).detach().to(device)
         old_actions = torch.squeeze(torch.stack(self.buffer.actions, dim=0)).detach().to(device)
         old_logprobs = torch.squeeze(torch.stack(self.buffer.logprobs, dim=0)).detach().to(device)
         old_state_values = torch.squeeze(torch.stack(self.buffer.state_values, dim=0)).detach().to(device)
+        is_terminals = torch.tensor(self.buffer.is_terminals, dtype=torch.float32).to(device)
 
-        # RE3: compute intrinsic rewards (no model update -- encoder is fixed)
+        # ---------- RIDE intrinsic (single batch call BEFORE K_epochs) ----------
         intrinsic_rewards = torch.zeros(len(self.buffer.rewards)).to(device)
 
-        if self.use_re3:
-            intrinsic_rewards = self.re3.compute_intrinsic_reward(old_states, update_buffer=True)
+        if self.use_ride and len(self.buffer.next_states) > 0:
+            old_next_states = torch.squeeze(torch.stack(self.buffer.next_states, dim=0)).detach().to(device)
 
-        # Combine extrinsic and intrinsic rewards
+            with torch.no_grad():
+                intr_ride = self.ride.compute_intrinsic_reward(
+                    old_states, old_next_states, is_terminals
+                ).to(device)
+
+                # Normalize intrinsic (mean-std + ReLU), same recipe as ppo_icm.py
+                ride_mean = intr_ride.mean()
+                ride_std = intr_ride.std(unbiased=False) + 1e-8
+                intr_norm = (intr_ride - ride_mean) / ride_std
+                intrinsic_rewards = torch.relu(intr_norm)
+
+            # Train encoder via forward+inverse
+            avg_forward_loss, avg_inverse_loss = self.ride_update(old_states, old_next_states, old_actions)
+
+        # ---------- Combine extrinsic + intrinsic ----------
         extrinsic_rewards = []
         intrinsic_rewards_list = []
         combined_rewards = []
-
         for idx, reward in enumerate(self.buffer.rewards):
             ext_reward = reward
             intr_reward = 0.0
-
-            if self.use_re3:
+            if self.use_ride and len(self.buffer.next_states) > 0:
                 try:
                     intr_reward = float(intrinsic_rewards[idx].cpu().item())
                 except Exception:
                     intr_reward = float(intrinsic_rewards.cpu().item())
-
             combined_reward = ext_reward + self.intr_reward_strength * intr_reward
-
             extrinsic_rewards.append(ext_reward)
             intrinsic_rewards_list.append(intr_reward)
             combined_rewards.append(combined_reward)
 
         combined_rewards = torch.tensor(combined_rewards, dtype=torch.float32).to(device)
-        is_terminals = torch.tensor(self.buffer.is_terminals, dtype=torch.float32).to(device)
 
-        # GAE advantages
+        # ---------- GAE on combined rewards ----------
         advantages = torch.zeros_like(combined_rewards).to(device)
         last_gae = 0
-
         for t in reversed(range(len(combined_rewards))):
             if t == len(combined_rewards) - 1:
                 next_value = 0
@@ -255,22 +289,16 @@ class PPO:
             advantages[t] = last_gae
 
         returns = advantages + old_state_values
-        if advantages.std().item() > 1e-7:
-            advantages = (advantages - advantages.mean()) / (advantages.std() + 1e-7)
-        else:
-            advantages = advantages - advantages.mean()
+        advantages = (advantages - advantages.mean()) / (advantages.std() + 1e-7)
 
-        # PPO epochs
+        # ---------- PPO K-epochs (intrinsic NOT recomputed inside) ----------
         for _ in range(self.K_epochs):
             logprobs, state_values, dist_entropy = self.policy.evaluate(old_states, old_actions)
             state_values = torch.squeeze(state_values)
             ratios = torch.exp(logprobs - old_logprobs.detach())
-
             surr1 = ratios * advantages
-            surr2 = torch.clamp(ratios, 1-self.eps_clip, 1+self.eps_clip) * advantages
-
+            surr2 = torch.clamp(ratios, 1 - self.eps_clip, 1 + self.eps_clip) * advantages
             loss = -torch.min(surr1, surr2) + 0.5 * self.MseLoss(state_values, returns) - 0.01 * dist_entropy
-
             self.optimizer.zero_grad()
             loss.mean().backward()
             self.optimizer.step()
@@ -278,8 +306,7 @@ class PPO:
         if len(extrinsic_rewards) > 0:
             avg_ext_reward = np.mean(extrinsic_rewards)
             avg_int_reward = np.mean(intrinsic_rewards_list) if len(intrinsic_rewards_list) > 0 else 0.0
-            buf_size = len(self.re3.embedding_buffer) if self.use_re3 else 0
-            print(f"Update - Avg Ext: {avg_ext_reward:.4f}, Avg Int: {avg_int_reward:.4f}, RE3 buffer: {buf_size}")
+            print(f"Update - Avg Extrinsic Reward: {avg_ext_reward:.4f}, Avg Intrinsic Reward: {avg_int_reward:.4f}")
 
         self.policy_old.load_state_dict(self.policy.state_dict())
         self.buffer.clear()
@@ -288,8 +315,8 @@ class PPO:
         save_dict = {
             'policy_state_dict': self.policy_old.state_dict(),
         }
-        if self.use_re3:
-            save_dict['re3_encoder_state_dict'] = self.re3.encoder.state_dict()
+        if self.use_ride:
+            save_dict['ride_state_dict'] = self.ride.state_dict()
 
         if self.trajectory_logger is not None:
             save_dict['trajectory_np'] = self.trajectory_logger.get_trajectory_array()
@@ -304,9 +331,9 @@ class PPO:
         checkpoint = torch.load(checkpoint_path, map_location=lambda storage, loc: storage)
         self.policy_old.load_state_dict(checkpoint['policy_state_dict'])
         self.policy.load_state_dict(checkpoint['policy_state_dict'])
-        if self.use_re3 and 're3_encoder_state_dict' in checkpoint:
+        if self.use_ride and 'ride_state_dict' in checkpoint:
             try:
-                self.re3.encoder.load_state_dict(checkpoint['re3_encoder_state_dict'])
+                self.ride.load_state_dict(checkpoint['ride_state_dict'])
             except Exception:
                 pass
 
@@ -328,7 +355,7 @@ class PPO:
                 except Exception:
                     pass
 
-    # ---------------- Trajectory utilities (wrappers) ----------------
+    # ---------------- Trajectory utilities ----------------
     def save_trajectory_csv(self, csv_path):
         if self.trajectory_logger is not None:
             self.trajectory_logger.save_csv(csv_path)

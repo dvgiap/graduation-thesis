@@ -1,5 +1,5 @@
 """
-Compare baseline (ppo-curiosity) vs CARE (ppo-care-curiosity) for ICM and COUNT.
+Compare baseline (ppo-curiosity) vs CARE (ppo-care-curiosity) for ICM, COUNT, and RIDE.
 Run from the repo root:  python plot_compare.py
 """
 
@@ -21,11 +21,13 @@ ENVS = [
 WINDOW = 20  # smoothing window (triangular)
 
 SERIES = [
-    # (sub_dir,            suffix,   display_label,       color,         linestyle)
-    ('ppo-curiosity',      '_ICM',   'ICM (baseline)',    'steelblue',   '-'),
-    ('ppo-care-curiosity', '_ICM',   'CARE-ICM',          'darkorange',  '--'),
-    ('ppo-curiosity',      '_COUNT', 'COUNT (baseline)',  'seagreen',    '-'),
-    ('ppo-care-curiosity', '_COUNT', 'CARE-COUNT',        'crimson',     '--'),
+    # (sub_dir,            suffix,   display_label,       color,           linestyle)
+    ('ppo-curiosity',      '_ICM',   'ICM (baseline)',    'steelblue',     '-'),
+    ('ppo-care-curiosity', '_ICM',   'CARE-ICM',          'darkorange',    '--'),
+    ('ppo-curiosity',      '_COUNT', 'COUNT (baseline)',  'seagreen',      '-'),
+    ('ppo-care-curiosity', '_COUNT', 'CARE-COUNT',        'crimson',       '--'),
+    ('ppo-curiosity',      '_RIDE',  'RIDE (baseline)',   'mediumpurple',  '-'),
+    ('ppo-care-curiosity', '_RIDE',  'CARE-RIDE',         'goldenrod',     '--'),
 ]
 
 OUT_DIR = os.path.join('figs', 'compare')
@@ -59,7 +61,7 @@ def plot_all_envs():
     ncols = 3
     nrows = 2
     fig, axes = plt.subplots(nrows, ncols, figsize=(18, 10))
-    fig.suptitle('Baseline vs CARE (ICM & COUNT) — All Environments',
+    fig.suptitle('Baseline vs CARE (ICM, COUNT, RIDE) — All Environments',
                  fontsize=15, fontweight='bold', y=1.01)
 
     for idx, env in enumerate(ENVS):
@@ -103,15 +105,16 @@ def plot_all_envs():
 
 
 def plot_per_env():
-    """Save individual high-res plots per environment (2-panel: ICM | COUNT)."""
+    """Save individual high-res plots per environment (3-panel: ICM | COUNT | RIDE)."""
     for env in ENVS:
-        fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+        fig, axes = plt.subplots(1, 3, figsize=(18, 5))
         env_short = env.replace('MiniGrid-', '').replace('-v0', '')
-        fig.suptitle(f'{env_short}: Baseline vs CARE', fontsize=13, fontweight='bold')
+        fig.suptitle(f'{env_short}: Baseline vs CARE (ICM, COUNT, RIDE)', fontsize=13, fontweight='bold')
 
         method_groups = [
             ('ICM',   [s for s in SERIES if '_ICM' in s[1]]),
             ('COUNT', [s for s in SERIES if '_COUNT' in s[1]]),
+            ('RIDE',  [s for s in SERIES if '_RIDE' in s[1]]),
         ]
 
         for ax, (method_name, series_subset) in zip(axes, method_groups):

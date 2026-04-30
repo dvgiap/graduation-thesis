@@ -1,10 +1,12 @@
 import math
+import os
 import numpy as np
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from torch.distributions import MultivariateNormal, Categorical
 from training_logger import TrainingLogger
-from curiosity.re3 import RE3
+from curiosity.ride import RIDE
 
 # ---------------- device ----------------
 device = torch.device('cpu')
@@ -19,11 +21,9 @@ else:
     print("Device set to : cpu")
 
 
-# ---------------- BetaNetwork  ----------------
+# ---------------- BetaNetwork ----------------
 class BetaNetwork(nn.Module):
-    """
-    Beta network that mirrors the RE3 encoder design width.
-    """
+    """Beta network that mirrors the RIDE encoder design"""
     def __init__(self, state_dim, encoding_size=256, num_layers=2, head_hidden=128,
                  min_beta=1e-3, max_beta=10.0):
         super(BetaNetwork, self).__init__()
@@ -96,7 +96,6 @@ class ActorCritic(nn.Module):
             self.action_dim = int(action_dim)
             self.action_var = torch.full((self.action_dim,), action_std_init * action_std_init).to(device)
 
-        # actor
         if has_continuous_action_space:
             self.actor = nn.Sequential(
                 nn.Linear(state_dim, 64),
@@ -115,7 +114,6 @@ class ActorCritic(nn.Module):
                 nn.Linear(64, int(action_dim)),
             )
 
-        # critic
         self.critic = nn.Sequential(
             nn.Linear(state_dim, 64),
             nn.Tanh(),
@@ -185,13 +183,15 @@ class PPO:
                  eps_clip=0.2,
                  has_continuous_action_space=False,
                  action_std_init=0.6,
-                 # RE3
-                 use_re3=True,
-                 re3_encoding_size=64,
-                 re3_num_layers=2,
-                 re3_k=3,
-                 re3_buffer_size=10000,
-                 intr_reward_strength=0.1,
+                 # RIDE
+                 use_ride=True,
+                 ride_lr=3e-4,
+                 ride_epochs=5,
+                 ride_batch_size=64,
+                 ride_encoding_size=256,
+                 ride_num_layers=2,
+                 ride_hash_dim=32,
+                 intr_reward_strength=0.001,
                  # GAE
                  gae_lambda=0.95,
                  # meta-beta
@@ -237,15 +237,17 @@ class PPO:
 
         self.MseLoss = nn.MSELoss()
 
-        # RE3 (no learnable parameters; encoder is random and frozen)
-        self.use_re3 = use_re3
+        # RIDE
+        self.use_ride = use_ride and (RIDE is not None)
         self.intr_reward_strength = intr_reward_strength
-        if self.use_re3:
-            self.re3 = RE3(state_dim,
-                           encoding_size=re3_encoding_size,
-                           num_layers=re3_num_layers,
-                           k=re3_k,
-                           buffer_size=re3_buffer_size).to(device)
+        self.ride_epochs = ride_epochs
+        self.ride_batch_size = ride_batch_size
+        if self.use_ride:
+            self.ride = RIDE(state_dim, action_dim,
+                             encoding_size=ride_encoding_size,
+                             num_layers=ride_num_layers,
+                             hash_dim=ride_hash_dim).to(device)
+            self.optimizer_ride = torch.optim.Adam(self.ride.parameters(), lr=ride_lr)
 
         # meta-beta
         self.use_state_dependent_beta = use_state_dependent_beta
@@ -261,7 +263,7 @@ class PPO:
                                         max_beta=beta_max).to(device)
             self.beta_optimizer = torch.optim.Adam(self.beta_net.parameters(), lr=beta_lr, weight_decay=1e-6)
 
-        # meta options (Learning-Progress)
+        # meta options
         self.meta_use_progress = meta_use_progress
         self.meta_progress_weight = meta_progress_weight
         self.meta_reg_weight = meta_reg_weight
@@ -305,29 +307,48 @@ class PPO:
         else:
             return int(action.item())
 
-    # ---------------- compute intrinsic rewards ----------------
-    def compute_intrinsic(self, states):
-        """
-        RE3 intrinsic reward = log(||y_t - y_t^{k-NN}||_2 + 1).
+    # ---------------- RIDE update ----------------
+    def ride_update(self, states, next_states, actions):
+        """Train RIDE encoder via inverse + forward dynamics losses (mini-batch)."""
+        total_forward_loss = 0.0
+        total_inverse_loss = 0.0
+        num_updates = 0
 
-        Computed using fixed random encoder embeddings against a FIFO buffer of past embeddings.
-        We then standardize within the batch (mean/std) and rectify (ReLU) to match
-        the standardization step described in Section~\\ref{sec:standardization} of the thesis.
-        """
-        if not self.use_re3:
+        dataset_size = states.shape[0]
+        if dataset_size == 0 or (not self.use_ride):
+            return 0.0, 0.0
+
+        for _ in range(self.ride_epochs):
+            indices = np.random.permutation(dataset_size)
+            for start in range(0, dataset_size, self.ride_batch_size):
+                num_updates += 1
+                batch_idx = indices[start:start + self.ride_batch_size]
+                batch_states = states[batch_idx]
+                batch_next_states = next_states[batch_idx]
+                batch_actions = actions[batch_idx]
+                _, inverse_loss, forward_loss = self.ride(batch_states, batch_next_states, batch_actions)
+                ride_loss = 0.2 * forward_loss + 0.8 * inverse_loss
+                self.optimizer_ride.zero_grad()
+                ride_loss.backward()
+                self.optimizer_ride.step()
+                total_forward_loss += forward_loss.item()
+                total_inverse_loss += inverse_loss.item()
+
+        avg_forward = total_forward_loss / num_updates if num_updates > 0 else 0.0
+        avg_inverse = total_inverse_loss / num_updates if num_updates > 0 else 0.0
+        return avg_forward, avg_inverse
+
+    # ---------------- compute RIDE intrinsic ----------------
+    def compute_intrinsic(self, states, next_states, is_terminals):
+        """Single batch RIDE intrinsic call BEFORE K_epochs PPO loop."""
+        if not self.use_ride:
             return torch.zeros(states.shape[0], device=device)
-
-        intr_raw = self.re3.compute_intrinsic_reward(states, update_buffer=True)
-
-        # Standardization + rectification (per-batch)
-        if intr_raw.shape[0] > 0:
+        with torch.no_grad():
+            intr_raw = self.ride.compute_intrinsic_reward(states, next_states, is_terminals).to(device)
             mean = intr_raw.mean()
             std = intr_raw.std(unbiased=False) + 1e-8
             intr_norm = (intr_raw - mean) / std
             intr_pos = torch.relu(intr_norm)
-        else:
-            intr_pos = intr_raw
-
         return intr_pos
 
     # ---------------- compute extrinsic advantages ----------------
@@ -365,11 +386,14 @@ class PPO:
 
         N = len(extrinsic_rewards)
 
-        # compute intrinsic (RE3 has NO trainable parameters: nothing to update on its side)
-        if self.use_re3:
-            intrinsic_re3_pos = self.compute_intrinsic(old_states)
+        # ---------------- compute intrinsic + train RIDE encoder ----------------
+        if self.use_ride and len(self.buffer.next_states) > 0:
+            old_next_states = torch.squeeze(torch.stack(self.buffer.next_states, dim=0)).detach().to(device)
+            intrinsic_ride_pos = self.compute_intrinsic(old_states, old_next_states, is_terminals)
+            avg_fwd, avg_inv = self.ride_update(old_states, old_next_states, old_actions)
         else:
-            intrinsic_re3_pos = torch.zeros(N, device=device)
+            intrinsic_ride_pos = torch.zeros(N, device=device)
+            avg_fwd, avg_inv = 0.0, 0.0
 
         # ---------------- Post-rollout extrinsic statistics ----------------
         advantages_ext, deltas_ext = self.compute_extrinsic_advantages(
@@ -471,10 +495,11 @@ class PPO:
         self.logger.log_scalar('beta', beta_value_scalar)
         self.logger.log_scalar('meta_loss', meta_loss_value)
 
+        # ---------------- sample state->beta for visualization ----------------
         if self.use_state_dependent_beta:
             self.logger.sample_and_log(old_states,
-                                      self.beta_net(old_states).squeeze().detach(),
-                                      name='beta')
+                                       self.beta_net(old_states).squeeze().detach(),
+                                       name='beta')
         else:
             beta_arr = torch.full((old_states.shape[0],), beta_value_scalar, device=device)
             self.logger.sample_and_log(old_states, beta_arr, name='beta')
@@ -488,9 +513,9 @@ class PPO:
                 beta_full = torch.exp(self.beta_log).detach().cpu().item()
 
         if isinstance(beta_full, float) or isinstance(beta_full, int):
-            combined_rewards = extrinsic_rewards + self.intr_reward_strength * float(beta_full) * intrinsic_re3_pos
+            combined_rewards = extrinsic_rewards + self.intr_reward_strength * float(beta_full) * intrinsic_ride_pos
         else:
-            combined_rewards = extrinsic_rewards + self.intr_reward_strength * beta_full * intrinsic_re3_pos
+            combined_rewards = extrinsic_rewards + self.intr_reward_strength * beta_full * intrinsic_ride_pos
         combined_rewards = combined_rewards.to(device)
 
         # GAE on combined rewards
@@ -512,6 +537,7 @@ class PPO:
         else:
             advantages = advantages - advantages.mean()
 
+        # PPO epochs (intrinsic NOT recomputed inside)
         for _ in range(self.K_epochs):
             logprobs, state_values, dist_entropy = self.policy.evaluate(old_states, old_actions)
             state_values = torch.squeeze(state_values)
@@ -523,22 +549,21 @@ class PPO:
             loss.mean().backward()
             self.optimizer.step()
 
-        # LOG averaged metrics
         try:
             avg_ext = float(extrinsic_rewards.mean().cpu().item())
-            avg_int = float(intrinsic_re3_pos.mean().cpu().item())
+            avg_int = float(intrinsic_ride_pos.mean().cpu().item())
         except Exception:
             avg_ext, avg_int = 0.0, 0.0
 
         self.logger.log_scalars({
+            'ride_forward_loss': avg_fwd,
+            'ride_inverse_loss': avg_inv,
             'avg_intrinsic_reward': avg_int,
             'avg_extrinsic_reward': avg_ext,
-            're3_buffer_size': float(len(self.re3.embedding_buffer)) if self.use_re3 else 0.0,
         })
 
         print(f"Update {self.logger.update_count}: AvgExt {avg_ext:.4f}, AvgInt {avg_int:.4f}, Beta {beta_value_scalar:.4f}, MetaLoss {meta_loss_value:.6f}")
-        if self.use_re3:
-            print(f"  RE3 buffer size: {len(self.re3.embedding_buffer)}")
+        print(f"  RIDE fwd: {avg_fwd:.4f}, inv: {avg_inv:.4f}")
 
         self.policy_old.load_state_dict(self.policy.state_dict())
         self.logger.step_update()
@@ -550,9 +575,8 @@ class PPO:
             'policy_state_dict': self.policy_old.state_dict(),
             'update_count': self.logger.update_count,
         }
-        if self.use_re3:
-            # The encoder is fixed and random, so we save it once for reproducibility.
-            save_dict['re3_encoder_state_dict'] = self.re3.encoder.state_dict()
+        if self.use_ride:
+            save_dict['ride_state_dict'] = self.ride.state_dict()
         if not self.use_state_dependent_beta:
             save_dict['beta_log'] = self.beta_log.detach().cpu()
             save_dict['beta_optimizer_state'] = self.beta_optimizer.state_dict()
@@ -570,9 +594,9 @@ class PPO:
             self.policy.load_state_dict(checkpoint['policy_state_dict'])
         if 'update_count' in checkpoint:
             self.logger.update_count = checkpoint['update_count']
-        if self.use_re3 and 're3_encoder_state_dict' in checkpoint:
+        if self.use_ride and 'ride_state_dict' in checkpoint:
             try:
-                self.re3.encoder.load_state_dict(checkpoint['re3_encoder_state_dict'])
+                self.ride.load_state_dict(checkpoint['ride_state_dict'])
             except Exception:
                 pass
         if not self.use_state_dependent_beta and 'beta_log' in checkpoint:
