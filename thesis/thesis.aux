@@ -82,13 +82,14 @@
 \newlabel{eq:shaped_reward}{{3.1}{12}{State-Dependent Reward Shaping}{equation.3.1}{}}
 \citation{bellemare2016count,tang2017exploration}
 \citation{pathak2017curiosity}
-\citation{seo2021re3}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces CARE system architecture. The intrinsic module block stands for any of the three implementations evaluated in this thesis (count-based, ICM, or RE3); the rest of the pipeline is identical across modules. Solid arrows trace the forward computation that produces the shaped reward $\bar  r_t$ used by PPO. Dashed arrows indicate the auxiliary signals used to update the Beta Network $\beta _\psi $ via the learning-progress objective $L_\beta $, with the $\tau (s_t)$ target derived from the magnitude of the critic's TD error $\delta _t$.}}{13}{figure.caption.4}\protected@file@percent }
-\newlabel{fig:care_arch}{{3.1}{13}{CARE system architecture. The intrinsic module block stands for any of the three implementations evaluated in this thesis (count-based, ICM, or RE3); the rest of the pipeline is identical across modules. Solid arrows trace the forward computation that produces the shaped reward $\bar r_t$ used by PPO. Dashed arrows indicate the auxiliary signals used to update the Beta Network $\beta _\psi $ via the learning-progress objective $L_\beta $, with the $\tau (s_t)$ target derived from the magnitude of the critic's TD error $\delta _t$}{figure.caption.4}{}}
+\citation{raileanu2020ride}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces CARE system architecture. The intrinsic module block stands for any of the three implementations evaluated in this thesis (count-based, ICM, or RIDE); the rest of the pipeline is identical across modules. Solid arrows trace the forward computation that produces the shaped reward $\bar  r_t$ used by PPO. Dashed arrows indicate the auxiliary signals used to update the Beta Network $\beta _\psi $ via the learning-progress objective $L_\beta $, with the $\tau (s_t)$ target derived from the magnitude of the critic's TD error $\delta _t$.}}{13}{figure.caption.4}\protected@file@percent }
+\newlabel{fig:care_arch}{{3.1}{13}{CARE system architecture. The intrinsic module block stands for any of the three implementations evaluated in this thesis (count-based, ICM, or RIDE); the rest of the pipeline is identical across modules. Solid arrows trace the forward computation that produces the shaped reward $\bar r_t$ used by PPO. Dashed arrows indicate the auxiliary signals used to update the Beta Network $\beta _\psi $ via the learning-progress objective $L_\beta $, with the $\tau (s_t)$ target derived from the magnitude of the critic's TD error $\delta _t$}{figure.caption.4}{}}
 \newlabel{eq:combined_reward}{{3.2}{13}{System Architecture}{equation.3.2}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.2}Intrinsic Reward Generation}{13}{section.3.2}\protected@file@percent }
 \newlabel{sec:intrinsic_modules}{{3.2}{13}{Intrinsic Reward Generation}{section.3.2}{}}
 \citation{tang2017exploration}
+\citation{raileanu2020ride}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}ICM Instantiation}{14}{subsection.3.2.1}\protected@file@percent }
 \newlabel{sec:icm}{{3.2.1}{14}{ICM Instantiation}{subsection.3.2.1}{}}
 \newlabel{eq:icm_loss}{{3.3}{14}{ICM Instantiation}{equation.3.3}{}}
@@ -97,12 +98,10 @@
 \newlabel{sec:count_module}{{3.2.2}{14}{Count-Based Exploration}{subsection.3.2.2}{}}
 \newlabel{eq:count_hash}{{3.5}{14}{Count-Based Exploration}{equation.3.5}{}}
 \newlabel{eq:count_raw}{{3.6}{14}{Count-Based Exploration}{equation.3.6}{}}
-\citation{seo2021re3}
-\citation{seo2021re3}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.3}Random Encoders for Efficient Exploration}{15}{subsection.3.2.3}\protected@file@percent }
-\newlabel{sec:re3_module}{{3.2.3}{15}{Random Encoders for Efficient Exploration}{subsection.3.2.3}{}}
-\newlabel{eq:re3_embed}{{3.7}{15}{Random Encoders for Efficient Exploration}{equation.3.7}{}}
-\newlabel{eq:re3_raw}{{3.8}{15}{Random Encoders for Efficient Exploration}{equation.3.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.3}Rewarding Impact-Driven Exploration}{15}{subsection.3.2.3}\protected@file@percent }
+\newlabel{sec:ride_module}{{3.2.3}{15}{Rewarding Impact-Driven Exploration}{subsection.3.2.3}{}}
+\newlabel{eq:ride_embed}{{3.7}{15}{Rewarding Impact-Driven Exploration}{equation.3.7}{}}
+\newlabel{eq:ride_raw}{{3.8}{15}{Rewarding Impact-Driven Exploration}{equation.3.8}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2.4}Standardization and Rectification}{15}{subsection.3.2.4}\protected@file@percent }
 \newlabel{sec:standardization}{{3.2.4}{15}{Standardization and Rectification}{subsection.3.2.4}{}}
 \newlabel{def:standardized_intrinsic}{{3.3}{16}{Standardized Intrinsic Reward}{definition.3.3}{}}
@@ -166,11 +165,12 @@
 \newlabel{sec:metrics}{{4.5}{27}{Performance Evaluation Metrics}{section.4.5}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {4.6}Empirical Results}{28}{section.4.6}\protected@file@percent }
 \newlabel{sec:empirical_results}{{4.6}{28}{Empirical Results}{section.4.6}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.1}Module-Level Results}{28}{subsection.4.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.1}Module-Level Results: Fixed-$\beta $ Sweep vs CARE}{28}{subsection.4.6.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.6.2}Effect of CARE Across Modules}{28}{subsection.4.6.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.3}Behavior of the Learned Scaling Function}{28}{subsection.4.6.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.4}Discussion}{28}{subsection.4.6.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {chapter}{Conclusion and Future Work}{29}{chapter*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.3}Sensitivity to Fixed $\beta $}{29}{subsection.4.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.4}Behavior of the Learned Scaling Function}{29}{subsection.4.6.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.5}Discussion}{29}{subsection.4.6.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{Conclusion and Future Work}{30}{chapter*.7}\protected@file@percent }
 \bibdata{references}
 \bibcite{mnih2015human}{{1}{}{{}}{{}}}
 \bibcite{silver2016go}{{2}{}{{}}{{}}}
@@ -181,7 +181,7 @@
 \bibcite{bellemare2016count}{{7}{}{{}}{{}}}
 \bibcite{tang2017exploration}{{8}{}{{}}{{}}}
 \bibcite{ostrovski2017count}{{9}{}{{}}{{}}}
-\@writefile{toc}{\contentsline {chapter}{References}{30}{section*.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{References}{32}{section*.8}\protected@file@percent }
 \bibcite{pathak2017curiosity}{{10}{}{{}}{{}}}
 \bibcite{burda2019rnd}{{11}{}{{}}{{}}}
 \bibcite{raileanu2020ride}{{12}{}{{}}{{}}}
@@ -195,46 +195,52 @@
 \bibcite{zheng2018lirpg}{{20}{}{{}}{{}}}
 \bibcite{schulman2016gae}{{21}{}{{}}{{}}}
 \bibcite{schulman2017ppo}{{22}{}{{}}{{}}}
-\pp@pagectr{footnote}{5}{49}{33}
-\@writefile{toc}{\contentsline {chapter}{\numberline {A}Mathematical Proofs}{33}{appendix.A}\protected@file@percent }
+\pp@pagectr{footnote}{5}{51}{35}
+\@writefile{toc}{\contentsline {chapter}{\numberline {A}Mathematical Proofs}{35}{appendix.A}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{app:proofs}{{A}{33}{Mathematical Proofs}{appendix.A}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {A.1}Proof of Proposition 3.1: Target Recovery}{33}{section.A.1}\protected@file@percent }
-\newlabel{app:proof_target}{{A.1}{33}{Proof of Proposition 3.1: Target Recovery}{section.A.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {A.2}Proof of Proposition 3.2: Gradient Direction}{34}{section.A.2}\protected@file@percent }
-\newlabel{app:proof_gradient}{{A.2}{34}{Proof of Proposition 3.2: Gradient Direction}{section.A.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {A.3}Proof of Lemma 3.1: Bounded Shaped Reward}{34}{section.A.3}\protected@file@percent }
-\newlabel{app:proof_bounded}{{A.3}{34}{Proof of Lemma 3.1: Bounded Shaped Reward}{section.A.3}{}}
+\newlabel{app:proofs}{{A}{35}{Mathematical Proofs}{appendix.A}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {A.1}Proof of Proposition 3.1: Target Recovery}{35}{section.A.1}\protected@file@percent }
+\newlabel{app:proof_target}{{A.1}{35}{Proof of Proposition 3.1: Target Recovery}{section.A.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {A.2}Proof of Proposition 3.2: Gradient Direction}{36}{section.A.2}\protected@file@percent }
+\newlabel{app:proof_gradient}{{A.2}{36}{Proof of Proposition 3.2: Gradient Direction}{section.A.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {A.3}Proof of Lemma 3.1: Bounded Shaped Reward}{36}{section.A.3}\protected@file@percent }
+\newlabel{app:proof_bounded}{{A.3}{36}{Proof of Lemma 3.1: Bounded Shaped Reward}{section.A.3}{}}
 \citation{zheng2018lirpg}
-\@writefile{toc}{\contentsline {section}{\numberline {A.4}Proof of Proposition 3.3: Computational Cost Comparison}{35}{section.A.4}\protected@file@percent }
-\newlabel{app:proof_cost}{{A.4}{35}{Proof of Proposition 3.3: Computational Cost Comparison}{section.A.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {A.5}Proof of Corollary 3.1: Degeneration to Fixed Coefficient}{36}{section.A.5}\protected@file@percent }
-\newlabel{app:proof_degeneration}{{A.5}{36}{Proof of Corollary 3.1: Degeneration to Fixed Coefficient}{section.A.5}{}}
-\pp@pagectr{footnote}{6}{54}{38}
-\@writefile{toc}{\contentsline {chapter}{\numberline {B}Implementation Details}{38}{appendix.B}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {A.4}Proof of Proposition 3.3: Computational Cost Comparison}{37}{section.A.4}\protected@file@percent }
+\newlabel{app:proof_cost}{{A.4}{37}{Proof of Proposition 3.3: Computational Cost Comparison}{section.A.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {A.5}Proof of Corollary 3.1: Degeneration to Fixed Coefficient}{38}{section.A.5}\protected@file@percent }
+\newlabel{app:proof_degeneration}{{A.5}{38}{Proof of Corollary 3.1: Degeneration to Fixed Coefficient}{section.A.5}{}}
+\pp@pagectr{footnote}{6}{56}{40}
+\@writefile{toc}{\contentsline {chapter}{\numberline {B}Implementation Details}{40}{appendix.B}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{app:implementation}{{B}{38}{Implementation Details}{appendix.B}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {B.1}Network Architectures}{38}{section.B.1}\protected@file@percent }
-\newlabel{app:architectures}{{B.1}{38}{Network Architectures}{section.B.1}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {B.1}{\ignorespaces Beta Network $\beta _\psi $ architecture.}}{38}{table.caption.10}\protected@file@percent }
-\newlabel{tab:beta_arch}{{B.1}{38}{Beta Network $\beta _\psi $ architecture}{table.caption.10}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {B.2}{\ignorespaces Intrinsic Curiosity Module (ICM) architecture.}}{39}{table.caption.11}\protected@file@percent }
-\newlabel{tab:icm_arch}{{B.2}{39}{Intrinsic Curiosity Module (ICM) architecture}{table.caption.11}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {B.3}{\ignorespaces Actor and critic network architectures used by PPO.}}{39}{table.caption.12}\protected@file@percent }
-\newlabel{tab:ppo_arch}{{B.3}{39}{Actor and critic network architectures used by PPO}{table.caption.12}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {B.2}Hyperparameters}{40}{section.B.2}\protected@file@percent }
-\newlabel{app:hyperparameters}{{B.2}{40}{Hyperparameters}{section.B.2}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {B.4}{\ignorespaces PPO hyperparameters.}}{40}{table.caption.13}\protected@file@percent }
-\newlabel{tab:ppo_hparams}{{B.4}{40}{PPO hyperparameters}{table.caption.13}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {B.5}{\ignorespaces ICM hyperparameters.}}{40}{table.caption.14}\protected@file@percent }
-\newlabel{tab:icm_hparams}{{B.5}{40}{ICM hyperparameters}{table.caption.14}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {B.6}{\ignorespaces CARE hyperparameters and intrinsic reward strengths.}}{41}{table.caption.15}\protected@file@percent }
-\newlabel{tab:care_hparams}{{B.6}{41}{CARE hyperparameters and intrinsic reward strengths}{table.caption.15}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {B.7}{\ignorespaces Other count-based and RE3 hyperparameters.}}{41}{table.caption.16}\protected@file@percent }
-\newlabel{tab:other_hparams}{{B.7}{41}{Other count-based and RE3 hyperparameters}{table.caption.16}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {B.8}{\ignorespaces Training schedule.}}{42}{table.caption.17}\protected@file@percent }
-\newlabel{tab:training_schedule}{{B.8}{42}{Training schedule}{table.caption.17}{}}
+\newlabel{app:implementation}{{B}{40}{Implementation Details}{appendix.B}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.1}Network Architectures}{40}{section.B.1}\protected@file@percent }
+\newlabel{app:architectures}{{B.1}{40}{Network Architectures}{section.B.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.1}{\ignorespaces Beta Network $\beta _\psi $ architecture.}}{40}{table.caption.10}\protected@file@percent }
+\newlabel{tab:beta_arch}{{B.1}{40}{Beta Network $\beta _\psi $ architecture}{table.caption.10}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.2}{\ignorespaces Intrinsic Curiosity Module (ICM) architecture.}}{41}{table.caption.11}\protected@file@percent }
+\newlabel{tab:icm_arch}{{B.2}{41}{Intrinsic Curiosity Module (ICM) architecture}{table.caption.11}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.3}{\ignorespaces RIDE architecture. The encoder, forward model, and inverse model share the ICM design and training objective; the difference is the intrinsic reward formula in Equation~\eqref  {eq:ride_raw}, which uses representation impact divided by an episodic count rather than forward prediction error.}}{41}{table.caption.12}\protected@file@percent }
+\newlabel{tab:ride_arch}{{B.3}{41}{RIDE architecture. The encoder, forward model, and inverse model share the ICM design and training objective; the difference is the intrinsic reward formula in Equation~\eqref {eq:ride_raw}, which uses representation impact divided by an episodic count rather than forward prediction error}{table.caption.12}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.4}{\ignorespaces Actor and critic network architectures used by PPO.}}{42}{table.caption.13}\protected@file@percent }
+\newlabel{tab:ppo_arch}{{B.4}{42}{Actor and critic network architectures used by PPO}{table.caption.13}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.2}Hyperparameters}{42}{section.B.2}\protected@file@percent }
+\newlabel{app:hyperparameters}{{B.2}{42}{Hyperparameters}{section.B.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.5}{\ignorespaces PPO hyperparameters.}}{42}{table.caption.14}\protected@file@percent }
+\newlabel{tab:ppo_hparams}{{B.5}{42}{PPO hyperparameters}{table.caption.14}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.6}{\ignorespaces ICM hyperparameters.}}{42}{table.caption.15}\protected@file@percent }
+\newlabel{tab:icm_hparams}{{B.6}{42}{ICM hyperparameters}{table.caption.15}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.7}{\ignorespaces RIDE hyperparameters.}}{43}{table.caption.16}\protected@file@percent }
+\newlabel{tab:ride_hparams}{{B.7}{43}{RIDE hyperparameters}{table.caption.16}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.8}{\ignorespaces CARE hyperparameters and intrinsic reward strengths. The same global strength $\alpha $ is shared by all three modules; the same Beta Network bounds and learning-progress hyperparameters apply to every CARE variant.}}{43}{table.caption.17}\protected@file@percent }
+\newlabel{tab:care_hparams}{{B.8}{43}{CARE hyperparameters and intrinsic reward strengths. The same global strength $\alpha $ is shared by all three modules; the same Beta Network bounds and learning-progress hyperparameters apply to every CARE variant}{table.caption.17}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.9}{\ignorespaces Fixed-$\beta $ sweep used in the baseline conditions $F_{m,\beta }$ of Section~\ref {sec:baselines}. In these conditions the Beta Network is replaced by the listed scalar value, the learning-progress update is disabled, and $\alpha \,\beta \,I_t^{+,m}$ is fed directly into the shaped reward.}}{44}{table.caption.18}\protected@file@percent }
+\newlabel{tab:fixed_beta_sweep}{{B.9}{44}{Fixed-$\beta $ sweep used in the baseline conditions $F_{m,\beta }$ of Section~\ref {sec:baselines}. In these conditions the Beta Network is replaced by the listed scalar value, the learning-progress update is disabled, and $\alpha \,\beta \,I_t^{+,m}$ is fed directly into the shaped reward}{table.caption.18}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.10}{\ignorespaces Other module-specific hyperparameters for count-based exploration and RIDE.}}{44}{table.caption.19}\protected@file@percent }
+\newlabel{tab:other_hparams}{{B.10}{44}{Other module-specific hyperparameters for count-based exploration and RIDE}{table.caption.19}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.11}{\ignorespaces Training schedule.}}{45}{table.caption.20}\protected@file@percent }
+\newlabel{tab:training_schedule}{{B.11}{45}{Training schedule}{table.caption.20}{}}
 \providecommand\NAT@force@numbers{}\NAT@force@numbers
-\gdef \@abspage@last{58}
+\gdef \@abspage@last{61}

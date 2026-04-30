@@ -17,7 +17,8 @@ def train(
     random_seed=1,
     env_name="MiniGrid-DoorKey-8x8-v0",
     max_training_timesteps=int(1e6),
-    seeds_range=(1, 5)
+    seeds_range=(1, 5),
+    fixed_beta=None
 ):
     """
     Unified training function for PPO with different exploration methods.
@@ -28,6 +29,7 @@ def train(
         env_name: Gymnasium environment name
         max_training_timesteps: Maximum timesteps per seed
         seeds_range: Tuple of (start_seed, end_seed) inclusive
+        fixed_beta: If set, use a fixed scalar beta and disable state-dependent beta
     """
 
     print("============================================================================================")
@@ -81,6 +83,14 @@ def train(
     ride_hash_dim = 32
     ride_intr_strength = 0.001
 
+    beta_kwargs = {}
+    if fixed_beta is not None:
+        beta_kwargs = {
+            'use_state_dependent_beta': False,
+            'beta_init': float(fixed_beta),
+            'meta_use_progress': False,
+        }
+
     # Create environment
     env = gym.make(env_name)
     env = FlatObsWrapper(env)
@@ -125,6 +135,10 @@ def train(
     elif exploration_method == 'ride':
         print("--------------------------------------------------------------------------------------------")
         print(f"RIDE - lr: {ride_lr}, epochs: {ride_epochs}, batch: {ride_batch_size}, encoding: {ride_encoding_size}, hash: {ride_hash_dim}, strength: {ride_intr_strength}")
+
+    if fixed_beta is not None:
+        print("--------------------------------------------------------------------------------------------")
+        print(f"Fixed beta enabled: {fixed_beta} (state-dependent beta disabled)")
     
     print("============================================================================================")
 
@@ -135,8 +149,14 @@ def train(
         print(f"\n\n########## STARTING RUN FOR SEED {seed} ##########\n")
         
         # Setup paths for this seed
-        log_f_name = os.path.join(log_dir, f'PPO{suffix}_{env_name}_seed_{seed}.csv')
-        checkpoint_path = os.path.join(model_dir, f'PPO{suffix}_{env_name}_seed_{seed}.pth')
+        # Build condition suffix to distinguish CARE (adaptive beta) vs fixed-beta sweep runs
+        if fixed_beta is None:
+            cond_suffix = "_CARE"
+        else:
+            cond_suffix = f"_FB{fixed_beta}"
+
+        log_f_name = os.path.join(log_dir, f'PPO{suffix}{cond_suffix}_{env_name}_seed_{seed}.csv')
+        checkpoint_path = os.path.join(model_dir, f'PPO{suffix}{cond_suffix}_{env_name}_seed_{seed}.pth')
         
         print(f"Logging at: {log_f_name}")
         print(f"Checkpoint path: {checkpoint_path}")
@@ -162,12 +182,14 @@ def train(
                           K_epochs, eps_clip, has_continuous_action_space,
                           use_icm=True, icm_lr=icm_lr, icm_epochs=icm_epochs,
                           icm_batch_size=icm_batch_size, intr_reward_strength=icm_intr_strength,
-                          gae_lambda=gae_lambda)
+                          gae_lambda=gae_lambda,
+                          **beta_kwargs)
         elif exploration_method == 'count':
             ppo_agent = PPO(state_dim, action_dim, lr_actor, lr_critic, gamma,
                           K_epochs, eps_clip, has_continuous_action_space,
                           use_count_based=True, hash_dim=hash_dim, bonus_type=bonus_type,
-                          intr_reward_strength=count_intr_strength, gae_lambda=gae_lambda)
+                          intr_reward_strength=count_intr_strength, gae_lambda=gae_lambda,
+                          **beta_kwargs)
         elif exploration_method == 'ride':
             ppo_agent = PPO(state_dim, action_dim, lr_actor, lr_critic, gamma,
                           K_epochs, eps_clip, has_continuous_action_space,
@@ -177,7 +199,8 @@ def train(
                           ride_num_layers=ride_num_layers,
                           ride_hash_dim=ride_hash_dim,
                           intr_reward_strength=ride_intr_strength,
-                          gae_lambda=gae_lambda)
+                          gae_lambda=gae_lambda,
+                          **beta_kwargs)
         
         # Training variables
         start_time = datetime.now().replace(microsecond=0)
@@ -279,6 +302,8 @@ if __name__ == '__main__':
                        help="Ending seed (inclusive)")
     parser.add_argument("--max_steps", type=int, default=int(1e6),
                        help="Max training timesteps per seed")
+    parser.add_argument("--fixed-beta", type=float, default=None,
+                       help="Use fixed scalar beta (disables state-dependent beta)")
     
     args = parser.parse_args()
     
@@ -287,5 +312,6 @@ if __name__ == '__main__':
         random_seed=args.seed_start,
         env_name=args.env,
         max_training_timesteps=args.max_steps,
-        seeds_range=(args.seed_start, args.seed_end)
+        seeds_range=(args.seed_start, args.seed_end),
+        fixed_beta=args.fixed_beta
     )

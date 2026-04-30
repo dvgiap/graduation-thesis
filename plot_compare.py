@@ -21,21 +21,45 @@ ENVS = [
 WINDOW = 20  # smoothing window (triangular)
 
 SERIES = [
-    # (sub_dir,            suffix,   display_label,       color,           linestyle)
-    ('ppo-curiosity',      '_ICM',   'ICM (baseline)',    'steelblue',     '-'),
-    ('ppo-care-curiosity', '_ICM',   'CARE-ICM',          'darkorange',    '--'),
-    ('ppo-curiosity',      '_COUNT', 'COUNT (baseline)',  'seagreen',      '-'),
-    ('ppo-care-curiosity', '_COUNT', 'CARE-COUNT',        'crimson',       '--'),
-    ('ppo-curiosity',      '_RIDE',  'RIDE (baseline)',   'mediumpurple',  '-'),
-    ('ppo-care-curiosity', '_RIDE',  'CARE-RIDE',         'goldenrod',     '--'),
+    # (sub_dir,            suffix,        display_label,        color,           linestyle)
+    ('ppo-curiosity',      '',            'PPO (no intrinsic)', 'gray',          ':'),
+    ('ppo-curiosity',      '_ICM',        'ICM (beta=1 raw)',   'steelblue',     '-'),
+    ('ppo-care-curiosity', '_ICM_CARE',   'CARE-ICM',           'darkorange',    '--'),
+    ('ppo-curiosity',      '_COUNT',      'COUNT (beta=1 raw)', 'seagreen',      '-'),
+    ('ppo-care-curiosity', '_COUNT_CARE', 'CARE-COUNT',         'crimson',       '--'),
+    ('ppo-curiosity',      '_RIDE',       'RIDE (beta=1 raw)',  'mediumpurple',  '-'),
+    ('ppo-care-curiosity', '_RIDE_CARE',  'CARE-RIDE',          'goldenrod',     '--'),
 ]
+
+# Fixed-β sweep helpers (compose into SERIES when sweep data is available)
+FIXED_BETA_VALUES = [0.005, 0.05, 0.5, 1.0, 2.0]
+FB_COLORS = ['#fee0d2', '#fcae91', '#fb6a4a', '#de2d26', '#a50f15']  # gradient red
+
+
+def fixed_beta_series(module_suffix):
+    """Return SERIES entries for the fixed-β sweep of a given module suffix (e.g. '_ICM').
+
+    Each entry follows the (sub_dir, suffix, display_label, color, linestyle) layout
+    used by the rest of the script.
+    """
+    module_name = module_suffix.lstrip('_')
+    return [
+        ('ppo-care-curiosity', f'{module_suffix}_FB{v}',
+         f'{module_name} beta={v}', FB_COLORS[i], ':')
+        for i, v in enumerate(FIXED_BETA_VALUES)
+    ]
 
 OUT_DIR = os.path.join('figs', 'compare')
 # ─────────────────────────────────────────────────────────────────────────────
 
 
 def load_seeds(log_dir, env_name, suffix):
-    pattern = os.path.join(log_dir, 'logs', env_name, f'PPO{suffix}_{env_name}_seed_*.csv')
+    # PPO with no intrinsic reward writes filenames as 'PPO_{env}_seed_N.csv'
+    # (suffix is empty), so glob with a single underscore in that case.
+    if suffix == '':
+        pattern = os.path.join(log_dir, 'logs', env_name, f'PPO_{env_name}_seed_*.csv')
+    else:
+        pattern = os.path.join(log_dir, 'logs', env_name, f'PPO{suffix}_{env_name}_seed_*.csv')
     files = sorted(glob.glob(pattern))
     runs = []
     for f in files:

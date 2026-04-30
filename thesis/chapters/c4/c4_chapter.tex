@@ -1,7 +1,7 @@
 \chapter{Experimental Setup and Results}
 \label{chap:experiment}
 
-This chapter describes the experimental setup used to evaluate the proposed methodology. It first presents the benchmark environments and the computing infrastructure, then specifies the experimental configuration, the baselines, and the performance evaluation metrics. The empirical evaluation across all three intrinsic reward families (count-based, ICM, and RE3) is the subject of Section~\ref{sec:empirical_results}. Settings reported here are the canonical configuration shared by every reported run; the underlying hyperparameter values are tabulated in Appendix~\ref{app:implementation}.
+This chapter describes the experimental setup used to evaluate the proposed methodology. It first presents the benchmark environments and the computing infrastructure, then specifies the experimental configuration, the baselines, and the performance evaluation metrics. The empirical evaluation across all three intrinsic reward families (count-based, ICM, and RIDE) is the subject of Section~\ref{sec:empirical_results}. Settings reported here are the canonical configuration shared by every reported run; the underlying hyperparameter values are tabulated in Appendix~\ref{app:implementation}.
 
 \section{Benchmark Environments}
 \label{sec:benchmark_environments}
@@ -42,42 +42,40 @@ The training scripts automatically dispatch the policy and auxiliary networks to
 \section{Experimental Configuration}
 \label{sec:experimental_config}
 
-All reported runs share the same PPO backbone and the same Beta Network architecture so that the comparison across intrinsic reward modules is fair. The complete set of hyperparameter values is tabulated in Appendix~\ref{app:hyperparameters}; the most relevant high-level settings are summarized here.
+All reported runs share the same PPO backbone and the same intrinsic-reward processing pipeline so that the comparison across modules and across scaling strategies is fair. The complete set of hyperparameter values is tabulated in Appendix~\ref{app:hyperparameters}; the most relevant high-level settings are summarized here.
 
-The global intrinsic strength is fixed at $\alpha = 10^{-3}$ for every intrinsic reward module. The Beta Network in CARE is realized as a two-layer encoder of dimension $256$ followed by a $128$-unit head producing $\log \beta_\psi$, which is clipped so that $\beta_\psi(s_t) \in [\beta_\text{min}, \beta_\text{max}] = [0.1, 2.0]$. The learning-progress objective in Equation~\eqref{eq:beta_loss} uses regularization weight $\lambda_\text{reg} = 10^{-3}$, reference value $\beta_0 = 1.0$, gradient clipping at $L_2$ norm $1.0$, and $L_2$ weight decay of $10^{-6}$ on the Beta Network parameters. The Beta Network is updated with Adam at learning rate $5 \times 10^{-4}$.
+The global intrinsic strength is fixed at $\alpha = 10^{-3}$ for every intrinsic reward module so that any difference between fixed-$\beta$ and CARE conditions can be attributed to the scaling factor itself rather than to a change in overall intrinsic magnitude. In the CARE conditions, the Beta Network is realized as a two-layer encoder of dimension $256$ followed by a $128$-unit head producing $\log \beta_\psi$, which is clipped so that $\beta_\psi(s_t) \in [\beta_\text{min}, \beta_\text{max}] = [0.1, 2.0]$. The learning-progress objective in Equation~\eqref{eq:beta_loss} uses regularization weight $\lambda_\text{reg} = 10^{-3}$, reference value $\beta_0 = 1.0$, gradient clipping at $L_2$ norm $1.0$, and $L_2$ weight decay of $10^{-6}$ on the Beta Network parameters. The Beta Network is updated with Adam at learning rate $5 \times 10^{-4}$. In the fixed-$\beta$ conditions, the Beta Network is replaced by a constant scalar $\beta \in \{0.005, 0.05, 0.5, 1.0, 2.0\}$ and the learning-progress update is disabled; the rest of the pipeline (intrinsic generation, standardization, and the shaped reward formula in Equation~\eqref{eq:combined_reward}) is unchanged.
 
 The base PPO algorithm uses $K = 80$ epochs per update, clip parameter $\epsilon = 0.2$, discount factor $\gamma = 0.99$, GAE bias-variance trade-off $\lambda = 0.95$, actor learning rate $3 \times 10^{-4}$, and critic learning rate $10^{-3}$. The rollout buffer length is $T = 4{,}000$ steps, and each seed is trained for $10^6$ environment steps. Each configuration is repeated over five independent random seeds $\{1, 2, 3, 4, 5\}$.
 
 \section{Baselines}
 \label{sec:baselines}
 
-The experimental framing of this thesis treats CARE as a module-agnostic adaptive layer that can be paired with any of the three representative intrinsic reward families: count-based bonuses, the Intrinsic Curiosity Module (ICM), and Random Encoders for Efficient Exploration (RE3). To isolate the contribution of CARE from the contribution of the underlying intrinsic signal, the baselines are organized into a $1 + 3 + 3$ matrix as listed in Table~\ref{tab:baselines}.
+The experimental framing of this thesis treats CARE as a module-agnostic adaptive layer that can be paired with any of the three representative intrinsic reward families: count-based bonuses, the Intrinsic Curiosity Module (ICM), and Rewarding Impact-Driven Exploration (RIDE). To isolate the contribution of CARE from both the contribution of the underlying intrinsic signal and the choice of any particular fixed scaling coefficient, the baselines are organized into a $1 + 15 + 3$ matrix as summarized in Table~\ref{tab:baselines}: one no-intrinsic control, fifteen fixed-$\beta$ configurations spanning a four-orders-of-magnitude sweep across the three modules, and three CARE variants.
 
 \begin{table}[H]
 \centering
 \caption{Baseline conditions evaluated on every environment.}
 \label{tab:baselines}
-\begin{tabular}{|m{1.6cm}|m{4.2cm}|m{7.6cm}|}
+\begin{tabular}{|m{1.8cm}|m{4.4cm}|m{7.2cm}|}
 \hline
 \textbf{Label} & \textbf{Configuration} & \textbf{Purpose in the comparison} \\ \hline
 $B_0$ & PPO (no intrinsic reward) & Lower bound on exploration ability without any curiosity signal. \\ \hline
-$B_\text{Count}$ & PPO + count-based with $\beta \equiv 1$ & Count-based exploration with fixed unit coefficient (no learned scaling). \\ \hline
-$B_\text{ICM}$ & PPO + ICM with $\beta \equiv 1$ & ICM exploration with fixed unit coefficient. \\ \hline
-$B_\text{RE3}$ & PPO + RE3 with $\beta \equiv 1$ & RE3 exploration with fixed unit coefficient. \\ \hline
+$F_{m,\beta}$ & PPO + module $m$ with constant $\beta$, $m \in \{\text{Count}, \text{ICM}, \text{RIDE}\}$, $\beta \in \{0.005,\, 0.05,\, 0.5,\, 1.0,\, 2.0\}$ & Fixed-coefficient sweep for each module. The five values span four orders of magnitude, covering both ``intrinsic almost off'' and ``intrinsic comparable to extrinsic'' regimes. \\ \hline
 $C_\text{Count}$ & PPO + count-based + CARE & Count-based bonus with learned $\beta_\psi(s_t)$ from the Beta Network. \\ \hline
 $C_\text{ICM}$ & PPO + ICM + CARE & ICM bonus with learned $\beta_\psi(s_t)$. \\ \hline
-$C_\text{RE3}$ & PPO + RE3 + CARE & RE3 bonus with learned $\beta_\psi(s_t)$. \\ \hline
+$C_\text{RIDE}$ & PPO + RIDE + CARE & RIDE bonus with learned $\beta_\psi(s_t)$. \\ \hline
 \end{tabular}
 \end{table}
 
 This design isolates three distinct effects:
 \begin{itemize}
-    \item \textbf{$B_0$ vs $B_m$ (for any $m$)} measures the contribution of intrinsic motivation in module $m$ on top of the extrinsic-only PPO baseline.
-    \item \textbf{$B_m$ vs $C_m$} measures the contribution of CARE's adaptive scaling, holding the underlying intrinsic signal fixed. This is the cleanest test of whether learned, state-dependent $\beta_\psi$ is preferable to a fixed unit coefficient.
-    \item \textbf{$C_\text{Count}$ vs $C_\text{ICM}$ vs $C_\text{RE3}$} reveals how the same CARE layer interacts with structurally different intrinsic generators, addressing the research question of module-agnosticism stated in Chapter~1.
+    \item \textbf{$B_0$ vs $F_{m,\beta}$} measures whether intrinsic motivation in module $m$ at coefficient $\beta$ helps or hurts on top of the extrinsic-only PPO baseline. Sweeping $\beta$ over four orders of magnitude exposes how sensitive each module is to manual tuning.
+    \item \textbf{$F_{m,\beta}$ vs $C_m$} measures the contribution of CARE's adaptive scaling, holding the underlying intrinsic signal fixed. The cleanest test is the comparison of $C_m$ against the \emph{best} fixed-$\beta$ value for module $m$ on each environment: if CARE matches or exceeds the best post-hoc fixed coefficient \emph{without} that coefficient having to be searched, the case for state-dependent scaling is established.
+    \item \textbf{$C_\text{Count}$ vs $C_\text{ICM}$ vs $C_\text{RIDE}$} reveals how the same CARE layer interacts with structurally different intrinsic generators (count-based visitation, ICM forward error, and RIDE impact-with-episodic-counts), addressing the research question of module-agnosticism stated in Chapter~1.
 \end{itemize}
 
-With seven conditions per environment and five seeds per condition, the full evaluation comprises $7 \times 5 = 35$ runs per environment and $35 \times 6 = 210$ runs across the six environments.
+With $1 + 15 + 3 = 19$ conditions per environment and five seeds per condition, the full evaluation comprises $19 \times 5 = 95$ runs per environment and $95 \times 6 = 570$ runs across the six environments.
 
 \section{Performance Evaluation Metrics}
 \label{sec:metrics}
@@ -103,13 +101,16 @@ where $S$ is the set of seeds. Lower $\sigma(n)$ indicates more reproducible beh
 \section{Empirical Results}
 \label{sec:empirical_results}
 
-\textit{Empirical results across the six benchmark environments and the seven conditions defined in Section~\ref{sec:baselines} will be reported here once the experimental runs are complete. The remainder of this section is organized into the following subsections, which will be populated with reward curves, summary tables, and qualitative analyses of $\beta_\psi(s)$.}
+\textit{Empirical results across the six benchmark environments and the nineteen conditions defined in Section~\ref{sec:baselines} will be reported here once the experimental runs are complete. The remainder of this section is organized into the following subsections, which will be populated with reward curves, summary tables, and qualitative analyses of $\beta_\psi(s)$.}
 
-\subsection{Module-Level Results}
-\textit{Per-module reward curves and summary statistics for $B_m$ vs $C_m$ across all six environments.}
+\subsection{Module-Level Results: Fixed-$\beta$ Sweep vs CARE}
+\textit{Per-module reward curves and summary statistics. For each module $m \in \{\text{Count}, \text{ICM}, \text{RIDE}\}$, the five $F_{m,\beta}$ curves and the $C_m$ curve are plotted on a single panel per environment, with $B_0$ as a shared reference. Tables report the best fixed-$\beta$ value per environment and the gap to $C_m$.}
 
 \subsection{Effect of CARE Across Modules}
-\textit{Cross-module comparison summarizing where CARE provides the largest gain, where it is neutral, and where the cold-start fallback dominates.}
+\textit{Cross-module comparison summarizing where CARE provides the largest gain over the best fixed coefficient, where it is neutral, and where the cold-start fallback dominates. Includes a heatmap of CARE-vs-best-fixed gains across the six environments and three modules.}
+
+\subsection{Sensitivity to Fixed $\beta$}
+\textit{Analysis of how sharply performance varies across the swept range $\beta \in \{0.005, \dots, 2.0\}$ for each module, motivating the need for adaptive scaling: modules whose performance varies strongly with $\beta$ are the ones where CARE is expected to help most.}
 
 \subsection{Behavior of the Learned Scaling Function}
 \textit{Distributional and trajectory-level analysis of $\beta_\psi(s_t)$, including evolution over training and qualitative state heatmaps.}

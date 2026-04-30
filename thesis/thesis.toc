@@ -28,7 +28,7 @@
 \contentsline {section}{\numberline {3.2}Intrinsic Reward Generation}{13}{section.3.2}%
 \contentsline {subsection}{\numberline {3.2.1}ICM Instantiation}{14}{subsection.3.2.1}%
 \contentsline {subsection}{\numberline {3.2.2}Count-Based Exploration}{14}{subsection.3.2.2}%
-\contentsline {subsection}{\numberline {3.2.3}Random Encoders for Efficient Exploration}{15}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.3}Rewarding Impact-Driven Exploration}{15}{subsection.3.2.3}%
 \contentsline {subsection}{\numberline {3.2.4}Standardization and Rectification}{15}{subsection.3.2.4}%
 \contentsline {section}{\numberline {3.3}Correlation-Aware Reward Exploration}{16}{section.3.3}%
 \contentsline {subsection}{\numberline {3.3.1}Beta Network}{16}{subsection.3.3.1}%
@@ -45,18 +45,19 @@
 \contentsline {section}{\numberline {4.4}Baselines}{26}{section.4.4}%
 \contentsline {section}{\numberline {4.5}Performance Evaluation Metrics}{27}{section.4.5}%
 \contentsline {section}{\numberline {4.6}Empirical Results}{28}{section.4.6}%
-\contentsline {subsection}{\numberline {4.6.1}Module-Level Results}{28}{subsection.4.6.1}%
+\contentsline {subsection}{\numberline {4.6.1}Module-Level Results: Fixed-$\beta $ Sweep vs CARE}{28}{subsection.4.6.1}%
 \contentsline {subsection}{\numberline {4.6.2}Effect of CARE Across Modules}{28}{subsection.4.6.2}%
-\contentsline {subsection}{\numberline {4.6.3}Behavior of the Learned Scaling Function}{28}{subsection.4.6.3}%
-\contentsline {subsection}{\numberline {4.6.4}Discussion}{28}{subsection.4.6.4}%
-\contentsline {chapter}{Conclusion and Future Work}{29}{chapter*.7}%
-\contentsline {chapter}{References}{30}{section*.8}%
-\contentsline {chapter}{\numberline {A}Mathematical Proofs}{33}{appendix.A}%
-\contentsline {section}{\numberline {A.1}Proof of Proposition 3.1: Target Recovery}{33}{section.A.1}%
-\contentsline {section}{\numberline {A.2}Proof of Proposition 3.2: Gradient Direction}{34}{section.A.2}%
-\contentsline {section}{\numberline {A.3}Proof of Lemma 3.1: Bounded Shaped Reward}{34}{section.A.3}%
-\contentsline {section}{\numberline {A.4}Proof of Proposition 3.3: Computational Cost Comparison}{35}{section.A.4}%
-\contentsline {section}{\numberline {A.5}Proof of Corollary 3.1: Degeneration to Fixed Coefficient}{36}{section.A.5}%
-\contentsline {chapter}{\numberline {B}Implementation Details}{38}{appendix.B}%
-\contentsline {section}{\numberline {B.1}Network Architectures}{38}{section.B.1}%
-\contentsline {section}{\numberline {B.2}Hyperparameters}{40}{section.B.2}%
+\contentsline {subsection}{\numberline {4.6.3}Sensitivity to Fixed $\beta $}{29}{subsection.4.6.3}%
+\contentsline {subsection}{\numberline {4.6.4}Behavior of the Learned Scaling Function}{29}{subsection.4.6.4}%
+\contentsline {subsection}{\numberline {4.6.5}Discussion}{29}{subsection.4.6.5}%
+\contentsline {chapter}{Conclusion and Future Work}{30}{chapter*.7}%
+\contentsline {chapter}{References}{32}{section*.8}%
+\contentsline {chapter}{\numberline {A}Mathematical Proofs}{35}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Proof of Proposition 3.1: Target Recovery}{35}{section.A.1}%
+\contentsline {section}{\numberline {A.2}Proof of Proposition 3.2: Gradient Direction}{36}{section.A.2}%
+\contentsline {section}{\numberline {A.3}Proof of Lemma 3.1: Bounded Shaped Reward}{36}{section.A.3}%
+\contentsline {section}{\numberline {A.4}Proof of Proposition 3.3: Computational Cost Comparison}{37}{section.A.4}%
+\contentsline {section}{\numberline {A.5}Proof of Corollary 3.1: Degeneration to Fixed Coefficient}{38}{section.A.5}%
+\contentsline {chapter}{\numberline {B}Implementation Details}{40}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Network Architectures}{40}{section.B.1}%
+\contentsline {section}{\numberline {B.2}Hyperparameters}{42}{section.B.2}%

@@ -188,8 +188,8 @@ class PPO:
                  beta_encoding_size=256,
                  beta_num_layers=2,
                  beta_head_hidden=128,
-                 beta_min=0.1,
-                 beta_max=2.0,
+                 beta_min=0.005,
+                 beta_max=2,
                  # Meta options (Learning-Progress)
                  meta_use_progress=True,
                  meta_progress_weight=1.0,

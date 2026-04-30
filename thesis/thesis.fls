@@ -1,6 +1,6 @@
-PWD d:\Workspace\graduation-thesis\graduation-thesis\thesis
+PWD D:\Workspace\graduation-thesis\graduation-thesis\thesis
 INPUT C:\Users\JS\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT d:\Workspace\graduation-thesis\graduation-thesis\thesis\thesis.tex
+INPUT thesis.tex
 OUTPUT thesis.log
 INPUT D:\Program Files\MiKTeX\tex\latex\base\report.cls
 INPUT D:\Program Files\MiKTeX\tex\latex\base\report.cls
@@ -359,6 +359,30 @@ INPUT chapters\abtract_vi.tex
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnr12.tfm
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnti12.tfm
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnbx12.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmr12.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmr8.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmr6.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmmi12.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmmi8.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmmi6.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmsy10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmsy8.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmsy6.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmex10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex8.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
+INPUT D:\Program Files\MiKTeX\tex\latex\amsfonts\umsa.fd
+INPUT D:\Program Files\MiKTeX\tex\latex\amsfonts\umsa.fd
+INPUT D:\Program Files\MiKTeX\tex\latex\amsfonts\umsa.fd
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam5.tfm
+INPUT D:\Program Files\MiKTeX\tex\latex\amsfonts\umsb.fd
+INPUT D:\Program Files\MiKTeX\tex\latex\amsfonts\umsb.fd
+INPUT D:\Program Files\MiKTeX\tex\latex\amsfonts\umsb.fd
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm5.tfm
 INPUT .\chapters\abtract_en.tex
 INPUT .\chapters\abtract_en.tex
 INPUT .\chapters\abtract_en.tex
@@ -369,27 +393,15 @@ INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnbx12.tfm
 INPUT .\thesis.toc
 INPUT .\thesis.toc
 INPUT thesis.toc
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmr12.tfm
 INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmr9.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmr6.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmmi12.tfm
 INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmmi9.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmmi6.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmsy10.tfm
 INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmsy9.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmsy6.tfm
 INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmex10.tfm
 INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex9.tfm
 INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
-INPUT D:\Program Files\MiKTeX\tex\latex\amsfonts\umsa.fd
-INPUT D:\Program Files\MiKTeX\tex\latex\amsfonts\umsa.fd
-INPUT D:\Program Files\MiKTeX\tex\latex\amsfonts\umsa.fd
 INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
 INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
 INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam7.tfm
-INPUT D:\Program Files\MiKTeX\tex\latex\amsfonts\umsb.fd
-INPUT D:\Program Files\MiKTeX\tex\latex\amsfonts\umsb.fd
-INPUT D:\Program Files\MiKTeX\tex\latex\amsfonts\umsb.fd
 INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
 INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
 INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm7.tfm
@@ -437,18 +449,6 @@ INPUT .\chapters\c3\c3_chapter.tex
 INPUT .\chapters\c3\c3_chapter.tex
 INPUT .\chapters\c3\c3_chapter.tex
 INPUT chapters\c3\c3_chapter.tex
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmr8.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmmi8.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmsy8.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmex10.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex8.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam5.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm5.tfm
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnr10.tfm
 INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmr10.tfm
 INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmmi10.tfm

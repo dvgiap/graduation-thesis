@@ -66,6 +66,37 @@ Encoder gradient flow & inverse loss only (forward loss detached) \\
 
 \begin{table}[H]
 \centering
+\caption{RIDE architecture. The encoder, forward model, and inverse model share the ICM design and training objective; the difference is the intrinsic reward formula in Equation~\eqref{eq:ride_raw}, which uses representation impact divided by an episodic count rather than forward prediction error.}
+\label{tab:ride_arch}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Component} & \textbf{Specification} \\
+\hline
+Encoder $\phi$ layer 1 & Linear($d_s \to 256$), Tanh \\
+\hline
+Encoder $\phi$ layer 2 & Linear($256 \to 256$), Tanh \\
+\hline
+Latent dimension $d_y$ & $256$ \\
+\hline
+Forward model $f^F_\eta$ & Linear($256 + |\mathcal{A}| \to 256$), Tanh, Linear($256 \to 256$) \\
+\hline
+Inverse model $f^I_\eta$ & Linear($512 \to 256$), Tanh, Linear($256 \to |\mathcal{A}|$) \\
+\hline
+Episodic-count hash dim $d_h$ & $32$ \\
+\hline
+Episodic-count bin width $\Delta$ & $0.1$ \\
+\hline
+Episodic count reset & At every episode boundary (via \texttt{is\_terminals} buffer) \\
+\hline
+Forward/inverse weighting & $\alpha_F = 0.2$, $\alpha_I = 0.8$ (same as ICM) \\
+\hline
+Intrinsic signal & $I_t = \| \phi(s_{t+1}) - \phi(s_t) \|_2 / \sqrt{\max\{N_e(s_{t+1}), 1\}}$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
 \caption{Actor and critic network architectures used by PPO.}
 \label{tab:ppo_arch}
 \begin{tabular}{|l|l|}
@@ -132,7 +163,24 @@ ICM batch size & Mini-batch size within each epoch & $64$ \\
 
 \begin{table}[H]
 \centering
-\caption{CARE hyperparameters and intrinsic reward strengths.}
+\caption{RIDE hyperparameters.}
+\label{tab:ride_hparams}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Symbol} & \textbf{Description} & \textbf{Value} \\
+\hline
+$\eta_\text{lr}^\text{RIDE}$ & RIDE encoder learning rate & $3 \times 10^{-4}$ \\
+\hline
+RIDE epochs & Number of gradient epochs per buffer update & $5$ \\
+\hline
+RIDE batch size & Mini-batch size within each epoch & $64$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{CARE hyperparameters and intrinsic reward strengths. The same global strength $\alpha$ is shared by all three modules; the same Beta Network bounds and learning-progress hyperparameters apply to every CARE variant.}
 \label{tab:care_hparams}
 \begin{tabular}{|l|l|l|}
 \hline
@@ -142,7 +190,7 @@ $\alpha$ (ICM) & Global intrinsic strength for ICM & $1 \times 10^{-3}$ \\
 \hline
 $\alpha$ (count) & Global intrinsic strength for count-based & $1 \times 10^{-3}$ \\
 \hline
-$\alpha$ (RE3) & Global intrinsic strength for RE3 & $1 \times 10^{-3}$ \\
+$\alpha$ (RIDE) & Global intrinsic strength for RIDE & $1 \times 10^{-3}$ \\
 \hline
 $\beta_\text{min}$ & Lower bound on Beta Network output & $0.1$ \\
 \hline
@@ -165,23 +213,46 @@ $\varepsilon$ & Numerical stability constant in standardization & $1 \times 10^{
 
 \begin{table}[H]
 \centering
-\caption{Other count-based and RE3 hyperparameters.}
+\caption{Fixed-$\beta$ sweep used in the baseline conditions $F_{m,\beta}$ of Section~\ref{sec:baselines}. In these conditions the Beta Network is replaced by the listed scalar value, the learning-progress update is disabled, and $\alpha\,\beta\,I_t^{+,m}$ is fed directly into the shaped reward.}
+\label{tab:fixed_beta_sweep}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Item} & \textbf{Specification} \\
+\hline
+Modules swept & Count-based, ICM, RIDE \\
+\hline
+Sweep values $\beta$ & $\{0.005,\, 0.05,\, 0.5,\, 1.0,\, 2.0\}$ \\
+\hline
+Conditions per module & $5$ fixed-$\beta$ + $1$ CARE = $6$ \\
+\hline
+Total intrinsic-augmented conditions & $3 \times 6 = 18$ \\
+\hline
+Plus extrinsic-only control $B_0$ & $+1$ (no intrinsic reward) \\
+\hline
+Total conditions per environment & $19$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Other module-specific hyperparameters for count-based exploration and RIDE.}
 \label{tab:other_hparams}
 \begin{tabular}{|l|l|l|}
 \hline
 \textbf{Symbol} & \textbf{Description} & \textbf{Value} \\
 \hline
-$d_\text{hash}$ & Hash dimension for count-based exploration & $32$ \\
+$d_\text{hash}$ (count) & Hash dimension for count-based exploration & $32$ \\
 \hline
 Bonus type (count) & Form of count-based bonus & $1/\sqrt{N(s)}$ \\
 \hline
-RE3 encoding size & Random encoder embedding dimension & $64$ \\
+$d_\text{hash}$ (RIDE) & Hash dimension for episodic count in RIDE & $32$ \\
 \hline
-RE3 encoder layers & Number of layers in the random encoder & $2$ \\
+$\Delta$ (RIDE) & Bin width for episodic-count hash & $0.1$ \\
 \hline
-RE3 $k$ & $k$-NN order in the entropy estimator & $3$ \\
+RIDE encoder size & Latent dimension $d_y$ of the RIDE encoder & $256$ \\
 \hline
-RE3 buffer size & FIFO buffer of past embeddings for $k$-NN search & $10{,}000$ \\
+RIDE encoder layers & Number of $\text{Linear} \to \text{Tanh}$ blocks in the encoder & $2$ \\
 \hline
 \end{tabular}
 \end{table}
