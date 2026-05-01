@@ -65,7 +65,7 @@ The proposed system instantiates this formulation with a parameterized $\beta_\p
 \label{fig:care_arch}
 \end{figure}
 
-The shaped reward used throughout this thesis follows directly from Definition~\ref{def:reward_shaping}. For the chosen intrinsic reward module $m$ with rectified intrinsic signal $I_t^{+,m}$ (Section~\ref{sec:icm}), the combined reward optimized by PPO is
+The shaped reward used throughout this thesis follows directly from Definition~\ref{def:reward_shaping}. For the chosen intrinsic reward module $m$ with rectified intrinsic signal $I_t^{+,m}$ (Section~\ref{sec:standardization}), the combined reward optimized by PPO is
 \begin{equation}
 \bar{r}_t \;=\; R_t^E \;+\; \beta_\psi(s_t)\, I_t^{+,m}.
 \label{eq:combined_reward}
@@ -268,7 +268,7 @@ Consider the objective $L_\beta(\psi)$ in Equation~\eqref{eq:beta_loss}. There a
 Proof in Appendix~\ref{app:proof_degeneration}.
 \end{corollary}
 
-Corollary~\ref{cor:degeneration} has both a theoretical and a practical reading. Theoretically, it shows that CARE strictly contains fixed-coefficient PPO+ICM (with coefficient $\beta_0$) as a limiting case, so the framework cannot perform worse than that baseline once the regularization is appropriately tuned and the cold-start fallback is in place. Practically, the cold-start branch is essential in extremely sparse environments: when the agent has not yet encountered any extrinsic reward, the TD error reflects only initialization noise of the critic, and falling back to $\beta_0$ prevents CARE from amplifying that noise into the policy update.
+Corollary~\ref{cor:degeneration} has both a theoretical and a practical reading. Theoretically, it shows that CARE strictly contains the fixed-coefficient baseline PPO + module $m$ (with coefficient $\beta_0$) as a limiting case for any intrinsic reward module $m$, so the framework cannot perform worse than that baseline once the regularization is appropriately tuned and the cold-start fallback is in place. Practically, the cold-start branch is essential in extremely sparse environments: when the agent has not yet encountered any extrinsic reward, the TD error reflects only initialization noise of the critic, and falling back to $\beta_0$ prevents CARE from amplifying that noise into the policy update.
 
 \section{Algorithm}
 \label{sec:algorithm}
