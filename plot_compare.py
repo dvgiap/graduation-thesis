@@ -23,17 +23,14 @@ WINDOW = 20  # smoothing window (triangular)
 SERIES = [
     # (sub_dir,            suffix,        display_label,        color,           linestyle)
     ('ppo-curiosity',      '',            'PPO (no intrinsic)', 'gray',          ':'),
-    ('ppo-curiosity',      '_ICM',        'ICM (beta=1 raw)',   'steelblue',     '-'),
     ('ppo-care-curiosity', '_ICM_CARE',   'CARE-ICM',           'darkorange',    '--'),
-    ('ppo-curiosity',      '_COUNT',      'COUNT (beta=1 raw)', 'seagreen',      '-'),
     ('ppo-care-curiosity', '_COUNT_CARE', 'CARE-COUNT',         'crimson',       '--'),
-    ('ppo-curiosity',      '_RIDE',       'RIDE (beta=1 raw)',  'mediumpurple',  '-'),
     ('ppo-care-curiosity', '_RIDE_CARE',  'CARE-RIDE',          'goldenrod',     '--'),
 ]
 
 # Fixed-β sweep helpers (compose into SERIES when sweep data is available)
-FIXED_BETA_VALUES = [0.005, 0.05, 0.5, 1.0, 2.0]
-FB_COLORS = ['#fee0d2', '#fcae91', '#fb6a4a', '#de2d26', '#a50f15']  # gradient red
+FIXED_BETA_VALUES = [0.001, 0.005, 0.05, 0.1]
+FB_COLORS = ['#fcae91', '#fb6a4a', '#de2d26', '#a50f15']  # gradient red
 
 
 def fixed_beta_series(module_suffix):

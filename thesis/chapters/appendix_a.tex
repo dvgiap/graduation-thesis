@@ -59,15 +59,15 @@ In particular, the partial derivative is positive when $\beta_\psi(s)$ overshoot
 \begin{proof}
 By Equation~\eqref{eq:combined_reward},
 \begin{equation*}
-\bar r_t - R_t^E \;=\; \alpha\, \beta_\psi(s_t)\, I_t^{+,m}.
+\bar r_t - R_t^E \;=\; \beta_\psi(s_t)\, I_t^{+,m}.
 \end{equation*}
-Taking absolute values and using $\alpha > 0$,
+Taking absolute values,
 \begin{equation*}
-\left| \bar r_t - R_t^E \right| \;=\; \alpha\, \left| \beta_\psi(s_t) \right|\, \left| I_t^{+,m} \right|.
+\left| \bar r_t - R_t^E \right| \;=\; \left| \beta_\psi(s_t) \right|\, \left| I_t^{+,m} \right|.
 \end{equation*}
 By Definition~\ref{def:beta_network}, $\beta_\psi(s_t) \in [\beta_\text{min}, \beta_\text{max}]$ with $\beta_\text{min} > 0$, so $|\beta_\psi(s_t)| \le \beta_\text{max}$. By assumption, $|I_t^{+,m}| \le M$ almost surely. Combining these bounds,
 \begin{equation*}
-\left| \bar r_t - R_t^E \right| \;\le\; \alpha\, \beta_\text{max}\, M,
+\left| \bar r_t - R_t^E \right| \;\le\; \beta_\text{max}\, M,
 \end{equation*}
 which establishes the claim.
 \end{proof}
@@ -131,11 +131,11 @@ L_\text{reg}(\psi^\star_\lambda)
 \;\le\; \frac{\gamma_p\, (\beta_\text{max} - \beta_\text{min})^2}{\lambda}
 \;\xrightarrow[\lambda \to \infty]{}\; 0.
 \end{equation*}
-Hence $\mathbb{E}[(\log \beta_{\psi^\star_\lambda}(s_t))^2] \to 0$, which implies $\log \beta_{\psi^\star_\lambda}(s_t) \to 0$ in $L^2$ under the state-visitation distribution. Equivalently, $\beta_{\psi^\star_\lambda}(s) \to \beta_0 = 1$ in $L^2$ on the support of that distribution.
+Hence $\mathbb{E}[(\log \beta_{\psi^\star_\lambda}(s_t) - \log \beta_0)^2] \to 0$, which implies $\log \beta_{\psi^\star_\lambda}(s_t) \to \log \beta_0$ in $L^2$ under the state-visitation distribution. Equivalently, $\beta_{\psi^\star_\lambda}(s) \to \beta_0$ in $L^2$ on the support of that distribution.
 
-\textbf{Reduction to fixed-coefficient form.} In either regime, substituting $\beta_\psi(s) = 1$ into Equation~\eqref{eq:combined_reward} yields
+\textbf{Reduction to fixed-coefficient form.} In either regime, substituting $\beta_\psi(s) = \beta_0$ into Equation~\eqref{eq:combined_reward} yields
 \begin{equation*}
-\bar r_t \;=\; R_t^E \;+\; \alpha\, \cdot\, 1\, \cdot\, I_t^{+,m} \;=\; R_t^E \;+\; \alpha\, I_t^{+,m},
+\bar r_t \;=\; R_t^E \;+\; \beta_0\, I_t^{+,m},
 \end{equation*}
-which is exactly the fixed-coefficient PPO+ICM update with intrinsic strength $\alpha$.
+which is exactly the fixed-coefficient PPO update with intrinsic coefficient $\beta_0$.
 \end{proof}

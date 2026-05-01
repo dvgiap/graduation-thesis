@@ -13,7 +13,7 @@ This is a graduation thesis research project implementing and comparing PPO-base
 pip install -r requirements.txt
 
 # Train an agent (from either ppo-curiosity/ or ppo-care-curiosity/)
-python train.py --method [none|icm|count|rnd] \
+python train.py --method [none|icm|count|ride] \
                 --env MiniGrid-DoorKey-8x8-v0 \
                 --seed_start 1 \
                 --seed_end 5 \
@@ -47,7 +47,7 @@ Both `ppo-curiosity/` and `ppo-care-curiosity/` share the same layout — differ
 - Actor: `Linear(64) → Tanh → Linear(64) → Tanh → Linear(action_dim) → Softmax`
 - Critic: `Linear(64) → Tanh → Linear(64) → Tanh → Linear(1)`
 
-**`RolloutBuffer`** — stores `(state, action, logprob, reward, is_terminal, next_state)` tuples; `next_state` is needed by ICM/RND.
+**`RolloutBuffer`** — stores `(state, action, logprob, reward, is_terminal, next_state)` tuples; `next_state` is needed by ICM/RIDE.
 
 **`PPO` agent** — wraps ActorCritic, handles `select_action()`, `update()` (K=80 gradient epochs with GAE advantage estimation), and checkpoint save/load.
 
@@ -57,9 +57,9 @@ Both `ppo-curiosity/` and `ppo-care-curiosity/` share the same layout — differ
 |---|---|---|
 | ICM | `curiosity/icm.py` | Forward model prediction error in embedding space |
 | Count-based | `curiosity/count_based.py` | `1/sqrt(visit_count)` via random projection hash |
-| RND | `curiosity/rnd.py` | Predictor network prediction error against a fixed random target network |
+| RIDE | `curiosity/ride.py` | Impact-driven: `\|\|φ(s')−φ(s)\|\|₂ / √N_episode(s')`, encoder learned from inverse+forward dynamics |
 
-Each module exposes `compute_intrinsic_reward(state, action, next_state)` and is updated alongside the PPO policy.
+Each module exposes `compute_intrinsic_reward(...)` and is updated alongside the PPO policy. RIDE's `compute_intrinsic_reward(states, next_states, is_terminals)` is called once per PPO update over the whole rollout buffer, with episodic counts respecting episode boundaries via `is_terminals`.
 
 ### CARE Enhancement (`ppo-care-curiosity/` only)
 
@@ -83,8 +83,11 @@ R_combined = R_extrinsic + α * β(s) * R_intrinsic
 ```python
 K_epochs = 80, eps_clip = 0.2, gamma = 0.99, gae_lambda = 0.95
 lr_actor = 0.0003, lr_critic = 0.001
-icm_intr_strength = 0.001, count_intr_strength = 0.001, rnd_intr_strength = 0.001
+# CARE: no separate global intrinsic strength; β_ψ(s) ∈ [0.001, 0.1] alone scales intrinsic
+# Fixed-β sweep: β ∈ {0.001, 0.005, 0.05, 0.1}; β_0 = 0.01 (geometric centre)
 ```
+
+(`ppo-curiosity/` baseline still uses the old `intr_reward_strength` style; only `ppo-care-curiosity/` was migrated to no-α.)
 
 ### Output Artifacts
 

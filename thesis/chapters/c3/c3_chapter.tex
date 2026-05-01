@@ -15,15 +15,15 @@ An \emph{intrinsic-augmented MDP} is a tuple $(\mathcal{S}, \mathcal{A}, P, R^E,
 
 \begin{definition}[State-Dependent Reward Shaping]
 \label{def:reward_shaping}
-A \emph{state-dependent reward shaping function} is a measurable map $\beta : \mathcal{S} \to \mathbb{R}_+$. Given an intrinsic-augmented MDP and a global intrinsic-strength hyperparameter $\alpha > 0$, the corresponding shaped reward at time step $t$ is
+A \emph{state-dependent reward shaping function} is a measurable map $\beta : \mathcal{S} \to \mathbb{R}_+$. Given an intrinsic-augmented MDP, the corresponding shaped reward at time step $t$ is
 \begin{equation}
-\bar{r}_t = R_t^E + \alpha\, \beta(s_t)\, R_t^I.
+\bar{r}_t = R_t^E + \beta(s_t)\, R_t^I.
 \label{eq:shaped_reward}
 \end{equation}
-The standard fixed-coefficient formulation corresponds to the special case $\beta(s) \equiv 1$.
+The standard fixed-coefficient formulation corresponds to the special case $\beta(s) \equiv \beta_0$ for some constant $\beta_0 > 0$.
 \end{definition}
 
-The proposed system instantiates this formulation with a parameterized $\beta_\psi$ together with one of three intrinsic reward generators --- count-based exploration, the Intrinsic Curiosity Module, or Random Network Distillation --- all of which are evaluated in Chapter~\ref{chap:experiment}. The full pipeline is shown in Figure~\ref{fig:care_arch}.
+The proposed system instantiates this formulation with a parameterized $\beta_\psi$ together with one of three intrinsic reward generators --- count-based exploration, the Intrinsic Curiosity Module, or Rewarding Impact-Driven Exploration --- all of which are evaluated in Chapter~\ref{chap:experiment}. The full pipeline is shown in Figure~\ref{fig:care_arch}.
 
 \begin{figure}[H]
 \centering
@@ -51,7 +51,7 @@ The proposed system instantiates this formulation with a parameterized $\beta_\p
     \draw[arr] (buf.south) -- node[right, font=\footnotesize, near end]{$s_t$} (beta.north);
     \draw[arr] (beta) -- node[above, font=\footnotesize]{$\beta_\psi$} (mult);
     \draw[arr] (mod.south) |- node[right, font=\footnotesize, near end]{$I_t^{+,m}$} (mult.north);
-    \draw[arr] (mult) -- node[above, font=\footnotesize]{$\alpha\,\beta_\psi\, I_t^{+,m}$} (plus);
+    \draw[arr] (mult) -- node[above, font=\footnotesize]{$\beta_\psi\, I_t^{+,m}$} (plus);
     \draw[arr] (buf.east) -| node[right, font=\footnotesize, near start]{$R_t^E$} (plus.north);
     \draw[arr] (plus) -- node[above, font=\footnotesize]{$\bar r_t$} (ppo);
 
@@ -67,7 +67,7 @@ The proposed system instantiates this formulation with a parameterized $\beta_\p
 
 The shaped reward used throughout this thesis follows directly from Definition~\ref{def:reward_shaping}. For the chosen intrinsic reward module $m$ with rectified intrinsic signal $I_t^{+,m}$ (Section~\ref{sec:icm}), the combined reward optimized by PPO is
 \begin{equation}
-\bar{r}_t \;=\; R_t^E \;+\; \alpha\, \beta_\psi(s_t)\, I_t^{+,m}.
+\bar{r}_t \;=\; R_t^E \;+\; \beta_\psi(s_t)\, I_t^{+,m}.
 \label{eq:combined_reward}
 \end{equation}
 Conceptually, $\beta_\psi(s_t)$ acts as a state-conditional volume control on curiosity: it amplifies intrinsic reward in states where exploration is empirically associated with future extrinsic success and attenuates it elsewhere. The remainder of this chapter formalizes this intuition.
@@ -155,7 +155,7 @@ The \emph{Beta Network} is a parameterized map
 \beta_\psi : \mathcal{S} \to [\beta_\text{min}, \beta_\text{max}], \qquad 0 < \beta_\text{min} < \beta_\text{max} < \infty,
 \label{eq:beta_network}
 \end{equation}
-which assigns a positive, bounded scaling factor to each state. In the implemented system, $\beta_\psi$ is realized as a feed-forward MLP with a 2-layer encoder of width $256$ and a 2-layer head of widths $[256, 128, 1]$ that produces $\log \beta_\psi(s_t)$. The output is mapped to $[\beta_\text{min}, \beta_\text{max}] = [0.1, 2.0]$ via $\beta_\psi(s_t) = \exp\bigl( \mathrm{clamp}(\log \beta_\psi(s_t),\, \log \beta_\text{min},\, \log \beta_\text{max}) \bigr)$. The complete architecture and weight initialization are listed in Appendix~\ref{app:architectures}, Table~\ref{tab:beta_arch}.
+which assigns a positive, bounded scaling factor to each state. In the implemented system, $\beta_\psi$ is realized as a feed-forward MLP with a 2-layer encoder of width $256$ and a 2-layer head of widths $[256, 128, 1]$ that produces $\log \beta_\psi(s_t)$. The output is mapped to $[\beta_\text{min}, \beta_\text{max}] = [0.001, 0.1]$ via $\beta_\psi(s_t) = \exp\bigl( \mathrm{clamp}(\log \beta_\psi(s_t),\, \log \beta_\text{min},\, \log \beta_\text{max}) \bigr)$. The complete architecture and weight initialization are listed in Appendix~\ref{app:architectures}, Table~\ref{tab:beta_arch}.
 \end{definition}
 
 For an intrinsic reward module $m$, the scaled intrinsic reward at time step $t$ is
@@ -171,7 +171,7 @@ The boundedness assumption built into Definition~\ref{def:beta_network} ensures 
 \label{lem:bounded_shaped}
 Let $\beta_\psi$ satisfy Definition~\ref{def:beta_network} and assume the standardized intrinsic reward is bounded almost surely, $|I_t^{+,m}| \le M$ for some constant $M < \infty$. Then for every time step $t$,
 \begin{equation*}
-\left| \bar{r}_t - R_t^E \right| \;\le\; \alpha\, \beta_\text{max}\, M.
+\left| \bar{r}_t - R_t^E \right| \;\le\; \beta_\text{max}\, M.
 \end{equation*}
 Proof in Appendix~\ref{app:proof_bounded}.
 \end{lemma}
@@ -196,14 +196,14 @@ where $d_t \in \{0, 1\}$ is the episode termination flag and $V_\mu$ is the curr
 \end{cases}
 \label{eq:beta_target}
 \end{equation}
-The cold-start fallback addresses the regime in which a batch contains no positive extrinsic reward; in that case $|\delta_t|$ reflects mainly initialization noise of the critic, and would be a poor target for $\beta_\psi$. Defaulting $\tau$ to the reference value $\beta_0 = 1$ in that regime makes CARE behave like a fixed-coefficient method until extrinsic signal becomes informative.
+The cold-start fallback addresses the regime in which a batch contains no positive extrinsic reward; in that case $|\delta_t|$ reflects mainly initialization noise of the critic, and would be a poor target for $\beta_\psi$. Defaulting $\tau$ to the reference value $\beta_0$ (set to the geometric centre of $[\beta_\text{min}, \beta_\text{max}]$, i.e.\ $\beta_0 = 0.01$) in that regime makes CARE behave like a fixed-coefficient method until extrinsic signal becomes informative.
 
 The learning-progress loss is the mean-squared deviation of $\beta_\psi$ from this target:
 \begin{equation}
 L_\text{progress}(\psi) \;=\; \mathbb{E}\!\left[ \bigl( \beta_\psi(s_t) - \tau(s_t) \bigr)^2 \right].
 \label{eq:progress_loss}
 \end{equation}
-A log-space regularizer pulls $\beta_\psi$ toward the reference value $\beta_0 = 1$ to prevent degenerate scaling and to control variance during early training:
+A log-space regularizer pulls $\beta_\psi$ toward the reference value $\beta_0$ to prevent degenerate scaling and to control variance during early training:
 \begin{equation}
 L_\text{reg}(\psi) \;=\; \mathbb{E}\!\left[ \bigl( \log \beta_\psi(s_t) - \log \beta_0 \bigr)^2 \right].
 \label{eq:reg_loss}
@@ -260,15 +260,15 @@ In the implemented system, $|\psi|$ is roughly two orders of magnitude smaller t
 
 \begin{corollary}[Degeneration to Fixed Coefficient]
 \label{cor:degeneration}
-Consider the objective $L_\beta(\psi)$ in Equation~\eqref{eq:beta_loss}. There are two regimes in which every minimizer $\psi^\star$ satisfies $\beta_{\psi^\star}(s) \to \beta_0 = 1$ uniformly in $s$, and the shaped reward in Equation~\eqref{eq:combined_reward} reduces to the fixed-coefficient form $\bar r_t = R_t^E + \alpha\, I_t^{+,m}$:
+Consider the objective $L_\beta(\psi)$ in Equation~\eqref{eq:beta_loss}. There are two regimes in which every minimizer $\psi^\star$ satisfies $\beta_{\psi^\star}(s) \to \beta_0$ uniformly in $s$, and the shaped reward in Equation~\eqref{eq:combined_reward} reduces to the fixed-coefficient form $\bar r_t = R_t^E + \beta_0\, I_t^{+,m}$:
 \begin{enumerate}
     \item[(i)] \textbf{Cold-start regime}: when $\max_{t} R_t^E \le 0$ within the rollout buffer, the target $\tau$ in Equation~\eqref{eq:beta_target} reduces to $\beta_0$ by definition, and the unique minimizer of $L_\text{progress}$ is $\beta_\psi \equiv \beta_0$.
-    \item[(ii)] \textbf{Strong regularization regime}: as $\lambda_\text{reg} \to \infty$, the regularization term dominates and forces $\log \beta_\psi(s) \to 0$ in $L^2$ under the state-visitation distribution, equivalently $\beta_\psi(s) \to \beta_0 = 1$.
+    \item[(ii)] \textbf{Strong regularization regime}: as $\lambda_\text{reg} \to \infty$, the regularization term dominates and forces $\log \beta_\psi(s) \to \log \beta_0$ in $L^2$ under the state-visitation distribution, equivalently $\beta_\psi(s) \to \beta_0$.
 \end{enumerate}
 Proof in Appendix~\ref{app:proof_degeneration}.
 \end{corollary}
 
-Corollary~\ref{cor:degeneration} has both a theoretical and a practical reading. Theoretically, it shows that CARE strictly contains fixed-coefficient PPO+ICM as a limiting case, so the framework cannot perform worse than that baseline once the regularization is appropriately tuned and the cold-start fallback is in place. Practically, the cold-start branch is essential in extremely sparse environments: when the agent has not yet encountered any extrinsic reward, the TD error reflects only initialization noise of the critic, and falling back to $\beta_0 = 1$ prevents CARE from amplifying that noise into the policy update.
+Corollary~\ref{cor:degeneration} has both a theoretical and a practical reading. Theoretically, it shows that CARE strictly contains fixed-coefficient PPO+ICM (with coefficient $\beta_0$) as a limiting case, so the framework cannot perform worse than that baseline once the regularization is appropriately tuned and the cold-start fallback is in place. Practically, the cold-start branch is essential in extremely sparse environments: when the agent has not yet encountered any extrinsic reward, the TD error reflects only initialization noise of the critic, and falling back to $\beta_0$ prevents CARE from amplifying that noise into the policy update.
 
 \section{Algorithm}
 \label{sec:algorithm}
@@ -338,7 +338,7 @@ Algorithm~\ref{alg:care} specifies the complete CARE training loop. One iteratio
     \State Compute extrinsic TD errors $\delta_t$ via Equation~\eqref{eq:td_error} and targets $\tau(s_t)$ via Equation~\eqref{eq:beta_target}
     \State Update intrinsic-module parameters $\eta$ (no-op if module is non-parametric, e.g., count-based)
     \State Update Beta Network: $\psi \gets \psi - \psi_\text{lr}\, \nabla_\psi L_\beta(\psi)$
-    \State Compute shaped rewards $\bar r_t = R_t^E + \alpha\, \beta_\psi(s_t)\, I_t^+$
+    \State Compute shaped rewards $\bar r_t = R_t^E + \beta_\psi(s_t)\, I_t^+$
     \State Compute GAE advantages $\hat A_t$ from $\{\bar r_t\}$ and $V_\mu$
     \For{$\text{epoch} = 1, 2, \dots, K$}
         \State Update actor: $\theta \gets \theta - \theta_\text{lr}\, \nabla_\theta L^\text{PPO}(\theta)$

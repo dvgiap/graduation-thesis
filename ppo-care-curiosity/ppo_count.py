@@ -53,7 +53,7 @@ class BetaNetwork(nn.Module):
         # Initialize head to output beta ~1.0 initially
         with torch.no_grad():
             try:
-                nn.init.constant_(self.head[-1].bias, math.log(1.0))
+                nn.init.constant_(self.head[-1].bias, math.log(0.01))
                 nn.init.normal_(self.head[-1].weight, mean=0.0, std=1e-3)
             except Exception:
                 pass
@@ -175,10 +175,9 @@ class PPO:
     def __init__(self, state_dim, action_dim, lr_actor, lr_critic, gamma, K_epochs, eps_clip,
                  has_continuous_action_space, action_std_init=0.6,
                  # Count-Based params
-                 use_count_based=True, 
-                 hash_dim=32, 
+                 use_count_based=True,
+                 hash_dim=32,
                  bonus_type='inverse_sqrt',
-                 intr_reward_strength=0.02, 
                  # GAE
                  gae_lambda=0.95,
                  # Adaptive Beta params
@@ -188,13 +187,13 @@ class PPO:
                  beta_encoding_size=256,
                  beta_num_layers=2,
                  beta_head_hidden=128,
-                 beta_min=0.005,
-                 beta_max=2,
+                 beta_min=0.001,
+                 beta_max=0.1,
                  # Meta options (Learning-Progress)
                  meta_use_progress=True,
                  meta_progress_weight=1.0,
                  meta_reg_weight=1e-3,
-                 meta_reg_beta_center=1.0,
+                 meta_reg_beta_center=0.01,
                  # Logging
                  sample_states_per_update=256,
                  sample_every_n_updates=1):
@@ -225,7 +224,6 @@ class PPO:
 
         # Count-Based Exploration
         self.use_count_based = use_count_based
-        self.intr_reward_strength = intr_reward_strength
 
         if self.use_count_based:
             self.count_based = CountBasedExploration(
@@ -489,9 +487,9 @@ class PPO:
 
         # Combined rewards
         if isinstance(beta_full, float) or isinstance(beta_full, int):
-            combined_rewards = extrinsic_rewards + self.intr_reward_strength * float(beta_full) * intrinsic_rewards
+            combined_rewards = extrinsic_rewards + float(beta_full) * intrinsic_rewards
         else:
-            combined_rewards = extrinsic_rewards + self.intr_reward_strength * beta_full * intrinsic_rewards
+            combined_rewards = extrinsic_rewards + beta_full * intrinsic_rewards
         combined_rewards = combined_rewards.to(device)
 
         # ============ GAE Computation ============

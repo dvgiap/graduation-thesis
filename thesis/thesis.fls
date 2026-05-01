@@ -1,6 +1,6 @@
-PWD D:\Workspace\graduation-thesis\graduation-thesis\thesis
+PWD d:\Workspace\graduation-thesis\graduation-thesis\thesis
 INPUT C:\Users\JS\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT thesis.tex
+INPUT d:\Workspace\graduation-thesis\graduation-thesis\thesis\thesis.tex
 OUTPUT thesis.log
 INPUT D:\Program Files\MiKTeX\tex\latex\base\report.cls
 INPUT D:\Program Files\MiKTeX\tex\latex\base\report.cls

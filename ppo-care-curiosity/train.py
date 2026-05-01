@@ -67,12 +67,10 @@ def train(
     icm_lr = 0.001
     icm_epochs = 4
     icm_batch_size = 64
-    icm_intr_strength = 0.001
-    
+
     # Count-based
     hash_dim = 32
     bonus_type = 'inverse_sqrt'
-    count_intr_strength = 0.001
 
     # RIDE (Raileanu & Rocktäschel ICLR 2020): impact-driven, encoder learned via inverse+forward
     ride_lr = 0.0003
@@ -81,7 +79,6 @@ def train(
     ride_encoding_size = 256
     ride_num_layers = 2
     ride_hash_dim = 32
-    ride_intr_strength = 0.001
 
     beta_kwargs = {}
     if fixed_beta is not None:
@@ -128,13 +125,13 @@ def train(
     
     if exploration_method == 'icm':
         print("--------------------------------------------------------------------------------------------")
-        print(f"ICM - lr: {icm_lr}, epochs: {icm_epochs}, batch: {icm_batch_size}, strength: {icm_intr_strength}")
+        print(f"ICM - lr: {icm_lr}, epochs: {icm_epochs}, batch: {icm_batch_size}")
     elif exploration_method == 'count':
         print("--------------------------------------------------------------------------------------------")
-        print(f"Count-Based - hash_dim: {hash_dim}, bonus_type: {bonus_type}, strength: {count_intr_strength}")
+        print(f"Count-Based - hash_dim: {hash_dim}, bonus_type: {bonus_type}")
     elif exploration_method == 'ride':
         print("--------------------------------------------------------------------------------------------")
-        print(f"RIDE - lr: {ride_lr}, epochs: {ride_epochs}, batch: {ride_batch_size}, encoding: {ride_encoding_size}, hash: {ride_hash_dim}, strength: {ride_intr_strength}")
+        print(f"RIDE - lr: {ride_lr}, epochs: {ride_epochs}, batch: {ride_batch_size}, encoding: {ride_encoding_size}, hash: {ride_hash_dim}")
 
     if fixed_beta is not None:
         print("--------------------------------------------------------------------------------------------")
@@ -181,14 +178,14 @@ def train(
             ppo_agent = PPO(state_dim, action_dim, lr_actor, lr_critic, gamma,
                           K_epochs, eps_clip, has_continuous_action_space,
                           use_icm=True, icm_lr=icm_lr, icm_epochs=icm_epochs,
-                          icm_batch_size=icm_batch_size, intr_reward_strength=icm_intr_strength,
+                          icm_batch_size=icm_batch_size,
                           gae_lambda=gae_lambda,
                           **beta_kwargs)
         elif exploration_method == 'count':
             ppo_agent = PPO(state_dim, action_dim, lr_actor, lr_critic, gamma,
                           K_epochs, eps_clip, has_continuous_action_space,
                           use_count_based=True, hash_dim=hash_dim, bonus_type=bonus_type,
-                          intr_reward_strength=count_intr_strength, gae_lambda=gae_lambda,
+                          gae_lambda=gae_lambda,
                           **beta_kwargs)
         elif exploration_method == 'ride':
             ppo_agent = PPO(state_dim, action_dim, lr_actor, lr_critic, gamma,
@@ -198,7 +195,6 @@ def train(
                           ride_encoding_size=ride_encoding_size,
                           ride_num_layers=ride_num_layers,
                           ride_hash_dim=ride_hash_dim,
-                          intr_reward_strength=ride_intr_strength,
                           gae_lambda=gae_lambda,
                           **beta_kwargs)
         

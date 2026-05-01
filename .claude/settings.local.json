@@ -7,7 +7,11 @@
       "Bash(python -c \"import ast; ast.parse\\(open\\('ppo_icm.py'\\).read\\(\\)\\); print\\('OK'\\)\")",
       "Bash(python -c \"import ast; ast.parse\\(open\\('ppo_icm.py', encoding='utf-8'\\).read\\(\\)\\); print\\('OK'\\)\")",
       "PowerShell(try { Rename-Item -Path \"ppo-care-curiosity\" -NewName \"ppo-care-curiosity\" -ErrorAction Stop } catch { $_.Exception.Message })",
-      "Bash(git mv *)"
+      "Bash(git mv *)",
+      "Bash(pdflatex -interaction=nonstopmode thesis.tex)",
+      "Bash(bibtex thesis *)",
+      "Bash(grep -cE '^\\\\\\\\\\\\\\\\section' chapters/c4/c4_chapter.tex)",
+      "Bash(grep -cE '^\\\\\\\\\\\\\\\\subsection' chapters/c4/c4_chapter.tex)"
     ]
   }
 }
