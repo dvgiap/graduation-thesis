@@ -183,7 +183,7 @@ class PPO:
                  # Adaptive Beta params
                  beta_lr=5e-4,
                  use_state_dependent_beta=True,
-                 beta_init=1.0,
+                 beta_init=0.01,
                  beta_encoding_size=256,
                  beta_num_layers=2,
                  beta_head_hidden=128,
@@ -234,6 +234,8 @@ class PPO:
 
         # Adaptive Beta
         self.use_state_dependent_beta = use_state_dependent_beta
+        self.beta_min = float(beta_min)
+        self.beta_max = float(beta_max)
         if not use_state_dependent_beta:
             # Scalar beta (log parameterization)
             self.beta_log = nn.Parameter(torch.tensor([math.log(beta_init)], dtype=torch.float32, device=device))
@@ -323,6 +325,9 @@ class PPO:
         return advantages, deltas
 
     def update(self):
+        if len(self.buffer.rewards) == 0:
+            return
+
         # Convert buffer to tensors
         old_states = torch.squeeze(torch.stack(self.buffer.states, dim=0)).detach().to(device)
         old_actions = torch.squeeze(torch.stack(self.buffer.actions, dim=0)).detach().to(device)
@@ -375,7 +380,7 @@ class PPO:
             # Triết lý: nếu batch không có reward ngoại tại nào, không tồn tại
             # "extrinsic learning progress" — mọi biến thiên |δ| chỉ là nhiễu V_init.
             if extrinsic_rewards.max().item() <= 0.0:
-                target = torch.full_like(beta_for_loss, self.beta_init)
+                target = torch.full_like(beta_for_loss, self.meta_reg_beta_center)
                 cold_start = True
             else:
                 delta_norm = delta_abs / (delta_max + 1e-8)
@@ -383,7 +388,7 @@ class PPO:
                     b_min = self.beta_net.min
                     b_max = self.beta_net.max
                 else:
-                    b_min, b_max = 1e-3, 10.0
+                    b_min, b_max = self.beta_min, self.beta_max
                 target = b_min + (b_max - b_min) * delta_norm
                 cold_start = False
 

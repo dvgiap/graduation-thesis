@@ -197,7 +197,7 @@ class PPO:
                  # meta-beta
                  beta_lr=5e-4,
                  use_state_dependent_beta=True,
-                 beta_init=1.0,
+                 beta_init=0.01,
                  beta_encoding_size=256,
                  beta_num_layers=2,
                  beta_head_hidden=128,
@@ -247,6 +247,8 @@ class PPO:
 
         # meta-beta
         self.use_state_dependent_beta = use_state_dependent_beta
+        self.beta_min = float(beta_min)
+        self.beta_max = float(beta_max)
         if not use_state_dependent_beta:
             self.beta_log = nn.Parameter(torch.tensor([math.log(beta_init)], dtype=torch.float32, device=device))
             self.beta_optimizer = torch.optim.Adam([self.beta_log], lr=beta_lr)
@@ -427,7 +429,7 @@ class PPO:
             # Triết lý: nếu batch không có reward ngoại tại nào, không tồn tại
             # "extrinsic learning progress" — mọi biến thiên |δ| chỉ là nhiễu V_init.
             if extrinsic_rewards.max().item() <= 0.0:
-                target = torch.full_like(beta_for_loss, self.beta_init)
+                target = torch.full_like(beta_for_loss, self.meta_reg_beta_center)
                 cold_start = True
             else:
                 delta_norm = delta_abs / (delta_max + 1e-8)
@@ -435,7 +437,7 @@ class PPO:
                     b_min = self.beta_net.min
                     b_max = self.beta_net.max
                 else:
-                    b_min, b_max = 1e-3, 10.0
+                    b_min, b_max = self.beta_min, self.beta_max
                 target = b_min + (b_max - b_min) * delta_norm
                 cold_start = False
 
