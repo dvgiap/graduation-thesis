@@ -44,19 +44,18 @@ class BetaNetwork(nn.Module):
 
         self.encoder = nn.Sequential(*layers)
 
+        self.head_out = nn.Linear(head_hidden, 1)
         self.head = nn.Sequential(
             nn.Linear(encoding_size, head_hidden),
             nn.Tanh(),
-            nn.Linear(head_hidden, 1)
+            self.head_out,
         )
-        
-        # Initialize head to output beta ~1.0 initially
+
+        # Initialize head so beta_psi ~= meta_reg_beta_center (= 0.01) at init
         with torch.no_grad():
-            try:
-                nn.init.constant_(self.head[-1].bias, math.log(0.01))
-                nn.init.normal_(self.head[-1].weight, mean=0.0, std=1e-3)
-            except Exception:
-                pass
+            if self.head_out.bias is not None:
+                nn.init.constant_(self.head_out.bias, math.log(0.01))
+            nn.init.normal_(self.head_out.weight, mean=0.0, std=1e-3)
 
     def forward(self, state):
         if state.dim() == 1:
