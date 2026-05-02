@@ -26,11 +26,11 @@ Head output & Linear($128 \to 1$) producing $\log \beta_\psi(s_t)$ \\
 \hline
 Output bound & $\beta_\psi(s_t) = \exp\!\bigl( \mathrm{clamp}(\log \beta_\psi,\, \log \beta_\text{min},\, \log \beta_\text{max}) \bigr)$ \\
 \hline
-$[\beta_\text{min}, \beta_\text{max}]$ & $[0.001,\, 0.1]$ \\
+$[\beta_\text{min}, \beta_\text{max}]$ & $[0.0001,\, 0.1]$ \\
 \hline
 Encoder weight init & $\mathcal{N}(0,\, 1/\sqrt{d_\text{in}})$ \\
 \hline
-Output bias init & $\log(0.01) \approx -4.605$ (so $\beta_\psi \approx 0.01$ at initialization, near the geometric centre of $[0.001, 0.1]$) \\
+Output bias init & $\log(0.001) \approx -6.908$ (so $\beta_\psi \approx 0.001$ at initialization; skewed toward $\beta_\text{min}$ so cold-start defaults to a small intrinsic weight) \\
 \hline
 \end{tabular}
 \end{table}
@@ -186,11 +186,11 @@ RIDE batch size & Mini-batch size within each epoch & $64$ \\
 \hline
 \textbf{Symbol} & \textbf{Description} & \textbf{Value} \\
 \hline
-$\beta_\text{min}$ & Lower bound on Beta Network output & $0.001$ \\
+$\beta_\text{min}$ & Lower bound on Beta Network output & $0.0001$ \\
 \hline
 $\beta_\text{max}$ & Upper bound on Beta Network output & $0.1$ \\
 \hline
-$\beta_0$ & Reference value for log-space regularization & $0.01$ \\
+$\beta_0$ & Reference value for log-space regularization & $0.001$ \\
 \hline
 $\gamma_p$ & Progress-loss weight in $L_\beta$ & $1.0$ \\
 \hline

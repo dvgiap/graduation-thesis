@@ -11,10 +11,11 @@ class BetaNetwork(nn.Module):
     """State-dependent β(s) ∈ [β_min, β_max] via log-space clamped output."""
 
     def __init__(self, state_dim, encoding_size=256, num_layers=2, head_hidden=128,
-                 min_beta=1e-3, max_beta=0.1):
+                 min_beta=1e-4, max_beta=1e-1, beta_0=1e-3):
         super().__init__()
         self.min = float(min_beta)
         self.max = float(max_beta)
+        self.beta_0 = float(beta_0)
 
         layers = []
         layers.append(nn.Linear(state_dim, encoding_size))
@@ -37,7 +38,7 @@ class BetaNetwork(nn.Module):
 
         with torch.no_grad():
             if self.head_out.bias is not None:
-                nn.init.constant_(self.head_out.bias, math.log(0.01))
+                nn.init.constant_(self.head_out.bias, math.log(self.beta_0))
             nn.init.normal_(self.head_out.weight, mean=0.0, std=1e-3)
 
     def forward(self, state):
@@ -63,7 +64,7 @@ class CAREModule:
     """
 
     def __init__(self, state_dim,
-                 beta_min=0.001, beta_max=0.1, beta_0=0.01,
+                 beta_min=0.0001, beta_max=0.1, beta_0=0.001,
                  encoding_size=256, num_layers=2, head_hidden=128,
                  lr=5e-4, weight_decay=1e-6, grad_clip=1.0,
                  progress_weight=1.0, reg_weight=1e-3,
@@ -84,14 +85,14 @@ class CAREModule:
 
         if use_state_dependent:
             self.beta_net = BetaNetwork(
-                state_dim, encoding_size, num_layers, head_hidden, beta_min, beta_max
+                state_dim, encoding_size, num_layers, head_hidden, beta_min, beta_max, beta_0
             ).to(device)
 
             # Target network: lagged EMA copy — fixes Gotcha-4 feedback loop.
             # combine() uses this instead of beta_net so the β shaping rewards
             # is always one soft-update behind the β being trained.
             self.beta_net_target = BetaNetwork(
-                state_dim, encoding_size, num_layers, head_hidden, beta_min, beta_max
+                state_dim, encoding_size, num_layers, head_hidden, beta_min, beta_max, beta_0
             ).to(device)
             self.beta_net_target.load_state_dict(self.beta_net.state_dict())
             for p in self.beta_net_target.parameters():

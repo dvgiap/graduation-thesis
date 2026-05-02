@@ -137,11 +137,11 @@ class PPO:
                  # Adaptive Beta params
                  beta_lr=5e-4,
                  use_state_dependent_beta=True,
-                 beta_init=0.01,
+                 beta_init=0.001,
                  beta_encoding_size=256,
                  beta_num_layers=2,
                  beta_head_hidden=128,
-                 beta_min=0.001,
+                 beta_min=0.0001,
                  beta_max=0.1,
                  # Meta options (Learning-Progress)
                  meta_use_progress=True,

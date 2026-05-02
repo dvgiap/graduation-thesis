@@ -155,7 +155,7 @@ The \emph{Beta Network} is a parameterized map
 \beta_\psi : \mathcal{S} \to [\beta_\text{min}, \beta_\text{max}], \qquad 0 < \beta_\text{min} < \beta_\text{max} < \infty,
 \label{eq:beta_network}
 \end{equation}
-which assigns a positive, bounded scaling factor to each state. In the implemented system, $\beta_\psi$ is realized as a feed-forward MLP with a 2-layer encoder of width $256$ and a 2-layer head of widths $[256, 128, 1]$ that produces $\log \beta_\psi(s_t)$. The output is mapped to $[\beta_\text{min}, \beta_\text{max}] = [0.001, 0.1]$ via $\beta_\psi(s_t) = \exp\bigl( \mathrm{clamp}(\log \beta_\psi(s_t),\, \log \beta_\text{min},\, \log \beta_\text{max}) \bigr)$. The complete architecture and weight initialization are listed in Appendix~\ref{app:architectures}, Table~\ref{tab:beta_arch}.
+which assigns a positive, bounded scaling factor to each state. In the implemented system, $\beta_\psi$ is realized as a feed-forward MLP with a 2-layer encoder of width $256$ and a 2-layer head of widths $[256, 128, 1]$ that produces $\log \beta_\psi(s_t)$. The output is mapped to $[\beta_\text{min}, \beta_\text{max}] = [0.0001, 0.1]$ via $\beta_\psi(s_t) = \exp\bigl( \mathrm{clamp}(\log \beta_\psi(s_t),\, \log \beta_\text{min},\, \log \beta_\text{max}) \bigr)$. The complete architecture and weight initialization are listed in Appendix~\ref{app:architectures}, Table~\ref{tab:beta_arch}.
 \end{definition}
 
 For an intrinsic reward module $m$, the scaled intrinsic reward at time step $t$ is
@@ -196,7 +196,7 @@ where $d_t \in \{0, 1\}$ is the episode termination flag and $V_\mu$ is the curr
 \end{cases}
 \label{eq:beta_target}
 \end{equation}
-The cold-start fallback addresses the regime in which a batch contains no positive extrinsic reward; in that case $|\delta_t|$ reflects mainly initialization noise of the critic, and would be a poor target for $\beta_\psi$. Defaulting $\tau$ to the reference value $\beta_0$ (set to the geometric centre of $[\beta_\text{min}, \beta_\text{max}]$, i.e.\ $\beta_0 = 0.01$) in that regime makes CARE behave like a fixed-coefficient method until extrinsic signal becomes informative.
+The cold-start fallback addresses the regime in which a batch contains no positive extrinsic reward; in that case $|\delta_t|$ reflects mainly initialization noise of the critic, and would be a poor target for $\beta_\psi$. Defaulting $\tau$ to the reference value $\beta_0$ (set to a small value $\beta_0 = 0.001$ near $\beta_\text{min}$, so that intrinsic reward stays small until extrinsic signal informs $\beta_\psi$) in that regime makes CARE behave like a fixed-coefficient method until extrinsic signal becomes informative.
 
 The learning-progress loss is the mean-squared deviation of $\beta_\psi$ from this target:
 \begin{equation}
