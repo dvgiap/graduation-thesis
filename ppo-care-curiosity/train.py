@@ -148,7 +148,7 @@ def train(
         # Setup paths for this seed
         # Build condition suffix to distinguish CARE (adaptive beta) vs fixed-beta sweep runs
         if fixed_beta is None:
-            cond_suffix = "_CARE"
+            cond_suffix = ""
         else:
             cond_suffix = f"_FB{fixed_beta}"
 
