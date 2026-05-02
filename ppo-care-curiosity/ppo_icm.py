@@ -1,4 +1,3 @@
-import math
 import os
 import numpy as np
 import torch
@@ -7,6 +6,7 @@ import torch.nn.functional as F
 from torch.distributions import MultivariateNormal, Categorical
 from training_logger import TrainingLogger
 from curiosity.icm import ICM
+from curiosity.care_module import CAREModule
 
 # ---------------- device ----------------
 device = torch.device('cpu')
@@ -19,51 +19,6 @@ if torch.cuda.is_available():
         print("Device set to : cuda")
 else:
     print("Device set to : cpu")
-
-
-# ---------------- BetaNetwork  ----------------
-class BetaNetwork(nn.Module):
-    """
-    Beta network that mirrors the ICM encoder design
-    """
-    def __init__(self, state_dim, encoding_size=256, num_layers=2, head_hidden=128,
-                 min_beta=1e-3, max_beta=10.0):
-        super(BetaNetwork, self).__init__()
-        self.min = float(min_beta)
-        self.max = float(max_beta)
-        layers = []
-        
-        layers.append(nn.Linear(state_dim, encoding_size))
-        nn.init.normal_(layers[-1].weight, mean=0.0, std=np.sqrt(1.0 / max(1, state_dim)))
-        layers.append(nn.Tanh())
-
-        for _ in range(num_layers - 1):
-            layers.append(nn.Linear(encoding_size, encoding_size))
-            nn.init.normal_(layers[-1].weight, mean=0.0, std=np.sqrt(1.0 / max(1, encoding_size)))
-            layers.append(nn.Tanh())
-
-        self.encoder = nn.Sequential(*layers)
-
-        self.head_out = nn.Linear(head_hidden, 1)
-        self.head = nn.Sequential(
-            nn.Linear(encoding_size, head_hidden),
-            nn.Tanh(),
-            self.head_out,
-        )
-
-        with torch.no_grad():
-            if self.head_out.bias is not None:
-                nn.init.constant_(self.head_out.bias, math.log(0.01))
-            nn.init.normal_(self.head_out.weight, mean=0.0, std=1e-3)
-
-    def forward(self, state):
-        if state.dim() == 1:
-            state = state.unsqueeze(0)
-        h = self.encoder(state)
-        log_beta = self.head(h).squeeze(-1)
-        log_beta = torch.clamp(log_beta, math.log(self.min), math.log(self.max))
-        beta = torch.exp(log_beta)
-        return beta
 
 
 # ---------------- Rollout buffer ----------------
@@ -206,7 +161,6 @@ class PPO:
                  meta_use_progress=True,
                  meta_progress_weight=1.0,
                  meta_reg_weight=1e-3,
-                 meta_reg_beta_center=0.01,
                  # logging
                  sample_states_per_update=256,
                  sample_every_n_updates=1,
@@ -244,34 +198,29 @@ class PPO:
             self.icm = ICM(state_dim, action_dim, encoding_size=beta_encoding_size, num_layers=beta_num_layers).to(device)
             self.optimizer_icm = torch.optim.Adam(self.icm.parameters(), lr=icm_lr)
 
-        # meta-beta
-        self.use_state_dependent_beta = use_state_dependent_beta
-        self.beta_min = float(beta_min)
-        self.beta_max = float(beta_max)
-        if not use_state_dependent_beta:
-            self.beta_log = nn.Parameter(torch.tensor([math.log(beta_init)], dtype=torch.float32, device=device))
-            self.beta_optimizer = torch.optim.Adam([self.beta_log], lr=beta_lr)
-        else:
-            self.beta_net = BetaNetwork(state_dim,
-                                        encoding_size=beta_encoding_size,
-                                        num_layers=beta_num_layers,
-                                        head_hidden=beta_head_hidden,
-                                        min_beta=beta_min,
-                                        max_beta=beta_max).to(device)
-            self.beta_optimizer = torch.optim.Adam(self.beta_net.parameters(), lr=beta_lr, weight_decay=1e-6)
-
-        # meta options (Learning-Progress)
-        self.meta_use_progress = meta_use_progress
-        self.meta_progress_weight = meta_progress_weight
-        self.meta_reg_weight = meta_reg_weight
-        self.meta_reg_beta_center = float(meta_reg_beta_center)
-        self.beta_init = float(beta_init)
-
-        # LOGGER 
+        # LOGGER (created first so it can be passed to CAREModule)
         self.logger = TrainingLogger(
             sample_states_per_update=sample_states_per_update,
             sample_every_n_updates=sample_every_n_updates,
             auto_convert_to_numpy=True
+        )
+
+        # CARE module (BetaNetwork + meta-loss + target network)
+        self.care = CAREModule(
+            state_dim=state_dim,
+            beta_min=beta_min,
+            beta_max=beta_max,
+            beta_0=beta_init,
+            encoding_size=beta_encoding_size,
+            num_layers=beta_num_layers,
+            head_hidden=beta_head_hidden,
+            lr=beta_lr,
+            progress_weight=meta_progress_weight,
+            reg_weight=meta_reg_weight,
+            use_state_dependent=use_state_dependent_beta,
+            use_progress=meta_use_progress,
+            target_tau=0.01,
+            logger=self.logger,
         )
 
         # debug
@@ -402,144 +351,23 @@ class PPO:
             intrinsic_icm_pos = torch.zeros(N, device=device)
             avg_fwd, avg_inv = 0.0, 0.0
 
-        # ---------------- Post-rollout extrinsic statistics ----------------
-        # Tính 1 lần / update, dùng buffer CHRONOLOGICAL (chưa shuffle).
-        # Bất kỳ mini-batch loop nào sau này đều phải nằm SAU dòng này.
-        advantages_ext, deltas_ext = self.compute_extrinsic_advantages(
-            extrinsic_rewards, old_state_values, is_terminals
-        )
-
-        # ---------------- Meta-update (Learning-Progress) ----------------
-        meta_loss_value = 0.0
-        beta_value_scalar = 1.0
-
-        if self.meta_use_progress:
-            # 1. Đọc δ_ext đã tính sẵn ở post-rollout step (KHÔNG gọi lại GAE)
-            delta_abs = deltas_ext.abs().detach()
-            delta_max = delta_abs.max()
-
-            # 2. β(s) hiện tại
-            if self.use_state_dependent_beta:
-                beta_for_loss = self.beta_net(old_states).squeeze()
-            else:
-                beta_for_loss = torch.exp(self.beta_log)
-
-            # 3. Target từ |δ| (cold-start fallback dựa trên extrinsic reward signal)
-            # Triết lý: nếu batch không có reward ngoại tại nào, không tồn tại
-            # "extrinsic learning progress" — mọi biến thiên |δ| chỉ là nhiễu V_init.
-            if extrinsic_rewards.max().item() <= 0.0:
-                target = torch.full_like(beta_for_loss, self.meta_reg_beta_center)
-                cold_start = True
-            else:
-                delta_norm = delta_abs / (delta_max + 1e-8)
-                if self.use_state_dependent_beta:
-                    b_min = self.beta_net.min
-                    b_max = self.beta_net.max
-                else:
-                    b_min, b_max = self.beta_min, self.beta_max
-                target = b_min + (b_max - b_min) * delta_norm
-                cold_start = False
-
-            # 4. Progress loss (MSE regression)
-            loss_progress = ((beta_for_loss - target.detach()) ** 2).mean()
-
-            # 5. Regularization
-            if self.use_state_dependent_beta:
-                beta_log_vals = torch.log(beta_for_loss + 1e-8)
-                reg_center = math.log(max(1e-8, self.meta_reg_beta_center))
-                loss_reg = ((beta_log_vals - reg_center) ** 2).mean()
-            else:
-                reg_center = math.log(max(1e-8, self.meta_reg_beta_center))
-                loss_reg = (self.beta_log - reg_center) ** 2
-
-            loss_meta = self.meta_progress_weight * loss_progress + self.meta_reg_weight * loss_reg
-
-            # 6. Optimize
-            self.beta_optimizer.zero_grad()
-            loss_meta.backward()
-
-            # gradient norm logging
-            total_norm = 0.0
-            if self.use_state_dependent_beta:
-                for p in self.beta_net.parameters():
-                    if p.grad is not None:
-                        param_norm = p.grad.data.norm(2).item()
-                        total_norm += param_norm ** 2
-            else:
-                if self.beta_log.grad is not None:
-                    total_norm = float(self.beta_log.grad.data.norm(2).item() ** 2)
-            total_norm = math.sqrt(total_norm) if total_norm > 0 else 0.0
-            self.logger.log_scalar('beta_gradient_norm', total_norm)
-
-            # clip and step
-            if not self.use_state_dependent_beta:
-                torch.nn.utils.clip_grad_norm_([self.beta_log], 1.0)
-            else:
-                torch.nn.utils.clip_grad_norm_(self.beta_net.parameters(), 1.0)
-            self.beta_optimizer.step()
-
-            meta_loss_value = float(loss_meta.detach().cpu().item())
-
-            # 7. Logging
-            self.logger.log_scalar('delta_max', float(delta_max.item()))
-            self.logger.log_scalar('delta_mean', float(delta_abs.mean().item()))
-            self.logger.log_scalar('cold_start', float(cold_start))
-            self.logger.log_scalar('loss_progress', float(loss_progress.detach().cpu().item()))
-            self.logger.log_array('delta_abs', delta_abs)
-            self.logger.log_array('beta_target', target.detach())
-
-            # beta scalar
-            if self.use_state_dependent_beta:
-                with torch.no_grad():
-                    try:
-                        beta_value_scalar = float(self.beta_net(old_states).mean().detach().cpu().item())
-                    except Exception:
-                        beta_value_scalar = 1.0
-            else:
-                with torch.no_grad():
-                    beta_value_scalar = float(torch.exp(self.beta_log).detach().cpu().item())
-
+        # ---------------- CARE: meta-update β + combine rewards ----------------
+        if self.care.use_progress:
+            _, deltas_ext = self.compute_extrinsic_advantages(
+                extrinsic_rewards, old_state_values, is_terminals
+            )
+            meta_loss_value = self.care.update(
+                old_states, deltas_ext.abs().detach(), extrinsic_rewards
+            )
         else:
-            # no meta update
-            if self.use_state_dependent_beta:
-                with torch.no_grad():
-                    try:
-                        beta_value_scalar = float(self.beta_net(old_states).mean().detach().cpu().item())
-                    except Exception:
-                        beta_value_scalar = 1.0
-            else:
-                with torch.no_grad():
-                    try:
-                        beta_value_scalar = float(torch.exp(self.beta_log).detach().cpu().item())
-                    except Exception:
-                        beta_value_scalar = 1.0
+            meta_loss_value = 0.0
 
-        # LOG scalar metrics
+        beta_value_scalar = self.care.get_beta_scalar(old_states)
         self.logger.log_scalar('beta', beta_value_scalar)
         self.logger.log_scalar('meta_loss', meta_loss_value)
+        self.care.sample_and_log(old_states)
 
-        # ---------------- sample state->beta for visualization ----------------
-        if self.use_state_dependent_beta:
-            self.logger.sample_and_log(old_states, 
-                                      self.beta_net(old_states).squeeze().detach(),
-                                      name='beta')
-        else:
-            # scalar beta
-            beta_arr = torch.full((old_states.shape[0],), beta_value_scalar, device=device)
-            self.logger.sample_and_log(old_states, beta_arr, name='beta')
-
-        # ---------------- Combine rewards and PPO update ----------------
-        if self.use_state_dependent_beta:
-            with torch.no_grad():
-                beta_full = self.beta_net(old_states).squeeze().to(device)
-        else:
-            with torch.no_grad():
-                beta_full = torch.exp(self.beta_log).detach().cpu().item()
-
-        if isinstance(beta_full, float) or isinstance(beta_full, int):
-            combined_rewards = extrinsic_rewards + float(beta_full) * intrinsic_icm_pos
-        else:
-            combined_rewards = extrinsic_rewards + beta_full * intrinsic_icm_pos
+        combined_rewards = self.care.combine(extrinsic_rewards, intrinsic_icm_pos, old_states)
         combined_rewards = combined_rewards.to(device)
 
         # GAE on combined rewards
@@ -601,23 +429,17 @@ class PPO:
 
     # ---------------- save / load ----------------
     def save(self, checkpoint_path):
-        # main checkpoint
         save_dict = {
             'policy_state_dict': self.policy_old.state_dict(),
             'update_count': self.logger.update_count,
         }
         if self.use_icm:
             save_dict['icm_state_dict'] = self.icm.state_dict()
-        if not self.use_state_dependent_beta:
-            save_dict['beta_log'] = self.beta_log.detach().cpu()
-            save_dict['beta_optimizer_state'] = self.beta_optimizer.state_dict()
-        else:
-            save_dict['beta_net_state_dict'] = self.beta_net.state_dict()
-            save_dict['beta_optimizer_state'] = self.beta_optimizer.state_dict()
-        
         torch.save(save_dict, checkpoint_path)
-        
-        # export logger data
+
+        care_path = checkpoint_path.replace('.pth', '') + '_care.pth'
+        self.care.save(care_path)
+
         self.logger.export_logs(checkpoint_path)
 
     def load(self, checkpoint_path):
@@ -632,24 +454,10 @@ class PPO:
                 self.icm.load_state_dict(checkpoint['icm_state_dict'])
             except Exception:
                 pass
-        if not self.use_state_dependent_beta and 'beta_log' in checkpoint:
-            try:
-                loaded_log = checkpoint['beta_log'].to(device)
-                with torch.no_grad():
-                    self.beta_log.data.copy_(loaded_log)
-                if 'beta_optimizer_state' in checkpoint:
-                    self.beta_optimizer.load_state_dict(checkpoint['beta_optimizer_state'])
-            except Exception:
-                pass
-        elif self.use_state_dependent_beta and 'beta_net_state_dict' in checkpoint:
-            try:
-                self.beta_net.load_state_dict(checkpoint['beta_net_state_dict'])
-                if 'beta_optimizer_state' in checkpoint:
-                    self.beta_optimizer.load_state_dict(checkpoint['beta_optimizer_state'])
-            except Exception:
-                pass
-        
-        # load logger data
+
+        care_path = checkpoint_path.replace('.pth', '') + '_care.pth'
+        self.care.load(care_path)
+
         self.logger.load_logs(checkpoint_path)
 
     # ---------------- convenience exports ----------------

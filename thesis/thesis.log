@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.15)  1 MAY 2026 16:39
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.15)  2 MAY 2026 10:54
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1046,6 +1046,11 @@ Overfull \hbox (19.3828pt too wide) in paragraph at lines 12--13
 
 
 ] (chapters/abtract_en.tex
+Overfull \hbox (5.42575pt too wide) in paragraph at lines 9--10
+[]\T5/cmr/m/n/11.86258 This the-sis pro-poses \T5/cmr/bx/n/11.86258 Critic-Adaptive Re-ward Ex-plo-ration (CARE)\T5/cmr/m/n/11.86258 , a module-agnostic
+ []
+
+
 Overfull \hbox (1.22397pt too wide) in paragraph at lines 11--12
 \T5/cmr/m/n/11.86258 vari-ant is com-pared against a sweep of fixed scalar co-ef-fi-cients $\OML/cmm/m/it/12 ^^L \OMS/cmsy/m/n/12 2 f\OT1/cmr/m/n/12 0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 001\OML/cmm/m/it/12 ;  \OT1/cmr/m/n/12 0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 005\OML/cmm/m/it/12 ;  \OT1/cmr/m/n/12 0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 05\OML/cmm/m/it/12 ;  \OT1/cmr/m/n/12 0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 1\OMS/cmsy/m/n/12 g$\T5/cmr/m/n/11.86258 ,
  []
@@ -1102,11 +1107,6 @@ LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <6.5> not available
 
 
 ] (chapters/glossary.tex
-Underfull \hbox (badness 6559) in paragraph at lines 8--8
-[]|\T5/cmr/m/n/13 Correlation-Aware Re-ward
- []
-
-
 Underfull \hbox (badness 1546) in paragraph at lines 12--13
 []|\T5/cmr/m/n/13 On-policy policy-gradient al-
  []
@@ -1192,9 +1192,9 @@ LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <7.58339> not available
 LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <5.41673> not available
 (Font)              size <5> substituted on input line 43.
 
-[13] [14] [15] [16] [17] [18] [19] [20]
-Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 330.
- [21]) [22] (chapters/c4/c4_chapter.tex
+[13] [14] [15] [16] [17] [18] [19] [20] [21]
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 337.
+) [22] [23] (chapters/c4/c4_chapter.tex
 Ch\uhorn \ohorn ng 4.
 
 Overfull \hbox (6.8529pt too wide) in paragraph at lines 4--5
@@ -1206,7 +1206,7 @@ Underfull \hbox (badness 1087) in paragraph at lines 23--23
 \T5/cmr/m/n/13 ma-nip-u-la-tion stage, cre-at-ing a hi-er-ar-chi-cal
  []
 
-[23
+[24
 
 
 
@@ -1214,11 +1214,11 @@ Underfull \hbox (badness 1087) in paragraph at lines 23--23
 LaTeX Font Info:    Trying to load font information for T5+cmtt on input line 34.
  (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/vntex\t5cmtt.fd
 File: t5cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
-) [24]
+) [25]
 
-Package natbib Warning: Citation `andres2025impact' on page 25 undefined on input line 47.
+Package natbib Warning: Citation `andres2025impact' on page 26 undefined on input line 47.
 
-[25]
+[26]
 Underfull \hbox (badness 5652) in paragraph at lines 64--64
 []|\T5/cmr/m/n/13 PPO + mod-ule $\OML/cmm/m/it/12 m$
  []
@@ -1234,7 +1234,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 64--64
  []
 
 
-Package natbib Warning: Citation `andres2025impact' on page 26 undefined on input line 64.
+Package natbib Warning: Citation `andres2025impact' on page 27 undefined on input line 64.
 
 
 Underfull \hbox (badness 5893) in paragraph at lines 65--65
@@ -1246,7 +1246,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 67--67
 []|\T5/cmr/m/n/13 PPO + RIDE +
  []
 
-[26] [27] [28]
+[27] [28] [29]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 106.
@@ -1281,11 +1281,11 @@ Overfull \hbox (51.6028pt too wide) in paragraph at lines 113--114
 \T5/cmr/m/it/13 Analysis of how sharply per-for-mance varies across the swept range $\OML/cmm/m/it/12 ^^L \OMS/cmsy/m/n/12 2 f\OT1/cmr/m/n/12 0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 001\OML/cmm/m/it/12 ;  \OT1/cmr/m/n/12 0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 005\OML/cmm/m/it/12 ;  \OT1/cmr/m/n/12 0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 05\OML/cmm/m/it/12 ;  \OT1/cmr/m/n/12 0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 1\OMS/cmsy/m/n/12 g$
  []
 
-) [29] [30] (chapters/conclusion.tex) [31
+) [30] [31] (chapters/conclusion.tex) [32
 
 
 
-] [32] (thesis.bbl [33
+] [33] (thesis.bbl [34
 
 
 
@@ -1294,23 +1294,23 @@ Underfull \hbox (badness 1297) in paragraph at lines 63--67
 []\T5/cmr/m/n/13 Deepak Pathak, Pulkit Agrawal, Alexei A. Efros, and Trevor Dar-rell.
  []
 
-[34]
+[35]
 Underfull \hbox (badness 3168) in paragraph at lines 139--142
 []\T5/cmr/m/n/13 John Schul-man, Filip Wol-ski, Pra-fulla Dhari-wal, Alec Rad-ford, and
  []
 
-) [35] (chapters/appendix_a.tex
+) [36] (chapters/appendix_a.tex
 Ph\d {u} l\d {u}c A.
 
 Overfull \hbox (22.96526pt too wide) in paragraph at lines 13--15
 \OML/cmm/m/it/12 ^^U[] \OT1/cmr/m/n/12 = 0$ \T5/cmr/m/n/13 in Equa-tion [] re-duces the Beta-network ob-jec-tive to $\OML/cmm/m/it/12 L[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12  \OT1/cmr/m/n/12 ) = \OML/cmm/m/it/12 ^^M[] L[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12  \OT1/cmr/m/n/12 )$\T5/cmr/m/n/13 ,
  []
 
-[36
+[37
 
 
 
-] [37] [38] [39]) [40] (chapters/appendix_b.tex
+] [38] [39] [40]) [41] (chapters/appendix_b.tex
 Ph\d {u} l\d {u}c B.
 
 Overfull \hbox (168.43272pt too wide) in paragraph at lines 13--36
@@ -1322,7 +1322,7 @@ Overfull \hbox (62.77873pt too wide) in paragraph at lines 42--65
  [][] 
  []
 
-[41
+[42
 
 
 
@@ -1336,22 +1336,22 @@ Overfull \hbox (14.14755pt too wide) in paragraph at lines 102--115
  [][] 
  []
 
-[42] [43]
-Overfull \hbox (9.68867pt too wide) in paragraph at lines 185--206
+[43] [44]
+Overfull \hbox (15.55244pt too wide) in paragraph at lines 185--210
  [][] 
  []
 
-[44]
-Overfull \hbox (16.39854pt too wide) in paragraph at lines 235--252
+[45]
+Overfull \hbox (16.39854pt too wide) in paragraph at lines 239--256
  [][] 
  []
 
 
-Overfull \hbox (44.64226pt too wide) in paragraph at lines 258--275
+Overfull \hbox (44.64226pt too wide) in paragraph at lines 262--279
  [][] 
  []
 
-[45]) [46]
+[46]) [47]
 
 Package natbib Warning: There were undefined citations.
 
@@ -1366,20 +1366,20 @@ LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
 
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: D830305966A4894936C87BD7ABF2B1E3;11466.
+(rerunfilecheck)             Checksum: 455348F397F112BC2B0A2C55C4DCDF3E;11456.
  ) 
 Here is how much of TeX's memory you used:
- 29191 strings out of 467867
- 525362 string characters out of 5428410
- 949788 words of memory out of 5000000
- 57338 multiletter control sequences out of 15000+600000
+ 29194 strings out of 467867
+ 525398 string characters out of 5428410
+ 948831 words of memory out of 5000000
+ 57339 multiletter control sequences out of 15000+600000
  664279 words of font info for 111 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  108i,14n,107p,1676b,851s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\JS\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnbx12.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnbx9.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnbxti10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr12.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr7.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr8.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr9.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnti12.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnti9.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vntt12.pfb>
-Output written on thesis.pdf (62 pages, 612112 bytes).
+Output written on thesis.pdf (63 pages, 614576 bytes).
 PDF statistics:
- 971 PDF objects out of 1000 (max. 8388607)
- 186 named destinations out of 1000 (max. 500000)
+ 978 PDF objects out of 1000 (max. 8388607)
+ 188 named destinations out of 1000 (max. 500000)
  522 words of extra memory for PDF output out of 10000 (max. 10000000)
 

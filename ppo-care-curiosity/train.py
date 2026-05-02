@@ -172,8 +172,9 @@ def train(
         
         # Initialize PPO agent based on exploration method
         if exploration_method == 'none':
-            ppo_agent = PPO(state_dim, action_dim, lr_actor, lr_critic, gamma, 
-                          K_epochs, eps_clip, has_continuous_action_space)
+            ppo_agent = PPO(state_dim, action_dim, lr_actor, lr_critic, gamma,
+                          K_epochs, eps_clip, has_continuous_action_space,
+                          gae_lambda=gae_lambda)
         elif exploration_method == 'icm':
             ppo_agent = PPO(state_dim, action_dim, lr_actor, lr_critic, gamma,
                           K_epochs, eps_clip, has_continuous_action_space,

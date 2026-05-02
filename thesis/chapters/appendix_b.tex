@@ -192,6 +192,8 @@ $\beta_\text{max}$ & Upper bound on Beta Network output & $0.1$ \\
 \hline
 $\beta_0$ & Reference value for log-space regularization & $0.01$ \\
 \hline
+$\gamma_p$ & Progress-loss weight in $L_\beta$ & $1.0$ \\
+\hline
 $\lambda_\text{reg}$ & Regularization weight in $L_\beta$ & $1 \times 10^{-3}$ \\
 \hline
 $\psi_\text{lr}$ & Beta Network learning rate & $5 \times 10^{-4}$ \\
@@ -199,6 +201,8 @@ $\psi_\text{lr}$ & Beta Network learning rate & $5 \times 10^{-4}$ \\
 Weight decay ($\psi$) & $L_2$ weight decay on Beta Network & $1 \times 10^{-6}$ \\
 \hline
 Gradient clipping ($\psi$) & Max $L_2$ norm on $\nabla_\psi L_\beta$ & $1.0$ \\
+\hline
+$\tau_\text{target}$ & Polyak soft-update rate for target Beta Network & $0.01$ \\
 \hline
 $\varepsilon$ & Numerical stability constant in standardization & $1 \times 10^{-8}$ \\
 \hline

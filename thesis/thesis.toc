@@ -30,34 +30,34 @@
 \contentsline {subsection}{\numberline {3.2.2}Count-Based Exploration}{14}{subsection.3.2.2}%
 \contentsline {subsection}{\numberline {3.2.3}Rewarding Impact-Driven Exploration}{15}{subsection.3.2.3}%
 \contentsline {subsection}{\numberline {3.2.4}Standardization and Rectification}{15}{subsection.3.2.4}%
-\contentsline {section}{\numberline {3.3}Correlation-Aware Reward Exploration}{16}{section.3.3}%
+\contentsline {section}{\numberline {3.3}Critic-Adaptive Reward Exploration}{16}{section.3.3}%
 \contentsline {subsection}{\numberline {3.3.1}Beta Network}{16}{subsection.3.3.1}%
 \contentsline {subsection}{\numberline {3.3.2}Learning-Progress Objective}{17}{subsection.3.3.2}%
 \contentsline {subsection}{\numberline {3.3.3}First-Order Optimization vs. Meta-Gradient}{19}{subsection.3.3.3}%
 \contentsline {section}{\numberline {3.4}Algorithm}{20}{section.3.4}%
 \contentsline {subsection}{\numberline {3.4.1}Rollout Buffer}{20}{subsection.3.4.1}%
 \contentsline {subsection}{\numberline {3.4.2}Loss Functions}{21}{subsection.3.4.2}%
-\contentsline {subsection}{\numberline {3.4.3}Training Procedure}{21}{subsection.3.4.3}%
-\contentsline {chapter}{\numberline {4}Experimental Setup and Results}{23}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Benchmark Environments}{23}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Computing Environment}{24}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Experimental Configuration}{25}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Baselines}{26}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Performance Evaluation Metrics}{28}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Empirical Results}{29}{section.4.6}%
-\contentsline {subsection}{\numberline {4.6.1}Module-Level Results: Fixed-$\beta $ Sweep vs CARE}{29}{subsection.4.6.1}%
-\contentsline {subsection}{\numberline {4.6.2}Effect of CARE Across Modules}{29}{subsection.4.6.2}%
-\contentsline {subsection}{\numberline {4.6.3}Sensitivity to Fixed $\beta $}{29}{subsection.4.6.3}%
-\contentsline {subsection}{\numberline {4.6.4}Behavior of the Learned Scaling Function}{29}{subsection.4.6.4}%
-\contentsline {subsection}{\numberline {4.6.5}Discussion}{30}{subsection.4.6.5}%
-\contentsline {chapter}{Conclusion and Future Work}{31}{chapter*.7}%
-\contentsline {chapter}{References}{33}{section*.8}%
-\contentsline {chapter}{\numberline {A}Mathematical Proofs}{36}{appendix.A}%
-\contentsline {section}{\numberline {A.1}Proof of Proposition 3.1: Target Recovery}{36}{section.A.1}%
-\contentsline {section}{\numberline {A.2}Proof of Proposition 3.2: Gradient Direction}{37}{section.A.2}%
-\contentsline {section}{\numberline {A.3}Proof of Lemma 3.1: Bounded Shaped Reward}{37}{section.A.3}%
-\contentsline {section}{\numberline {A.4}Proof of Proposition 3.3: Computational Cost Comparison}{38}{section.A.4}%
-\contentsline {section}{\numberline {A.5}Proof of Corollary 3.1: Degeneration to Fixed Coefficient}{39}{section.A.5}%
-\contentsline {chapter}{\numberline {B}Implementation Details}{41}{appendix.B}%
-\contentsline {section}{\numberline {B.1}Network Architectures}{41}{section.B.1}%
-\contentsline {section}{\numberline {B.2}Hyperparameters}{43}{section.B.2}%
+\contentsline {subsection}{\numberline {3.4.3}Training Procedure}{22}{subsection.3.4.3}%
+\contentsline {chapter}{\numberline {4}Experimental Setup and Results}{24}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Benchmark Environments}{24}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Computing Environment}{25}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Experimental Configuration}{26}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Baselines}{27}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Performance Evaluation Metrics}{29}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Empirical Results}{30}{section.4.6}%
+\contentsline {subsection}{\numberline {4.6.1}Module-Level Results: Fixed-$\beta $ Sweep vs CARE}{30}{subsection.4.6.1}%
+\contentsline {subsection}{\numberline {4.6.2}Effect of CARE Across Modules}{30}{subsection.4.6.2}%
+\contentsline {subsection}{\numberline {4.6.3}Sensitivity to Fixed $\beta $}{30}{subsection.4.6.3}%
+\contentsline {subsection}{\numberline {4.6.4}Behavior of the Learned Scaling Function}{30}{subsection.4.6.4}%
+\contentsline {subsection}{\numberline {4.6.5}Discussion}{31}{subsection.4.6.5}%
+\contentsline {chapter}{Conclusion and Future Work}{32}{chapter*.7}%
+\contentsline {chapter}{References}{34}{section*.8}%
+\contentsline {chapter}{\numberline {A}Mathematical Proofs}{37}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Proof of Proposition 3.1: Target Recovery}{37}{section.A.1}%
+\contentsline {section}{\numberline {A.2}Proof of Proposition 3.2: Gradient Direction}{38}{section.A.2}%
+\contentsline {section}{\numberline {A.3}Proof of Lemma 3.1: Bounded Shaped Reward}{38}{section.A.3}%
+\contentsline {section}{\numberline {A.4}Proof of Proposition 3.3: Computational Cost Comparison}{39}{section.A.4}%
+\contentsline {section}{\numberline {A.5}Proof of Corollary 3.1: Degeneration to Fixed Coefficient}{40}{section.A.5}%
+\contentsline {chapter}{\numberline {B}Implementation Details}{42}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Network Architectures}{42}{section.B.1}%
+\contentsline {section}{\numberline {B.2}Hyperparameters}{44}{section.B.2}%

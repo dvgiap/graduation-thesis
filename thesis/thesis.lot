@@ -2,18 +2,18 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces MiniGrid environments used in the experiments.}}{24}{table.caption.5}%
-\contentsline {table}{\numberline {4.2}{\ignorespaces Baseline conditions evaluated on every environment.}}{27}{table.caption.6}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces MiniGrid environments used in the experiments.}}{25}{table.caption.5}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Baseline conditions evaluated on every environment.}}{28}{table.caption.6}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {B.1}{\ignorespaces Beta Network $\beta _\psi $ architecture.}}{41}{table.caption.10}%
-\contentsline {table}{\numberline {B.2}{\ignorespaces Intrinsic Curiosity Module (ICM) architecture.}}{42}{table.caption.11}%
-\contentsline {table}{\numberline {B.3}{\ignorespaces RIDE architecture. The encoder, forward model, and inverse model share the ICM design and training objective; the difference is the intrinsic reward formula in Equation~\eqref {eq:ride_raw}, which uses representation impact divided by an episodic count rather than forward prediction error.}}{42}{table.caption.12}%
-\contentsline {table}{\numberline {B.4}{\ignorespaces Actor and critic network architectures used by PPO.}}{43}{table.caption.13}%
-\contentsline {table}{\numberline {B.5}{\ignorespaces PPO hyperparameters.}}{43}{table.caption.14}%
-\contentsline {table}{\numberline {B.6}{\ignorespaces ICM hyperparameters.}}{43}{table.caption.15}%
-\contentsline {table}{\numberline {B.7}{\ignorespaces RIDE hyperparameters.}}{44}{table.caption.16}%
-\contentsline {table}{\numberline {B.8}{\ignorespaces CARE hyperparameters. The Beta Network alone determines the intrinsic-reward scale (no separate global coefficient $\alpha $ is used); the same Beta Network bounds and learning-progress hyperparameters apply to every CARE variant.}}{44}{table.caption.17}%
-\contentsline {table}{\numberline {B.9}{\ignorespaces Fixed-$\beta $ sweep used in the baseline conditions $F_{m,\beta }$ of Section~\ref {sec:baselines}. In these conditions the Beta Network is replaced by the listed scalar value, the learning-progress update is disabled, and $\beta \,I_t^{+,m}$ is fed directly into the shaped reward.}}{45}{table.caption.18}%
-\contentsline {table}{\numberline {B.10}{\ignorespaces Other module-specific hyperparameters for count-based exploration and RIDE.}}{45}{table.caption.19}%
-\contentsline {table}{\numberline {B.11}{\ignorespaces Training schedule.}}{46}{table.caption.20}%
+\contentsline {table}{\numberline {B.1}{\ignorespaces Beta Network $\beta _\psi $ architecture.}}{42}{table.caption.10}%
+\contentsline {table}{\numberline {B.2}{\ignorespaces Intrinsic Curiosity Module (ICM) architecture.}}{43}{table.caption.11}%
+\contentsline {table}{\numberline {B.3}{\ignorespaces RIDE architecture. The encoder, forward model, and inverse model share the ICM design and training objective; the difference is the intrinsic reward formula in Equation~\eqref {eq:ride_raw}, which uses representation impact divided by an episodic count rather than forward prediction error.}}{43}{table.caption.12}%
+\contentsline {table}{\numberline {B.4}{\ignorespaces Actor and critic network architectures used by PPO.}}{44}{table.caption.13}%
+\contentsline {table}{\numberline {B.5}{\ignorespaces PPO hyperparameters.}}{44}{table.caption.14}%
+\contentsline {table}{\numberline {B.6}{\ignorespaces ICM hyperparameters.}}{44}{table.caption.15}%
+\contentsline {table}{\numberline {B.7}{\ignorespaces RIDE hyperparameters.}}{45}{table.caption.16}%
+\contentsline {table}{\numberline {B.8}{\ignorespaces CARE hyperparameters. The Beta Network alone determines the intrinsic-reward scale (no separate global coefficient $\alpha $ is used); the same Beta Network bounds and learning-progress hyperparameters apply to every CARE variant.}}{45}{table.caption.17}%
+\contentsline {table}{\numberline {B.9}{\ignorespaces Fixed-$\beta $ sweep used in the baseline conditions $F_{m,\beta }$ of Section~\ref {sec:baselines}. In these conditions the Beta Network is replaced by the listed scalar value, the learning-progress update is disabled, and $\beta \,I_t^{+,m}$ is fed directly into the shaped reward.}}{46}{table.caption.18}%
+\contentsline {table}{\numberline {B.10}{\ignorespaces Other module-specific hyperparameters for count-based exploration and RIDE.}}{46}{table.caption.19}%
+\contentsline {table}{\numberline {B.11}{\ignorespaces Training schedule.}}{47}{table.caption.20}%

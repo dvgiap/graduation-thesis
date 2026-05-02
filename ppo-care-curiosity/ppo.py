@@ -7,8 +7,8 @@ from torch.distributions import Categorical
 print("============================================================================================")
 # set device to cpu or cuda
 device = torch.device('cpu')
-if(torch.cuda.is_available()): 
-    device = torch.device('cuda:0') 
+if(torch.cuda.is_available()):
+    device = torch.device('cuda:0')
     torch.cuda.empty_cache()
     print("Device set to : " + str(torch.cuda.get_device_name(device)))
 else:
@@ -122,7 +122,7 @@ class ActorCritic(nn.Module):
 
 
 class PPO:
-    def __init__(self, state_dim, action_dim, lr_actor, lr_critic, gamma, K_epochs, eps_clip, has_continuous_action_space, action_std_init=0.6):
+    def __init__(self, state_dim, action_dim, lr_actor, lr_critic, gamma, K_epochs, eps_clip, has_continuous_action_space, action_std_init=0.6, gae_lambda=0.95):
 
         self.has_continuous_action_space = has_continuous_action_space
 
@@ -132,7 +132,8 @@ class PPO:
         self.gamma = gamma
         self.eps_clip = eps_clip
         self.K_epochs = K_epochs
-        
+        self.gae_lambda = gae_lambda
+
         self.buffer = RolloutBuffer()
 
         self.policy = ActorCritic(state_dim, action_dim, has_continuous_action_space, action_std_init).to(device)
@@ -198,27 +199,30 @@ class PPO:
             return action.item()
 
     def update(self):
-        # Monte Carlo estimate of returns
-        rewards = []
-        discounted_reward = 0
-        for reward, is_terminal in zip(reversed(self.buffer.rewards), reversed(self.buffer.is_terminals)):
-            if is_terminal:
-                discounted_reward = 0
-            discounted_reward = reward + (self.gamma * discounted_reward)
-            rewards.insert(0, discounted_reward)
-            
-        # Normalizing the rewards
-        rewards = torch.tensor(rewards, dtype=torch.float32).to(device)
-        rewards = (rewards - rewards.mean()) / (rewards.std() + 1e-7)
-
-        # convert list to tensor
+        # GAE advantage estimation
         old_states = torch.squeeze(torch.stack(self.buffer.states, dim=0)).detach().to(device)
         old_actions = torch.squeeze(torch.stack(self.buffer.actions, dim=0)).detach().to(device)
         old_logprobs = torch.squeeze(torch.stack(self.buffer.logprobs, dim=0)).detach().to(device)
         old_state_values = torch.squeeze(torch.stack(self.buffer.state_values, dim=0)).detach().to(device)
+        rewards = torch.tensor(self.buffer.rewards, dtype=torch.float32).to(device)
+        is_terminals = torch.tensor(self.buffer.is_terminals, dtype=torch.float32).to(device)
 
-        # calculate advantages
-        advantages = rewards.detach() - old_state_values.detach()
+        T = len(rewards)
+        advantages = torch.zeros(T, device=device)
+        last_gae = 0.0
+        for t in reversed(range(T)):
+            next_value = 0.0 if t == T - 1 else old_state_values[t + 1]
+            delta = rewards[t] + self.gamma * next_value * (1 - is_terminals[t]) - old_state_values[t]
+            last_gae = delta + self.gamma * self.gae_lambda * (1 - is_terminals[t]) * last_gae
+            advantages[t] = last_gae
+
+        returns = advantages + old_state_values
+
+        # Normalizing the advantages
+        if advantages.std().item() > 1e-7:
+            advantages = (advantages - advantages.mean()) / (advantages.std() + 1e-7)
+        else:
+            advantages = advantages - advantages.mean()
 
         # Optimize policy for K epochs
         for _ in range(self.K_epochs):
@@ -237,8 +241,8 @@ class PPO:
             surr2 = torch.clamp(ratios, 1-self.eps_clip, 1+self.eps_clip) * advantages
 
             # final loss of clipped objective PPO
-            loss = -torch.min(surr1, surr2) + 0.5 * self.MseLoss(state_values, rewards) - 0.01 * dist_entropy
-            
+            loss = -torch.min(surr1, surr2) + 0.5 * self.MseLoss(state_values, returns.detach()) - 0.01 * dist_entropy
+
             # take gradient step
             self.optimizer.zero_grad()
             loss.mean().backward()

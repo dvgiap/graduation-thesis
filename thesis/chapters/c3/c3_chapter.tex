@@ -1,7 +1,7 @@
 \chapter{Methodology}
 \label{ch:methodology}
 
-This chapter presents the proposed methodology in formal terms. It first defines the underlying intrinsic-augmented decision process and the overall system architecture. It then specifies the intrinsic reward generator used in the implemented system, formulates the Correlation-Aware Reward Exploration (CARE) framework with its Beta Network and learning-progress objective, and concludes with the complete training algorithm. Five formal results (Propositions 3.1--3.3, Lemma 3.1, Corollary 3.1) are stated in this chapter and proved in Appendix A.
+This chapter presents the proposed methodology in formal terms. It first defines the underlying intrinsic-augmented decision process and the overall system architecture. It then specifies the intrinsic reward generator used in the implemented system, formulates the Critic-Adaptive Reward Exploration (CARE) framework with its Beta Network and learning-progress objective, and concludes with the complete training algorithm. Five formal results (Propositions 3.1--3.3, Lemma 3.1, Corollary 3.1) are stated in this chapter and proved in Appendix A.
 
 \section{System Architecture}
 \label{sec:system_architecture}
@@ -140,7 +140,7 @@ I_t^+ \;=\; \max\!\left( 0,\; \frac{I_t - \mu_I}{\sigma_I + \varepsilon} \right)
 
 This preprocessing suppresses transitions whose intrinsic signal is below the batch average and retains relatively surprising transitions. We use the generic notation $I_t^{+,m}$ to emphasize that the same pipeline (standardization, Beta Network, progress loss) is applied identically across all three modules; only the upstream raw signal $I_t$ differs.
 
-\section{Correlation-Aware Reward Exploration}
+\section{Critic-Adaptive Reward Exploration}
 \label{sec:care}
 
 CARE introduces a state-dependent scaling function $\beta_\psi(s_t)$ between the intrinsic reward generator and the policy update. This section formalizes the network, its learning-progress training objective, and the reasons for choosing a first-order optimization scheme over a meta-gradient one.
@@ -321,6 +321,13 @@ L^V(\mu) \;=\; \mathbb{E}_t\!\left[ \bigl( V_\mu(s_t) - \hat V_t \bigr)^2 \right
 
 The four losses correspond to four parameter groups: $\theta$ (actor), $\mu$ (critic), $\eta$ (ICM), and $\psi$ (Beta Network). Gradients flow through each loss with respect to its own parameter group only; in particular, the Beta Network is not updated through $L^\text{PPO}$ and the policy is not updated through $L_\beta$.
 
+\textbf{Target Beta Network.} To decouple the $\beta$ used for reward shaping from the $\beta$ currently being optimized, the implementation maintains a \emph{target} Beta Network $\bar\beta_{\bar\psi}$ alongside the live network $\beta_\psi$. After each $\psi$-step, the target is soft-updated via a Polyak average:
+\begin{equation}
+\bar\psi \;\leftarrow\; (1 - \tau_\text{target})\,\bar\psi \;+\; \tau_\text{target}\,\psi,
+\label{eq:polyak_beta}
+\end{equation}
+with $\tau_\text{target} = 0.01$. The shaped reward in Equation~\eqref{eq:combined_reward} uses $\bar\beta_{\bar\psi}(s_t)$ (the lagged target) rather than $\beta_\psi(s_t)$ (the live network). This breaks the within-update circular dependency: $\delta_t$ is derived from $V_\mu$ shaped by the \emph{previous} target $\bar\psi$, so it is not influenced by the $\psi$ update occurring in the same iteration.
+
 \subsection{Training Procedure}
 \label{sec:training_procedure}
 
@@ -335,8 +342,8 @@ Algorithm~\ref{alg:care} specifies the complete CARE training loop. One iteratio
     \State Collect $T$ on-policy transitions $\{\xi_t\}_{t=0}^{T-1}$ using $\pi_\theta$
     \State Compute raw intrinsic rewards $I_t$ via the module-specific equation in Section~\ref{sec:intrinsic_modules}
     \State Standardize and rectify to obtain $I_t^+$ via Equation~\eqref{eq:icm_standardized}
-    \State Compute extrinsic TD errors $\delta_t$ via Equation~\eqref{eq:td_error} and targets $\tau(s_t)$ via Equation~\eqref{eq:beta_target}
     \State Update intrinsic-module parameters $\eta$ (no-op if module is non-parametric, e.g., count-based)
+    \State Compute extrinsic TD errors $\delta_t$ via Equation~\eqref{eq:td_error} and targets $\tau(s_t)$ via Equation~\eqref{eq:beta_target}
     \State Update Beta Network: $\psi \gets \psi - \psi_\text{lr}\, \nabla_\psi L_\beta(\psi)$
     \State Compute shaped rewards $\bar r_t = R_t^E + \beta_\psi(s_t)\, I_t^+$
     \State Compute GAE advantages $\hat A_t$ from $\{\bar r_t\}$ and $V_\mu$
@@ -348,4 +355,4 @@ Algorithm~\ref{alg:care} specifies the complete CARE training loop. One iteratio
 \end{algorithmic}
 \end{algorithm}
 
-The algorithm preserves the standard PPO update structure (lines 11--14) and inserts only two additional optimization steps (lines 7--8) before the shaped reward is computed. This modularity is important: the same template applies if ICM is replaced by a count-based bonus or by RIDE, with only Equations~\eqref{eq:icm_raw}--\eqref{eq:icm_standardized} being substituted by the corresponding module-specific computation. Concrete numerical values for all hyperparameters and network architectures used in the experiments are listed in Appendix~\ref{app:implementation}.
+The algorithm preserves the standard PPO update structure (lines 11--14) and inserts only two additional optimization steps (lines 6 and 8) before the shaped reward is computed. This modularity is important: the same template applies if ICM is replaced by a count-based bonus or by RIDE, with only Equations~\eqref{eq:icm_raw}--\eqref{eq:icm_standardized} being substituted by the corresponding module-specific computation. Concrete numerical values for all hyperparameters and network architectures used in the experiments are listed in Appendix~\ref{app:implementation}.
