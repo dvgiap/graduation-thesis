@@ -1,7 +1,7 @@
 \chapter{Methodology}
 \label{ch:methodology}
 
-This chapter presents the proposed methodology in formal terms. It first defines the underlying intrinsic-augmented decision process and the overall system architecture. It then specifies the intrinsic reward generator used in the implemented system, formulates the Critic-Adaptive Reward Exploration (CARE) framework with its Beta Network and learning-progress objective, and concludes with the complete training algorithm. Five formal results (Propositions 3.1--3.3, Lemma 3.1, Corollary 3.1) are stated in this chapter and proved in Appendix A.
+This chapter presents the proposed methodology in formal terms. It first defines the underlying intrinsic-augmented decision process and the overall system architecture. It then specifies the intrinsic reward generator used in the implemented system, formulates the Correlation-Aware Reward Exploration (CARE) framework with its Beta Network and learning-progress objective, and concludes with the complete training algorithm. Five formal results (Propositions 3.1--3.3, Lemma 3.1, Corollary 3.1) are stated in this chapter and proved in Appendix A.
 
 \section{System Architecture}
 \label{sec:system_architecture}
@@ -140,7 +140,7 @@ I_t^+ \;=\; \max\!\left( 0,\; \frac{I_t - \mu_I}{\sigma_I + \varepsilon} \right)
 
 This preprocessing suppresses transitions whose intrinsic signal is below the batch average and retains relatively surprising transitions. We use the generic notation $I_t^{+,m}$ to emphasize that the same pipeline (standardization, Beta Network, progress loss) is applied identically across all three modules; only the upstream raw signal $I_t$ differs.
 
-\section{Critic-Adaptive Reward Exploration}
+\section{Correlation-Aware Reward Exploration}
 \label{sec:care}
 
 CARE introduces a state-dependent scaling function $\beta_\psi(s_t)$ between the intrinsic reward generator and the policy update. This section formalizes the network, its learning-progress training objective, and the reasons for choosing a first-order optimization scheme over a meta-gradient one.

@@ -153,15 +153,14 @@ class PPO:
                  # meta-beta
                  beta_lr=5e-4,
                  use_state_dependent_beta=True,
-                 beta_init=0.001,
+                 beta_init=None,
                  beta_encoding_size=256,
                  beta_num_layers=2,
                  beta_head_hidden=128,
                  beta_min=0.0001,
                  beta_max=0.1,
-                 # meta options (Learning-Progress)
+                 # meta options (correlation-based β scaling)
                  meta_use_progress=True,
-                 meta_progress_weight=1.0,
                  meta_reg_weight=1e-3,
                  # logging
                  sample_states_per_update=256,
@@ -220,7 +219,6 @@ class PPO:
             num_layers=beta_num_layers,
             head_hidden=beta_head_hidden,
             lr=beta_lr,
-            progress_weight=meta_progress_weight,
             reg_weight=meta_reg_weight,
             use_state_dependent=use_state_dependent_beta,
             use_progress=meta_use_progress,
@@ -348,11 +346,11 @@ class PPO:
 
         # ---------------- CARE: meta-update β + combine rewards ----------------
         if self.care.use_progress:
-            _, deltas_ext = self.compute_extrinsic_advantages(
+            adv_ext, _ = self.compute_extrinsic_advantages(
                 extrinsic_rewards, old_state_values, is_terminals
             )
             meta_loss_value = self.care.update(
-                old_states, deltas_ext.abs().detach(), extrinsic_rewards
+                old_states, intrinsic_ride_pos.detach(), adv_ext.detach()
             )
         else:
             meta_loss_value = 0.0

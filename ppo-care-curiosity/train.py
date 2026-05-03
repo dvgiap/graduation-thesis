@@ -146,9 +146,10 @@ def train(
         print(f"\n\n########## STARTING RUN FOR SEED {seed} ##########\n")
         
         # Setup paths for this seed
-        # Build condition suffix to distinguish CARE (adaptive beta) vs fixed-beta sweep runs
-        if fixed_beta is None:
+        if exploration_method == 'none':
             cond_suffix = ""
+        elif fixed_beta is None:
+            cond_suffix = "_CARE"
         else:
             cond_suffix = f"_FB{fixed_beta}"
 

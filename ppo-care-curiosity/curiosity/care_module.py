@@ -11,11 +11,14 @@ class BetaNetwork(nn.Module):
     """State-dependent β(s) ∈ [β_min, β_max] via log-space clamped output."""
 
     def __init__(self, state_dim, encoding_size=256, num_layers=2, head_hidden=128,
-                 min_beta=1e-4, max_beta=1e-1, beta_0=1e-3):
+                 min_beta=1e-4, max_beta=1e-1,
+                 beta_0=None):
         super().__init__()
         self.min = float(min_beta)
         self.max = float(max_beta)
-        self.beta_0 = float(beta_0)
+        # Default β₀ = geometric mean of clamp range → init bias sits in the middle
+        # of log-space, no asymmetric pull toward either bound.
+        self.beta_0 = float(beta_0) if beta_0 is not None else math.sqrt(self.min * self.max)
 
         layers = []
         layers.append(nn.Linear(state_dim, encoding_size))
@@ -52,11 +55,10 @@ class BetaNetwork(nn.Module):
 
 class CAREModule:
     """
-    Standalone CARE meta-β module. Encapsulates BetaNetwork, meta-loss, and
-    Polyak-EMA target network (Gotcha-4 fix).
+    State-dependent β scaling module: BetaNetwork + correlation loss + Polyak target.
 
     Public API:
-        update(states, delta_abs, extrinsic_rewards) -> float  (meta_loss)
+        update(states, intrinsic_plus, extrinsic_advantages) -> float  (meta_loss)
         combine(R_ext, I_plus, states) -> Tensor               (shaped rewards)
         get_beta_scalar(states) -> float                       (for logging)
         sample_and_log(states)                                 (viz helper)
@@ -64,10 +66,10 @@ class CAREModule:
     """
 
     def __init__(self, state_dim,
-                 beta_min=0.0001, beta_max=0.1, beta_0=0.001,
+                 beta_min=0.0001, beta_max=0.1, beta_0=None,
                  encoding_size=256, num_layers=2, head_hidden=128,
                  lr=5e-4, weight_decay=1e-6, grad_clip=1.0,
-                 progress_weight=1.0, reg_weight=1e-3,
+                 reg_weight=1e-3,
                  use_state_dependent=True, use_progress=True,
                  target_tau=0.01,
                  logger=None):
@@ -76,9 +78,9 @@ class CAREModule:
         self.use_progress = use_progress
         self.beta_min = float(beta_min)
         self.beta_max = float(beta_max)
-        self.beta_0 = float(beta_0)
+        # β₀ defaults to geometric mean of clamp → log-space center, symmetric init.
+        self.beta_0 = float(beta_0) if beta_0 is not None else math.sqrt(self.beta_min * self.beta_max)
         self.grad_clip = float(grad_clip)
-        self.progress_weight = float(progress_weight)
         self.reg_weight = float(reg_weight)
         self.tau = float(target_tau)
         self.logger = logger
@@ -88,9 +90,8 @@ class CAREModule:
                 state_dim, encoding_size, num_layers, head_hidden, beta_min, beta_max, beta_0
             ).to(device)
 
-            # Target network: lagged EMA copy — fixes Gotcha-4 feedback loop.
-            # combine() uses this instead of beta_net so the β shaping rewards
-            # is always one soft-update behind the β being trained.
+            # Polyak EMA target network: combine() uses this lagged copy so the β
+            # shaping rewards is always one soft-update behind the β being trained.
             self.beta_net_target = BetaNetwork(
                 state_dim, encoding_size, num_layers, head_hidden, beta_min, beta_max, beta_0
             ).to(device)
@@ -104,29 +105,13 @@ class CAREModule:
         else:
             # Fixed-β path: scalar log-parameterized β, not updated when use_progress=False.
             self.beta_log = nn.Parameter(
-                torch.tensor([math.log(beta_0)], dtype=torch.float32, device=device)
+                torch.tensor([math.log(self.beta_0)], dtype=torch.float32, device=device)
             )
             self.optimizer = torch.optim.Adam([self.beta_log], lr=lr)
 
     # ------------------------------------------------------------------ #
     # Internal helpers                                                     #
     # ------------------------------------------------------------------ #
-
-    def _build_target(self, ref_tensor, delta_abs, extrinsic_rewards):
-        """Build τ(s) from |δ_t|. Returns (target_tensor, cold_start_bool).
-
-        Cold-start triggers when max(R^E) <= 0 — assumes no negative step
-        penalties (holds for MiniGrid sparse-reward). If used in envs with
-        step penalties, all rewards stay negative and cold-start never exits.
-        """
-        if extrinsic_rewards.max().item() <= 0.0:
-            # ref_tensor used only to inherit shape/dtype/device for the fill
-            return torch.full_like(ref_tensor, self.beta_0), True
-        delta_max = delta_abs.max()
-        delta_norm = delta_abs / (delta_max + 1e-8)
-        b_min = self.beta_net.min if self.use_state_dependent else self.beta_min
-        b_max = self.beta_net.max if self.use_state_dependent else self.beta_max
-        return b_min + (b_max - b_min) * delta_norm, False
 
     def _polyak_update(self):
         """Soft-update: β_target ← (1-τ)·β_target + τ·β_live."""
@@ -139,29 +124,49 @@ class CAREModule:
     # Public API                                                           #
     # ------------------------------------------------------------------ #
 
-    def update(self, states, delta_abs, extrinsic_rewards):
+    def update(self, states, intrinsic_plus, extrinsic_advantages):
         """
-        Compute L_β, step ψ, then soft-update target network.
-        Returns meta_loss as float (0.0 when use_progress=False).
+        Correlation objective with extrinsic advantage as supervisory signal.
+
+            L_β = -E[ Î_z · Â_z ]  +  λ_reg · L_reg
+
+        where
+            Î = β(s) · I⁺                         weighted intrinsic
+            Â = Â^E_t  (extrinsic GAE advantage)  variance-reduced future-return proxy
+            *_z = z-score within minibatch
+            L_reg = (log β(s) - log β₀)²          log-space anchor toward prior
+
+        Args:
+            states:                tensor (B, state_dim)
+            intrinsic_plus:        tensor (B,) — I⁺, already z-scored & rectified by caller
+            extrinsic_advantages:  tensor (B,) — Â^E from caller's GAE
+        Returns:
+            float meta_loss (0.0 if use_progress=False)
         """
         if not self.use_progress:
             return 0.0
 
         if self.use_state_dependent:
-            beta_for_loss = self.beta_net(states).squeeze()
+            beta = self.beta_net(states).squeeze()
         else:
-            beta_for_loss = torch.exp(self.beta_log)
+            beta = torch.exp(self.beta_log).expand(states.shape[0])
 
-        target, cold_start = self._build_target(beta_for_loss, delta_abs, extrinsic_rewards)  # ref_tensor = beta_for_loss
+        intrinsic_plus = intrinsic_plus.detach().to(beta.device)
+        adv = extrinsic_advantages.detach().to(beta.device)
 
-        loss_progress = ((beta_for_loss - target.detach()) ** 2).mean()
+        weighted_intr = beta * intrinsic_plus  # Î
+
+        eps = 1e-8
+        Iz = (weighted_intr - weighted_intr.mean()) / (weighted_intr.std(unbiased=False) + eps)
+        Az = (adv - adv.mean()) / (adv.std(unbiased=False) + eps)
+        loss_corr = -(Iz * Az).mean()
 
         if self.use_state_dependent:
-            loss_reg = ((torch.log(beta_for_loss + 1e-8) - math.log(max(1e-8, self.beta_0))) ** 2).mean()
+            loss_reg = ((torch.log(beta + eps) - math.log(self.beta_0)) ** 2).mean()
         else:
-            loss_reg = (self.beta_log - math.log(max(1e-8, self.beta_0))) ** 2
+            loss_reg = (self.beta_log - math.log(self.beta_0)) ** 2
 
-        loss_meta = self.progress_weight * loss_progress + self.reg_weight * loss_reg
+        loss_meta = loss_corr + self.reg_weight * loss_reg
 
         self.optimizer.zero_grad()
         loss_meta.backward()
@@ -182,21 +187,19 @@ class CAREModule:
             torch.nn.utils.clip_grad_norm_([self.beta_log], self.grad_clip)
         self.optimizer.step()
 
-        # Polyak soft-update target network after each ψ-step (Gotcha-4 fix).
         if self.use_state_dependent:
             self._polyak_update()
 
         meta_loss_val = float(loss_meta.detach().cpu().item())
-        delta_max = delta_abs.max()
 
         if self.logger is not None:
             self.logger.log_scalar('beta_gradient_norm', total_norm)
-            self.logger.log_scalar('delta_max', float(delta_max.item()))
-            self.logger.log_scalar('delta_mean', float(delta_abs.mean().item()))
-            self.logger.log_scalar('cold_start', float(cold_start))
-            self.logger.log_scalar('loss_progress', float(loss_progress.detach().cpu().item()))
-            self.logger.log_array('delta_abs', delta_abs)
-            self.logger.log_array('beta_target', target.detach())
+            self.logger.log_scalar('loss_corr', float(loss_corr.detach().cpu().item()))
+            self.logger.log_scalar('loss_reg', float(loss_reg.detach().cpu().item()))
+            self.logger.log_scalar('adv_ext_mean', float(adv.mean().item()))
+            self.logger.log_scalar('adv_ext_std', float(adv.std(unbiased=False).item()))
+            self.logger.log_scalar('intr_plus_mean', float(intrinsic_plus.mean().item()))
+            self.logger.log_array('beta_per_state', beta.detach())
 
         return meta_loss_val
 

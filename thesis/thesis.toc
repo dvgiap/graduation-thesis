@@ -30,7 +30,7 @@
 \contentsline {subsection}{\numberline {3.2.2}Count-Based Exploration}{14}{subsection.3.2.2}%
 \contentsline {subsection}{\numberline {3.2.3}Rewarding Impact-Driven Exploration}{15}{subsection.3.2.3}%
 \contentsline {subsection}{\numberline {3.2.4}Standardization and Rectification}{15}{subsection.3.2.4}%
-\contentsline {section}{\numberline {3.3}Critic-Adaptive Reward Exploration}{16}{section.3.3}%
+\contentsline {section}{\numberline {3.3}Correlation-Aware Reward Exploration}{16}{section.3.3}%
 \contentsline {subsection}{\numberline {3.3.1}Beta Network}{16}{subsection.3.3.1}%
 \contentsline {subsection}{\numberline {3.3.2}Learning-Progress Objective}{17}{subsection.3.3.2}%
 \contentsline {subsection}{\numberline {3.3.3}First-Order Optimization vs. Meta-Gradient}{19}{subsection.3.3.3}%
