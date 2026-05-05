@@ -157,8 +157,8 @@ class PPO:
                  beta_encoding_size=256,
                  beta_num_layers=2,
                  beta_head_hidden=128,
-                 beta_min=0.0001,
-                 beta_max=0.1,
+                 beta_min=5e-4,
+                 beta_max=5e-2,
                  # meta options (correlation-based β scaling)
                  meta_use_progress=True,
                  meta_reg_weight=1e-3,
@@ -301,7 +301,12 @@ class PPO:
         return intr_pos
 
     # ---------------- compute extrinsic advantages ----------------
-    def compute_extrinsic_advantages(self, extrinsic_rewards, state_values, is_terminals):
+    def compute_extrinsic_advantages(self, extrinsic_rewards, state_values, is_terminals, normalize=True):
+        """GAE on extrinsic-only rewards.
+
+        normalize=True  → z-score advantages (for PPO policy update path)
+        normalize=False → raw advantages (for CARE: preserves signal-strength info)
+        """
         T = len(extrinsic_rewards)
         advantages = torch.zeros(T, device=device)
         deltas = torch.zeros(T, device=device)
@@ -315,10 +320,11 @@ class PPO:
             deltas[t] = delta
             last_gae = delta + self.gamma * self.gae_lambda * (1 - is_terminals[t]) * last_gae
             advantages[t] = last_gae
-        if advantages.std().item() > 1e-8:
-            advantages = (advantages - advantages.mean()) / (advantages.std() + 1e-8)
-        else:
-            advantages = advantages - advantages.mean()
+        if normalize:
+            if advantages.std().item() > 1e-8:
+                advantages = (advantages - advantages.mean()) / (advantages.std() + 1e-8)
+            else:
+                advantages = advantages - advantages.mean()
         return advantages, deltas
 
     # ---------------- main update ----------------
@@ -346,11 +352,11 @@ class PPO:
 
         # ---------------- CARE: meta-update β + combine rewards ----------------
         if self.care.use_progress:
-            adv_ext, _ = self.compute_extrinsic_advantages(
-                extrinsic_rewards, old_state_values, is_terminals
+            adv_ext_raw, _ = self.compute_extrinsic_advantages(
+                extrinsic_rewards, old_state_values, is_terminals, normalize=False
             )
             meta_loss_value = self.care.update(
-                old_states, intrinsic_ride_pos.detach(), adv_ext.detach()
+                old_states, intrinsic_ride_pos.detach(), adv_ext_raw.detach()
             )
         else:
             meta_loss_value = 0.0
