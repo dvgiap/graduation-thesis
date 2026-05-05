@@ -25,9 +25,10 @@ except Exception:
     pass
 
 # ── CONFIG ────────────────────────────────────────────────────────────────────
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-LOGS_ROOT  = os.path.join(SCRIPT_DIR, 'logs')
-OUT_DIR    = os.path.join(SCRIPT_DIR, 'figs', 'compare')
+SCRIPT_DIR  = os.path.dirname(os.path.abspath(__file__))
+LOGS_ROOT   = os.path.join(SCRIPT_DIR, 'logs')      # reward CSVs
+MODELS_ROOT = os.path.join(SCRIPT_DIR, 'models')    # .meta.npz / .samples.npz
+OUT_DIR     = os.path.join(SCRIPT_DIR, 'figs', 'compare')
 
 ENVS = [
     'MiniGrid-DoorKey-8x8-v0',
@@ -46,10 +47,10 @@ MODULES = [
 ]
 
 WINDOW = 20
-FIXED_BETA_VALUES = [0.001, 0.005, 0.05, 0.1]
-FB_COLORS = ['#fcae91', '#fb6a4a', '#de2d26', '#a50f15']  # gradient red
+FIXED_BETA_VALUES = [0.0005, 0.001, 0.005, 0.01, 0.05]
+FB_COLORS = ['#fee5d9', '#fcae91', '#fb6a4a', '#de2d26', '#a50f15']  # gradient red (5 shades)
 PPO_COLOR = 'gray'
-BETA_0    = 0.01  # CARE cold-start prior (β_0 from CLAUDE.md)
+BETA_0    = 0.00224  # CARE cold-start prior — √(β_min·β_max) = √(1e-4·5e-2) ≈ 2.24e-3
 
 # Hardcoded budget guess for sample-efficiency penalty when threshold is never reached.
 DEFAULT_MAX_STEPS = 1_000_000
@@ -68,14 +69,14 @@ def load_seeds(env, suffix):
 
 def load_meta(env, module_suffix):
     """Load TrainingLogger .meta.npz for all CARE seeds of a module."""
-    pat = os.path.join(LOGS_ROOT, env,
+    pat = os.path.join(MODELS_ROOT, env,
                        f'PPO{module_suffix}_CARE_{env}_seed_*.pth.meta.npz')
     return [np.load(f, allow_pickle=True) for f in sorted(glob.glob(pat))]
 
 
 def load_samples(env, module_suffix):
     """Load .samples.npz (state, beta(s)) snapshots for all CARE seeds."""
-    pat = os.path.join(LOGS_ROOT, env,
+    pat = os.path.join(MODELS_ROOT, env,
                        f'PPO{module_suffix}_CARE_{env}_seed_*.pth.samples.npz')
     return [np.load(f, allow_pickle=True) for f in sorted(glob.glob(pat))]
 
@@ -433,8 +434,8 @@ def plot_beta_histogram():
                 pooled.extend(last.tolist())
             if pooled:
                 pooled = np.asarray(pooled, dtype=float)
-                # log-spaced bins covering the [0.001, 0.1] CARE clamp range
-                bins = np.logspace(np.log10(0.001), np.log10(0.1), 40)
+                # log-spaced bins covering the [1e-4, 5e-2] CARE clamp range
+                bins = np.logspace(np.log10(1e-4), np.log10(5e-2), 40)
                 ax.hist(pooled, bins=bins, color=care_color,
                         edgecolor='black', linewidth=0.3, alpha=0.85)
                 ax.set_xscale('log')

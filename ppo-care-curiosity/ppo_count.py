@@ -141,7 +141,7 @@ class PPO:
                  beta_encoding_size=256,
                  beta_num_layers=2,
                  beta_head_hidden=128,
-                 beta_min=5e-4,
+                 beta_min=1e-4,
                  beta_max=5e-2,
                  # Meta options (correlation-based β scaling)
                  meta_use_progress=True,
@@ -191,7 +191,7 @@ class PPO:
             auto_convert_to_numpy=True
         )
 
-        # CARE module (BetaNetwork + meta-loss + target network)
+        # CARE module (BetaNetwork + correlation meta-loss)
         self.care = CAREModule(
             state_dim=state_dim,
             beta_min=beta_min,
@@ -204,7 +204,6 @@ class PPO:
             reg_weight=meta_reg_weight,
             use_state_dependent=use_state_dependent_beta,
             use_progress=meta_use_progress,
-            target_tau=0.01,
             logger=self.logger,
         )
 
