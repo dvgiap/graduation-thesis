@@ -1,0 +1,24 @@
+\begin{table}[H]
+\centering
+\caption{Final reward (mean of last 10 logged episodes, averaged over 5 seeds, $\pm$ standard deviation) for the ICM module. Best entry per row in bold.}
+\label{tab:final_reward_icm}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{|l|c|c|c|c|c|c|c|}
+\hline
+\textbf{Environment} & \textbf{PPO} & \textbf{$\beta{=}0.0005$} & \textbf{$\beta{=}0.001$} & \textbf{$\beta{=}0.005$} & \textbf{$\beta{=}0.01$} & \textbf{$\beta{=}0.05$} & \textbf{CARE-ICM} \\
+\hline
+DoorKey-8x8 & 0.584{\scriptsize $\pm$ 0.533} & \textbf{0.973{\scriptsize $\pm$ 0.001}} & 0.973{\scriptsize $\pm$ 0.002} & 0.970{\scriptsize $\pm$ 0.002} & 0.762{\scriptsize $\pm$ 0.421} & 0.017{\scriptsize $\pm$ 0.006} & 0.770{\scriptsize $\pm$ 0.340} \\
+\hline
+Empty-16x16 & 0.974{\scriptsize $\pm$ 0.002} & \textbf{0.975{\scriptsize $\pm$ 0.001}} & 0.779{\scriptsize $\pm$ 0.436} & 0.972{\scriptsize $\pm$ 0.002} & 0.184{\scriptsize $\pm$ 0.376} & 0.000{\scriptsize $\pm$ 0.000} & 0.575{\scriptsize $\pm$ 0.525} \\
+\hline
+KeyCorridor & 0.038{\scriptsize $\pm$ 0.085} & 0.425{\scriptsize $\pm$ 0.397} & \textbf{0.457{\scriptsize $\pm$ 0.312}} & 0.064{\scriptsize $\pm$ 0.085} & 0.016{\scriptsize $\pm$ 0.035} & 0.002{\scriptsize $\pm$ 0.002} & 0.000{\scriptsize $\pm$ 0.000} \\
+\hline
+LavaCrossing & \textbf{0.263{\scriptsize $\pm$ 0.283}} & 0.000{\scriptsize $\pm$ 0.000} & 0.060{\scriptsize $\pm$ 0.134} & 0.039{\scriptsize $\pm$ 0.087} & 0.000{\scriptsize $\pm$ 0.000} & 0.000{\scriptsize $\pm$ 0.000} & 0.077{\scriptsize $\pm$ 0.165} \\
+\hline
+RedBlueDoors & 0.285{\scriptsize $\pm$ 0.391} & \textbf{0.737{\scriptsize $\pm$ 0.071}} & 0.653{\scriptsize $\pm$ 0.313} & 0.398{\scriptsize $\pm$ 0.341} & 0.009{\scriptsize $\pm$ 0.020} & 0.010{\scriptsize $\pm$ 0.013} & 0.273{\scriptsize $\pm$ 0.350} \\
+\hline
+UnlockPickup & 0.268{\scriptsize $\pm$ 0.387} & 0.923{\scriptsize $\pm$ 0.022} & \textbf{0.937{\scriptsize $\pm$ 0.003}} & 0.747{\scriptsize $\pm$ 0.328} & 0.872{\scriptsize $\pm$ 0.045} & 0.037{\scriptsize $\pm$ 0.020} & 0.716{\scriptsize $\pm$ 0.315} \\
+\hline
+\end{tabular}
+\end{table}

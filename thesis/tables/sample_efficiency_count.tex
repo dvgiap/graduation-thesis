@@ -1,0 +1,24 @@
+\begin{table}[H]
+\centering
+\caption{Sample efficiency for the COUNT module: first timestep at which the across-seed mean reward reaches $0.7 \cdot r^\star_\text{env}$, where $r^\star_\text{env}$ is the best mean final reward across all conditions on that environment. Lower is better; $\infty$ means the threshold was never reached within the $10^6$-step budget. Best entry per row in bold.}
+\label{tab:sample_efficiency_count}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{|l|c|c|c|c|c|c|c|}
+\hline
+\textbf{Environment} & \textbf{PPO} & \textbf{$\beta{=}0.0005$} & \textbf{$\beta{=}0.001$} & \textbf{$\beta{=}0.005$} & \textbf{$\beta{=}0.01$} & \textbf{$\beta{=}0.05$} & \textbf{CARE-COUNT} \\
+\hline
+DoorKey-8x8 & $\infty$ & 162k & 108k & \textbf{98k} & 446k & $\infty$ & 100k \\
+\hline
+Empty-16x16 & 280k & 106k & 86k & 82k & 330k & $\infty$ & \textbf{66k} \\
+\hline
+KeyCorridor & $\infty$ & 650k & \textbf{436k} & 826k & $\infty$ & $\infty$ & 506k \\
+\hline
+LavaCrossing & $\infty$ & $\infty$ & \textbf{576k} & $\infty$ & $\infty$ & $\infty$ & $\infty$ \\
+\hline
+RedBlueDoors & $\infty$ & \textbf{346k} & 440k & $\infty$ & $\infty$ & $\infty$ & 474k \\
+\hline
+UnlockPickup & $\infty$ & 334k & 336k & 376k & 622k & $\infty$ & \textbf{326k} \\
+\hline
+\end{tabular}
+\end{table}

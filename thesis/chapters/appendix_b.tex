@@ -26,11 +26,13 @@ Head output & Linear($128 \to 1$) producing $\log \beta_\psi(s_t)$ \\
 \hline
 Output bound & $\beta_\psi(s_t) = \exp\!\bigl( \mathrm{clamp}(\log \beta_\psi,\, \log \beta_\text{min},\, \log \beta_\text{max}) \bigr)$ \\
 \hline
-$[\beta_\text{min}, \beta_\text{max}]$ & $[0.0001,\, 0.1]$ \\
+$[\beta_\text{min}, \beta_\text{max}]$ & $[10^{-4},\, 5\times 10^{-2}]$ \\
 \hline
 Encoder weight init & $\mathcal{N}(0,\, 1/\sqrt{d_\text{in}})$ \\
 \hline
-Output bias init & $\log(0.001) \approx -6.908$ (so $\beta_\psi \approx 0.001$ at initialization; skewed toward $\beta_\text{min}$ so cold-start defaults to a small intrinsic weight) \\
+Head output weight init & $\mathcal{N}(0,\, 10^{-3})$ (small-variance head so initial $\log \beta_\psi$ is concentrated near the bias) \\
+\hline
+Head output bias init & $\log \beta_0 = \tfrac{1}{2}(\log \beta_\text{min} + \log \beta_\text{max}) \approx -6.103$, i.e., $\beta_\psi \approx 2.24 \times 10^{-3}$ at initialization (geometric-mean prior, symmetric in log space between $\beta_\text{min}$ and $\beta_\text{max}$) \\
 \hline
 \end{tabular}
 \end{table}
@@ -180,38 +182,36 @@ RIDE batch size & Mini-batch size within each epoch & $64$ \\
 
 \begin{table}[H]
 \centering
-\caption{CARE hyperparameters. The Beta Network alone determines the intrinsic-reward scale (no separate global coefficient $\alpha$ is used); the same Beta Network bounds and learning-progress hyperparameters apply to every CARE variant.}
+\caption{CARE hyperparameters. The Beta Network alone determines the intrinsic-reward scale (no separate global coefficient $\alpha$ is used); the same Beta Network bounds and correlation-objective hyperparameters apply to every CARE variant.}
 \label{tab:care_hparams}
 \begin{tabular}{|l|l|l|}
 \hline
 \textbf{Symbol} & \textbf{Description} & \textbf{Value} \\
 \hline
-$\beta_\text{min}$ & Lower bound on Beta Network output & $0.0001$ \\
+$\beta_\text{min}$ & Lower bound on Beta Network output & $1 \times 10^{-4}$ \\
 \hline
-$\beta_\text{max}$ & Upper bound on Beta Network output & $0.1$ \\
+$\beta_\text{max}$ & Upper bound on Beta Network output & $5 \times 10^{-2}$ \\
 \hline
-$\beta_0$ & Reference value for log-space regularization & $0.001$ \\
-\hline
-$\gamma_p$ & Progress-loss weight in $L_\beta$ & $1.0$ \\
+$\beta_0$ & Reference value for log-space regularization $\sqrt{\beta_\text{min}\,\beta_\text{max}}$ & $\approx 2.24 \times 10^{-3}$ \\
 \hline
 $\lambda_\text{reg}$ & Regularization weight in $L_\beta$ & $1 \times 10^{-3}$ \\
 \hline
-$\psi_\text{lr}$ & Beta Network learning rate & $5 \times 10^{-4}$ \\
+$\psi_\text{lr}$ & Beta Network learning rate (Adam) & $5 \times 10^{-4}$ \\
 \hline
 Weight decay ($\psi$) & $L_2$ weight decay on Beta Network & $1 \times 10^{-6}$ \\
 \hline
 Gradient clipping ($\psi$) & Max $L_2$ norm on $\nabla_\psi L_\beta$ & $1.0$ \\
 \hline
-$\tau_\text{target}$ & Polyak soft-update rate for target Beta Network & $0.01$ \\
+$\psi$ updates per outer iter. & Single $\psi$-step per PPO outer iteration (live $\beta_\psi$ in shaped reward; no Polyak target) & $1$ \\
 \hline
-$\varepsilon$ & Numerical stability constant in standardization & $1 \times 10^{-8}$ \\
+$\varepsilon$ & Numerical stability constant in z-scoring of $\tilde I_t$ and $\hat A_t^{E}$ & $1 \times 10^{-8}$ \\
 \hline
 \end{tabular}
 \end{table}
 
 \begin{table}[H]
 \centering
-\caption{Fixed-$\beta$ sweep used in the baseline conditions $F_{m,\beta}$ of Section~\ref{sec:baselines}. In these conditions the Beta Network is replaced by the listed scalar value, the learning-progress update is disabled, and $\beta\,I_t^{+,m}$ is fed directly into the shaped reward.}
+\caption{Fixed-$\beta$ sweep used in the baseline conditions $F_{m,\beta}$ of Section~\ref{sec:baselines}. In these conditions the Beta Network is replaced by the listed scalar value, the correlation update is disabled, and $\beta\,I_t^{+,m}$ is fed directly into the shaped reward.}
 \label{tab:fixed_beta_sweep}
 \begin{tabular}{|l|l|}
 \hline
@@ -219,15 +219,15 @@ $\varepsilon$ & Numerical stability constant in standardization & $1 \times 10^{
 \hline
 Modules swept & Count-based, ICM, RIDE \\
 \hline
-Sweep values $\beta$ & $\{0.001,\, 0.005,\, 0.05,\, 0.1\}$ \\
+Sweep values $\beta$ & $\{0.0005,\, 0.001,\, 0.005,\, 0.01,\, 0.05\}$ \\
 \hline
-Conditions per module & $4$ fixed-$\beta$ + $1$ CARE = $5$ \\
+Conditions per module & $5$ fixed-$\beta$ + $1$ CARE = $6$ \\
 \hline
-Total intrinsic-augmented conditions & $3 \times 5 = 15$ \\
+Total intrinsic-augmented conditions & $3 \times 6 = 18$ \\
 \hline
 Plus extrinsic-only control $B_0$ & $+1$ (no intrinsic reward) \\
 \hline
-Total conditions per environment & $16$ \\
+Total conditions per environment & $19$ \\
 \hline
 \end{tabular}
 \end{table}

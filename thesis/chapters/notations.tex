@@ -25,6 +25,8 @@ $\hat A_t$ & Generalized advantage estimate at time $t$ \\
 \hline
 $\rho_t(\theta)$ & PPO importance ratio $\pi_\theta(a_t \mid s_t)\,/\,\pi_{\theta_\text{old}}(a_t \mid s_t)$ \\
 \hline
+$\hat A_t^{E}$ & Extrinsic GAE advantage at time $t$ (computed from extrinsic reward and $V_\mu$, no rollout-level normalization in the CARE update path) \\
+\hline
 \end{tabular}
 
 \vspace{0.8em}
@@ -49,9 +51,7 @@ $\tilde I^{\,m}_t$ & Scaled intrinsic reward $\beta_\psi(s_t)\, I^{+,m}_t$ \\
 \hline
 $\bar r_t$ & Shaped reward used by PPO \\
 \hline
-$\delta_t$ & One-step extrinsic temporal-difference error of the critic at time $t$ \\
-\hline
-$\tau(s_t)$ & Per-state target for $\beta_\psi$ derived from $|\delta_t|$ \\
+$\hat I_t^{z},\, \hat A_t^{z}$ & Within-batch z-scored versions of $\beta_\psi(s_t)\, I_t^{+,m}$ and $\hat A_t^{E}$, used in the correlation loss \\
 \hline
 \end{tabular}
 
@@ -83,11 +83,9 @@ $\alpha_F,\,\alpha_I$ & Forward and inverse loss weights in $L_\text{ICM}$ \\
 \hline
 $\beta_\psi(s)$ & State-dependent scaling function with parameters $\psi$ \\
 \hline
-$[\beta_\text{min},\,\beta_\text{max}]$ & Output range of the Beta Network \\
+$[\beta_\text{min},\,\beta_\text{max}]$ & Output range of the Beta Network, set to $[10^{-4},\, 5\times 10^{-2}]$ \\
 \hline
-$\beta_0$ & Reference value for log-space regularization \\
-\hline
-$\gamma_p$ & Progress-loss weight in the Beta loss \\
+$\beta_0$ & Reference value for log-space regularization, set to $\sqrt{\beta_\text{min}\,\beta_\text{max}}$ \\
 \hline
 $\lambda_\text{reg}$ & Regularization weight in the Beta loss \\
 \hline
@@ -107,11 +105,11 @@ $L^V(\mu)$ & Critic mean-squared-error loss \\
 \hline
 $L_\text{ICM}(\eta)$ & ICM combined forward + inverse loss \\
 \hline
-$L_\text{progress}(\psi)$ & Learning-progress (target-tracking) component of the Beta loss \\
+$L_\text{corr}(\psi)$ & Within-batch correlation component of the Beta loss \\
 \hline
 $L_\text{reg}(\psi)$ & Log-space regularization component of the Beta loss \\
 \hline
-$L_\beta(\psi)$ & Total Beta-Network loss $\gamma_p\, L_\text{progress} + \lambda_\text{reg}\, L_\text{reg}$ \\
+$L_\beta(\psi)$ & Total Beta-Network loss $L_\text{corr} + \lambda_\text{reg}\, L_\text{reg}$ \\
 \hline
 \end{tabular}
 

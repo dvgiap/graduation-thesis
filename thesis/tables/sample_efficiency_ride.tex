@@ -1,0 +1,24 @@
+\begin{table}[H]
+\centering
+\caption{Sample efficiency for the RIDE module: first timestep at which the across-seed mean reward reaches $0.7 \cdot r^\star_\text{env}$, where $r^\star_\text{env}$ is the best mean final reward across all conditions on that environment. Lower is better; $\infty$ means the threshold was never reached within the $10^6$-step budget. Best entry per row in bold.}
+\label{tab:sample_efficiency_ride}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{|l|c|c|c|c|c|c|c|}
+\hline
+\textbf{Environment} & \textbf{PPO} & \textbf{$\beta{=}0.0005$} & \textbf{$\beta{=}0.001$} & \textbf{$\beta{=}0.005$} & \textbf{$\beta{=}0.01$} & \textbf{$\beta{=}0.05$} & \textbf{CARE-RIDE} \\
+\hline
+DoorKey-8x8 & $\infty$ & 222k & 132k & 184k & 314k & $\infty$ & \textbf{108k} \\
+\hline
+Empty-16x16 & 280k & 124k & \textbf{92k} & 110k & 124k & $\infty$ & 104k \\
+\hline
+KeyCorridor & $\infty$ & 898k & \textbf{794k} & $\infty$ & $\infty$ & $\infty$ & $\infty$ \\
+\hline
+LavaCrossing & $\infty$ & 712k & \textbf{418k} & $\infty$ & $\infty$ & $\infty$ & 460k \\
+\hline
+RedBlueDoors & $\infty$ & $\infty$ & \textbf{306k} & 504k & 780k & $\infty$ & 774k \\
+\hline
+UnlockPickup & $\infty$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ \\
+\hline
+\end{tabular}
+\end{table}

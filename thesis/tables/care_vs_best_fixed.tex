@@ -1,0 +1,48 @@
+\begin{table}[H]
+\centering
+\caption{CARE versus the best post-hoc fixed-$\beta$ value, per (environment, module). Gap is $r_\text{CARE} - r_\text{best-FB}$ in raw reward; positive means CARE is better. Best-$\beta$ is the value of $\beta$ that achieves $r_\text{best-FB}$ on that environment.}
+\label{tab:care_vs_best_fixed}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{|l|l|c|c|c|c|}
+\hline
+\textbf{Environment} & \textbf{Module} & \textbf{CARE} & \textbf{Best fixed-$\beta$} & \textbf{Best $\beta$} & \textbf{Gap} \\
+\hline
+\multirow{3}{*}{DoorKey-8x8} & COUNT & 0.973 & 0.973 & 0.0005 & \textbf{+0.001} \\
+\cline{2-6}
+ & ICM & 0.770 & 0.973 & 0.0005 & -0.202 \\
+\cline{2-6}
+ & RIDE & 0.973 & 0.973 & 0.0005 & \textbf{+0.000} \\
+\hline
+\multirow{3}{*}{Empty-16x16} & COUNT & 0.959 & 0.975 & 0.0005 & -0.017 \\
+\cline{2-6}
+ & ICM & 0.575 & 0.975 & 0.0005 & -0.400 \\
+\cline{2-6}
+ & RIDE & 0.941 & 0.974 & 0.001 & -0.033 \\
+\hline
+\multirow{3}{*}{KeyCorridor} & COUNT & 0.831 & 0.828 & 0.001 & \textbf{+0.003} \\
+\cline{2-6}
+ & ICM & 0.000 & 0.457 & 0.001 & -0.457 \\
+\cline{2-6}
+ & RIDE & 0.548 & 0.703 & 0.001 & -0.155 \\
+\hline
+\multirow{3}{*}{LavaCrossing} & COUNT & 0.372 & 0.530 & 0.001 & -0.158 \\
+\cline{2-6}
+ & ICM & 0.077 & 0.060 & 0.001 & \textbf{+0.017} \\
+\cline{2-6}
+ & RIDE & 0.543 & 0.512 & 0.0005 & \textbf{+0.031} \\
+\hline
+\multirow{3}{*}{RedBlueDoors} & COUNT & 0.653 & 0.779 & 0.0005 & -0.126 \\
+\cline{2-6}
+ & ICM & 0.273 & 0.737 & 0.0005 & -0.464 \\
+\cline{2-6}
+ & RIDE & 0.593 & 0.794 & 0.001 & -0.201 \\
+\hline
+\multirow{3}{*}{UnlockPickup} & COUNT & 0.936 & 0.936 & 0.0005 & \textbf{+0.000} \\
+\cline{2-6}
+ & ICM & 0.716 & 0.937 & 0.001 & -0.221 \\
+\cline{2-6}
+ & RIDE & 0.536 & 0.369 & 0.0005 & \textbf{+0.167} \\
+\hline
+\end{tabular}
+\end{table}

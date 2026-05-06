@@ -1,0 +1,24 @@
+\begin{table}[H]
+\centering
+\caption{Final reward (mean of last 10 logged episodes, averaged over 5 seeds, $\pm$ standard deviation) for the RIDE module. Best entry per row in bold.}
+\label{tab:final_reward_ride}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{|l|c|c|c|c|c|c|c|}
+\hline
+\textbf{Environment} & \textbf{PPO} & \textbf{$\beta{=}0.0005$} & \textbf{$\beta{=}0.001$} & \textbf{$\beta{=}0.005$} & \textbf{$\beta{=}0.01$} & \textbf{$\beta{=}0.05$} & \textbf{CARE-RIDE} \\
+\hline
+DoorKey-8x8 & 0.584{\scriptsize $\pm$ 0.533} & 0.973{\scriptsize $\pm$ 0.001} & 0.777{\scriptsize $\pm$ 0.434} & 0.972{\scriptsize $\pm$ 0.002} & 0.775{\scriptsize $\pm$ 0.433} & 0.010{\scriptsize $\pm$ 0.018} & \textbf{0.973{\scriptsize $\pm$ 0.000}} \\
+\hline
+Empty-16x16 & 0.974{\scriptsize $\pm$ 0.002} & 0.973{\scriptsize $\pm$ 0.004} & \textbf{0.974{\scriptsize $\pm$ 0.004}} & 0.969{\scriptsize $\pm$ 0.002} & 0.962{\scriptsize $\pm$ 0.002} & 0.000{\scriptsize $\pm$ 0.000} & 0.941{\scriptsize $\pm$ 0.058} \\
+\hline
+KeyCorridor & 0.038{\scriptsize $\pm$ 0.085} & 0.611{\scriptsize $\pm$ 0.206} & \textbf{0.703{\scriptsize $\pm$ 0.219}} & 0.486{\scriptsize $\pm$ 0.363} & 0.092{\scriptsize $\pm$ 0.120} & 0.014{\scriptsize $\pm$ 0.006} & 0.548{\scriptsize $\pm$ 0.332} \\
+\hline
+LavaCrossing & 0.263{\scriptsize $\pm$ 0.283} & 0.512{\scriptsize $\pm$ 0.307} & 0.505{\scriptsize $\pm$ 0.292} & 0.000{\scriptsize $\pm$ 0.000} & 0.064{\scriptsize $\pm$ 0.142} & 0.000{\scriptsize $\pm$ 0.000} & \textbf{0.543{\scriptsize $\pm$ 0.325}} \\
+\hline
+RedBlueDoors & 0.285{\scriptsize $\pm$ 0.391} & 0.329{\scriptsize $\pm$ 0.450} & \textbf{0.794{\scriptsize $\pm$ 0.028}} & 0.662{\scriptsize $\pm$ 0.370} & 0.645{\scriptsize $\pm$ 0.362} & 0.012{\scriptsize $\pm$ 0.027} & 0.593{\scriptsize $\pm$ 0.335} \\
+\hline
+UnlockPickup & 0.268{\scriptsize $\pm$ 0.387} & 0.369{\scriptsize $\pm$ 0.506} & 0.178{\scriptsize $\pm$ 0.398} & 0.135{\scriptsize $\pm$ 0.302} & 0.001{\scriptsize $\pm$ 0.003} & 0.000{\scriptsize $\pm$ 0.000} & \textbf{0.536{\scriptsize $\pm$ 0.489}} \\
+\hline
+\end{tabular}
+\end{table}

@@ -3,54 +3,66 @@
 
 This appendix collects the full proofs of the formal results stated in Chapter~\ref{ch:methodology}. Each section below corresponds to a single proposition, lemma, or corollary, and may be read independently of the others. Throughout the appendix, expectations are taken with respect to the on-policy distribution induced by the current policy $\pi_\theta$ unless stated otherwise; standard regularity conditions (existence of first and second moments, measurability of $\beta_\psi$, and a state-visitation distribution that admits a density) are assumed.
 
-\section{Proof of Proposition 3.1: Target Recovery}
+\section{Proof of Proposition 3.1: Optimal State-Dependent Scaling}
 \label{app:proof_target}
 
 \begin{proof}
-We work with the population form of the learning-progress loss in Equation~\eqref{eq:progress_loss}:
+We work with the population form of the correlation loss in Equation~\eqref{eq:corr_loss}, identifying minibatch averages with expectations under the on-policy state-visitation distribution. Let $\tilde I_t = \beta_\psi(s_t)\, I_t^{+,m}$ denote the weighted intrinsic reward and $\hat A_t^{E}$ the extrinsic GAE advantage computed from $V_\mu$. Setting $\lambda_\text{reg} = 0$ in Equation~\eqref{eq:beta_loss} reduces the Beta-network objective to $L_\beta(\psi) = L_\text{corr}(\psi)$, which equals the negative population correlation
 \begin{equation*}
-L_\text{progress}(\psi) \;=\; \mathbb{E}\!\left[ \bigl( \beta_\psi(s_t) - \tau(s_t) \bigr)^2 \right],
+L_\text{corr}(\psi) \;=\; -\,\frac{\mathbb{E}[(\tilde I - \mu_{\tilde I})(\hat A^{E} - \mu_{\hat A^{E}})]}{\sigma_{\tilde I}\, \sigma_{\hat A^{E}}}
 \end{equation*}
-where the expectation is over the on-policy state-visitation distribution. Setting $\lambda_\text{reg} = 0$ in Equation~\eqref{eq:beta_loss} reduces the Beta-network objective to $L_\beta(\psi) = \gamma_p\, L_\text{progress}(\psi)$, which is minimized at the same $\psi$ as $L_\text{progress}$.
+in the population limit, where $\mu_\bullet$ and $\sigma_\bullet$ are the marginal mean and standard deviation under the state-visitation distribution. By the assumption that the cross-moment is nonzero almost everywhere, both standard deviations are strictly positive.
 
-Assume the Beta Network has sufficient capacity to represent any measurable function $f : \mathcal{S} \to [\beta_\text{min}, \beta_\text{max}]$. Then minimizing $L_\text{progress}$ over $\psi$ is equivalent to minimizing
+Fix a state $s \in \mathcal{S}$ visited with positive probability, and treat $f(s) := \beta_\psi(s)$ as a free real parameter (this is admissible because the Beta Network has sufficient capacity to represent any measurable function into $[\beta_\text{min}, \beta_\text{max}]$). Conditioning on $s_t = s$,
 \begin{equation*}
-\mathcal{J}(f) \;=\; \mathbb{E}\!\left[ \bigl( f(s_t) - \tau(s_t) \bigr)^2 \right]
+\frac{\partial}{\partial f(s)}\, \mathbb{E}\!\left[\, \tilde I_t\,\hat A_t^{E} \,\right]
+\;=\; \mathbb{P}(s_t = s)\, \mathbb{E}\!\left[\, I_t^{+,m}\,\hat A_t^{E} \,\big|\, s_t = s \right],
 \end{equation*}
-over the function class. Conditioning on $s_t$ and applying the law of total expectation,
+because $\tilde I_t = f(s)\, I_t^{+,m}$ at $s_t = s$. Likewise, $\partial \mu_{\tilde I} / \partial f(s) = \mathbb{P}(s_t = s)\, \mathbb{E}[I_t^{+,m} \mid s_t = s]$ and the contribution of $f(s)$ to $\sigma_{\tilde I}$ is positive and bounded away from zero by the nondegeneracy assumption. Setting the partial derivative of the population $L_\text{corr}$ to zero at an interior optimum $f^\star(s) \in (\beta_\text{min}, \beta_\text{max})$ and rearranging, the first-order condition reads
 \begin{equation*}
-\mathcal{J}(f) \;=\; \mathbb{E}\!\left[ \mathbb{E}\bigl[ (f(s_t) - \tau(s_t))^2 \,\big|\, s_t \bigr] \right].
+\mathbb{E}\!\left[\, I_t^{+,m}\,\bigl( \hat A_t^{E} - \mu_{\hat A^{E}} \bigr) \,\big|\, s_t = s \right]
+\;=\;
+c(s)\, \bigl( f^\star(s) - \mu_{\tilde I} \bigr),
 \end{equation*}
-Because $f(s_t)$ is constant given $s_t$, the inner expectation is the conditional mean-squared error of $f(s_t)$ as a predictor of $\tau(s_t)$. By the standard $L^2$-projection argument, this inner expectation is uniquely minimized (over choices of $f(s_t)$) by the conditional mean
+for some scalar $c(s) > 0$ that depends on the variance terms but not on the sign of $f^\star(s) - \beta_0$. Because $\mu_{\tilde I}$ collapses to $\beta_0\,\mathbb{E}[I^{+,m}]$ when $f \equiv \beta_0$, the sign of the right-hand side at a small perturbation of $\beta_0$ matches the sign of $f^\star(s) - \beta_0$, while the sign of the left-hand side is fixed by $\mathbb{E}[\, I^{+,m}\,\hat A^{E} \mid s_t = s]$. Consequently,
 \begin{equation*}
-f^\star(s) \;=\; \mathbb{E}\!\left[\, \tau(s_t) \,\big|\, s_t = s \right].
+\mathrm{sign}\bigl( f^\star(s) - \beta_0 \bigr)
+\;=\;
+\mathrm{sign}\!\left(\, \mathbb{E}[\, I_t^{+,m}\, \hat A_t^{E} \mid s_t = s \,] \right),
 \end{equation*}
-Since $\tau(s_t) \in [\beta_\text{min}, \beta_\text{max}]$ almost surely (by Equation~\eqref{eq:beta_target} together with $\beta_0 \in [\beta_\text{min}, \beta_\text{max}]$), the conditional mean $f^\star(s)$ also lies in $[\beta_\text{min}, \beta_\text{max}]$, and is therefore representable by the Beta Network. Setting $\beta_{\psi^\star}(s) = f^\star(s)$ yields a global minimizer of $L_\beta$, and the strict convexity of the squared loss makes it unique on the support of the state-visitation distribution.
+which is the announced equality. When the unconstrained interior solution falls outside $[\beta_\text{min}, \beta_\text{max}]$, the bound is active and $f^\star(s) \in \{\beta_\text{min}, \beta_\text{max}\}$; the same monotone relationship in the conditional cross-moment is preserved at the clipped optimum.
 \end{proof}
 
 \section{Proof of Proposition 3.2: Gradient Direction}
 \label{app:proof_gradient}
 
 \begin{proof}
-Fix a state $s \in \mathcal{S}$ visited with positive probability, and treat $\beta_\psi(s)$ as a free real-valued parameter for the purpose of computing the partial derivative. The population form of the progress loss can be written as
+Fix a state $s \in \mathcal{S}$ visited with positive probability, and treat $\beta_\psi(s)$ as a free real-valued parameter for the purpose of computing the partial derivative. By the chain rule,
 \begin{equation*}
-L_\text{progress}(\psi)
-\;=\; \mathbb{E}\!\left[ \bigl( \beta_\psi(s_t) - \tau(s_t) \bigr)^2 \right]
-\;=\; \int_\mathcal{S} p(s')\, \mathbb{E}\!\left[ (\beta_\psi(s') - \tau(s_t))^2 \,\big|\, s_t = s' \right] \, \mathrm{d}s',
+\frac{\partial L_\text{corr}}{\partial \beta_\psi(s)}
+\;=\;
+-\, \frac{\partial}{\partial \beta_\psi(s)}\, \mathbb{E}\!\left[\, \hat I_t^{z}\,\hat A_t^{z} \,\right],
 \end{equation*}
-where $p(s')$ denotes the density of the state-visitation distribution. Differentiating with respect to $\beta_\psi(s)$, only the term at $s' = s$ contributes,
+with $\hat I_t^{z} = (\tilde I_t - \mu_{\tilde I})/\sigma_{\tilde I}$ and $\hat A_t^{z} = (\hat A_t^{E} - \mu_{\hat A^{E}})/\sigma_{\hat A^{E}}$. Because $\hat A_t^{z}$ does not depend on $\psi$, only the dependence of $\hat I_t^{z}$ on $\beta_\psi(s)$ contributes. The numerator $\tilde I_t - \mu_{\tilde I}$ depends on $\beta_\psi(s)$ at the rate
+\begin{equation*}
+\frac{\partial (\tilde I_t - \mu_{\tilde I})}{\partial \beta_\psi(s)}
+\;=\;
+\mathbb{1}\{s_t = s\}\, I_t^{+,m} \;-\; \mathbb{P}(s_t = s)\, \mathbb{E}[\, I_t^{+,m} \mid s_t = s\,],
+\end{equation*}
+where the second term comes from differentiating the marginal mean $\mu_{\tilde I}$. Substituting and integrating against $\hat A_t^{z}$ under the on-policy distribution gives
 \begin{align*}
-\frac{\partial L_\text{progress}}{\partial \beta_\psi(s)}
-&\;=\; p(s)\, \frac{\partial}{\partial \beta_\psi(s)}\, \mathbb{E}\!\left[ (\beta_\psi(s) - \tau(s_t))^2 \,\big|\, s_t = s \right] \\
-&\;=\; p(s)\, \mathbb{E}\!\left[ 2\, (\beta_\psi(s) - \tau(s_t)) \,\big|\, s_t = s \right] \\
-&\;=\; 2\, p(s)\, \Bigl( \beta_\psi(s) - \mathbb{E}[\tau(s_t) \mid s_t = s] \Bigr).
+\frac{\partial L_\text{corr}}{\partial \beta_\psi(s)}
+&\;=\;
+-\,\frac{1}{\sigma_{\tilde I}}\,\mathbb{E}\!\left[\, \bigl( \mathbb{1}\{s_t = s\}\, I_t^{+,m} - \mathbb{P}(s_t = s)\, \mathbb{E}[I_t^{+,m} \mid s_t = s] \bigr)\, \hat A_t^{z} \,\right]\\
+&\;=\;
+-\,\frac{\mathbb{P}(s_t = s)}{\sigma_{\tilde I}}\,
+\Bigl(
+\mathbb{E}[\, I_t^{+,m}\, \hat A_t^{z} \mid s_t = s\,]
+\;-\;
+\mathbb{E}[\, I_t^{+,m} \mid s_t = s\,]\, \mathbb{E}[\, \hat A_t^{z}\,]
+\Bigr),
 \end{align*}
-Identifying $\mathbb{P}(s_t = s) \equiv p(s)$ in the discrete or density-weighted sense, this gives the announced identity
-\begin{equation*}
-\frac{\partial L_\text{progress}}{\partial \beta_\psi(s)}
-\;=\; 2\, \mathbb{P}(s_t = s)\, \Bigl( \beta_\psi(s) - \mathbb{E}[\tau(s_t) \mid s_t = s] \Bigr).
-\end{equation*}
-In particular, the partial derivative is positive when $\beta_\psi(s)$ overshoots the conditional mean target and negative when it undershoots, so a gradient descent step on $L_\text{progress}$ shrinks $\beta_\psi(s)$ in the first case and grows it in the second. Repeated application of this update therefore drives $\beta_\psi(s)$ monotonically toward $\mathbb{E}[\tau(s_t) \mid s_t = s]$ until equality is reached, in agreement with Proposition~\ref{prop:target_recovery}.
+where we used $\mathbb{E}[\mathbb{1}\{s_t = s\}\, X] = \mathbb{P}(s_t = s)\, \mathbb{E}[X \mid s_t = s]$ and the fact that $\hat A_t^{z}$ has zero \emph{marginal} mean by construction. The difference inside the parentheses is the conditional covariance between $I^{+,m}$ and $\hat A^{z}$ at $s$. The partial derivative is therefore negative whenever this conditional covariance is positive, so a gradient descent step on $L_\text{corr}$ \emph{increases} $\beta_\psi(s)$ in that case; the converse holds when the conditional covariance is negative.
 \end{proof}
 
 \section{Proof of Lemma 3.1: Bounded Shaped Reward}
@@ -86,10 +98,10 @@ C_\text{meta} \;=\; O(K\, T\, |\theta|).
 \end{equation*}
 
 \textbf{CARE training step.} A CARE training step for the Beta Network on the same buffer of $T$ transitions consists of:
-(i) one forward pass through the critic $V_\mu$ for each of the $T$ states to obtain TD errors $\delta_t$, at cost $O(T\, |\mu|)$, where $|\mu| \le |\theta|$;
-(ii) construction of the target $\tau(s_t)$ from $|\delta_t|$, which is $O(T)$;
+(i) one forward pass through the critic $V_\mu$ for each of the $T$ states to obtain the extrinsic GAE advantages $\hat A_t^{E}$, at cost $O(T\, |\mu|)$, where $|\mu| \le |\theta|$ (this pass is in any case required by PPO and adds no marginal cost relative to the policy update);
+(ii) computation of the GAE recursion in Equation~\eqref{eq:gae_advantage_ext}, which is $O(T)$;
 (iii) one forward pass through $\beta_\psi$ for each of the $T$ states, at cost $O(T\, |\psi|)$; and
-(iv) one backward pass through $\beta_\psi$ to compute $\nabla_\psi L_\beta$, at cost $O(T\, |\psi|)$.
+(iv) one backward pass through $\beta_\psi$ to compute $\nabla_\psi L_\beta$ from the correlation in Equation~\eqref{eq:corr_loss}, at cost $O(T\, |\psi|)$.
 The dominant term is $O(T\, |\psi|)$ when $|\psi| \ge |\mu|$ in practice; otherwise the bound becomes $O(T\, |\mu|)$, which is still strictly smaller than $C_\text{meta}$ by a factor of $K$. We summarize the time complexity per buffer update as
 \begin{equation*}
 C_\text{CARE} \;=\; O(T\, |\psi|).
@@ -108,27 +120,29 @@ When $|\psi| \ll |\theta|$ and $K \ge 1$, this ratio is large, which is what the
 \begin{proof}
 We treat the two regimes separately.
 
-\textbf{(i) Cold-start regime.} Suppose $\max_t R_t^E \le 0$ within the rollout buffer. By Equation~\eqref{eq:beta_target}, the target reduces to the constant value $\tau(s_t) \equiv \beta_0$ for every $t$. Substituting into the progress loss in Equation~\eqref{eq:progress_loss},
+\textbf{(i) Cold-start regime.} Suppose the rollout buffer contains no informative extrinsic signal, modeled formally as $\hat A_t^{E} = 0$ for almost every $t$. Then the marginal standard deviation $\sigma_{\hat A^{E}}$ is zero, so the standardized advantage $\hat A_t^{z}$ in Equation~\eqref{eq:zscored_signals} is undefined; in the implementation, the small constant $\varepsilon$ in the denominator keeps the operation numerically stable, but the standardized quantity is then a vanishing-magnitude random variable concentrated at zero. Substituting $\hat A_t^{z} \to 0$ into Equation~\eqref{eq:corr_loss},
 \begin{equation*}
-L_\text{progress}(\psi) \;=\; \mathbb{E}\!\left[ (\beta_\psi(s_t) - \beta_0)^2 \right].
+L_\text{corr}(\psi) \;\to\; -\,\frac{1}{B}\sum_{t=1}^{B}\, \hat I_t^{z}\cdot 0 \;=\; 0
+\quad\text{identically in } \psi,
 \end{equation*}
-This squared expectation is non-negative and equals zero if and only if $\beta_\psi(s) = \beta_0$ almost everywhere with respect to the state-visitation distribution. The regularizer $L_\text{reg}$ in Equation~\eqref{eq:reg_loss} is also non-negative and is minimized at the same point, since $L_\text{reg}(\psi) = \mathbb{E}[(\log \beta_\psi(s_t) - \log \beta_0)^2]$ vanishes precisely when $\beta_\psi(s) = \beta_0$. Therefore both terms of $L_\beta$ in Equation~\eqref{eq:beta_loss} are simultaneously minimized at $\beta_{\psi^\star}(s) \equiv \beta_0$.
+so the gradient $\nabla_\psi L_\text{corr}$ vanishes everywhere. The full Beta-network objective therefore reduces to $L_\beta(\psi) = \lambda_\text{reg}\, L_\text{reg}(\psi)$ with $L_\text{reg}(\psi) = \mathbb{E}[(\log \beta_\psi(s_t) - \log \beta_0)^2]$. This expectation is non-negative and equals zero if and only if $\beta_\psi(s) = \beta_0$ almost everywhere on the state-visitation support. Hence $\beta_{\psi^\star}(s) \equiv \beta_0$ is the unique minimizer.
 
-\textbf{(ii) Strong regularization regime.} The progress loss $L_\text{progress}$ is non-negative and bounded above by $(\beta_\text{max} - \beta_\text{min})^2$ since both $\beta_\psi(s_t)$ and $\tau(s_t)$ take values in $[\beta_\text{min}, \beta_\text{max}]$. The regularizer $L_\text{reg}$ is non-negative. Let $\psi^\star_\lambda$ be any minimizer of $L_\beta$ at regularization weight $\lambda \equiv \lambda_\text{reg}$. By optimality, comparing against any reference $\psi_0$ that satisfies $\beta_{\psi_0}(s) \equiv \beta_0$ (for which $L_\text{reg}(\psi_0) = 0$),
+\textbf{(ii) Strong regularization regime.} The correlation loss $L_\text{corr}$ takes values in $[-1, 1]$ by the Cauchy--Schwarz inequality applied to z-scored variables, so $|L_\text{corr}(\psi)| \le 1$ uniformly in $\psi$. The regularizer $L_\text{reg}$ is non-negative. Let $\psi^\star_\lambda$ be any minimizer of $L_\beta$ at regularization weight $\lambda \equiv \lambda_\text{reg}$. By optimality, comparing against any reference $\psi_0$ that satisfies $\beta_{\psi_0}(s) \equiv \beta_0$ (for which $L_\text{reg}(\psi_0) = 0$ and $|L_\text{corr}(\psi_0)| \le 1$),
 \begin{equation*}
-\gamma_p\, L_\text{progress}(\psi^\star_\lambda) \;+\; \lambda\, L_\text{reg}(\psi^\star_\lambda)
-\;\le\; \gamma_p\, L_\text{progress}(\psi_0) \;+\; 0.
+L_\text{corr}(\psi^\star_\lambda) \;+\; \lambda\, L_\text{reg}(\psi^\star_\lambda)
+\;\le\; L_\text{corr}(\psi_0) \;+\; 0
+\;\le\; 1.
 \end{equation*}
 Rearranging,
 \begin{equation*}
 \lambda\, L_\text{reg}(\psi^\star_\lambda)
-\;\le\; \gamma_p\, \bigl( L_\text{progress}(\psi_0) - L_\text{progress}(\psi^\star_\lambda) \bigr)
-\;\le\; \gamma_p\, (\beta_\text{max} - \beta_\text{min})^2.
+\;\le\; 1 \;-\; L_\text{corr}(\psi^\star_\lambda)
+\;\le\; 2,
 \end{equation*}
-Dividing by $\lambda > 0$,
+where the last inequality uses $L_\text{corr}(\psi^\star_\lambda) \ge -1$. Dividing by $\lambda > 0$,
 \begin{equation*}
 L_\text{reg}(\psi^\star_\lambda)
-\;\le\; \frac{\gamma_p\, (\beta_\text{max} - \beta_\text{min})^2}{\lambda}
+\;\le\; \frac{2}{\lambda}
 \;\xrightarrow[\lambda \to \infty]{}\; 0.
 \end{equation*}
 Hence $\mathbb{E}[(\log \beta_{\psi^\star_\lambda}(s_t) - \log \beta_0)^2] \to 0$, which implies $\log \beta_{\psi^\star_\lambda}(s_t) \to \log \beta_0$ in $L^2$ under the state-visitation distribution. Equivalently, $\beta_{\psi^\star_\lambda}(s) \to \beta_0$ in $L^2$ on the support of that distribution.

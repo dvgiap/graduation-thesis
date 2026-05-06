@@ -409,6 +409,8 @@ OUTPUT thesis.toc
 INPUT .\thesis.lof
 INPUT .\thesis.lof
 INPUT thesis.lof
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnr9.tfm
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnr7.tfm
 OUTPUT thesis.lof
 INPUT .\thesis.lot
 INPUT .\thesis.lot
@@ -427,8 +429,6 @@ INPUT .\chapters\notations.tex
 INPUT .\chapters\notations.tex
 INPUT .\chapters\notations.tex
 INPUT chapters\notations.tex
-INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnr9.tfm
-INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnr7.tfm
 INPUT .\chapters\c1\c1_introduction.tex
 INPUT .\chapters\c1\c1_introduction.tex
 INPUT .\chapters\c1\c1_introduction.tex
@@ -449,26 +449,19 @@ INPUT .\chapters\c3\c3_chapter.tex
 INPUT .\chapters\c3\c3_chapter.tex
 INPUT .\chapters\c3\c3_chapter.tex
 INPUT chapters\c3\c3_chapter.tex
-INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnr10.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmr10.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmmi10.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmsy10.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmex10.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex8.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam7.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam5.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm7.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm5.tfm
-INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnr8.tfm
-INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnr6.tfm
+INPUT .\figures\system_architecture.png
+INPUT .\figures\system_architecture.png
+INPUT .\figures\system_architecture.png
+INPUT .\figures\system_architecture.png
+INPUT .\figures\system_architecture.png
+INPUT .\figures\system_architecture.png
+INPUT .\figures\system_architecture.png
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnti9.tfm
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnti7.tfm
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnbxti10.tfm
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnbx9.tfm
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnbx7.tfm
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnr10.tfm
 INPUT .\chapters\c4\c4_chapter.tex
 INPUT .\chapters\c4\c4_chapter.tex
 INPUT .\chapters\c4\c4_chapter.tex
@@ -478,6 +471,145 @@ INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\vntex\t5cmtt.fd
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\vntex\t5cmtt.fd
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\vntex\t5cmtt.fd
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vntt12.tfm
+INPUT .\figures\all_envs_count.png
+INPUT .\figures\all_envs_count.png
+INPUT .\figures\all_envs_count.png
+INPUT .\figures\all_envs_count.png
+INPUT .\figures\all_envs_count.png
+INPUT .\figures\all_envs_count.png
+INPUT .\figures\all_envs_count.png
+INPUT .\tables\final_reward_count.tex
+INPUT .\tables\final_reward_count.tex
+INPUT .\tables\final_reward_count.tex
+INPUT .\tables\final_reward_count.tex
+INPUT tables\final_reward_count.tex
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnr9.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex9.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam7.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam5.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm7.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm5.tfm
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnbx9.tfm
+INPUT .\figures\all_envs_icm.png
+INPUT .\figures\all_envs_icm.png
+INPUT .\figures\all_envs_icm.png
+INPUT .\figures\all_envs_icm.png
+INPUT .\figures\all_envs_icm.png
+INPUT .\figures\all_envs_icm.png
+INPUT .\figures\all_envs_icm.png
+INPUT .\tables\final_reward_icm.tex
+INPUT .\tables\final_reward_icm.tex
+INPUT .\tables\final_reward_icm.tex
+INPUT .\tables\final_reward_icm.tex
+INPUT tables\final_reward_icm.tex
+INPUT .\figures\all_envs_ride.png
+INPUT .\figures\all_envs_ride.png
+INPUT .\figures\all_envs_ride.png
+INPUT .\figures\all_envs_ride.png
+INPUT .\figures\all_envs_ride.png
+INPUT .\figures\all_envs_ride.png
+INPUT .\figures\all_envs_ride.png
+INPUT .\tables\final_reward_ride.tex
+INPUT .\tables\final_reward_ride.tex
+INPUT .\tables\final_reward_ride.tex
+INPUT .\tables\final_reward_ride.tex
+INPUT tables\final_reward_ride.tex
+INPUT .\tables\sample_efficiency_count.tex
+INPUT .\tables\sample_efficiency_count.tex
+INPUT .\tables\sample_efficiency_count.tex
+INPUT .\tables\sample_efficiency_count.tex
+INPUT tables\sample_efficiency_count.tex
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnr8.tfm
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnr6.tfm
+INPUT .\tables\sample_efficiency_icm.tex
+INPUT .\tables\sample_efficiency_icm.tex
+INPUT .\tables\sample_efficiency_icm.tex
+INPUT .\tables\sample_efficiency_icm.tex
+INPUT tables\sample_efficiency_icm.tex
+INPUT .\tables\sample_efficiency_ride.tex
+INPUT .\tables\sample_efficiency_ride.tex
+INPUT .\tables\sample_efficiency_ride.tex
+INPUT .\tables\sample_efficiency_ride.tex
+INPUT tables\sample_efficiency_ride.tex
+INPUT .\tables\care_vs_best_fixed.tex
+INPUT .\tables\care_vs_best_fixed.tex
+INPUT .\tables\care_vs_best_fixed.tex
+INPUT .\tables\care_vs_best_fixed.tex
+INPUT tables\care_vs_best_fixed.tex
+INPUT .\figures\aggregate_summary.png
+INPUT .\figures\aggregate_summary.png
+INPUT .\figures\aggregate_summary.png
+INPUT .\figures\aggregate_summary.png
+INPUT .\figures\aggregate_summary.png
+INPUT .\figures\aggregate_summary.png
+INPUT .\figures\aggregate_summary.png
+INPUT .\figures\care_dynamics_count.png
+INPUT .\figures\care_dynamics_count.png
+INPUT .\figures\care_dynamics_count.png
+INPUT .\figures\care_dynamics_count.png
+INPUT .\figures\care_dynamics_count.png
+INPUT .\figures\care_dynamics_count.png
+INPUT .\figures\care_dynamics_count.png
+INPUT .\figures\care_dynamics_icm.png
+INPUT .\figures\care_dynamics_icm.png
+INPUT .\figures\care_dynamics_icm.png
+INPUT .\figures\care_dynamics_icm.png
+INPUT .\figures\care_dynamics_icm.png
+INPUT .\figures\care_dynamics_icm.png
+INPUT .\figures\care_dynamics_icm.png
+INPUT .\figures\care_dynamics_ride.png
+INPUT .\figures\care_dynamics_ride.png
+INPUT .\figures\care_dynamics_ride.png
+INPUT .\figures\care_dynamics_ride.png
+INPUT .\figures\care_dynamics_ride.png
+INPUT .\figures\care_dynamics_ride.png
+INPUT .\figures\care_dynamics_ride.png
+INPUT .\figures\care_beta_hist_count.png
+INPUT .\figures\care_beta_hist_count.png
+INPUT .\figures\care_beta_hist_count.png
+INPUT .\figures\care_beta_hist_count.png
+INPUT .\figures\care_beta_hist_count.png
+INPUT .\figures\care_beta_hist_count.png
+INPUT .\figures\care_beta_hist_count.png
+INPUT .\figures\care_beta_hist_icm.png
+INPUT .\figures\care_beta_hist_icm.png
+INPUT .\figures\care_beta_hist_icm.png
+INPUT .\figures\care_beta_hist_icm.png
+INPUT .\figures\care_beta_hist_icm.png
+INPUT .\figures\care_beta_hist_icm.png
+INPUT .\figures\care_beta_hist_icm.png
+INPUT .\figures\care_beta_hist_ride.png
+INPUT .\figures\care_beta_hist_ride.png
+INPUT .\figures\care_beta_hist_ride.png
+INPUT .\figures\care_beta_hist_ride.png
+INPUT .\figures\care_beta_hist_ride.png
+INPUT .\figures\care_beta_hist_ride.png
+INPUT .\figures\care_beta_hist_ride.png
+INPUT .\figures\profile_count.png
+INPUT .\figures\profile_count.png
+INPUT .\figures\profile_count.png
+INPUT .\figures\profile_count.png
+INPUT .\figures\profile_count.png
+INPUT .\figures\profile_count.png
+INPUT .\figures\profile_count.png
+INPUT .\figures\profile_icm.png
+INPUT .\figures\profile_icm.png
+INPUT .\figures\profile_icm.png
+INPUT .\figures\profile_icm.png
+INPUT .\figures\profile_icm.png
+INPUT .\figures\profile_icm.png
+INPUT .\figures\profile_icm.png
+INPUT .\figures\profile_ride.png
+INPUT .\figures\profile_ride.png
+INPUT .\figures\profile_ride.png
+INPUT .\figures\profile_ride.png
+INPUT .\figures\profile_ride.png
+INPUT .\figures\profile_ride.png
+INPUT .\figures\profile_ride.png
 INPUT .\chapters\conclusion.tex
 INPUT .\chapters\conclusion.tex
 INPUT .\chapters\conclusion.tex
@@ -503,8 +635,6 @@ INPUT C:\Users\JS\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\tcrm12
 INPUT C:\Users\JS\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\tcrm1200.pk
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmex10.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmex10.pfb
-INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi10.pfb
-INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi10.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi12.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi12.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi6.pfb
@@ -513,8 +643,6 @@ INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi8.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi8.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi9.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi9.pfb
-INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr10.pfb
-INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr10.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr12.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr12.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr6.pfb
@@ -525,8 +653,6 @@ INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr9.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr9.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb
-INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy6.pfb
-INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy6.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy9.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy9.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\symbols\msbm10.pfb

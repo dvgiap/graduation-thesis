@@ -1,0 +1,24 @@
+\begin{table}[H]
+\centering
+\caption{Sample efficiency for the ICM module: first timestep at which the across-seed mean reward reaches $0.7 \cdot r^\star_\text{env}$, where $r^\star_\text{env}$ is the best mean final reward across all conditions on that environment. Lower is better; $\infty$ means the threshold was never reached within the $10^6$-step budget. Best entry per row in bold.}
+\label{tab:sample_efficiency_icm}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{|l|c|c|c|c|c|c|c|}
+\hline
+\textbf{Environment} & \textbf{PPO} & \textbf{$\beta{=}0.0005$} & \textbf{$\beta{=}0.001$} & \textbf{$\beta{=}0.005$} & \textbf{$\beta{=}0.01$} & \textbf{$\beta{=}0.05$} & \textbf{CARE-ICM} \\
+\hline
+DoorKey-8x8 & $\infty$ & \textbf{218k} & 246k & 522k & 920k & $\infty$ & 272k \\
+\hline
+Empty-16x16 & 280k & \textbf{240k} & 616k & 780k & $\infty$ & $\infty$ & $\infty$ \\
+\hline
+KeyCorridor & $\infty$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ \\
+\hline
+LavaCrossing & $\infty$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ & $\infty$ \\
+\hline
+RedBlueDoors & $\infty$ & 664k & \textbf{450k} & $\infty$ & $\infty$ & $\infty$ & $\infty$ \\
+\hline
+UnlockPickup & $\infty$ & 354k & \textbf{256k} & 876k & 634k & $\infty$ & 278k \\
+\hline
+\end{tabular}
+\end{table}

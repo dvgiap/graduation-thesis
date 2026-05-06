@@ -65,10 +65,20 @@
 \AtBeginDocument{\addtolength\cftchapnumwidth{\widthof{\bfseries Chapter }}}
 \setlength{\parskip}{0.4em}
 \setlength{\parindent}{0pt}
-\renewcommand{\contentsname}{Contents}
-\renewcommand{\listfigurename}{List of Figures}
-\renewcommand{\listtablename}{List of Tables}
-\renewcommand{\bibname}{References}
+% The `vietnam` babel package resets caption/label names at \begin{document}
+% time, so preamble-level \renewcommand is overwritten.  Use \AtBeginDocument
+% to run these overrides *after* babel's language hooks fire, ensuring English
+% labels throughout the body while Vietnamese hyphenation patterns still load.
+\AtBeginDocument{%
+  \renewcommand{\contentsname}{Contents}%
+  \renewcommand{\listfigurename}{List of Figures}%
+  \renewcommand{\listtablename}{List of Tables}%
+  \renewcommand{\bibname}{References}%
+  \renewcommand{\figurename}{Figure}%
+  \renewcommand{\tablename}{Table}%
+  \renewcommand{\proofname}{Proof}%
+  \renewcommand{\appendixname}{Appendix}%
+}
 
 \title{Research on Intrinsic Motivation for Reinforcement Learning}
 \author{Doan Van Giap}

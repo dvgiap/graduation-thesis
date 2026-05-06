@@ -1,0 +1,24 @@
+\begin{table}[H]
+\centering
+\caption{Final reward (mean of last 10 logged episodes, averaged over 5 seeds, $\pm$ standard deviation) for the COUNT module. Best entry per row in bold.}
+\label{tab:final_reward_count}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{|l|c|c|c|c|c|c|c|}
+\hline
+\textbf{Environment} & \textbf{PPO} & \textbf{$\beta{=}0.0005$} & \textbf{$\beta{=}0.001$} & \textbf{$\beta{=}0.005$} & \textbf{$\beta{=}0.01$} & \textbf{$\beta{=}0.05$} & \textbf{CARE-COUNT} \\
+\hline
+DoorKey-8x8 & 0.584{\scriptsize $\pm$ 0.533} & 0.973{\scriptsize $\pm$ 0.001} & 0.956{\scriptsize $\pm$ 0.039} & 0.972{\scriptsize $\pm$ 0.002} & 0.957{\scriptsize $\pm$ 0.004} & 0.007{\scriptsize $\pm$ 0.015} & \textbf{0.973{\scriptsize $\pm$ 0.001}} \\
+\hline
+Empty-16x16 & 0.974{\scriptsize $\pm$ 0.002} & \textbf{0.975{\scriptsize $\pm$ 0.000}} & 0.974{\scriptsize $\pm$ 0.001} & 0.966{\scriptsize $\pm$ 0.008} & 0.952{\scriptsize $\pm$ 0.030} & 0.007{\scriptsize $\pm$ 0.015} & 0.959{\scriptsize $\pm$ 0.028} \\
+\hline
+KeyCorridor & 0.038{\scriptsize $\pm$ 0.085} & 0.731{\scriptsize $\pm$ 0.185} & 0.828{\scriptsize $\pm$ 0.103} & 0.595{\scriptsize $\pm$ 0.235} & 0.185{\scriptsize $\pm$ 0.185} & 0.002{\scriptsize $\pm$ 0.003} & \textbf{0.831{\scriptsize $\pm$ 0.068}} \\
+\hline
+LavaCrossing & 0.263{\scriptsize $\pm$ 0.283} & 0.345{\scriptsize $\pm$ 0.322} & \textbf{0.530{\scriptsize $\pm$ 0.305}} & 0.350{\scriptsize $\pm$ 0.373} & 0.137{\scriptsize $\pm$ 0.227} & 0.000{\scriptsize $\pm$ 0.000} & 0.372{\scriptsize $\pm$ 0.317} \\
+\hline
+RedBlueDoors & 0.285{\scriptsize $\pm$ 0.391} & \textbf{0.779{\scriptsize $\pm$ 0.047}} & 0.637{\scriptsize $\pm$ 0.357} & 0.274{\scriptsize $\pm$ 0.370} & 0.065{\scriptsize $\pm$ 0.038} & 0.016{\scriptsize $\pm$ 0.022} & 0.653{\scriptsize $\pm$ 0.269} \\
+\hline
+UnlockPickup & 0.268{\scriptsize $\pm$ 0.387} & 0.936{\scriptsize $\pm$ 0.006} & 0.930{\scriptsize $\pm$ 0.015} & 0.923{\scriptsize $\pm$ 0.015} & 0.842{\scriptsize $\pm$ 0.158} & 0.074{\scriptsize $\pm$ 0.050} & \textbf{0.936{\scriptsize $\pm$ 0.002}} \\
+\hline
+\end{tabular}
+\end{table}

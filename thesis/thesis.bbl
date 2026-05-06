@@ -1,5 +1,12 @@
 \begin{thebibliography}{10}
 
+\bibitem{agarwal2021deep}
+Rishabh Agarwal, Max Schwarzer, Pablo~Samuel Castro, Aaron Courville, and
+  Marc~G. Bellemare.
+\newblock Deep reinforcement learning at the edge of the statistical precipice.
+\newblock In {\em Advances in Neural Information Processing Systems (NeurIPS)},
+  2021.
+
 \bibitem{mnih2015human}
 Volodymyr Mnih, Koray Kavukcuoglu, David Silver, Andrei~A. Rusu, Joel Veness,
   Marc~G. Bellemare, Alex Graves, Martin Riedmiller, Andreas~K. Fidjeland,
@@ -134,6 +141,13 @@ John Schulman, Philipp Moritz, Sergey Levine, Michael Jordan, and Pieter
 \newblock High-dimensional continuous control using generalized advantage
   estimation.
 \newblock In {\em International Conference on Learning Representations}, 2016.
+
+\bibitem{andres2025impact}
+Alain Andres, Esther Villar-Rodriguez, and Javier~Del Ser.
+\newblock On the impact of the reward modulation in curiosity-driven
+  reinforcement learning.
+\newblock In {\em Proceedings of the AAAI Conference on Artificial
+  Intelligence}, 2025.
 
 \bibitem{schulman2017ppo}
 John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov.

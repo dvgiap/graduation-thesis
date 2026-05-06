@@ -27,41 +27,8 @@ The proposed system instantiates this formulation with a parameterized $\beta_\p
 
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}[
-    >=latex,
-    node distance=1.4cm,
-    box/.style={draw, rounded corners, minimum width=2.5cm, minimum height=1.0cm, align=center, font=\small},
-    op/.style={draw, circle, minimum size=0.7cm, font=\small, inner sep=1pt},
-    arr/.style={->, thick},
-    darr/.style={->, thick, dashed},
-]
-    % Top row: pipeline producing the intrinsic reward
-    \node[box, fill=green!15] (env) {Environment};
-    \node[box, fill=gray!15, right=1.6cm of env] (buf) {Rollout\\Buffer};
-    \node[box, fill=blue!15, right=1.6cm of buf] (mod) {Intrinsic\\Module $m$};
-    \draw[arr] (env) -- node[above, font=\footnotesize]{transitions} (buf);
-    \draw[arr] (buf) -- node[above, font=\footnotesize]{$s_t,\,a_t,\,s_{t+1}$} (mod);
-
-    % Middle row: Beta Network and shaped-reward composition
-    \node[box, fill=orange!15, below=1.8cm of buf] (beta) {Beta Network\\$\beta_\psi(s_t)$};
-    \node[op, right=1.0cm of beta] (mult) {$\times$};
-    \node[op, right=1.0cm of mult] (plus) {$+$};
-    \node[box, fill=red!10, right=1.2cm of plus] (ppo) {PPO Update};
-
-    \draw[arr] (buf.south) -- node[right, font=\footnotesize, near end]{$s_t$} (beta.north);
-    \draw[arr] (beta) -- node[above, font=\footnotesize]{$\beta_\psi$} (mult);
-    \draw[arr] (mod.south) |- node[right, font=\footnotesize, near end]{$I_t^{+,m}$} (mult.north);
-    \draw[arr] (mult) -- node[above, font=\footnotesize]{$\beta_\psi\, I_t^{+,m}$} (plus);
-    \draw[arr] (buf.east) -| node[right, font=\footnotesize, near start]{$R_t^E$} (plus.north);
-    \draw[arr] (plus) -- node[above, font=\footnotesize]{$\bar r_t$} (ppo);
-
-    % Bottom row: Progress loss and feedback to Beta Network
-    \node[box, fill=yellow!20, below=1.6cm of mult] (loss) {Progress Loss\\$L_\text{progress}$};
-    \draw[darr] (beta.south) |- node[above, font=\footnotesize, near end]{$\beta_\psi(s_t)$} (loss.west);
-    \draw[darr] (ppo.south) |- node[right, font=\footnotesize, near end]{$\tau(s_t) \leftarrow |\delta_t|$} (loss.east);
-    \draw[darr, blue!60!black] (loss.west) -- ++(-1.6,0) |- node[left, font=\footnotesize, near end]{$\nabla_\psi L_\beta$} (beta.south west);
-\end{tikzpicture}
-\caption{CARE system architecture. The intrinsic module block stands for any of the three implementations evaluated in this thesis (count-based, ICM, or RIDE); the rest of the pipeline is identical across modules. Solid arrows trace the forward computation that produces the shaped reward $\bar r_t$ used by PPO. Dashed arrows indicate the auxiliary signals used to update the Beta Network $\beta_\psi$ via the learning-progress objective $L_\beta$, with the $\tau(s_t)$ target derived from the magnitude of the critic's TD error $\delta_t$.}
+\includegraphics[width=\linewidth]{figures/system_architecture.png}
+\caption{CARE system architecture. The intrinsic module block stands for any of the three implementations evaluated in this thesis (count-based, ICM, or RIDE); the rest of the pipeline is identical across modules. Solid arrows trace the forward computation that produces the shaped reward $\bar r_t$ used by PPO. Dashed arrows indicate the auxiliary signals used to update the Beta Network $\beta_\psi$ via the correlation objective $L_\beta$, which couples the weighted intrinsic reward $\beta_\psi\, I_t^{+,m}$ to the extrinsic GAE advantage $\hat A_t^{E}$ obtained from the critic.}
 \label{fig:care_arch}
 \end{figure}
 
@@ -138,12 +105,12 @@ I_t^+ \;=\; \max\!\left( 0,\; \frac{I_t - \mu_I}{\sigma_I + \varepsilon} \right)
 \end{equation}
 \end{definition}
 
-This preprocessing suppresses transitions whose intrinsic signal is below the batch average and retains relatively surprising transitions. We use the generic notation $I_t^{+,m}$ to emphasize that the same pipeline (standardization, Beta Network, progress loss) is applied identically across all three modules; only the upstream raw signal $I_t$ differs.
+This preprocessing suppresses transitions whose intrinsic signal is below the batch average and retains relatively surprising transitions. We use the generic notation $I_t^{+,m}$ to emphasize that the same pipeline (standardization, Beta Network, correlation objective) is applied identically across all three modules; only the upstream raw signal $I_t$ differs.
 
 \section{Correlation-Aware Reward Exploration}
 \label{sec:care}
 
-CARE introduces a state-dependent scaling function $\beta_\psi(s_t)$ between the intrinsic reward generator and the policy update. This section formalizes the network, its learning-progress training objective, and the reasons for choosing a first-order optimization scheme over a meta-gradient one.
+CARE introduces a state-dependent scaling function $\beta_\psi(s_t)$ between the intrinsic reward generator and the policy update. This section formalizes the network, its advantage-correlation training objective, and the reasons for choosing a first-order optimization scheme over a meta-gradient one.
 
 \subsection{Beta Network}
 \label{sec:beta_network}
@@ -155,7 +122,7 @@ The \emph{Beta Network} is a parameterized map
 \beta_\psi : \mathcal{S} \to [\beta_\text{min}, \beta_\text{max}], \qquad 0 < \beta_\text{min} < \beta_\text{max} < \infty,
 \label{eq:beta_network}
 \end{equation}
-which assigns a positive, bounded scaling factor to each state. In the implemented system, $\beta_\psi$ is realized as a feed-forward MLP with a 2-layer encoder of width $256$ and a 2-layer head of widths $[256, 128, 1]$ that produces $\log \beta_\psi(s_t)$. The output is mapped to $[\beta_\text{min}, \beta_\text{max}] = [0.0001, 0.1]$ via $\beta_\psi(s_t) = \exp\bigl( \mathrm{clamp}(\log \beta_\psi(s_t),\, \log \beta_\text{min},\, \log \beta_\text{max}) \bigr)$. The complete architecture and weight initialization are listed in Appendix~\ref{app:architectures}, Table~\ref{tab:beta_arch}.
+which assigns a positive, bounded scaling factor to each state. In the implemented system, $\beta_\psi$ is realized as a feed-forward MLP with a 2-layer encoder of width $256$ and a 2-layer head of widths $[256, 128, 1]$ that produces $\log \beta_\psi(s_t)$. The output is mapped to $[\beta_\text{min}, \beta_\text{max}] = [10^{-4},\, 5\times 10^{-2}]$ via $\beta_\psi(s_t) = \exp\bigl( \mathrm{clamp}(\log \beta_\psi(s_t),\, \log \beta_\text{min},\, \log \beta_\text{max}) \bigr)$. The reference value used by the regularizer in Section~\ref{sec:progress_loss} is the geometric mean $\beta_0 = \sqrt{\beta_\text{min}\,\beta_\text{max}} \approx 2.24 \times 10^{-3}$; this choice places $\log \beta_0$ at the midpoint of $[\log \beta_\text{min},\, \log \beta_\text{max}]$, so the prior is symmetric in log space. The complete architecture and weight initialization are listed in Appendix~\ref{app:architectures}, Table~\ref{tab:beta_arch}.
 \end{definition}
 
 For an intrinsic reward module $m$, the scaled intrinsic reward at time step $t$ is
@@ -178,77 +145,93 @@ Proof in Appendix~\ref{app:proof_bounded}.
 
 Lemma~\ref{lem:bounded_shaped} is what allows CARE to be inserted into a PPO training loop without introducing additional instability: the shaped reward differs from the extrinsic reward by a bounded perturbation, so the policy gradient remains bounded under the same regularity conditions that PPO already requires.
 
-\subsection{Learning-Progress Objective}
+\subsection{Advantage-Correlation Objective}
 \label{sec:progress_loss}
 
-The Beta Network is trained so that $\beta_\psi(s_t)$ becomes large at states where the value function exhibits large temporal-difference (TD) error and small at states where the value function is well-fitted. The intuition is that a large $|\delta_t|$ marks a state where extrinsic learning is still in progress, so additional intrinsic exploration there is informative; conversely, when $|\delta_t|$ is small, the agent already has a stable value estimate and additional curiosity bonus would not improve learning.
+The Beta Network is trained so that the weighted intrinsic reward $\beta_\psi(s_t)\, I_t^{+,m}$ is large precisely at states where the extrinsic critic indicates that the policy is outperforming its own baseline, and small where it is not. The signal that captures this notion of ``where extrinsic learning still has slack'' is the extrinsic GAE advantage $\hat A_t^{E}$, which is already computed by the PPO pipeline. Coupling intrinsic curiosity to extrinsic advantage through a within-batch correlation objective gives a first-order training rule for $\psi$ that requires no additional rollouts and no differentiation through the policy update.
 
-For each transition in the rollout buffer, the one-step TD error of the extrinsic value function is
+For each transition in the rollout buffer, the GAE \cite{schulman2016gae} advantage with respect to the extrinsic value function $V_\mu$ is
 \begin{equation}
-\delta_t \;=\; R_t^E \;+\; \gamma\, V_\mu(s_{t+1}) (1 - d_t) \;-\; V_\mu(s_t),
-\label{eq:td_error}
+\hat A_t^{E} \;=\; \sum_{l=0}^{T-1-t} (\gamma\,\lambda)^l\, \delta_{t+l}^{E},
+\qquad
+\delta_t^{E} \;=\; R_t^{E} \;+\; \gamma\, V_\mu(s_{t+1})\,(1 - d_t) \;-\; V_\mu(s_t),
+\label{eq:gae_advantage_ext}
 \end{equation}
-where $d_t \in \{0, 1\}$ is the episode termination flag and $V_\mu$ is the current critic. The per-state target $\tau(s_t)$ is then defined as a piecewise normalization of $|\delta_t|$ onto the Beta Network's output range:
-\begin{equation}
-\tau(s_t) \;=\; \begin{cases}
-\beta_\text{min} + (\beta_\text{max} - \beta_\text{min}) \dfrac{|\delta_t|}{\max_{t'} |\delta_{t'}| + \varepsilon}, & \text{if } \max_{t'} R^E_{t'} > 0, \\[6pt]
-\beta_0, & \text{otherwise (cold-start fallback).}
-\end{cases}
-\label{eq:beta_target}
-\end{equation}
-The cold-start fallback addresses the regime in which a batch contains no positive extrinsic reward; in that case $|\delta_t|$ reflects mainly initialization noise of the critic, and would be a poor target for $\beta_\psi$. Defaulting $\tau$ to the reference value $\beta_0$ (set to a small value $\beta_0 = 0.001$ near $\beta_\text{min}$, so that intrinsic reward stays small until extrinsic signal informs $\beta_\psi$) in that regime makes CARE behave like a fixed-coefficient method until extrinsic signal becomes informative.
+with discount factor $\gamma$, GAE bias-variance trade-off $\lambda$, and episode termination flag $d_t \in \{0,1\}$. The advantages used to supervise $\psi$ are computed without rollout-level normalization so that the cross-state magnitude of $\hat A_t^{E}$, which carries the signal-strength information needed to weight intrinsic curiosity, is preserved.
 
-The learning-progress loss is the mean-squared deviation of $\beta_\psi$ from this target:
+The Beta Network is trained on minibatches of size $B$ drawn from the rollout buffer. Within each minibatch, both the weighted intrinsic reward and the extrinsic advantage are standardized:
 \begin{equation}
-L_\text{progress}(\psi) \;=\; \mathbb{E}\!\left[ \bigl( \beta_\psi(s_t) - \tau(s_t) \bigr)^2 \right].
-\label{eq:progress_loss}
+\tilde I_t \;=\; \beta_\psi(s_t)\, I_t^{+,m},
+\qquad
+\hat I_t^{z} \;=\; \frac{\tilde I_t - \mu_{\tilde I}}{\sigma_{\tilde I} + \varepsilon},
+\qquad
+\hat A_t^{z} \;=\; \frac{\hat A_t^{E} - \mu_{\hat A^E}}{\sigma_{\hat A^E} + \varepsilon},
+\label{eq:zscored_signals}
 \end{equation}
-A log-space regularizer pulls $\beta_\psi$ toward the reference value $\beta_0$ to prevent degenerate scaling and to control variance during early training:
+where $\mu_\bullet, \sigma_\bullet$ denote the empirical mean and (biased) standard deviation over the minibatch, and $\varepsilon > 0$ is a numerical-stability constant. The correlation loss is the negative within-batch sample correlation of $\tilde I_t$ and $\hat A_t^{E}$:
+\begin{equation}
+L_\text{corr}(\psi)
+\;=\;
+-\,\frac{1}{B}\sum_{t=1}^{B}\, \hat I_t^{z}\,\hat A_t^{z}.
+\label{eq:corr_loss}
+\end{equation}
+Minimizing $L_\text{corr}$ is equivalent to maximizing the Pearson correlation between $\tilde I$ and $\hat A^{E}$ over the minibatch, since the z-scored variables have unit variance by construction.
+
+A log-space regularizer pulls $\beta_\psi$ toward the reference value $\beta_0 = \sqrt{\beta_\text{min}\,\beta_\text{max}}$ to prevent degenerate scaling and to control variance during early training:
 \begin{equation}
 L_\text{reg}(\psi) \;=\; \mathbb{E}\!\left[ \bigl( \log \beta_\psi(s_t) - \log \beta_0 \bigr)^2 \right].
 \label{eq:reg_loss}
 \end{equation}
 The complete Beta-network objective is
 \begin{equation}
-L_\beta(\psi) \;=\; \gamma_p\, L_\text{progress}(\psi) \;+\; \lambda_\text{reg}\, L_\text{reg}(\psi),
+L_\beta(\psi) \;=\; L_\text{corr}(\psi) \;+\; \lambda_\text{reg}\, L_\text{reg}(\psi),
 \label{eq:beta_loss}
 \end{equation}
-with $\gamma_p > 0$ the progress weight and $\lambda_\text{reg} > 0$ the regularization weight.
+with $\lambda_\text{reg} > 0$ the regularization weight. No separate weighting on $L_\text{corr}$ is needed because z-scoring fixes its scale to $O(1)$ regardless of the underlying magnitudes of $\tilde I$ and $\hat A^{E}$.
 
-The progress loss has a clean statistical interpretation, and its gradient has a clean directional one.
+The use of \emph{advantage} rather than the discounted return $G_t^{E}$ \cite{andres2025impact} is intentional. The variance of $G_t^{E}$ is dominated by episode position --- early-episode states see almost the full $\sum_{k} \gamma^{k} R_{t+k}^{E}$ while late-episode states see almost none --- so a correlation between $\tilde I_t$ and $G_t^{E}$ is largely a correlation between $\tilde I_t$ and ``time remaining in the episode''. Subtracting the value baseline $V_\mu(s_t)$, as GAE does, removes this confound and yields a per-state credit signal: $\hat A_t^{E}$ is positive at states where the realized extrinsic return outperforms the critic's prediction, and negative where it underperforms. Coupling $\beta_\psi$ to this signal therefore amplifies intrinsic curiosity at states where extrinsic learning is still revising upward and attenuates it elsewhere.
 
-\begin{proposition}[Target Recovery]
+The correlation objective has a clean statistical interpretation, and its gradient has a clean directional one.
+
+\begin{proposition}[Optimal State-Dependent Scaling]
 \label{prop:target_recovery}
-Assume the Beta Network has sufficient expressive capacity to represent any measurable function $\mathcal{S} \to [\beta_\text{min}, \beta_\text{max}]$. In the population limit and with $\lambda_\text{reg} = 0$, the unique minimizer $\psi^\star$ of $L_\beta(\psi)$ satisfies
+Assume the Beta Network has sufficient expressive capacity to represent any measurable function $\mathcal{S} \to [\beta_\text{min}, \beta_\text{max}]$, and that within the rollout buffer the standardized advantage $\hat A_t^{z}$ has nonzero conditional cross-moment with the standardized intrinsic signal at almost every state. In the population limit and with $\lambda_\text{reg} = 0$, every minimizer $\psi^\star$ of $L_\beta(\psi)$ satisfies
 \begin{equation*}
-\beta_{\psi^\star}(s) \;=\; \mathbb{E}\!\left[\, \tau(s_t) \,\big|\, s_t = s \right]
+\mathrm{sign}\bigl( \beta_{\psi^\star}(s) - \beta_0 \bigr)
+\;=\;
+\mathrm{sign}\!\left(\, \mathbb{E}\!\left[\, I_t^{+,m}\,\hat A_t^{E} \,\big|\, s_t = s \right] \right)
 \end{equation*}
-for every state $s$ visited with positive probability.
+at the unconstrained interior minimum, and is clipped to $\beta_\text{min}$ or $\beta_\text{max}$ on the boundary. Equivalently, $\beta_{\psi^\star}$ is monotone in the conditional cross-moment between $I^{+,m}$ and $\hat A^{E}$.
 Proof in Appendix~\ref{app:proof_target}.
 \end{proposition}
 
-Proposition~\ref{prop:target_recovery} states that, in the population limit, the optimal Beta Network simply outputs the conditional mean of the target $\tau$ at each state. Because $\tau$ is a monotone normalization of $|\delta_t|$, this means that $\beta_{\psi^\star}(s)$ is large precisely at states where the extrinsic value function has, on average, larger TD error. The next result describes the gradient direction during training.
+Proposition~\ref{prop:target_recovery} states that, in the population limit and ignoring regularization, the optimal Beta Network amplifies intrinsic reward (i.e., outputs a value above $\beta_0$) at states where the intrinsic signal $I^{+,m}$ tends to co-vary with positive extrinsic advantage, and attenuates it otherwise. The next result describes the gradient direction during training.
 
 \begin{proposition}[Gradient Direction]
 \label{prop:gradient_direction}
-For every state $s \in \mathcal{S}$ visited with positive probability,
+Treat $\beta_\psi(s)$ as a free parameter at a state $s \in \mathcal{S}$ visited with positive probability. Then
 \begin{equation*}
-\frac{\partial L_\text{progress}}{\partial \beta_\psi(s)}
+\frac{\partial L_\text{corr}}{\partial \beta_\psi(s)}
 \;=\;
-2\, \mathbb{P}(s_t = s)\, \Bigl( \beta_\psi(s) \;-\; \mathbb{E}[\tau(s_t) \mid s_t = s] \Bigr).
+-\,\frac{\mathbb{P}(s_t = s)}{\sigma_{\tilde I}}\,
+\Bigl(
+\mathbb{E}[\, I_t^{+,m}\,\hat A_t^{z} \mid s_t = s \,]
+\;-\;
+\mathbb{E}[\, I_t^{+,m} \mid s_t = s\,]\, \mathbb{E}[\, \hat A_t^{z} \,]
+\Bigr).
 \end{equation*}
-In particular, gradient descent on $L_\text{progress}$ moves $\beta_\psi(s)$ monotonically toward the conditional mean target $\mathbb{E}[\tau(s_t) \mid s_t = s]$.
+In particular, gradient descent on $L_\text{corr}$ increases $\beta_\psi(s)$ when $I^{+,m}$ and $\hat A^{E}$ are conditionally positively correlated at $s$, and decreases it when they are conditionally negatively correlated.
 Proof in Appendix~\ref{app:proof_gradient}.
 \end{proposition}
 
-Proposition~\ref{prop:gradient_direction} makes the central design intuition of CARE explicit: a gradient step adjusts $\beta_\psi(s)$ toward the local average of $\tau$, which by Equation~\eqref{eq:beta_target} is a normalized measure of how unsettled the value function still is at state $s$. The Beta Network is therefore supervised by the agent's own learning progress as observed through the critic's TD error.
+Proposition~\ref{prop:gradient_direction} makes the central design intuition of CARE explicit: a gradient step pushes $\beta_\psi(s)$ in the direction in which adjusting the intrinsic weight at $s$ would increase the within-batch correlation between weighted curiosity and extrinsic advantage. The Beta Network is therefore supervised by the agreement between the intrinsic generator and the extrinsic critic, with no auxiliary network beyond the critic itself.
 
 \subsection{First-Order Optimization vs. Meta-Gradient}
 \label{sec:first_order}
 
-A natural alternative to the learning-progress objective is to learn the intrinsic reward weighting via meta-gradients, as in Learning Intrinsic Rewards for Policy Gradient methods (LIRPG) \cite{zheng2018lirpg}. In that approach, the parameters of the intrinsic reward function are updated so that, after a policy update using the shaped reward, the resulting policy maximizes the extrinsic objective. This requires differentiating through one or more inner policy updates, which is computationally expensive and can be unstable in deep reinforcement learning settings.
+A natural alternative to the correlation objective is to learn the intrinsic reward weighting via meta-gradients, as in Learning Intrinsic Rewards for Policy Gradient methods (LIRPG) \cite{zheng2018lirpg}. In that approach, the parameters of the intrinsic reward function are updated so that, after a policy update using the shaped reward, the resulting policy maximizes the extrinsic objective. This requires differentiating through one or more inner policy updates, which is computationally expensive and can be unstable in deep reinforcement learning settings.
 
-CARE replaces the meta-gradient by a first-order objective that supervises $\beta_\psi$ directly through the target $\tau(s_t)$ derived from the critic's TD error. The cost difference is quantified by the following result.
+CARE replaces the meta-gradient by a first-order objective that supervises $\beta_\psi$ directly through the within-batch correlation between weighted intrinsic reward and extrinsic GAE advantage. The cost difference is quantified by the following result.
 
 \begin{proposition}[Computational Cost]
 \label{prop:cost}
@@ -256,19 +239,19 @@ Per Beta-network update of size $T$, let $K$ denote the number of inner policy u
 Proof in Appendix~\ref{app:proof_cost}.
 \end{proposition}
 
-In the implemented system, $|\psi|$ is roughly two orders of magnitude smaller than $|\theta|$, so the cost reduction is substantial. The price of this efficiency is a weaker form of supervision: instead of optimizing $\beta_\psi$ directly for downstream extrinsic performance, CARE optimizes it for a TD-error-based target that serves as a proxy for that performance. The next result describes two regimes in which this proxy reduces to the trivial fixed-coefficient case.
+In the implemented system, $|\psi|$ is roughly two orders of magnitude smaller than $|\theta|$, so the cost reduction is substantial. The price of this efficiency is a weaker form of supervision: instead of optimizing $\beta_\psi$ directly for downstream extrinsic performance, CARE optimizes it for the within-batch correlation between weighted intrinsic curiosity and extrinsic advantage, which serves as a proxy for that performance. The next result describes two regimes in which this proxy reduces to the trivial fixed-coefficient case.
 
 \begin{corollary}[Degeneration to Fixed Coefficient]
 \label{cor:degeneration}
 Consider the objective $L_\beta(\psi)$ in Equation~\eqref{eq:beta_loss}. There are two regimes in which every minimizer $\psi^\star$ satisfies $\beta_{\psi^\star}(s) \to \beta_0$ uniformly in $s$, and the shaped reward in Equation~\eqref{eq:combined_reward} reduces to the fixed-coefficient form $\bar r_t = R_t^E + \beta_0\, I_t^{+,m}$:
 \begin{enumerate}
-    \item[(i)] \textbf{Cold-start regime}: when $\max_{t} R_t^E \le 0$ within the rollout buffer, the target $\tau$ in Equation~\eqref{eq:beta_target} reduces to $\beta_0$ by definition, and the unique minimizer of $L_\text{progress}$ is $\beta_\psi \equiv \beta_0$.
+    \item[(i)] \textbf{Cold-start regime}: when the rollout buffer contains no informative extrinsic signal, so that $\hat A_t^{E} = 0$ for almost every $t$, the standardization in Equation~\eqref{eq:zscored_signals} is undefined and the correlation gradient vanishes. In this regime $\nabla_\psi L_\text{corr} = 0$ identically, and the only active term in $L_\beta$ is the regularizer $L_\text{reg}$, whose unique minimizer is $\beta_\psi \equiv \beta_0$.
     \item[(ii)] \textbf{Strong regularization regime}: as $\lambda_\text{reg} \to \infty$, the regularization term dominates and forces $\log \beta_\psi(s) \to \log \beta_0$ in $L^2$ under the state-visitation distribution, equivalently $\beta_\psi(s) \to \beta_0$.
 \end{enumerate}
 Proof in Appendix~\ref{app:proof_degeneration}.
 \end{corollary}
 
-Corollary~\ref{cor:degeneration} has both a theoretical and a practical reading. Theoretically, it shows that CARE strictly contains the fixed-coefficient baseline PPO + module $m$ (with coefficient $\beta_0$) as a limiting case for any intrinsic reward module $m$, so the framework cannot perform worse than that baseline once the regularization is appropriately tuned and the cold-start fallback is in place. Practically, the cold-start branch is essential in extremely sparse environments: when the agent has not yet encountered any extrinsic reward, the TD error reflects only initialization noise of the critic, and falling back to $\beta_0$ prevents CARE from amplifying that noise into the policy update.
+Corollary~\ref{cor:degeneration} has both a theoretical and a practical reading. Theoretically, it shows that CARE strictly contains the fixed-coefficient baseline PPO + module $m$ (with coefficient $\beta_0$) as a limiting case for any intrinsic reward module $m$, so the framework cannot perform worse than that baseline once the regularization is appropriately tuned. Practically, the cold-start branch describes the behavior of CARE in extremely sparse environments: when no extrinsic reward has yet been encountered, the GAE advantage carries no signal-strength information across states, the correlation gradient is approximately zero-mean noise, and the regularizer alone keeps $\beta_\psi$ anchored at $\beta_0$ until extrinsic signal appears.
 
 \section{Algorithm}
 \label{sec:algorithm}
@@ -321,12 +304,7 @@ L^V(\mu) \;=\; \mathbb{E}_t\!\left[ \bigl( V_\mu(s_t) - \hat V_t \bigr)^2 \right
 
 The four losses correspond to four parameter groups: $\theta$ (actor), $\mu$ (critic), $\eta$ (ICM), and $\psi$ (Beta Network). Gradients flow through each loss with respect to its own parameter group only; in particular, the Beta Network is not updated through $L^\text{PPO}$ and the policy is not updated through $L_\beta$.
 
-\textbf{Target Beta Network.} To decouple the $\beta$ used for reward shaping from the $\beta$ currently being optimized, the implementation maintains a \emph{target} Beta Network $\bar\beta_{\bar\psi}$ alongside the live network $\beta_\psi$. After each $\psi$-step, the target is soft-updated via a Polyak average:
-\begin{equation}
-\bar\psi \;\leftarrow\; (1 - \tau_\text{target})\,\bar\psi \;+\; \tau_\text{target}\,\psi,
-\label{eq:polyak_beta}
-\end{equation}
-with $\tau_\text{target} = 0.01$. The shaped reward in Equation~\eqref{eq:combined_reward} uses $\bar\beta_{\bar\psi}(s_t)$ (the lagged target) rather than $\beta_\psi(s_t)$ (the live network). This breaks the within-update circular dependency: $\delta_t$ is derived from $V_\mu$ shaped by the \emph{previous} target $\bar\psi$, so it is not influenced by the $\psi$ update occurring in the same iteration.
+\textbf{Live Beta Network in shaped reward.} Following \cite{andres2025impact}, the shaped reward in Equation~\eqref{eq:combined_reward} uses the \emph{live} Beta Network $\beta_\psi$ rather than a Polyak-averaged target. The within-update circular dependency that a target network would otherwise mitigate is broken instead by the temporal ordering of the four loss updates: the extrinsic GAE advantage $\hat A_t^{E}$ used in $L_\beta$ is computed from the critic $V_\mu$ at its values \emph{before} the current PPO update, so it is fixed when $\psi$ is updated and is not affected by the in-progress actor or critic step. A single $\psi$-step is taken per outer PPO iteration, in line with Algorithm 1 of \cite{andres2025impact}.
 
 \subsection{Training Procedure}
 \label{sec:training_procedure}
@@ -343,10 +321,10 @@ Algorithm~\ref{alg:care} specifies the complete CARE training loop. One iteratio
     \State Compute raw intrinsic rewards $I_t$ via the module-specific equation in Section~\ref{sec:intrinsic_modules}
     \State Standardize and rectify to obtain $I_t^+$ via Equation~\eqref{eq:icm_standardized}
     \State Update intrinsic-module parameters $\eta$ (no-op if module is non-parametric, e.g., count-based)
-    \State Compute extrinsic TD errors $\delta_t$ via Equation~\eqref{eq:td_error} and targets $\tau(s_t)$ via Equation~\eqref{eq:beta_target}
-    \State Update Beta Network: $\psi \gets \psi - \psi_\text{lr}\, \nabla_\psi L_\beta(\psi)$
-    \State Compute shaped rewards $\bar r_t = R_t^E + \beta_\psi(s_t)\, I_t^+$
-    \State Compute GAE advantages $\hat A_t$ from $\{\bar r_t\}$ and $V_\mu$
+    \State Compute extrinsic GAE advantages $\hat A_t^{E}$ via Equation~\eqref{eq:gae_advantage_ext} from the current critic $V_\mu$ (no rollout-level normalization)
+    \State Update Beta Network with one gradient step: $\psi \gets \psi - \psi_\text{lr}\, \nabla_\psi L_\beta(\psi;\, \{s_t, I_t^+, \hat A_t^{E}\})$, with $L_\beta$ defined in Equation~\eqref{eq:beta_loss}
+    \State Compute shaped rewards $\bar r_t = R_t^E + \beta_\psi(s_t)\, I_t^+$ using the updated $\psi$
+    \State Compute GAE advantages $\hat A_t$ from $\{\bar r_t\}$ and $V_\mu$ (rollout-level normalization for PPO)
     \For{$\text{epoch} = 1, 2, \dots, K$}
         \State Update actor: $\theta \gets \theta - \theta_\text{lr}\, \nabla_\theta L^\text{PPO}(\theta)$
         \State Update critic: $\mu \gets \mu - \mu_\text{lr}\, \nabla_\mu L^V(\mu)$
@@ -355,4 +333,4 @@ Algorithm~\ref{alg:care} specifies the complete CARE training loop. One iteratio
 \end{algorithmic}
 \end{algorithm}
 
-The algorithm preserves the standard PPO update structure (lines 11--14) and inserts only two additional optimization steps (lines 6 and 8) before the shaped reward is computed. This modularity is important: the same template applies if ICM is replaced by a count-based bonus or by RIDE, with only Equations~\eqref{eq:icm_raw}--\eqref{eq:icm_standardized} being substituted by the corresponding module-specific computation. Concrete numerical values for all hyperparameters and network architectures used in the experiments are listed in Appendix~\ref{app:implementation}.
+The algorithm preserves the standard PPO update structure (lines 11--14) and inserts only two additional optimization steps (lines 6 and 8) before the shaped reward is computed. The extrinsic-only advantage $\hat A_t^{E}$ used in line 7 is computed from the same critic $V_\mu$ that drives the PPO update, but with rollout-level normalization disabled so that its cross-state magnitude is preserved. The PPO advantage $\hat A_t$ in line 10 is computed afresh from the shaped reward and is normalized in the standard way; the two advantage computations therefore differ only in their reward stream and in whether normalization is applied. This modularity is important: the same template applies if ICM is replaced by a count-based bonus or by RIDE, with only Equations~\eqref{eq:icm_raw}--\eqref{eq:icm_standardized} being substituted by the corresponding module-specific computation. Concrete numerical values for all hyperparameters and network architectures used in the experiments are listed in Appendix~\ref{app:implementation}.

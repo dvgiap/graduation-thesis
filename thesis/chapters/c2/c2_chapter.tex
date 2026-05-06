@@ -1,4 +1,5 @@
 \chapter{Literature Review}
+\label{ch:literature}
 
 This chapter summarizes the published studies most relevant to this thesis. It first formalizes reinforcement learning in sparse-reward environments and discusses why standard exploration is insufficient in such settings. It then reviews representative intrinsic motivation methods, including count-based and curiosity-driven exploration, and surveys prior attempts to adapt the weighting of intrinsic rewards. The chapter concludes by identifying the specific gap that motivates the proposed methodology in Chapter 3.
 
@@ -13,10 +14,10 @@ An episodic reinforcement learning (RL) problem is commonly modeled as a Markov 
     \node[draw, rectangle, rounded corners, minimum width=2.6cm, minimum height=1.1cm,
           fill=green!10, below of=agent, node distance=3.2cm] (env) {Environment};
     \draw[->, thick] (agent.east) -- ++(2.4,0)
-        node[midway, above] {action $a_t$}
+        node[midway, above] {$a_t$}
         |- (env.east);
     \draw[->, thick] (env.west) -- ++(-2.4,0)
-        node[midway, above] {state $s_{t+1}$, reward $R_t^E$}
+        node[midway, above] {$s_{t+1}$, $R_t^E$}
         |- (agent.west);
 \end{tikzpicture}
 \caption{Standard agent--environment interaction loop in reinforcement learning. The agent observes a state, executes an action sampled from its policy, and receives a new state along with an extrinsic reward from the environment.}
