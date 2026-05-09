@@ -2,8 +2,8 @@
 \centering
 \caption{Final reward (mean of last 10 logged episodes, averaged over 5 seeds, $\pm$ standard deviation) for the COUNT module. Best entry per row in bold.}
 \label{tab:final_reward_count}
-\small
 \setlength{\tabcolsep}{4pt}
+\resizebox{\linewidth}{!}{%
 \begin{tabular}{|l|c|c|c|c|c|c|c|}
 \hline
 \textbf{Environment} & \textbf{PPO} & \textbf{$\beta{=}0.0005$} & \textbf{$\beta{=}0.001$} & \textbf{$\beta{=}0.005$} & \textbf{$\beta{=}0.01$} & \textbf{$\beta{=}0.05$} & \textbf{CARE-COUNT} \\
@@ -20,5 +20,6 @@ RedBlueDoors & 0.285{\scriptsize $\pm$ 0.391} & \textbf{0.779{\scriptsize $\pm$ 
 \hline
 UnlockPickup & 0.268{\scriptsize $\pm$ 0.387} & 0.936{\scriptsize $\pm$ 0.006} & 0.930{\scriptsize $\pm$ 0.015} & 0.923{\scriptsize $\pm$ 0.015} & 0.842{\scriptsize $\pm$ 0.158} & 0.074{\scriptsize $\pm$ 0.050} & \textbf{0.936{\scriptsize $\pm$ 0.002}} \\
 \hline
-\end{tabular}
+\end{tabular}%
+}
 \end{table}

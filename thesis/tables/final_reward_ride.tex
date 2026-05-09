@@ -2,8 +2,8 @@
 \centering
 \caption{Final reward (mean of last 10 logged episodes, averaged over 5 seeds, $\pm$ standard deviation) for the RIDE module. Best entry per row in bold.}
 \label{tab:final_reward_ride}
-\small
 \setlength{\tabcolsep}{4pt}
+\resizebox{\linewidth}{!}{%
 \begin{tabular}{|l|c|c|c|c|c|c|c|}
 \hline
 \textbf{Environment} & \textbf{PPO} & \textbf{$\beta{=}0.0005$} & \textbf{$\beta{=}0.001$} & \textbf{$\beta{=}0.005$} & \textbf{$\beta{=}0.01$} & \textbf{$\beta{=}0.05$} & \textbf{CARE-RIDE} \\
@@ -20,5 +20,6 @@ RedBlueDoors & 0.285{\scriptsize $\pm$ 0.391} & 0.329{\scriptsize $\pm$ 0.450} &
 \hline
 UnlockPickup & 0.268{\scriptsize $\pm$ 0.387} & 0.369{\scriptsize $\pm$ 0.506} & 0.178{\scriptsize $\pm$ 0.398} & 0.135{\scriptsize $\pm$ 0.302} & 0.001{\scriptsize $\pm$ 0.003} & 0.000{\scriptsize $\pm$ 0.000} & \textbf{0.536{\scriptsize $\pm$ 0.489}} \\
 \hline
-\end{tabular}
+\end{tabular}%
+}
 \end{table}
