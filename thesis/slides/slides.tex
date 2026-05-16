@@ -228,48 +228,26 @@
     \item $(\cdot)_z$ : z-score trong minibatch $\Rightarrow$ tương quan Pearson trong batch.
     \item $\lambda_\text{reg} = 10^{-3}$ : kéo $\beta_\psi$ về anchor $\beta_0$ khi không có tín hiệu.
   \end{itemize}
-
-  \vspace{0.4em}
-  \begin{block}{Diễn giải gradient}
-    \footnotesize $\partial \mathcal{L}_\beta / \partial \log \beta_\psi(s)$ tỉ lệ với covariance trong batch giữa $I^+(s)$ và $\hat{A}^E(s)$:
-    \begin{itemize}\footnotesize
-      \item \textbf{Cov dương} (intrinsic cao đi đôi với advantage dương) $\Rightarrow$ \textit{tăng} $\beta$.
-      \item \textbf{Cov âm} (intrinsic cao đi đôi với advantage âm)  $\Rightarrow$ \textit{giảm} $\beta$.
-      \item \textbf{Cov $\approx 0$} (cold-start, sparse) $\Rightarrow$ regularizer chiếm ưu thế, $\beta \to \beta_0$.
-    \end{itemize}
-  \end{block}
 \end{frame}
 
 % =============================================================
-% Slide 8 - Tai sao dung advantage thay return
+% Slide 8 - Sau moi truong MiniGrid
 % =============================================================
-\begin{frame}{Tại sao dùng \textit{advantage} thay vì \textit{return}?}
-  Một lựa chọn thiết kế quan trọng của CARE: tín hiệu giám sát cho Beta Network là \textbf{GAE advantage} $\hat{A}^E$, không phải \textit{discounted return} $G^E$.
+\begin{frame}{6 môi trường MiniGrid}
+  \centering
+  \begin{tabular}{ccc}
+    \includegraphics[height=2.6cm]{env_doorkey.png} &
+    \includegraphics[height=2.6cm]{env_empty.png} &
+    \includegraphics[height=2.6cm]{env_keycorridor.png} \\
+    \scriptsize DoorKey-8x8 & \scriptsize Empty-16x16 & \scriptsize KeyCorridor-S3R3 \\[0.3em]
+    \includegraphics[height=2.6cm]{env_lavacrossing.png} &
+    \includegraphics[height=2.6cm]{env_redbluedoors.png} &
+    \includegraphics[height=2.6cm]{env_unlockpickup.png} \\
+    \scriptsize LavaCrossing-S9N3 & \scriptsize RedBlueDoors-8x8 & \scriptsize UnlockPickup \\
+  \end{tabular}
 
   \vspace{0.3em}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.5\textwidth}
-    \textbf{Vấn đề của $G^E$:}
-    \begin{itemize}\small
-      \item Variance bị chi phối bởi \textit{vị trí trong episode}.
-      \item Trạng thái đầu episode "thấy" gần như toàn bộ $\sum \gamma^k r_k$.
-      \item Trạng thái cuối episode "thấy" hầu như 0.
-      \item $\Rightarrow$ tín hiệu giả: state đầu luôn có return cao hơn, không phản ánh đóng góp riêng của state.
-    \end{itemize}
-
-    \column{0.48\textwidth}
-    \textbf{Lợi ích của $\hat{A}^E = G^E - V(s)$:}
-    \begin{itemize}\small
-      \item Trừ baseline $V(s)$ \textbf{loại bỏ confound vị trí episode}.
-      \item Tín hiệu là "vượt kỳ vọng baseline bao nhiêu" -- credit per-state sạch hơn.
-      \item Phù hợp đúng với trực giác "khuếch đại nội tại nơi chính sách đang vượt baseline".
-    \end{itemize}
-  \end{columns}
-
-  \vspace{0.3em}
-  \begin{block}{Trách nhiệm cài đặt}
-    \footnotesize Beta Network nhận \textbf{advantage thô (un-normalized)} để giữ thông tin độ lớn tín hiệu. PPO policy update vẫn dùng advantage đã chuẩn hoá như chuẩn mực.
-  \end{block}
+  \scriptsize\textcolor{softgray}{Tam giác đỏ: tác tử. Chìa vàng, cửa màu, ô lava, đích xanh khi có. Tất cả đều sparse-reward, grid rời rạc.}
 \end{frame}
 
 % =============================================================
@@ -428,7 +406,6 @@
   \vspace{1em}
   \begin{center}
     {\Huge\bfseries\color{uetblue} Xin cảm ơn Hội đồng!}\\[0.5em]
-    {\Large\itshape Sẵn sàng nhận câu hỏi.}\\[0.8em]
     \footnotesize\textcolor{softgray}{Đoàn Văn Giáp -- juuzou152@gmail.com}
   \end{center}
 \end{frame}

@@ -24,6 +24,45 @@ UnlockPickup & Extends DoorKey with an additional object manipulation stage, cre
 \end{tabular}
 \end{table}
 
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.31\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/env_doorkey.png}
+    \caption{DoorKey-8x8}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.31\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/env_empty.png}
+    \caption{Empty-16x16}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.31\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/env_keycorridor.png}
+    \caption{KeyCorridor-S3R3}
+\end{subfigure}
+
+\vspace{0.5em}
+
+\begin{subfigure}[t]{0.31\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/env_lavacrossing.png}
+    \caption{LavaCrossing-S9N3}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.31\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/env_redbluedoors.png}
+    \caption{RedBlueDoors-8x8}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.31\linewidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/env_unlockpickup.png}
+    \caption{UnlockPickup}
+\end{subfigure}
+\caption{Top-down view of the six MiniGrid environments used in the evaluation. The red triangle marks the agent's position and orientation; yellow keys, colored doors, lava, and the green goal tile are visible where applicable.}
+\label{fig:minigrid_envs}
+\end{figure}
+
 These tasks share several useful properties for studying adaptive intrinsic reward scaling: sparse terminal rewards, egocentric partial observations, step penalties that discourage random motion, and stochastic initialization across random seeds. Together, they form a test bed in which different intrinsic reward modules can be compared under the same policy optimization backbone and the same observation interface.
 
 \section{Computing Environment}

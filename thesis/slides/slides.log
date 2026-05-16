@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.15)  15 MAY 2026 01:17
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.15)  16 MAY 2026 11:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1318,50 +1318,85 @@ LaTeX Font Warning: Font shape `T5/cmss/m/it' in size <7> not available
 
 ] [7
 
-] [8
+]
+<../figures/env_doorkey.png, id=172, 256.96pt x 256.96pt>
+File: ../figures/env_doorkey.png Graphic file (type png)
+<use ../figures/env_doorkey.png>
+Package pdftex.def Info: ../figures/env_doorkey.png  used on input line 251.
+(pdftex.def)             Requested size: 73.9754pt x 73.97733pt.
+<../figures/env_empty.png, id=173, 513.92pt x 513.92pt>
+File: ../figures/env_empty.png Graphic file (type png)
+<use ../figures/env_empty.png>
+Package pdftex.def Info: ../figures/env_empty.png  used on input line 251.
+(pdftex.def)             Requested size: 73.97148pt x 73.97733pt.
+<../figures/env_keycorridor.png, id=174, 224.84pt x 224.84pt>
+File: ../figures/env_keycorridor.png Graphic file (type png)
+<use ../figures/env_keycorridor.png>
+Package pdftex.def Info: ../figures/env_keycorridor.png  used on input line 251
+.
+(pdftex.def)             Requested size: 73.97784pt x 73.97733pt.
+<../figures/env_lavacrossing.png, id=175, 289.08pt x 289.08pt>
+File: ../figures/env_lavacrossing.png Graphic file (type png)
+<use ../figures/env_lavacrossing.png>
+Package pdftex.def Info: ../figures/env_lavacrossing.png  used on input line 25
+1.
+(pdftex.def)             Requested size: 73.97687pt x 73.97733pt.
+<../figures/env_redbluedoors.png, id=176, 513.92pt x 256.96pt>
+File: ../figures/env_redbluedoors.png Graphic file (type png)
+<use ../figures/env_redbluedoors.png>
+Package pdftex.def Info: ../figures/env_redbluedoors.png  used on input line 25
+1.
+(pdftex.def)             Requested size: 147.9508pt x 73.97733pt.
+<../figures/env_unlockpickup.png, id=177, 353.32pt x 192.72pt>
+File: ../figures/env_unlockpickup.png Graphic file (type png)
+<use ../figures/env_unlockpickup.png>
+Package pdftex.def Info: ../figures/env_unlockpickup.png  used on input line 25
+1.
+(pdftex.def)             Requested size: 135.62158pt x 73.97733pt.
+ [8
 
-] [9
+ <../figures/env_doorkey.png (PNG copy)> <../figures/env_empty.png (PNG copy)> 
+<../figures/env_keycorridor.png (PNG copy)> <../figures/env_lavacrossing.png (P
+NG copy)> <../figures/env_redbluedoors.png (PNG copy)> <../figures/env_unlockpi
+ckup.png (PNG copy)>] [9
 
 ]
-<../figures/aggregate_summary.png, id=224, 1582.713pt x 519.8622pt>
+<../figures/aggregate_summary.png, id=204, 1582.713pt x 519.8622pt>
 File: ../figures/aggregate_summary.png Graphic file (type png)
 <use ../figures/aggregate_summary.png>
 Package pdftex.def Info: ../figures/aggregate_summary.png  used on input line 3
-38.
+16.
 (pdftex.def)             Requested size: 239.38824pt x 78.62642pt.
  [10
 
  <../figures/aggregate_summary.png>]
-<../figures/care_dynamics_count.png, id=234, 1075.8594pt x 1303.7508pt>
+<../figures/care_dynamics_count.png, id=214, 1075.8594pt x 1303.7508pt>
 File: ../figures/care_dynamics_count.png Graphic file (type png)
 <use ../figures/care_dynamics_count.png>
 Package pdftex.def Info: ../figures/care_dynamics_count.png  used on input line
- 362.
+ 340.
 (pdftex.def)             Requested size: 90.9133pt x 110.1708pt.
-<../figures/care_beta_hist_ride.png, id=235, 1293.1512pt x 652.3572pt>
+<../figures/care_beta_hist_ride.png, id=215, 1293.1512pt x 652.3572pt>
 File: ../figures/care_beta_hist_ride.png Graphic file (type png)
 <use ../figures/care_beta_hist_ride.png>
 Package pdftex.def Info: ../figures/care_beta_hist_ride.png  used on input line
- 362.
+ 340.
 (pdftex.def)             Requested size: 217.62282pt x 109.78438pt.
- [11
+
+[11
 
  <../figures/care_dynamics_count.png> <../figures/care_beta_hist_ride.png>]
-<../figures/profile_icm.png, id=248, 643.203pt x 425.4294pt>
+<../figures/profile_icm.png, id=228, 643.203pt x 425.4294pt>
 File: ../figures/profile_icm.png Graphic file (type png)
 <use ../figures/profile_icm.png>
-Package pdftex.def Info: ../figures/profile_icm.png  used on input line 394.
+Package pdftex.def Info: ../figures/profile_icm.png  used on input line 372.
 (pdftex.def)             Requested size: 200.21744pt x 132.42703pt.
- [12
+
+[12
 
  <../figures/profile_icm.png>] [13
 
-]
-
-LaTeX Font Warning: Font shape `T5/cmss/m/it' in size <14.4> not available
-(Font)              Font shape `T5/cmss/m/sl' tried instead on input line 434.
-
-[14
+] [14
 
 ] [15
 
@@ -1392,11 +1427,11 @@ Package rerunfilecheck Info: File `slides.out' has not changed.
 (rerunfilecheck)             Checksum: 3ADD7AF6A95872E48224E70D4C50F073;85.
  ) 
 Here is how much of TeX's memory you used:
- 29059 strings out of 467867
- 592505 string characters out of 5428410
- 1002616 words of memory out of 5000000
- 57299 multiletter control sequences out of 15000+600000
- 662208 words of font info for 106 fonts, out of 8000000 for 9000
+ 29102 strings out of 467867
+ 593911 string characters out of 5428410
+ 1001617 words of memory out of 5000000
+ 57343 multiletter control sequences out of 15000+600000
+ 661203 words of font info for 105 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  128i,20n,123p,383b,1103s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><D:/Progra
@@ -1424,12 +1459,11 @@ onts/type1/vntex/vnr/vnss10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1
 /vnss8.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnss9.pfb>
 <C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnssbx10.pfb><C:/User
 s/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnssi10.pfb><C:/Users/JS/AppD
-ata/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnssi12.pfb><C:/Users/JS/AppData/Roami
-ng/MiKTeX/fonts/type1/vntex/vnr/vnssi8.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/
-fonts/type1/vntex/vnr/vnssi9.pfb>
-Output written on slides.pdf (17 pages, 1690267 bytes).
+ata/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnssi8.pfb><C:/Users/JS/AppData/Roamin
+g/MiKTeX/fonts/type1/vntex/vnr/vnssi9.pfb>
+Output written on slides.pdf (17 pages, 1680356 bytes).
 PDF statistics:
- 441 PDF objects out of 1000 (max. 8388607)
+ 419 PDF objects out of 1000 (max. 8388607)
  36 named destinations out of 1000 (max. 500000)
- 443 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 401 words of extra memory for PDF output out of 10000 (max. 10000000)
 

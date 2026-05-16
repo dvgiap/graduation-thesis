@@ -40,24 +40,24 @@
 \contentsline {subsection}{\numberline {3.4.3}Training Procedure}{22}{subsection.3.4.3}%
 \contentsline {chapter}{\numberline {4}Experimental Setup and Results}{25}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Benchmark Environments}{25}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Computing Environment}{26}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Experimental Configuration}{27}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Baselines}{28}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Performance Evaluation Metrics}{30}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Empirical Results}{31}{section.4.6}%
-\contentsline {subsection}{\numberline {4.6.1}Module-Level Results: Fixed-$\beta $ Sweep vs CARE}{31}{subsection.4.6.1}%
-\contentsline {subsection}{\numberline {4.6.2}Effect of CARE Across Modules}{37}{subsection.4.6.2}%
-\contentsline {subsection}{\numberline {4.6.3}Sensitivity to Fixed $\beta $}{39}{subsection.4.6.3}%
-\contentsline {subsection}{\numberline {4.6.4}Behavior of the Learned Scaling Function}{40}{subsection.4.6.4}%
-\contentsline {subsection}{\numberline {4.6.5}Discussion}{48}{subsection.4.6.5}%
-\contentsline {chapter}{Conclusion and Future Work}{50}{chapter*.36}%
-\contentsline {chapter}{References}{52}{section*.37}%
-\contentsline {chapter}{\numberline {A}Mathematical Proofs}{55}{appendix.A}%
-\contentsline {section}{\numberline {A.1}Proof of Proposition 3.1: Optimal State-Dependent Scaling}{55}{section.A.1}%
-\contentsline {section}{\numberline {A.2}Proof of Proposition 3.2: Gradient Direction}{56}{section.A.2}%
-\contentsline {section}{\numberline {A.3}Proof of Lemma 3.1: Bounded Shaped Reward}{57}{section.A.3}%
-\contentsline {section}{\numberline {A.4}Proof of Proposition 3.3: Computational Cost Comparison}{57}{section.A.4}%
-\contentsline {section}{\numberline {A.5}Proof of Corollary 3.1: Degeneration to Fixed Coefficient}{58}{section.A.5}%
-\contentsline {chapter}{\numberline {B}Implementation Details}{60}{appendix.B}%
-\contentsline {section}{\numberline {B.1}Network Architectures}{60}{section.B.1}%
-\contentsline {section}{\numberline {B.2}Hyperparameters}{63}{section.B.2}%
+\contentsline {section}{\numberline {4.2}Computing Environment}{27}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Experimental Configuration}{28}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Baselines}{29}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Performance Evaluation Metrics}{31}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Empirical Results}{32}{section.4.6}%
+\contentsline {subsection}{\numberline {4.6.1}Module-Level Results: Fixed-$\beta $ Sweep vs CARE}{32}{subsection.4.6.1}%
+\contentsline {subsection}{\numberline {4.6.2}Effect of CARE Across Modules}{38}{subsection.4.6.2}%
+\contentsline {subsection}{\numberline {4.6.3}Sensitivity to Fixed $\beta $}{40}{subsection.4.6.3}%
+\contentsline {subsection}{\numberline {4.6.4}Behavior of the Learned Scaling Function}{41}{subsection.4.6.4}%
+\contentsline {subsection}{\numberline {4.6.5}Discussion}{49}{subsection.4.6.5}%
+\contentsline {chapter}{Conclusion and Future Work}{51}{chapter*.37}%
+\contentsline {chapter}{References}{53}{section*.38}%
+\contentsline {chapter}{\numberline {A}Mathematical Proofs}{56}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Proof of Proposition 3.1: Optimal State-Dependent Scaling}{56}{section.A.1}%
+\contentsline {section}{\numberline {A.2}Proof of Proposition 3.2: Gradient Direction}{57}{section.A.2}%
+\contentsline {section}{\numberline {A.3}Proof of Lemma 3.1: Bounded Shaped Reward}{58}{section.A.3}%
+\contentsline {section}{\numberline {A.4}Proof of Proposition 3.3: Computational Cost Comparison}{58}{section.A.4}%
+\contentsline {section}{\numberline {A.5}Proof of Corollary 3.1: Degeneration to Fixed Coefficient}{59}{section.A.5}%
+\contentsline {chapter}{\numberline {B}Implementation Details}{61}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Network Architectures}{61}{section.B.1}%
+\contentsline {section}{\numberline {B.2}Hyperparameters}{64}{section.B.2}%
