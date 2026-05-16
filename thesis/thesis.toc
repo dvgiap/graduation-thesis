@@ -1,12 +1,12 @@
-\contentsline {chapter}{Acknowledgement}{}{Doc-Start}%
-\contentsline {chapter}{Declaration of Authorship}{i}{Doc-Start}%
-\contentsline {chapter}{Tóm tắt}{ii}{Doc-Start}%
-\contentsline {chapter}{Abstract}{iii}{Doc-Start}%
-\contentsline {chapter}{Contents}{iv}{Doc-Start}%
-\contentsline {chapter}{List of Figures}{vii}{Doc-Start}%
-\contentsline {chapter}{List of Tables}{ix}{Doc-Start}%
-\contentsline {chapter}{List of Acronyms}{xi}{chapter*.1}%
-\contentsline {chapter}{List of Notations}{xii}{chapter*.2}%
+\contentsline {chapter}{Acknowledgement}{}{section*.1}%
+\contentsline {chapter}{Declaration of Authorship}{i}{section*.2}%
+\contentsline {chapter}{Tóm tắt}{ii}{section*.3}%
+\contentsline {chapter}{Abstract}{iii}{section*.4}%
+\contentsline {chapter}{Contents}{iv}{section*.5}%
+\contentsline {chapter}{List of Figures}{vii}{section*.6}%
+\contentsline {chapter}{List of Tables}{ix}{section*.7}%
+\contentsline {chapter}{List of Acronyms}{xi}{section*.9}%
+\contentsline {chapter}{List of Notations}{xii}{section*.11}%
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Background and Research Motivation}{1}{section.1.1}%
 \contentsline {section}{\numberline {1.2}Research Problem}{2}{section.1.2}%
@@ -20,44 +20,44 @@
 \contentsline {subsection}{\numberline {2.2.2}Curiosity-Driven Exploration}{8}{subsection.2.2.2}%
 \contentsline {section}{\numberline {2.3}Adaptive Weighting of Intrinsic Rewards}{9}{section.2.3}%
 \contentsline {subsection}{\numberline {2.3.1}Global-Level Adaptation}{9}{subsection.2.3.1}%
-\contentsline {subsection}{\numberline {2.3.2}Population-Level Adaptation}{10}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.2}Population-Level Adaptation}{9}{subsection.2.3.2}%
 \contentsline {subsection}{\numberline {2.3.3}Toward State-Level Adaptation}{10}{subsection.2.3.3}%
-\contentsline {section}{\numberline {2.4}Summary and Research Gap}{11}{section.2.4}%
+\contentsline {section}{\numberline {2.4}Summary and Research Gap}{10}{section.2.4}%
 \contentsline {chapter}{\numberline {3}Methodology}{12}{chapter.3}%
 \contentsline {section}{\numberline {3.1}System Architecture}{12}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Intrinsic Reward Generation}{14}{section.3.2}%
+\contentsline {section}{\numberline {3.2}Intrinsic Reward Generation}{13}{section.3.2}%
 \contentsline {subsection}{\numberline {3.2.1}ICM Instantiation}{14}{subsection.3.2.1}%
 \contentsline {subsection}{\numberline {3.2.2}Count-Based Exploration}{14}{subsection.3.2.2}%
 \contentsline {subsection}{\numberline {3.2.3}Rewarding Impact-Driven Exploration}{15}{subsection.3.2.3}%
-\contentsline {subsection}{\numberline {3.2.4}Standardization and Rectification}{16}{subsection.3.2.4}%
+\contentsline {subsection}{\numberline {3.2.4}Standardization and Rectification}{15}{subsection.3.2.4}%
 \contentsline {section}{\numberline {3.3}Correlation-Aware Reward Exploration}{16}{section.3.3}%
 \contentsline {subsection}{\numberline {3.3.1}Beta Network}{16}{subsection.3.3.1}%
 \contentsline {subsection}{\numberline {3.3.2}Advantage-Correlation Objective}{17}{subsection.3.3.2}%
 \contentsline {subsection}{\numberline {3.3.3}First-Order Optimization vs. Meta-Gradient}{20}{subsection.3.3.3}%
 \contentsline {section}{\numberline {3.4}Algorithm}{21}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Rollout Buffer}{22}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.1}Rollout Buffer}{21}{subsection.3.4.1}%
 \contentsline {subsection}{\numberline {3.4.2}Loss Functions}{22}{subsection.3.4.2}%
-\contentsline {subsection}{\numberline {3.4.3}Training Procedure}{23}{subsection.3.4.3}%
-\contentsline {chapter}{\numberline {4}Experimental Setup and Results}{26}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Benchmark Environments}{26}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Computing Environment}{27}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Experimental Configuration}{28}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Baselines}{29}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Performance Evaluation Metrics}{31}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Empirical Results}{32}{section.4.6}%
-\contentsline {subsection}{\numberline {4.6.1}Module-Level Results: Fixed-$\beta $ Sweep vs CARE}{32}{subsection.4.6.1}%
-\contentsline {subsection}{\numberline {4.6.2}Effect of CARE Across Modules}{38}{subsection.4.6.2}%
-\contentsline {subsection}{\numberline {4.6.3}Sensitivity to Fixed $\beta $}{40}{subsection.4.6.3}%
-\contentsline {subsection}{\numberline {4.6.4}Behavior of the Learned Scaling Function}{41}{subsection.4.6.4}%
-\contentsline {subsection}{\numberline {4.6.5}Discussion}{49}{subsection.4.6.5}%
-\contentsline {chapter}{Conclusion and Future Work}{51}{chapter*.27}%
-\contentsline {chapter}{References}{53}{section*.28}%
-\contentsline {chapter}{\numberline {A}Mathematical Proofs}{56}{appendix.A}%
-\contentsline {section}{\numberline {A.1}Proof of Proposition 3.1: Optimal State-Dependent Scaling}{56}{section.A.1}%
-\contentsline {section}{\numberline {A.2}Proof of Proposition 3.2: Gradient Direction}{57}{section.A.2}%
-\contentsline {section}{\numberline {A.3}Proof of Lemma 3.1: Bounded Shaped Reward}{58}{section.A.3}%
-\contentsline {section}{\numberline {A.4}Proof of Proposition 3.3: Computational Cost Comparison}{58}{section.A.4}%
-\contentsline {section}{\numberline {A.5}Proof of Corollary 3.1: Degeneration to Fixed Coefficient}{59}{section.A.5}%
-\contentsline {chapter}{\numberline {B}Implementation Details}{61}{appendix.B}%
-\contentsline {section}{\numberline {B.1}Network Architectures}{61}{section.B.1}%
+\contentsline {subsection}{\numberline {3.4.3}Training Procedure}{22}{subsection.3.4.3}%
+\contentsline {chapter}{\numberline {4}Experimental Setup and Results}{25}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Benchmark Environments}{25}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Computing Environment}{26}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Experimental Configuration}{27}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Baselines}{28}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Performance Evaluation Metrics}{30}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Empirical Results}{31}{section.4.6}%
+\contentsline {subsection}{\numberline {4.6.1}Module-Level Results: Fixed-$\beta $ Sweep vs CARE}{31}{subsection.4.6.1}%
+\contentsline {subsection}{\numberline {4.6.2}Effect of CARE Across Modules}{37}{subsection.4.6.2}%
+\contentsline {subsection}{\numberline {4.6.3}Sensitivity to Fixed $\beta $}{39}{subsection.4.6.3}%
+\contentsline {subsection}{\numberline {4.6.4}Behavior of the Learned Scaling Function}{40}{subsection.4.6.4}%
+\contentsline {subsection}{\numberline {4.6.5}Discussion}{48}{subsection.4.6.5}%
+\contentsline {chapter}{Conclusion and Future Work}{50}{chapter*.36}%
+\contentsline {chapter}{References}{52}{section*.37}%
+\contentsline {chapter}{\numberline {A}Mathematical Proofs}{55}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Proof of Proposition 3.1: Optimal State-Dependent Scaling}{55}{section.A.1}%
+\contentsline {section}{\numberline {A.2}Proof of Proposition 3.2: Gradient Direction}{56}{section.A.2}%
+\contentsline {section}{\numberline {A.3}Proof of Lemma 3.1: Bounded Shaped Reward}{57}{section.A.3}%
+\contentsline {section}{\numberline {A.4}Proof of Proposition 3.3: Computational Cost Comparison}{57}{section.A.4}%
+\contentsline {section}{\numberline {A.5}Proof of Corollary 3.1: Degeneration to Fixed Coefficient}{58}{section.A.5}%
+\contentsline {chapter}{\numberline {B}Implementation Details}{60}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Network Architectures}{60}{section.B.1}%
 \contentsline {section}{\numberline {B.2}Hyperparameters}{63}{section.B.2}%

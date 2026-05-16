@@ -10,7 +10,7 @@ This appendix records the network architectures, hyperparameters, and training s
 \centering
 \caption{Beta Network $\beta_\psi$ architecture.}
 \label{tab:beta_arch}
-\begin{tabular}{|l|l|}
+\begin{tabular}{|l|p{10.5cm}|}
 \hline
 \textbf{Component} & \textbf{Specification} \\
 \hline
@@ -41,7 +41,7 @@ Head output bias init & $\log \beta_0 = \tfrac{1}{2}(\log \beta_\text{min} + \lo
 \centering
 \caption{Intrinsic Curiosity Module (ICM) architecture.}
 \label{tab:icm_arch}
-\begin{tabular}{|l|l|}
+\begin{tabular}{|p{4cm}|p{10cm}|}
 \hline
 \textbf{Component} & \textbf{Specification} \\
 \hline
@@ -184,7 +184,7 @@ RIDE batch size & Mini-batch size within each epoch & $64$ \\
 \centering
 \caption{CARE hyperparameters. The Beta Network alone determines the intrinsic-reward scale (no separate global coefficient $\alpha$ is used); the same Beta Network bounds and correlation-objective hyperparameters apply to every CARE variant.}
 \label{tab:care_hparams}
-\begin{tabular}{|l|l|l|}
+\begin{tabular}{|l|p{7.5cm}|l|}
 \hline
 \textbf{Symbol} & \textbf{Description} & \textbf{Value} \\
 \hline
@@ -259,7 +259,7 @@ RIDE encoder layers & Number of $\text{Linear} \to \text{Tanh}$ blocks in the en
 \centering
 \caption{Training schedule.}
 \label{tab:training_schedule}
-\begin{tabular}{|l|l|l|}
+\begin{tabular}{|l|p{7.5cm}|l|}
 \hline
 \textbf{Symbol} & \textbf{Description} & \textbf{Value} \\
 \hline

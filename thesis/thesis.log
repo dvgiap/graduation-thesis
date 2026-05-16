@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.15)  7 MAY 2026 01:48
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.15)  16 MAY 2026 08:43
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -981,7 +981,7 @@ Package hyperref Info: Link coloring OFF on input line 150.
 
 \c@lstlisting=\count380
 (cover.tex
-<figures/uet.jpg, id=252, 1125.20375pt x 1125.20375pt>
+<figures/uet.jpg, id=258, 1125.20375pt x 1125.20375pt>
 File: figures/uet.jpg Graphic file (type jpg)
 <use figures/uet.jpg>
 Package pdftex.def Info: figures/uet.jpg  used on input line 22.
@@ -1007,7 +1007,12 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has be
 <to be read again> 
                    \relax 
 l.151 \input{cover}\newpage
-                           \cleardoublepage [3] (chapters/acknowledgement.tex)
+                           \cleardoublepage [3] (chapters/acknowledgement.tex
+Overfull \hbox (13.56937pt too wide) in paragraph at lines 7--8
+\T5/cmr/m/n/13 Thõy, for her in-valu-able guid-ance, en-cour-age-ment, and con-struc-tive feed-back through-
+ []
+
+)
 pdfTeX warning (ext4): destination with the same identifier (name{page.}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
@@ -1016,12 +1021,46 @@ l.153 \input{chapters/acknowledgement}\newpage
 
 
 ] (chapters/assurance.tex
-Underfull \hbox (badness 10000) in paragraph at lines 15--17
+LaTeX Font Info:    Calculating math sizes for size <13> on input line 13.
+
+
+LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <13> not available
+(Font)              size <12> substituted on input line 13.
+
+
+LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <6.5> not available
+(Font)              size <6> substituted on input line 13.
+
+
+LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <13> not available
+(Font)              size <12> substituted on input line 13.
+
+
+LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <6.5> not available
+(Font)              size <6> substituted on input line 13.
+
+
+LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <13> not available
+(Font)              size <12> substituted on input line 13.
+
+
+LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <6.5> not available
+(Font)              size <6> substituted on input line 13.
+
+LaTeX Font Info:    Trying to load font information for U+msa on input line 13.
+(D:\Program Files\MiKTeX\tex/latex/amsfonts\umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 13.
+ (D:\Program Files\MiKTeX\tex/latex/amsfonts\umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+Underfull \hbox (badness 10000) in paragraph at lines 20--22
 
  []
 
 
-Overfull \hbox (12.9051pt too wide) in paragraph at lines 20--21
+Overfull \hbox (12.9051pt too wide) in paragraph at lines 25--26
 []\T5/cmr/m/n/13 Doan Van Giap 
  []
 
@@ -1029,58 +1068,19 @@ Overfull \hbox (12.9051pt too wide) in paragraph at lines 20--21
 
 
 ] (chapters/abtract_vi.tex
-LaTeX Font Info:    Calculating math sizes for size <11.86258> on input line 12.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 12.
- (D:\Program Files\MiKTeX\tex/latex/amsfonts\umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 12.
- (D:\Program Files\MiKTeX\tex/latex/amsfonts\umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-Overfull \hbox (19.3828pt too wide) in paragraph at lines 12--13
+LaTeX Font Info:    Calculating math sizes for size <11.86258> on input line 13.
+
+Overfull \hbox (19.3828pt too wide) in paragraph at lines 13--14
 []\T5/cmr/m/n/11.86258 K¸t qu£ thüc nghi»m tr¶n s¡u mæi tr÷íng Min-i-Grid (DoorKey-8x8, Empty-16x16, KeyCorridor-
  []
 
 ) [2
 
 
-] (chapters/abtract_en.tex
-Overfull \hbox (47.00125pt too wide) in paragraph at lines 11--12
-\T5/cmr/m/n/11.86258 vari-ant is com-pared against a sweep of fixed scalar co-ef-fi-cients $\OML/cmm/m/it/12 ^^L \OMS/cmsy/m/n/12 2 f\OT1/cmr/m/n/12 0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 0005\OML/cmm/m/it/12 ;  \OT1/cmr/m/n/12 0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 001\OML/cmm/m/it/12 ;  \OT1/cmr/m/n/12 0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 005\OML/cmm/m/it/12 ;  \OT1/cmr/m/n/12 0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 01\OML/cmm/m/it/12 ;  \OT1/cmr/m/n/12 0\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 05\OMS/cmsy/m/n/12 g$\T5/cmr/m/n/11.86258 ,
- []
-
-) [3
+] (chapters/abtract_en.tex) [3
 
 
-] (thesis.toc
-LaTeX Font Info:    Calculating math sizes for size <13> on input line 1.
-
-
-LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <13> not available
-(Font)              size <12> substituted on input line 1.
-
-
-LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <6.5> not available
-(Font)              size <6> substituted on input line 1.
-
-
-LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <13> not available
-(Font)              size <12> substituted on input line 1.
-
-
-LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <6.5> not available
-(Font)              size <6> substituted on input line 1.
-
-
-LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <13> not available
-(Font)              size <12> substituted on input line 1.
-
-
-LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <6.5> not available
-(Font)              size <6> substituted on input line 1.
-
-[4
+] (thesis.toc [4
 
 
 ] [5])
@@ -1107,27 +1107,27 @@ Overfull \hbox (14.43074pt too wide) in paragraph at lines 17--17
 \openout7 = `thesis.lot'.
 
  [10] (chapters/glossary.tex
-Underfull \hbox (badness 6559) in paragraph at lines 8--8
+Underfull \hbox (badness 6559) in paragraph at lines 9--9
 []|\T5/cmr/m/n/13 Correlation-Aware Re-ward
  []
 
 
-Underfull \hbox (badness 1546) in paragraph at lines 12--13
+Underfull \hbox (badness 1546) in paragraph at lines 13--14
 []|\T5/cmr/m/n/13 On-policy policy-gradient al-
  []
 
 
-Underfull \hbox (badness 1337) in paragraph at lines 16--16
+Underfull \hbox (badness 1337) in paragraph at lines 17--17
 []|\T5/cmr/m/n/13 Random Net-work Dis-til-la-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 20--20
+Underfull \hbox (badness 10000) in paragraph at lines 19--19
 []|\T5/cmr/m/n/13 Rewarding Impact-Driven
  []
 
 
-Underfull \hbox (badness 1087) in paragraph at lines 22--23
+Underfull \hbox (badness 1087) in paragraph at lines 21--22
 []|\T5/cmr/m/n/13 Technique for re-duc-ing vari-
  []
 
@@ -1138,7 +1138,7 @@ Underfull \hbox (badness 1087) in paragraph at lines 22--23
 
 
 ]
-Underfull \hbox (badness 3482) in paragraph at lines 88--89
+Underfull \hbox (badness 3482) in paragraph at lines 89--90
 []|\T5/cmr/m/n/13 Reference value for log-space reg-u-lar-iza-tion, set to
  []
 
@@ -1154,8 +1154,8 @@ LaTeX Font Warning: Font shape `TS1/cmr/m/n' in size <13> not available
 (Font)              size <12> substituted on input line 32.
 
 
-Overfull \hbox (0.90125pt too wide) in paragraph at lines 33--34
-[]\T5/cmr/m/n/13 review count-based ex-plo-ration, ICM, RIDE, and prior adap-tive re-ward weight-
+Overfull \hbox (8.6783pt too wide) in paragraph at lines 33--34
+[]\T5/cmr/m/n/13 review count-based ex-plo-ration, ICM, RIDE, and ear-lier adap-tive re-ward weight-
  []
 
 [3]) [4] [5] (chapters/c2/c2_chapter.tex
@@ -1171,34 +1171,33 @@ Overfull \hbox (0.96979pt too wide) in paragraph at lines 7--8
 
 ] [7] [8] [9] [10]) [11] (chapters/c3/c3_chapter.tex
 Ch\uhorn \ohorn ng 3.
+<figures/system_architecture.png, id=669, 2922.92pt x 1467.4825pt>
+File: figures/system_architecture.png Graphic file (type png)
+<use figures/system_architecture.png>
+Package pdftex.def Info: figures/system_architecture.png  used on input line 25.
+(pdftex.def)             Requested size: 455.24411pt x 228.55464pt.
 [12
 
 
 
-]
-<figures/system_architecture.png, id=664, 2922.92pt x 1467.4825pt>
-File: figures/system_architecture.png Graphic file (type png)
-<use figures/system_architecture.png>
-Package pdftex.def Info: figures/system_architecture.png  used on input line 30.
-(pdftex.def)             Requested size: 455.24411pt x 228.55464pt.
- [13 <./figures/system_architecture.png>] [14] [15]
-Overfull \hbox (35.61092pt too wide) in paragraph at lines 124--126
+] [13 <./figures/system_architecture.png>] [14] [15]
+Overfull \hbox (35.61092pt too wide) in paragraph at lines 119--121
 \OML/cmm/m/it/12 ^^L[] \OT1/cmr/m/n/12 = [] \OMS/cmsy/m/n/12 ^^Y \OT1/cmr/m/n/12 2\OML/cmm/m/it/12 :\OT1/cmr/m/n/12 24 \OMS/cmsy/m/n/12 ^^B \OT1/cmr/m/n/12 10[]$\T5/cmr/m/n/13 ; this choice places $[] \OML/cmm/m/it/12 ^^L[]$ \T5/cmr/m/n/13 at the mid-point of $\OT1/cmr/m/n/12 [[] \OML/cmm/m/it/12 ^^L[];  [] ^^L[]\OT1/cmr/m/n/12 ]$\T5/cmr/m/n/13 ,
  []
 
 [16] [17] [18]
-Overfull \hbox (17.42647pt too wide) in paragraph at lines 198--199
+Overfull \hbox (17.42647pt too wide) in paragraph at lines 193--194
 \T5/cmr/m/it/13 has suf-fi-cient ex-pres-sive ca-pac-ity to rep-re-sent any mea-sur-able func-tion $\OMS/cmsy/m/n/12 S ! \OT1/cmr/m/n/12 [\OML/cmm/m/it/12 ^^L[]; ^^L[]\OT1/cmr/m/n/12 ]$\T5/cmr/m/it/13 ,
  []
 
-[19] [20] [21] [22]
-Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 315.
+[19] [20] [21]
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 310.
 
-Underfull \hbox (badness 10000) in paragraph at lines 325--326
+Underfull \hbox (badness 10000) in paragraph at lines 320--321
 [] \T5/cmr/m/n/13 Up-date Beta Net-work with one gra-di-ent step: $\OML/cmm/m/it/12   \OMS/cmsy/m/n/12   \OML/cmm/m/it/12   \OMS/cmsy/m/n/12 ^^@
  []
 
-[23]) [24] [25] (chapters/c4/c4_chapter.tex
+[22]) [23] [24] (chapters/c4/c4_chapter.tex
 Ch\uhorn \ohorn ng 4.
 
 Overfull \hbox (6.8529pt too wide) in paragraph at lines 4--5
@@ -1210,7 +1209,7 @@ Underfull \hbox (badness 1087) in paragraph at lines 23--23
 \T5/cmr/m/n/13 ma-nip-u-la-tion stage, cre-at-ing a hi-er-ar-chi-cal
  []
 
-[26
+[25
 
 
 
@@ -1218,7 +1217,7 @@ Underfull \hbox (badness 1087) in paragraph at lines 23--23
 LaTeX Font Info:    Trying to load font information for T5+cmtt on input line 34.
  (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/vntex\t5cmtt.fd
 File: t5cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
-) [27] [28] [29]
+) [26] [27] [28]
 Underfull \hbox (badness 5652) in paragraph at lines 64--64
 []|\T5/cmr/m/n/13 PPO + mod-ule $\OML/cmm/m/it/12 m$
  []
@@ -1248,7 +1247,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 67--67
 []|\T5/cmr/m/n/13 PPO + RIDE +
  []
 
-[30] [31]
+[29] [30]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 106.
@@ -1261,59 +1260,44 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 106.
 
-<figures/all_envs_count.png, id=857, 1437.6912pt x 797.379pt>
+<figures/all_envs_count.png, id=863, 1437.6912pt x 797.379pt>
 File: figures/all_envs_count.png Graphic file (type png)
 <use figures/all_envs_count.png>
 Package pdftex.def Info: figures/all_envs_count.png  used on input line 113.
 (pdftex.def)             Requested size: 455.24411pt x 252.47758pt.
-[32] (tables/final_reward_count.tex
-LaTeX Font Info:    Calculating math sizes for size <8.66673> on input line 11.
+[31] (tables/final_reward_count.tex
+LaTeX Font Info:    Calculating math sizes for size <8.66673> on input line 24.
 
 
 LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <4.33336> not available
-(Font)              size <5> substituted on input line 11.
+(Font)              size <5> substituted on input line 24.
 
 
 LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <4.33336> not available
-(Font)              size <5> substituted on input line 11.
+(Font)              size <5> substituted on input line 24.
 
 
 LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <4.33336> not available
-(Font)              size <5> substituted on input line 11.
-
-
-Overfull \hbox (136.66647pt too wide) in paragraph at lines 7--24
- [][] 
- []
+(Font)              size <5> substituted on input line 24.
 
 )
 Overfull \hbox (16.71788pt too wide) in paragraph at lines 120--121
 \T5/cmr/m/n/13 8x8, Empty-16x16, Key-Cor-ri-dor, and Un-lock-Pickup --- CARE-COUNT ei-ther matches
  []
 
-[33 <./figures/all_envs_count.png>]
-<figures/all_envs_icm.png, id=867, 1437.6912pt x 797.379pt>
+[32 <./figures/all_envs_count.png>]
+<figures/all_envs_icm.png, id=874, 1437.6912pt x 797.379pt>
 File: figures/all_envs_icm.png Graphic file (type png)
 <use figures/all_envs_icm.png>
 Package pdftex.def Info: figures/all_envs_icm.png  used on input line 124.
 (pdftex.def)             Requested size: 455.24411pt x 252.47758pt.
- (tables/final_reward_icm.tex
-Overfull \hbox (121.76494pt too wide) in paragraph at lines 7--24
- [][] 
- []
-
-) [34 <./figures/all_envs_icm.png>]
-<figures/all_envs_ride.png, id=875, 1437.6912pt x 797.379pt>
+ (tables/final_reward_icm.tex) [33 <./figures/all_envs_icm.png>]
+<figures/all_envs_ride.png, id=882, 1437.6912pt x 797.379pt>
 File: figures/all_envs_ride.png Graphic file (type png)
 <use figures/all_envs_ride.png>
 Package pdftex.def Info: figures/all_envs_ride.png  used on input line 135.
 (pdftex.def)             Requested size: 455.24411pt x 252.47758pt.
- [35] (tables/final_reward_ride.tex
-Overfull \hbox (113.49077pt too wide) in paragraph at lines 7--24
- [][] 
- []
-
-) [36 <./figures/all_envs_ride.png>] (tables/sample_efficiency_count.tex
+ [34] (tables/final_reward_ride.tex) [35 <./figures/all_envs_ride.png>] (tables/sample_efficiency_count.tex
 Overfull \hbox (18.73994pt too wide) in paragraph at lines 7--24
  [][] 
  []
@@ -1323,13 +1307,13 @@ Overfull \hbox (3.02313pt too wide) in paragraph at lines 7--24
  [][] 
  []
 
-[37]) [38] (tables/care_vs_best_fixed.tex)
-<figures/aggregate_summary.png, id=901, 1582.713pt x 519.8622pt>
+[36]) [37] (tables/care_vs_best_fixed.tex)
+<figures/aggregate_summary.png, id=908, 1582.713pt x 519.8622pt>
 File: figures/aggregate_summary.png Graphic file (type png)
 <use figures/aggregate_summary.png>
 Package pdftex.def Info: figures/aggregate_summary.png  used on input line 159.
 (pdftex.def)             Requested size: 455.24411pt x 149.52664pt.
- [39]
+ [38]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 166.
@@ -1342,62 +1326,62 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 166.
 
-[40 <./figures/aggregate_summary.png>] [41]
-<figures/care_dynamics_count.png, id=928, 1075.8594pt x 1303.7508pt>
+[39 <./figures/aggregate_summary.png>] [40]
+<figures/care_dynamics_count.png, id=935, 1075.8594pt x 1303.7508pt>
 File: figures/care_dynamics_count.png Graphic file (type png)
 <use figures/care_dynamics_count.png>
 Package pdftex.def Info: figures/care_dynamics_count.png  used on input line 182.
 (pdftex.def)             Requested size: 455.24411pt x 551.6697pt.
-<figures/care_dynamics_icm.png, id=929, 1075.8594pt x 1303.7508pt>
+<figures/care_dynamics_icm.png, id=936, 1075.8594pt x 1303.7508pt>
 File: figures/care_dynamics_icm.png Graphic file (type png)
 <use figures/care_dynamics_icm.png>
 Package pdftex.def Info: figures/care_dynamics_icm.png  used on input line 189.
 (pdftex.def)             Requested size: 455.24411pt x 551.6697pt.
- [42 <./figures/care_dynamics_count.png>]
-<figures/care_dynamics_ride.png, id=937, 1075.8594pt x 1303.7508pt>
+ [41 <./figures/care_dynamics_count.png>]
+<figures/care_dynamics_ride.png, id=944, 1075.8594pt x 1303.7508pt>
 File: figures/care_dynamics_ride.png Graphic file (type png)
 <use figures/care_dynamics_ride.png>
 Package pdftex.def Info: figures/care_dynamics_ride.png  used on input line 196.
 (pdftex.def)             Requested size: 455.24411pt x 551.6697pt.
- [43 <./figures/care_dynamics_icm.png>] [44 <./figures/care_dynamics_ride.png>]
-<figures/care_beta_hist_count.png, id=952, 1293.1512pt x 652.3572pt>
+ [42 <./figures/care_dynamics_icm.png>] [43 <./figures/care_dynamics_ride.png>]
+<figures/care_beta_hist_count.png, id=959, 1293.1512pt x 652.3572pt>
 File: figures/care_beta_hist_count.png Graphic file (type png)
 <use figures/care_beta_hist_count.png>
 Package pdftex.def Info: figures/care_beta_hist_count.png  used on input line 205.
 (pdftex.def)             Requested size: 455.24411pt x 229.65233pt.
-<figures/care_beta_hist_icm.png, id=953, 1293.1512pt x 652.3572pt>
+<figures/care_beta_hist_icm.png, id=960, 1293.1512pt x 652.3572pt>
 File: figures/care_beta_hist_icm.png Graphic file (type png)
 <use figures/care_beta_hist_icm.png>
 Package pdftex.def Info: figures/care_beta_hist_icm.png  used on input line 212.
 (pdftex.def)             Requested size: 455.24411pt x 229.65233pt.
- [45 <./figures/care_beta_hist_count.png>]
-<figures/care_beta_hist_ride.png, id=961, 1293.1512pt x 652.3572pt>
+ [44 <./figures/care_beta_hist_count.png>]
+<figures/care_beta_hist_ride.png, id=968, 1293.1512pt x 652.3572pt>
 File: figures/care_beta_hist_ride.png Graphic file (type png)
 <use figures/care_beta_hist_ride.png>
 Package pdftex.def Info: figures/care_beta_hist_ride.png  used on input line 219.
 (pdftex.def)             Requested size: 455.24411pt x 229.65233pt.
- [46 <./figures/care_beta_hist_icm.png> <./figures/care_beta_hist_ride.png>]
-<figures/profile_count.png, id=979, 643.203pt x 425.4294pt>
+ [45 <./figures/care_beta_hist_icm.png> <./figures/care_beta_hist_ride.png>]
+<figures/profile_count.png, id=986, 643.203pt x 425.4294pt>
 File: figures/profile_count.png Graphic file (type png)
 <use figures/profile_count.png>
 Package pdftex.def Info: figures/profile_count.png  used on input line 230.
 (pdftex.def)             Requested size: 455.24411pt x 301.1092pt.
-<figures/profile_icm.png, id=982, 643.203pt x 425.4294pt>
+<figures/profile_icm.png, id=989, 643.203pt x 425.4294pt>
 File: figures/profile_icm.png Graphic file (type png)
 <use figures/profile_icm.png>
 Package pdftex.def Info: figures/profile_icm.png  used on input line 237.
 (pdftex.def)             Requested size: 455.24411pt x 301.1092pt.
- [47 <./figures/profile_count.png>]
-<figures/profile_ride.png, id=990, 643.203pt x 425.4294pt>
+ [46 <./figures/profile_count.png>]
+<figures/profile_ride.png, id=997, 643.203pt x 425.4294pt>
 File: figures/profile_ride.png Graphic file (type png)
 <use figures/profile_ride.png>
 Package pdftex.def Info: figures/profile_ride.png  used on input line 244.
 (pdftex.def)             Requested size: 455.24411pt x 301.1092pt.
- [48 <./figures/profile_icm.png> <./figures/profile_ride.png>] [49]) [50] (chapters/conclusion.tex [51
+ [47 <./figures/profile_icm.png> <./figures/profile_ride.png>] [48]) [49] (chapters/conclusion.tex [50
 
 
 
-]) [52] (thesis.bbl [53
+]) [51] (thesis.bbl [52
 
 
 
@@ -1406,40 +1390,50 @@ Underfull \hbox (badness 1297) in paragraph at lines 70--74
 []\T5/cmr/m/n/13 Deepak Pathak, Pulkit Agrawal, Alexei A. Efros, and Trevor Dar-rell.
  []
 
-[54]
-Underfull \hbox (badness 3168) in paragraph at lines 153--156
+[53]
+Underfull \hbox (badness 3168) in paragraph at lines 145--148
 []\T5/cmr/m/n/13 John Schul-man, Filip Wol-ski, Pra-fulla Dhari-wal, Alec Rad-ford, and
  []
 
-) [55] (chapters/appendix_a.tex
+) [54] (chapters/appendix_a.tex
 Appendix A.
 
 Overfull \hbox (6.00438pt too wide) in paragraph at lines 10--11
 \T5/cmr/m/n/13 iden-ti-fy-ing mini-batch av-er-ages with ex-pec-ta-tions un-der the on-policy state-visitation
  []
 
-[56
+[55
 
 
 
-] [57] [58] [59]
+] [56] [57] [58]
 Overfull \hbox (5.2516pt too wide) in paragraph at lines 130--131
 \OT1/cmr/m/n/12 [\OMS/cmsy/m/n/12 ^^@\OT1/cmr/m/n/12 1\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 1]$ \T5/cmr/m/n/13 by the Cauchy--Schwarz in-equal-ity ap-plied to z-scored vari-ables, so $\OMS/cmsy/m/n/12 j\OML/cmm/m/it/12 L[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12  \OT1/cmr/m/n/12 )\OMS/cmsy/m/n/12 j ^^T
  []
 
-) [60] (chapters/appendix_b.tex
+) [59] (chapters/appendix_b.tex
 Appendix B.
 
-Overfull \hbox (521.08844pt too wide) in paragraph at lines 13--38
+Overfull \hbox (2.68231pt too wide) in paragraph at lines 13--38
  [][] 
  []
 
 
-Overfull \hbox (62.77873pt too wide) in paragraph at lines 44--67
- [][] 
+Underfull \hbox (badness 10000) in paragraph at lines 62--62
+[]|\T5/cmr/m/n/13 Action rep-re-sen-
  []
 
-[61
+
+Underfull \hbox (badness 10000) in paragraph at lines 62--62
+\T5/cmr/m/n/13 ta-tion in for-ward
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 64--64
+[]|\T5/cmr/m/n/13 Encoder gra-di-ent
+ []
+
+[60
 
 
 
@@ -1448,27 +1442,37 @@ Overfull \hbox (26.18797pt too wide) in paragraph at lines 73--98
  [][] 
  []
 
-
+[61]
 Overfull \hbox (14.14755pt too wide) in paragraph at lines 104--117
  [][] 
  []
 
-[62] [63]
-Overfull \hbox (255.20988pt too wide) in paragraph at lines 187--210
+[62]
+Underfull \hbox (badness 3078) in paragraph at lines 207--207
+[]|\T5/cmr/m/n/13 Numerical sta-bil-ity con-stant in z-
+ []
+
+
+Overfull \hbox (6.27127pt too wide) in paragraph at lines 187--210
  [][] 
  []
 
-[64]
+[63]
 Overfull \hbox (16.39854pt too wide) in paragraph at lines 239--256
  [][] 
  []
 
+[64]
+Underfull \hbox (badness 1292) in paragraph at lines 270--270
+[]|\T5/cmr/m/n/13 Total en-vi-ron-ment in-ter-ac-tion steps
+ []
 
-Overfull \hbox (44.64226pt too wide) in paragraph at lines 262--279
+
+Overfull \hbox (8.6826pt too wide) in paragraph at lines 262--279
  [][] 
  []
 
-[65]) [66] (thesis.aux)
+) [65] (thesis.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -1479,20 +1483,20 @@ LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
 
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: D0B272993EB6DED7EFFD14BCDA4C66AD;11571.
+(rerunfilecheck)             Checksum: 0E6338BB874556405AD1CD8B37943409;11579.
  ) 
 Here is how much of TeX's memory you used:
- 29336 strings out of 467867
- 530946 string characters out of 5428410
- 963028 words of memory out of 5000000
- 57416 multiletter control sequences out of 15000+600000
+ 29346 strings out of 467867
+ 531043 string characters out of 5428410
+ 962009 words of memory out of 5000000
+ 57419 multiletter control sequences out of 15000+600000
  665322 words of font info for 110 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 108i,14n,107p,2061b,835s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 108i,16n,107p,2061b,835s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\JS\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnbx12.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnbx9.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnbxti10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr12.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr7.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr8.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr9.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnti12.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnti9.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vntt12.pfb>
-Output written on thesis.pdf (84 pages, 9040461 bytes).
+Output written on thesis.pdf (83 pages, 9041078 bytes).
 PDF statistics:
- 1252 PDF objects out of 1440 (max. 8388607)
- 230 named destinations out of 1000 (max. 500000)
+ 1260 PDF objects out of 1440 (max. 8388607)
+ 237 named destinations out of 1000 (max. 500000)
  592 words of extra memory for PDF output out of 10000 (max. 10000000)
 

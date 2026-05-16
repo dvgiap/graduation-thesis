@@ -6,12 +6,7 @@ This chapter presents the proposed methodology in formal terms. It first defines
 \section{System Architecture}
 \label{sec:system_architecture}
 
-The proposed framework is built on top of an intrinsic-augmented Markov decision process (MDP) and introduces a learned, state-dependent scaling function for intrinsic rewards. The two ingredients are made explicit in the following definitions.
-
-\begin{definition}[Intrinsic-Augmented MDP]
-\label{def:augmented_mdp}
-An \emph{intrinsic-augmented MDP} is a tuple $(\mathcal{S}, \mathcal{A}, P, R^E, R^I, \gamma, \rho_0)$ in which $(\mathcal{S}, \mathcal{A}, P, R^E, \gamma, \rho_0)$ defines a standard MDP with extrinsic reward function $R^E : \mathcal{S} \times \mathcal{A} \to \mathbb{R}$, and $R^I : \mathcal{S} \times \mathcal{A} \times \mathcal{S} \to \mathbb{R}_{\ge 0}$ is an additional, internally generated intrinsic reward function. The agent observes only $(s_t, a_t, R_t^E, s_{t+1})$ from the environment; the intrinsic reward $R_t^I$ is computed by the agent itself.
-\end{definition}
+The proposed framework is built on top of the intrinsic-augmented MDP (Definition~\ref{def:augmented_mdp} in Chapter~\ref{ch:literature}) and introduces a learned, state-dependent scaling function for intrinsic rewards. The shaping function is formalized in the following definition.
 
 \begin{definition}[State-Dependent Reward Shaping]
 \label{def:reward_shaping}
