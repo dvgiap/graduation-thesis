@@ -275,16 +275,16 @@
       \item $C_m$: 3 biến thể CARE (count/ICM/RIDE)
     \end{itemize}
     \vspace{0.3em}
-    \textbf{Mỗi seed: $10^6$ bước môi trường, $\sim$2--4 giờ trên T4.}
+    \textbf{Mỗi seed: $10^6$ bước môi trường, $\sim$3--4 giờ trên T4 của Google Colab.}
   \end{columns}
 
   \vspace{0.3em}
   \begin{block}{Bốn chỉ số đánh giá}
     \footnotesize
     \begin{tabular}{@{}p{2.6cm}p{10.0cm}@{}}
-      Episode return    & Mean reward 10 episode cuối, trung bình 5 seeds. \\
-      Sample efficiency & Số bước đầu tiên đạt $0.7 \times$ best asymptotic. \\
-      Learning stability & Std-dev chéo seed của reward curve. \\
+      Episode return    & Phần thưởng trung bình của 10 episode cuối, lấy trung bình qua 5 seeds. \\
+      Sample efficiency & Số bước đầu tiên đạt $0.7 \times$ phần thưởng cuối tốt nhất. \\
+      Learning stability & Độ lệch chuẩn chéo seed của đường cong phần thưởng. \\
       Learned $\beta_\psi$ & Phân phối + heatmap theo vị trí tác tử. \\
     \end{tabular}
   \end{block}
@@ -310,9 +310,36 @@
     \begin{itemize}\footnotesize
       \item \textbf{CARE-RIDE trên UnlockPickup}: $0.536$ vs $0.369$ \textit{(+0.167)}.
       \item \textbf{CARE-COUNT trên Empty-16x16}: chạm ngưỡng \textbf{66k bước} (vs 82k tốt nhất của $\beta$ cố định).
-      \item Variance thấp nhất trên mọi env mà CARE-COUNT hội tụ.
+      \item Phương sai thấp nhất trên mọi env mà CARE-COUNT hội tụ.
     \end{itemize}
   \end{columns}
+\end{frame}
+
+% =============================================================
+% Slide 10b - Reward curves CARE-COUNT
+% =============================================================
+\begin{frame}{Đường cong phần thưởng: CARE-COUNT trên 6 môi trường}
+  \centering
+  \includegraphics[width=0.95\linewidth,height=0.78\textheight,keepaspectratio]{all_envs_count.png}\\
+  \scriptsize\textcolor{softgray}{Đường gạch (CARE-COUNT) so với 5 đường $\beta$ cố định (dải đỏ) và PPO không-nội-tại (xám). CARE-COUNT bám sát hoặc vượt $\beta$ cố định tốt nhất trên 4/6 env.}
+\end{frame}
+
+% =============================================================
+% Slide 10c - Reward curves CARE-RIDE
+% =============================================================
+\begin{frame}{Đường cong phần thưởng: CARE-RIDE trên 6 môi trường}
+  \centering
+  \includegraphics[width=0.95\linewidth,height=0.78\textheight,keepaspectratio]{all_envs_ride.png}\\
+  \scriptsize\textcolor{softgray}{Đường gạch (CARE-RIDE) -- thắng rõ nhất trên \textbf{UnlockPickup} và \textbf{LavaCrossing} so với $\beta$ cố định tốt nhất.}
+\end{frame}
+
+% =============================================================
+% Slide 10d - Reward curves CARE-ICM
+% =============================================================
+\begin{frame}{Đường cong phần thưởng: CARE-ICM trên 6 môi trường}
+  \centering
+  \includegraphics[width=0.95\linewidth,height=0.78\textheight,keepaspectratio]{all_envs_icm.png}\\
+  \scriptsize\textcolor{softgray}{Đường gạch (CARE-ICM) -- \textbf{sụp trên KeyCorridor (0.000)} và phương sai cao trên 3 env khác. ICM tín hiệu nhiễu $\Rightarrow$ CARE khuếch đại nhiễu.}
 \end{frame}
 
 % =============================================================
@@ -334,8 +361,8 @@
   \textbf{\small Ba chế độ quan sát được:}
   \begin{enumerate}\scriptsize
     \item \textbf{Extrinsic sớm} (DoorKey, Empty): $\beta_\psi$ tách khỏi $\beta_0$ trong $\sim 10$ update đầu, giảm về $\beta_\text{min}$.
-    \item \textbf{Extrinsic giữa training} (KeyCorridor, RedBlueDoors, UnlockPickup): $\beta_\psi$ \textit{neo tại $\beta_0$} cold-start, chỉ tách khi advantage có magnitude.
-    \item \textbf{Phân phối cuối $\beta_\psi$ trải $\sim$1 bậc giá trị} qua các state -- bằng chứng học được hàm \textit{thật sự phụ thuộc trạng thái}, không collapse về một hằng.
+    \item \textbf{Extrinsic giữa training} (KeyCorridor, RedBlueDoors, UnlockPickup): $\beta_\psi$ \textit{neo tại $\beta_0$} ở giai đoạn cold-start, chỉ tách khi advantage có độ lớn đáng kể.
+    \item \textbf{Phân phối cuối $\beta_\psi$ trải $\sim$1 bậc giá trị} qua các trạng thái -- bằng chứng học được hàm \textit{thật sự phụ thuộc trạng thái}, không suy biến về một hằng.
   \end{enumerate}
 \end{frame}
 
@@ -367,7 +394,7 @@
 
   \vspace{0.3em}
   \begin{block}{Bài học}
-    \footnotesize CARE \textbf{không phải} thay thế cho việc chọn module nội tại tốt. Đó là một bộ nhân phụ thuộc trạng thái mà chất lượng phụ thuộc vào \textit{độ tương quan} giữa tín hiệu nội tại thô và extrinsic-success path.
+    \footnotesize CARE \textbf{không phải} thay thế cho việc chọn module nội tại tốt. Đó là một bộ nhân phụ thuộc trạng thái mà chất lượng phụ thuộc vào \textit{độ tương quan} giữa tín hiệu nội tại thô và đường tới đích (extrinsic-success path).
   \end{block}
 \end{frame}
 
@@ -386,7 +413,7 @@
   \textbf{Giới hạn:}
   \begin{itemize}\small
     \item \textbf{Phụ thuộc chất lượng module}: CARE \textbf{không cứu được ICM} khi tín hiệu thô không khớp đường-tới-đích (KeyCorridor: 0.000).
-    \item \textbf{Cold-start trên môi trường cực thưa} (Empty-16x16): advantage gần như 0 ở mọi state, gradient correlation ~ noise, $\beta_\psi$ rớt về $\beta_0$ -- CARE \textit{thoái biến về fixed-$\beta$}.
+    \item \textbf{Cold-start trên môi trường cực thưa} (Empty-16x16): advantage gần như 0 ở mọi trạng thái, gradient của correlation gần như nhiễu, $\beta_\psi$ rớt về $\beta_0$ -- CARE \textit{thoái biến về fixed-$\beta$}.
     \item \textbf{Phạm vi MiniGrid}: action rời rạc, observation thấp chiều. Chưa kiểm chứng trên continuous control hoặc môi trường giàu observation.
   \end{itemize}
 \end{frame}
