@@ -4,7 +4,7 @@
 This chapter reviews the published works most related to this thesis. The chapter first describes reinforcement learning in sparse-reward environments. The next part explains why standard exploration is not enough in such settings. The chapter then reviews the main intrinsic motivation methods, including count-based and curiosity-driven exploration. Earlier work on adapting the weight of intrinsic rewards is also discussed. The chapter ends by pointing out the research gap that leads to the proposed method in Chapter 3.
 
 \section{Reinforcement Learning in Sparse-Reward Environments}
-An episodic reinforcement learning (RL) problem is commonly modeled as a Markov Decision Process (MDP). The MDP is defined by the tuple $(\mathcal{S}, \mathcal{A}, P, R, \gamma, \rho_0)$. Here $\mathcal{S}$ is the state space, $\mathcal{A}$ is the action space, $P(s_{t+1} \mid s_t, a_t)$ is the transition dynamics, $R$ is the reward function, $\gamma \in [0, 1)$ is the discount factor, and $\rho_0$ is the initial state distribution \cite{sutton2018rl}. At each time step $t$, the agent observes a state $s_t \in \mathcal{S}$. The agent samples an action $a_t \sim \pi_\theta(\cdot \mid s_t)$ from a policy with parameters $\theta$. The agent then receives an extrinsic reward $R_t^E$ and moves to a new state $s_{t+1}$. This standard interaction loop is shown in Figure~\ref{fig:rl_loop}.
+An episodic reinforcement learning (RL) problem is commonly modeled as a Markov Decision Process (MDP) defined by the tuple $(\mathcal{S}, \mathcal{A}, P, R, \gamma, \rho_0)$, where $\mathcal{S}$ is the state space, $\mathcal{A}$ is the action space, $P(s_{t+1} \mid s_t, a_t)$ is the transition dynamics, $R$ is the reward function, $\gamma \in [0, 1)$ is the discount factor, and $\rho_0$ is the initial state distribution \cite{sutton2018rl}. At each time step $t$, the agent observes a state $s_t \in \mathcal{S}$, samples an action $a_t \sim \pi_\theta(\cdot \mid s_t)$ from a policy with parameters $\theta$, receives an extrinsic reward $R_t^E$, and moves to a new state $s_{t+1}$. This standard interaction loop is shown in Figure~\ref{fig:rl_loop}.
 
 \begin{figure}[H]
 \centering
@@ -33,8 +33,64 @@ where $\tau = (s_0, a_0, s_1, a_1, \dots)$ denotes a trajectory induced by the p
 
 Equation~\eqref{eq:rl_objective} is a standard form. But learning becomes hard when extrinsic rewards are sparse. In sparse-reward tasks, the agent may take a long sequence of actions before getting any feedback. This feedback is needed to tell good trajectories from useless ones. Classical exploration methods such as $\epsilon$-greedy or random policies just add randomness to action choice. They do not actively guide the agent toward useful experiences when the state space is large or partly observed \cite{francois2018deep}. As a result, an agent that uses only extrinsic rewards in such environments often fails to find the goal-reaching behaviors needed to start learning.
 
+\section{Policy Optimization Foundations}
+\label{sec:policy_optimization_foundations}
+
+This section reviews three tools that Chapter~\ref{ch:methodology} builds on: value functions and the Bellman equation, the Proximal Policy Optimization (PPO) clipped surrogate objective, and Generalized Advantage Estimation (GAE). The presentation is kept to the level of detail needed to follow Chapter~\ref{ch:methodology}.
+
+\subsection{Value Functions and Bellman Equations}
+\label{sec:value_functions}
+
+For a policy $\pi$, the \emph{state-value function} is the expected discounted return obtained by following $\pi$ from state $s$:
+\begin{equation}
+V^\pi(s) \;=\; \mathbb{E}_{\pi, P}\!\left[\, \sum_{k=0}^{\infty} \gamma^k\, R_{t+k}^E \,\Big|\, s_t = s \right].
+\label{eq:value_function}
+\end{equation}
+The \emph{action-value function} is the corresponding quantity conditioned on the next action:
+\begin{equation}
+Q^\pi(s, a) \;=\; \mathbb{E}_{\pi, P}\!\left[\, \sum_{k=0}^{\infty} \gamma^k\, R_{t+k}^E \,\Big|\, s_t = s,\, a_t = a \right].
+\label{eq:action_value}
+\end{equation}
+Both functions satisfy the Bellman expectation equation \cite{sutton2018rl}:
+\begin{equation}
+V^\pi(s) \;=\; \mathbb{E}_{a \sim \pi(\cdot \mid s),\, s' \sim P(\cdot \mid s, a)}\!\left[\, R^E(s, a) + \gamma\, V^\pi(s') \,\right].
+\label{eq:bellman}
+\end{equation}
+In practice, $V^\pi$ is approximated by a critic network $V_\mu$ with parameters $\mu$, trained by regression on bootstrapped targets. The critic $V_\mu$ is shared across the GAE and PPO formulas reviewed below, and reappears throughout Chapter~\ref{ch:methodology}.
+
+\subsection{Proximal Policy Optimization}
+\label{sec:ppo_background}
+
+PPO \cite{schulman2017ppo} is the on-policy actor--critic algorithm used as the base policy optimizer throughout this thesis. Let $\pi_\theta$ be the current policy and $\pi_{\theta_\text{old}}$ the policy at the start of an update cycle. Define the importance-sampling ratio $\rho_t(\theta) = \pi_\theta(a_t \mid s_t) / \pi_{\theta_\text{old}}(a_t \mid s_t)$ and let $\hat A_t$ denote an advantage estimate. The PPO clipped surrogate objective is
+\begin{equation}
+L^\text{PPO}(\theta) \;=\; -\,\mathbb{E}_t\!\left[
+\min\!\Bigl(
+\rho_t(\theta)\, \hat A_t,\;
+\text{clip}\bigl(\rho_t(\theta),\, 1 - \epsilon,\, 1 + \epsilon\bigr)\, \hat A_t
+\Bigr) \right],
+\label{eq:ppo_clip}
+\end{equation}
+where $\epsilon$ is the clipping parameter. The minimum of the unclipped and clipped terms is a pessimistic lower bound on the unclipped policy-gradient objective. This bound keeps each update inside a trust region around $\pi_{\theta_\text{old}}$. PPO alternates between collecting on-policy rollouts, fitting the critic $V_\mu$ to bootstrapped targets, and minimizing $L^\text{PPO}$ over several epochs of minibatches.
+
+\subsection{Generalized Advantage Estimation}
+\label{sec:gae_background}
+
+GAE \cite{schulman2016gae} is the standard way to estimate $\hat A_t$ for actor--critic methods. The estimator is built from one-step temporal-difference (TD) errors of the critic:
+\begin{equation}
+\delta_t \;=\; R_t^E + \gamma\, V_\mu(s_{t+1})\,(1 - d_t) - V_\mu(s_t),
+\label{eq:td_error}
+\end{equation}
+where $d_t \in \{0, 1\}$ is the episode-termination flag. GAE forms an exponentially-weighted sum of these TD errors:
+\begin{equation}
+\hat A_t \;=\; \sum_{l=0}^{T-1-t} (\gamma\, \lambda)^l\, \delta_{t+l},
+\label{eq:gae_def}
+\end{equation}
+with $\lambda \in [0, 1]$ controlling the bias--variance trade-off. The limit $\lambda \to 0$ recovers the one-step TD advantage (low variance, high bias) and the limit $\lambda \to 1$ recovers the empirical Monte-Carlo advantage (high variance, low bias). Intermediate values of $\lambda$ smooth between these extremes. Equation~\eqref{eq:gae_def} is used in two places in Chapter~\ref{ch:methodology}: once with the shaped reward $\bar r_t$ for the PPO update, and once with the extrinsic-only reward $R_t^E$ for the CARE update.
+
+With the policy optimization machinery in place, the next section turns to the intrinsic reward signals that this machinery will optimize against.
+
 \section{Intrinsic Motivation for Exploration}
-Intrinsic motivation handles sparse rewards by adding an exploration bonus on top of the environment reward. This bonus is generated by the agent itself \cite{oudeyer2007intrinsic, schmidhuber2010formal}. The standard way to formalize this idea is to extend the MDP with an extra intrinsic reward function \cite{oudeyer2007intrinsic, schmidhuber2010formal, aubret2023intrinsic}.
+Intrinsic motivation handles sparse rewards by adding an exploration bonus on top of the environment reward. This bonus is generated by the agent itself \cite{oudeyer2007intrinsic, schmidhuber2010formal}. The standard way to formalize intrinsic motivation is to extend the MDP with an extra intrinsic reward function \cite{oudeyer2007intrinsic, schmidhuber2010formal, aubret2023intrinsic}.
 
 \begin{definition}[Intrinsic-Augmented MDP]
 \label{def:augmented_mdp}
@@ -52,7 +108,7 @@ where $\beta \ge 0$ controls how strong intrinsic motivation is. The intrinsic s
 Count-based methods give higher intrinsic rewards to states that have been visited less often. In tabular settings, the intrinsic reward at state $s$ is usually set to $1/\sqrt{N(s)}$, where $N(s)$ is the visit count. The idea is that less-explored states are more useful to revisit. Bellemare \textit{et al.}~\cite{bellemare2016count} extend this idea to high-dimensional observations through pseudo-counts from density models. Tang \textit{et al.}~\cite{tang2017exploration} use random projection hashing to get approximate counts in continuous state spaces. Ostrovski \textit{et al.}~\cite{ostrovski2017count} improve the approach with neural density models. They show strong exploration on hard Atari games such as \textit{Montezuma's Revenge}. Count-based methods are simple in idea and often work well. But the quality of the intrinsic signal is limited by how well the density estimator can measure novelty in complex observation spaces.
 
 \subsection{Curiosity-Driven Exploration}
-Curiosity-driven methods define intrinsic rewards through some form of prediction error. The Intrinsic Curiosity Module (ICM) \cite{pathak2017curiosity} learns a small latent representation of the state. ICM also trains a forward model that predicts the next latent feature from the current feature and action. The prediction error of this forward model is then used as the intrinsic bonus. This encourages the agent to seek transitions whose dynamics it cannot yet predict well. Random Network Distillation (RND) \cite{burda2019rnd} replaces the forward dynamics model with the gap between a fixed random target network and a learned predictor. This gives a state novelty signal that does not depend on action prediction. Rewarding Impact-Driven Exploration (RIDE) \cite{raileanu2020ride} computes intrinsic rewards from the size of representation changes caused by the agent's actions. This makes it useful for procedurally generated environments. In such environments, random background changes might otherwise overwhelm prediction-based bonuses.
+Curiosity-driven methods define intrinsic rewards through some form of prediction error. The Intrinsic Curiosity Module (ICM) \cite{pathak2017curiosity} learns a small latent representation of the state. ICM also trains a forward model that predicts the next latent feature from the current feature and action. The prediction error of this forward model is then used as the intrinsic bonus. This encourages the agent to seek transitions whose dynamics it cannot yet predict well. Random Network Distillation (RND) \cite{burda2019rnd} replaces the forward dynamics model with the gap between a fixed random target network and a learned predictor. This gives a state novelty signal that does not depend on action prediction. Rewarding Impact-Driven Exploration (RIDE) \cite{raileanu2020ride} computes intrinsic rewards from the size of representation changes caused by the agent's actions. This impact-based design is well suited to procedurally generated environments, where random background changes might otherwise overwhelm prediction-based bonuses.
 
 A common benefit of curiosity-driven methods is that intrinsic rewards tend to drop as the agent becomes familiar with a region of the state space. This reduces the risk of exploring the same area again and again. However, this self-adjustment only happens at the level of the raw intrinsic signal. The weight of that signal in the shaped reward of Equation~\eqref{eq:shaped_reward_lit} is still controlled by a fixed coefficient $\beta$ that does not adapt to context.
 

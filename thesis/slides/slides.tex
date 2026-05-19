@@ -291,7 +291,34 @@
 \end{frame}
 
 % =============================================================
-% Slide 10 - Ket qua 1: CARE-COUNT & CARE-RIDE
+% Slide 10a - Reward curves CARE-COUNT
+% =============================================================
+\begin{frame}{Đường cong phần thưởng: CARE-COUNT trên 6 môi trường}
+  \centering
+  \includegraphics[width=0.95\linewidth,height=0.78\textheight,keepaspectratio]{all_envs_count.png}\\
+  \scriptsize\textcolor{softgray}{Đường gạch (CARE-COUNT) so với 5 đường $\beta$ cố định (dải đỏ) và PPO không-nội-tại (xám). CARE-COUNT bám sát hoặc vượt $\beta$ cố định tốt nhất trên 4/6 env.}
+\end{frame}
+
+% =============================================================
+% Slide 10b - Reward curves CARE-RIDE
+% =============================================================
+\begin{frame}{Đường cong phần thưởng: CARE-RIDE trên 6 môi trường}
+  \centering
+  \includegraphics[width=0.95\linewidth,height=0.78\textheight,keepaspectratio]{all_envs_ride.png}\\
+  \scriptsize\textcolor{softgray}{Đường gạch (CARE-RIDE) -- thắng rõ nhất trên \textbf{UnlockPickup} và \textbf{LavaCrossing} so với $\beta$ cố định tốt nhất.}
+\end{frame}
+
+% =============================================================
+% Slide 10c - Reward curves CARE-ICM
+% =============================================================
+\begin{frame}{Đường cong phần thưởng: CARE-ICM trên 6 môi trường}
+  \centering
+  \includegraphics[width=0.95\linewidth,height=0.78\textheight,keepaspectratio]{all_envs_icm.png}\\
+  \scriptsize\textcolor{softgray}{Đường gạch (CARE-ICM) -- \textbf{sụp trên KeyCorridor (0.000)} và phương sai cao trên 3 env khác. ICM tín hiệu nhiễu $\Rightarrow$ CARE khuếch đại nhiễu.}
+\end{frame}
+
+% =============================================================
+% Slide 10d - Tong hop: CARE-COUNT & CARE-RIDE khop hoac vuot
 % =============================================================
 \begin{frame}{Kết quả: CARE-COUNT \& CARE-RIDE -- khớp hoặc vượt}
   \begin{columns}[T,onlytextwidth]
@@ -313,33 +340,6 @@
       \item Phương sai thấp nhất trên mọi env mà CARE-COUNT hội tụ.
     \end{itemize}
   \end{columns}
-\end{frame}
-
-% =============================================================
-% Slide 10b - Reward curves CARE-COUNT
-% =============================================================
-\begin{frame}{Đường cong phần thưởng: CARE-COUNT trên 6 môi trường}
-  \centering
-  \includegraphics[width=0.95\linewidth,height=0.78\textheight,keepaspectratio]{all_envs_count.png}\\
-  \scriptsize\textcolor{softgray}{Đường gạch (CARE-COUNT) so với 5 đường $\beta$ cố định (dải đỏ) và PPO không-nội-tại (xám). CARE-COUNT bám sát hoặc vượt $\beta$ cố định tốt nhất trên 4/6 env.}
-\end{frame}
-
-% =============================================================
-% Slide 10c - Reward curves CARE-RIDE
-% =============================================================
-\begin{frame}{Đường cong phần thưởng: CARE-RIDE trên 6 môi trường}
-  \centering
-  \includegraphics[width=0.95\linewidth,height=0.78\textheight,keepaspectratio]{all_envs_ride.png}\\
-  \scriptsize\textcolor{softgray}{Đường gạch (CARE-RIDE) -- thắng rõ nhất trên \textbf{UnlockPickup} và \textbf{LavaCrossing} so với $\beta$ cố định tốt nhất.}
-\end{frame}
-
-% =============================================================
-% Slide 10d - Reward curves CARE-ICM
-% =============================================================
-\begin{frame}{Đường cong phần thưởng: CARE-ICM trên 6 môi trường}
-  \centering
-  \includegraphics[width=0.95\linewidth,height=0.78\textheight,keepaspectratio]{all_envs_icm.png}\\
-  \scriptsize\textcolor{softgray}{Đường gạch (CARE-ICM) -- \textbf{sụp trên KeyCorridor (0.000)} và phương sai cao trên 3 env khác. ICM tín hiệu nhiễu $\Rightarrow$ CARE khuếch đại nhiễu.}
 \end{frame}
 
 % =============================================================

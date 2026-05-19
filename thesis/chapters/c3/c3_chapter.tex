@@ -84,7 +84,11 @@ y_t \;=\; \phi(s_t) \in \mathbb{R}^{d_y},
 I_t \;=\; \frac{\bigl\| \phi(s_{t+1}) - \phi(s_t) \bigr\|_2}{\sqrt{\max\{ N_e(\phi_h(s_{t+1})),\, 1 \}}},
 \label{eq:ride_raw}
 \end{equation}
-where $\phi_h$ is the same random-projection hash defined in Equation~\eqref{eq:count_hash} and $N_e(\cdot)$ counts the number of visits to the corresponding hash code \emph{within the current episode} (the count is reset at every episode boundary). The numerator rewards transitions whose representation change is large. The idea is that useful actions move the agent through latent space, not leave it in place. The denominator reduces bonuses for revisiting states already seen in the same episode. This prevents the cyclical wandering that happens when prediction-based bonuses are used in procedurally generated environments. Because the encoder is updated by the same inverse-plus-forward objective as ICM, RIDE inherits ICM's representation learning. But it replaces the intrinsic signal with an episodic, impact-driven one. We use the same hash dimension $d_h = 32$ and bin width $\Delta = 0.1$ as in the count-based module, and an embedding dimension of $d_y = 256$ matching the ICM encoder.
+where $\phi_h$ is the same random-projection hash defined in Equation~\eqref{eq:count_hash} and $N_e(\cdot)$ counts the number of visits to the corresponding hash code \emph{within the current episode} (the count is reset at every episode boundary).
+
+The numerator rewards transitions whose representation change is large; the underlying idea is that useful actions move the agent through latent space rather than leaving the agent in place. The denominator reduces bonuses for revisiting states already seen in the same episode, which prevents the cyclical wandering that happens when prediction-based bonuses are used in procedurally generated environments.
+
+Because the encoder is updated by the same inverse-plus-forward objective as ICM, RIDE inherits ICM's representation learning while replacing the intrinsic signal with an episodic, impact-driven one. We use the same hash dimension $d_h = 32$ and bin width $\Delta = 0.1$ as in the count-based module, and an embedding dimension of $d_y = 256$ matching the ICM encoder.
 
 \subsection{Standardization and Rectification}
 \label{sec:standardization}
@@ -127,7 +131,7 @@ For an intrinsic reward module $m$, the scaled intrinsic reward at time step $t$
 \end{equation}
 and substituting Equation~\eqref{eq:scaled_intrinsic} into Equation~\eqref{eq:combined_reward} yields the shaped reward used by PPO.
 
-The bounded range built into Definition~\ref{def:beta_network} makes sure that the shaped reward cannot grow without limit relative to the extrinsic signal, no matter how the Beta Network behaves during training.
+\textbf{Bounded Shaped Reward.} The bounded range built into Definition~\ref{def:beta_network} makes sure that the shaped reward cannot grow without limit relative to the extrinsic signal, no matter how the Beta Network behaves during training.
 
 \begin{lemma}[Bounded Shaped Reward]
 \label{lem:bounded_shaped}
@@ -152,9 +156,9 @@ For each transition in the rollout buffer, the GAE \cite{schulman2016gae} advant
 \delta_t^{E} \;=\; R_t^{E} \;+\; \gamma\, V_\mu(s_{t+1})\,(1 - d_t) \;-\; V_\mu(s_t),
 \label{eq:gae_advantage_ext}
 \end{equation}
-with discount factor $\gamma$, GAE bias-variance trade-off $\lambda$, and episode termination flag $d_t \in \{0,1\}$. The advantages used to supervise $\psi$ are computed without rollout-level normalization. This keeps the cross-state size of $\hat A_t^{E}$ intact. That size carries the signal-strength information needed to weight intrinsic curiosity.
+with discount factor $\gamma$, GAE bias-variance trade-off $\lambda$, and episode termination flag $d_t \in \{0,1\}$. The advantages used to supervise $\psi$ are computed without rollout-level normalization, which preserves the cross-state magnitude of $\hat A_t^{E}$ that carries the signal-strength information needed to weight intrinsic curiosity.
 
-The Beta Network is trained on minibatches of size $B$ drawn from the rollout buffer. Within each minibatch, both the weighted intrinsic reward and the extrinsic advantage are standardized:
+\textbf{Within-Batch Standardization and Correlation Loss.} The Beta Network is trained on minibatches of size $B$ drawn from the rollout buffer. Within each minibatch, both the weighted intrinsic reward and the extrinsic advantage are standardized:
 \begin{equation}
 \tilde I_t \;=\; \beta_\psi(s_t)\, I_t^{+,m},
 \qquad
@@ -172,7 +176,7 @@ L_\text{corr}(\psi)
 \end{equation}
 Minimizing $L_\text{corr}$ is equivalent to maximizing the Pearson correlation between $\tilde I$ and $\hat A^{E}$ over the minibatch, since the z-scored variables have unit variance by construction.
 
-A log-space regularizer pulls $\beta_\psi$ toward the reference value $\beta_0 = \sqrt{\beta_\text{min}\,\beta_\text{max}}$ to prevent degenerate scaling and to control variance during early training:
+\textbf{Log-Space Regularizer.} A log-space regularizer pulls $\beta_\psi$ toward the reference value $\beta_0 = \sqrt{\beta_\text{min}\,\beta_\text{max}}$ to prevent degenerate scaling and to control variance during early training:
 \begin{equation}
 L_\text{reg}(\psi) \;=\; \mathbb{E}\!\left[ \bigl( \log \beta_\psi(s_t) - \log \beta_0 \bigr)^2 \right].
 \label{eq:reg_loss}
@@ -184,9 +188,9 @@ L_\beta(\psi) \;=\; L_\text{corr}(\psi) \;+\; \lambda_\text{reg}\, L_\text{reg}(
 \end{equation}
 with $\lambda_\text{reg} > 0$ the regularization weight. No separate weighting on $L_\text{corr}$ is needed because z-scoring fixes its scale to $O(1)$ regardless of the underlying magnitudes of $\tilde I$ and $\hat A^{E}$.
 
-The use of \emph{advantage} rather than the discounted return $G_t^{E}$ \cite{andres2025impact} is on purpose. The variance of $G_t^{E}$ is mainly caused by episode position. Early-episode states see almost the full $\sum_{k} \gamma^{k} R_{t+k}^{E}$, while late-episode states see almost none. So a correlation between $\tilde I_t$ and $G_t^{E}$ is mostly a correlation between $\tilde I_t$ and ``time left in the episode''. Subtracting the value baseline $V_\mu(s_t)$, as GAE does, removes this confound. The result is a per-state credit signal: $\hat A_t^{E}$ is positive at states where the realized extrinsic return beats the critic's prediction, and negative where it falls short. Linking $\beta_\psi$ to this signal therefore raises intrinsic curiosity at states where extrinsic learning is still moving upward, and lowers it elsewhere.
+\textbf{Why Advantage Rather Than Return.} The use of \emph{advantage} rather than the discounted return $G_t^{E}$ \cite{andres2025impact} is on purpose. The variance of $G_t^{E}$ is mainly caused by episode position. Early-episode states see almost the full $\sum_{k} \gamma^{k} R_{t+k}^{E}$, while late-episode states see almost none. So a correlation between $\tilde I_t$ and $G_t^{E}$ is mostly a correlation between $\tilde I_t$ and ``time left in the episode''. Subtracting the value baseline $V_\mu(s_t)$, as GAE does, removes this confound. The result is a per-state credit signal: $\hat A_t^{E}$ is positive at states where the realized extrinsic return beats the critic's prediction, and negative where it falls short. Linking $\beta_\psi$ to this signal therefore raises intrinsic curiosity at states where extrinsic learning is still moving upward, and lowers it elsewhere.
 
-The correlation objective has a clean statistical interpretation, and its gradient has a clean directional one.
+\textbf{Statistical and Gradient Properties.} The correlation objective has a clean statistical interpretation, and its gradient has a clean directional interpretation.
 
 \begin{proposition}[Optimal State-Dependent Scaling]
 \label{prop:target_recovery}
@@ -219,7 +223,7 @@ In particular, gradient descent on $L_\text{corr}$ increases $\beta_\psi(s)$ whe
 Proof in Appendix~\ref{app:proof_gradient}.
 \end{proposition}
 
-Proposition~\ref{prop:gradient_direction} makes the main design idea of CARE clear. A gradient step pushes $\beta_\psi(s)$ in the direction that would increase the within-batch correlation between weighted curiosity and extrinsic advantage at state $s$. The Beta Network is therefore supervised by the agreement between the intrinsic generator and the extrinsic critic. No extra network beyond the critic itself is needed.
+Proposition~\ref{prop:gradient_direction} shows that the supervision signal for $\psi$ is fully determined by the agreement between the intrinsic generator and the extrinsic critic: no extra network beyond the critic itself is needed, and the gradient direction at each state $s$ depends only on the within-batch covariance at $s$. The next subsection contrasts this first-order rule with the meta-gradient alternative.
 
 \subsection{First-Order Optimization vs. Meta-Gradient}
 \label{sec:first_order}
@@ -328,4 +332,6 @@ Algorithm~\ref{alg:care} specifies the complete CARE training loop. One iteratio
 \end{algorithmic}
 \end{algorithm}
 
-The algorithm keeps the standard PPO update structure (lines 11--14) and adds only two extra optimization steps (lines 6 and 8) before the shaped reward is computed. The extrinsic-only advantage $\hat A_t^{E}$ used in line 7 is computed from the same critic $V_\mu$ that drives the PPO update. But rollout-level normalization is disabled so that the cross-state size is kept. The PPO advantage $\hat A_t$ in line 10 is computed again from the shaped reward, and is normalized in the standard way. So the two advantage computations differ only in their reward stream and in whether normalization is applied. This modularity is important. The same template works if ICM is replaced by a count-based bonus or by RIDE. Only Equations~\eqref{eq:icm_raw}--\eqref{eq:icm_standardized} are swapped for the corresponding module-specific computation. The numerical values of all hyperparameters and network architectures used in the experiments are listed in Appendix~\ref{app:implementation}.
+The algorithm keeps the standard PPO update structure (lines 11--14) and adds only two extra optimization steps (lines 6 and 8) before the shaped reward is computed. The extrinsic-only advantage $\hat A_t^{E}$ used in line 7 is computed from the same critic $V_\mu$ that drives the PPO update, but with rollout-level normalization disabled so that the cross-state magnitude is preserved. The PPO advantage $\hat A_t$ in line 10 is then recomputed from the shaped reward with the standard rollout-level normalization, so the two advantage computations differ only in their reward stream and in whether normalization is applied.
+
+This modular template generalizes immediately to the other intrinsic modules: replacing ICM with the count-based bonus or with RIDE only swaps Equations~\eqref{eq:icm_raw}--\eqref{eq:icm_standardized} for the corresponding module-specific computation, while the rest of the pipeline is identical. The numerical values of all hyperparameters and network architectures used in the experiments are listed in Appendix~\ref{app:implementation}.

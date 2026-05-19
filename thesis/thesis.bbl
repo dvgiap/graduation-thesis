@@ -101,6 +101,18 @@ Maxime Chevalier-Boisvert, Lucas Willems, and Suman Pal.
 \newblock Minimalistic gridworld environment for openai gym.
 \newblock In {\em ICLR Workshop on Representation Learning for RL}, 2018.
 
+\bibitem{schulman2017ppo}
+John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov.
+\newblock Proximal policy optimization algorithms.
+\newblock {\em arXiv preprint arXiv:1707.06347}, 2017.
+
+\bibitem{schulman2016gae}
+John Schulman, Philipp Moritz, Sergey Levine, Michael Jordan, and Pieter
+  Abbeel.
+\newblock High-dimensional continuous control using generalized advantage
+  estimation.
+\newblock In {\em International Conference on Learning Representations}, 2016.
+
 \bibitem{aubret2023intrinsic}
 Arthur Aubret, Laetitia Matignon, and Salima Hassas.
 \newblock An information-theoretic perspective on intrinsic motivation in
@@ -127,23 +139,11 @@ Zeyu Zheng, Junhyuk Oh, and Satinder Singh.
 \newblock In {\em Advances in Neural Information Processing Systems},
   volume~31, pages 4644--4654, 2018.
 
-\bibitem{schulman2016gae}
-John Schulman, Philipp Moritz, Sergey Levine, Michael Jordan, and Pieter
-  Abbeel.
-\newblock High-dimensional continuous control using generalized advantage
-  estimation.
-\newblock In {\em International Conference on Learning Representations}, 2016.
-
 \bibitem{andres2025impact}
 Alain Andres, Esther Villar-Rodriguez, and Javier~Del Ser.
 \newblock On the impact of the reward modulation in curiosity-driven
   reinforcement learning.
 \newblock In {\em Proceedings of the AAAI Conference on Artificial
   Intelligence}, 2025.
-
-\bibitem{schulman2017ppo}
-John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov.
-\newblock Proximal policy optimization algorithms.
-\newblock {\em arXiv preprint arXiv:1707.06347}, 2017.
 
 \end{thebibliography}

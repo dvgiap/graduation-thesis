@@ -1,6 +1,6 @@
-PWD d:\Workspace\graduation-thesis\graduation-thesis\thesis\slides
+PWD D:\Workspace\graduation-thesis\graduation-thesis\thesis\slides
 INPUT C:\Users\JS\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT d:\Workspace\graduation-thesis\graduation-thesis\thesis\slides\slides.tex
+INPUT slides.tex
 OUTPUT slides.log
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\beamer\beamer.cls
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\beamer\beamer.cls
@@ -532,12 +532,6 @@ INPUT ..\figures\env_unlockpickup.png
 INPUT ..\figures\env_unlockpickup.png
 INPUT ..\figures\env_unlockpickup.png
 INPUT ..\figures\env_unlockpickup.png
-INPUT ..\figures\aggregate_summary.png
-INPUT ..\figures\aggregate_summary.png
-INPUT ..\figures\aggregate_summary.png
-INPUT ..\figures\aggregate_summary.png
-INPUT ..\figures\aggregate_summary.png
-INPUT ..\figures\aggregate_summary.png
 INPUT ..\figures\all_envs_count.png
 INPUT ..\figures\all_envs_count.png
 INPUT ..\figures\all_envs_count.png
@@ -557,6 +551,12 @@ INPUT ..\figures\all_envs_icm.png
 INPUT ..\figures\all_envs_icm.png
 INPUT ..\figures\all_envs_icm.png
 INPUT ..\figures\all_envs_icm.png
+INPUT ..\figures\aggregate_summary.png
+INPUT ..\figures\aggregate_summary.png
+INPUT ..\figures\aggregate_summary.png
+INPUT ..\figures\aggregate_summary.png
+INPUT ..\figures\aggregate_summary.png
+INPUT ..\figures\aggregate_summary.png
 INPUT ..\figures\care_dynamics_count.png
 INPUT ..\figures\care_dynamics_count.png
 INPUT ..\figures\care_dynamics_count.png

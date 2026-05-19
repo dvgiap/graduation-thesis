@@ -1,6 +1,6 @@
-PWD D:\Workspace\graduation-thesis\graduation-thesis\thesis
+PWD d:\Workspace\graduation-thesis\graduation-thesis\thesis
 INPUT C:\Users\JS\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT thesis.tex
+INPUT d:\Workspace\graduation-thesis\graduation-thesis\thesis\thesis.tex
 OUTPUT thesis.log
 INPUT D:\Program Files\MiKTeX\tex\latex\base\report.cls
 INPUT D:\Program Files\MiKTeX\tex\latex\base\report.cls
@@ -312,8 +312,14 @@ INPUT D:\Program Files\MiKTeX\tex\latex\epstopdf-pkg\epstopdf-base.sty
 INPUT D:\Program Files\MiKTeX\tex\latex\00miktex\epstopdf-sys.cfg
 INPUT D:\Program Files\MiKTeX\tex\latex\00miktex\epstopdf-sys.cfg
 INPUT D:\Program Files\MiKTeX\tex\latex\00miktex\epstopdf-sys.cfg
-OUTPUT thesis.out
+INPUT .\thesis.out
+INPUT .\thesis.out
+INPUT thesis.out
+INPUT thesis.out
 OUTPUT thesis.pdf
+INPUT .\thesis.out
+INPUT .\thesis.out
+OUTPUT thesis.out
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnbx12.tfm
 INPUT .\cover.tex
 INPUT .\cover.tex
@@ -397,8 +403,18 @@ INPUT .\chapters\abtract_en.tex
 INPUT chapters\abtract_en.tex
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnr17.tfm
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnbx12.tfm
+INPUT .\thesis.toc
+INPUT .\thesis.toc
+INPUT thesis.toc
 OUTPUT thesis.toc
+INPUT .\thesis.lof
+INPUT .\thesis.lof
+INPUT thesis.lof
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnr7.tfm
 OUTPUT thesis.lof
+INPUT .\thesis.lot
+INPUT .\thesis.lot
+INPUT thesis.lot
 OUTPUT thesis.lot
 INPUT .\chapters\glossary.tex
 INPUT .\chapters\glossary.tex
@@ -413,7 +429,6 @@ INPUT .\chapters\notations.tex
 INPUT .\chapters\notations.tex
 INPUT .\chapters\notations.tex
 INPUT chapters\notations.tex
-INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnr7.tfm
 INPUT .\chapters\c1\c1_introduction.tex
 INPUT .\chapters\c1\c1_introduction.tex
 INPUT .\chapters\c1\c1_introduction.tex
@@ -680,6 +695,8 @@ INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr9.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr9.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb
+INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy6.pfb
+INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy6.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy9.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy9.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\symbols\msbm10.pfb
