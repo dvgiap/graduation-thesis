@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex thesis"] 1779210484.76808 "thesis.aux" "thesis.bbl" "thesis" 1779210609.71872 0
+["bibtex thesis"] 1779210484.76808 "thesis.aux" "thesis.bbl" "thesis" 1779292234.42795 0
   "./references.bib" 1778093282 7622 0c0837a7ce044ce675eb9f7d40715d6c ""
   "D:/Program Files/MiKTeX/bibtex/bst/bibtex/unsrt.bst" 1291864736 18030 1376b4b231b50c66211e47e42eda2875 ""
-  "thesis.aux" 1779210608 38509 34d91214d9b2b19651ee14ca9a19747b "pdflatex"
+  "thesis.aux" 1779292233 38509 34d91214d9b2b19651ee14ca9a19747b "pdflatex"
   (generated)
   "thesis.bbl"
   "thesis.blg"
   (rewritten before read)
-["pdflatex"] 1779210591.37614 "d:/Workspace/graduation-thesis/graduation-thesis/thesis/thesis.tex" "thesis.pdf" "thesis" 1779210609.72021 0
+["pdflatex"] 1779292214.90058 "d:/Workspace/graduation-thesis/graduation-thesis/thesis/thesis.tex" "thesis.pdf" "thesis" 1779292234.429 0
   "C:/Users/JS/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1778850130 88550 556fbefa7d2e4c8f68bc8647c78bd8e4 ""
   "C:/Users/JS/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1200.pk" 1773592808 14064 6e99fa4a000e472079bc32c4aad5ce7b ""
   "C:/Users/JS/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1773592751 13323773 8ddd8b3a37ea204ad94af85bcf127cda ""
@@ -233,16 +233,16 @@
   "D:/Program Files/MiKTeX/tex/latex/tools/xspace.sty" 1761901070 4545 d7bb86d489a8ad5263e4c34304c03aee ""
   "D:/Program Files/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "D:/Program Files/MiKTeX/tex/latex/xcolor/xcolor.sty" 1729265222 55384 b454dec21c2d9f45ec0b793f0995b992 ""
-  "chapters/abtract_en.tex" 1779208508 2290 3443983e94ba567ffb7d62edb507cf6b ""
-  "chapters/abtract_vi.tex" 1778783995 2882 c697381534c26e78e19112eee83dd4ba ""
+  "chapters/abtract_en.tex" 1779292042 2658 88e6c89d6a79b3496226b6c047095087 ""
+  "chapters/abtract_vi.tex" 1779292214 3346 92fde33da44a7f60ea97e8ad4473104e ""
   "chapters/acknowledgement.tex" 1778893265 500 e9f0de4b4bdf1ad45e96d777d5b335c0 ""
   "chapters/appendix_a.tex" 1778079867 12530 204e649dad9647be2fc74516e4cd46c4 ""
   "chapters/appendix_b.tex" 1778678384 9882 399ad56e904bf99db355ff647a53ff1f ""
-  "chapters/assurance.tex" 1778783988 1550 d4fcd99ca61e0e44e95b891ae72ca49f ""
-  "chapters/c1/c1_introduction.tex" 1779208822 9136 39cf1e00b7931196b587bdd6941191e0 ""
+  "chapters/assurance.tex" 1779290958 1830 ea764d5eae3239342e814fa9b2f7b900 ""
+  "chapters/c1/c1_introduction.tex" 1779292024 9123 1f256864101a9f47f25b5c46e9e5d801 ""
   "chapters/c2/c2_chapter.tex" 1779208867 17150 a043390f00db403416e65132b1545a6a ""
   "chapters/c3/c3_chapter.tex" 1779208963 29795 6e09bad06ee402bb666fe0cb55d60edb ""
-  "chapters/c4/c4_chapter.tex" 1779208730 38586 9ecd1c526cb8a8d560fcc9a2c09639bc ""
+  "chapters/c4/c4_chapter.tex" 1779292031 38580 424f827b19defeb1dda1c658a6603470 ""
   "chapters/conclusion.tex" 1778089839 3535 68b47c606dd1e3f2281b83f32f8442b8 ""
   "chapters/glossary.tex" 1778893582 1197 385ba63090fefa87fbbfc8a5b9934044 ""
   "chapters/notations.tex" 1778784023 3856 48e984ec6123528ecec3b644aeb1920d ""
@@ -276,13 +276,13 @@
   "tables/sample_efficiency_count.tex" 1778089353 1307 d394548542971a27f8b5b1a4e80c29ae ""
   "tables/sample_efficiency_icm.tex" 1778089354 1319 f6184789a4eaddd2cd49c3b4b95bc407 ""
   "tables/sample_efficiency_ride.tex" 1778089355 1314 26ada5f6e83a603198ec2178fd005d92 ""
-  "thesis.aux" 1779210608 38509 34d91214d9b2b19651ee14ca9a19747b "pdflatex"
+  "thesis.aux" 1779292233 38509 34d91214d9b2b19651ee14ca9a19747b "pdflatex"
   "thesis.bbl" 1779210484 6499 b67686a3c570e09d629fa459be773a75 "bibtex thesis"
-  "thesis.lof" 1779210608 4821 102435ec36fc1e1f67ea174348e91ea0 "pdflatex"
-  "thesis.lot" 1779210608 4683 9cb1edec516a6beabbb1b1b88a4e9688 "pdflatex"
-  "thesis.out" 1779210608 12490 a9cc863b3927b48c3b87de7c4892ca30 "pdflatex"
+  "thesis.lof" 1779292233 4821 102435ec36fc1e1f67ea174348e91ea0 "pdflatex"
+  "thesis.lot" 1779292233 4683 9cb1edec516a6beabbb1b1b88a4e9688 "pdflatex"
+  "thesis.out" 1779292233 12490 a9cc863b3927b48c3b87de7c4892ca30 "pdflatex"
   "thesis.tex" 1778783966 7042 7c92ba3802d6a9e8e13abe9645bc5f89 ""
-  "thesis.toc" 1779210608 5788 58e5dccf037d675560eb4db87a83ff29 "pdflatex"
+  "thesis.toc" 1779292233 5788 58e5dccf037d675560eb4db87a83ff29 "pdflatex"
   (generated)
   "thesis.aux"
   "thesis.lof"
