@@ -33,38 +33,6 @@ for some scalar $c(s) > 0$ that depends on the variance terms but not on the sig
 which is the announced equality. When the unconstrained interior solution falls outside $[\beta_\text{min}, \beta_\text{max}]$, the bound is active and $f^\star(s) \in \{\beta_\text{min}, \beta_\text{max}\}$; the same monotone relationship in the conditional cross-moment is preserved at the clipped optimum.
 \end{proof}
 
-\section{Proof of Proposition 3.2: Gradient Direction}
-\label{app:proof_gradient}
-
-\begin{proof}
-Fix a state $s \in \mathcal{S}$ visited with positive probability, and treat $\beta_\psi(s)$ as a free real-valued parameter for the purpose of computing the partial derivative. By the chain rule,
-\begin{equation*}
-\frac{\partial L_\text{corr}}{\partial \beta_\psi(s)}
-\;=\;
--\, \frac{\partial}{\partial \beta_\psi(s)}\, \mathbb{E}\!\left[\, \hat I_t^{z}\,\hat A_t^{z} \,\right],
-\end{equation*}
-with $\hat I_t^{z} = (\tilde I_t - \mu_{\tilde I})/\sigma_{\tilde I}$ and $\hat A_t^{z} = (\hat A_t^{E} - \mu_{\hat A^{E}})/\sigma_{\hat A^{E}}$. Because $\hat A_t^{z}$ does not depend on $\psi$, only the dependence of $\hat I_t^{z}$ on $\beta_\psi(s)$ contributes. The numerator $\tilde I_t - \mu_{\tilde I}$ depends on $\beta_\psi(s)$ at the rate
-\begin{equation*}
-\frac{\partial (\tilde I_t - \mu_{\tilde I})}{\partial \beta_\psi(s)}
-\;=\;
-\mathbb{1}\{s_t = s\}\, I_t^{+,m} \;-\; \mathbb{P}(s_t = s)\, \mathbb{E}[\, I_t^{+,m} \mid s_t = s\,],
-\end{equation*}
-where the second term comes from differentiating the marginal mean $\mu_{\tilde I}$. Substituting and integrating against $\hat A_t^{z}$ under the on-policy distribution gives
-\begin{align*}
-\frac{\partial L_\text{corr}}{\partial \beta_\psi(s)}
-&\;=\;
--\,\frac{1}{\sigma_{\tilde I}}\,\mathbb{E}\!\left[\, \bigl( \mathbb{1}\{s_t = s\}\, I_t^{+,m} - \mathbb{P}(s_t = s)\, \mathbb{E}[I_t^{+,m} \mid s_t = s] \bigr)\, \hat A_t^{z} \,\right]\\
-&\;=\;
--\,\frac{\mathbb{P}(s_t = s)}{\sigma_{\tilde I}}\,
-\Bigl(
-\mathbb{E}[\, I_t^{+,m}\, \hat A_t^{z} \mid s_t = s\,]
-\;-\;
-\mathbb{E}[\, I_t^{+,m} \mid s_t = s\,]\, \mathbb{E}[\, \hat A_t^{z}\,]
-\Bigr),
-\end{align*}
-where we used $\mathbb{E}[\mathbb{1}\{s_t = s\}\, X] = \mathbb{P}(s_t = s)\, \mathbb{E}[X \mid s_t = s]$ and the fact that $\hat A_t^{z}$ has zero \emph{marginal} mean by construction. The difference inside the parentheses is the conditional covariance between $I^{+,m}$ and $\hat A^{z}$ at $s$. The partial derivative is therefore negative whenever this conditional covariance is positive, so a gradient descent step on $L_\text{corr}$ \emph{increases} $\beta_\psi(s)$ in that case; the converse holds when the conditional covariance is negative.
-\end{proof}
-
 \section{Proof of Lemma 3.1: Bounded Shaped Reward}
 \label{app:proof_bounded}
 
@@ -84,34 +52,36 @@ By Definition~\ref{def:beta_network}, $\beta_\psi(s_t) \in [\beta_\text{min}, \b
 which establishes the claim.
 \end{proof}
 
-\section{Proof of Proposition 3.3: Computational Cost Comparison}
+\section{Proof of Proposition 3.2: Computational Cost Comparison}
 \label{app:proof_cost}
 
 \begin{proof}
 We measure cost in scalar floating-point operations and ignore lower-order terms.
+Write $|\theta|$, $|\mu|$, $|\psi|$ for the number of parameters in the policy, critic, and Beta Network respectively.
 
-\textbf{Meta-gradient training step.} A meta-gradient training step for a parameterized intrinsic reward function (LIRPG \cite{zheng2018lirpg}) consists of the following operations on a buffer of $T$ transitions:
-(i) compute the policy gradient at the current parameters and apply $K$ inner update steps to obtain a perturbed policy $\theta'$, each of which costs $O(T\, |\theta|)$ to evaluate the policy gradient and $O(|\theta|)$ to apply the update; and
-(ii) backpropagate the meta-objective evaluated at $\theta'$ through the chain of $K$ inner updates to obtain a gradient with respect to the intrinsic reward parameters. The backward pass through $K$ unrolled updates costs $O(K\, T\, |\theta|)$ in time and $O(K\, |\theta|)$ in memory because each inner step must be cached. Summing the forward and backward costs, the worst-case time complexity per buffer update is
+\textbf{Meta-gradient training step.} A meta-gradient estimator (LIRPG \cite{zheng2018lirpg}) updates the intrinsic-reward parameters by differentiating \emph{through} $K$ inner policy-update steps applied to the buffer of $T$ transitions. The costly part is the backward pass: because each of the $K$ inner steps depends on the current policy parameters, the entire chain of $K$ updates must be unrolled and cached before a single gradient with respect to the intrinsic-reward parameters can be computed. Concretely:
+(i) each inner step evaluates the policy gradient over $T$ transitions, costing $O(T\,|\theta|)$, and applies the update, costing $O(|\theta|)$; and
+(ii) the backward pass through all $K$ unrolled steps mirrors the forward pass, costing $O(K\,T\,|\theta|)$ in time and $O(K\,|\theta|)$ in memory.
+The worst-case time complexity per buffer update is therefore
 \begin{equation*}
 C_\text{meta} \;=\; O(K\, T\, |\theta|).
 \end{equation*}
 
-\textbf{CARE training step.} A CARE training step for the Beta Network on the same buffer of $T$ transitions consists of:
-(i) one forward pass through the critic $V_\mu$ for each of the $T$ states to obtain the extrinsic GAE advantages $\hat A_t^{E}$, at cost $O(T\, |\mu|)$, where $|\mu| \le |\theta|$ (this pass is in any case required by PPO and adds no marginal cost relative to the policy update);
-(ii) computation of the GAE recursion in Equation~\eqref{eq:gae_advantage_ext}, which is $O(T)$;
-(iii) one forward pass through $\beta_\psi$ for each of the $T$ states, at cost $O(T\, |\psi|)$; and
-(iv) one backward pass through $\beta_\psi$ to compute $\nabla_\psi L_\beta$ from the correlation in Equation~\eqref{eq:corr_loss}, at cost $O(T\, |\psi|)$.
-The dominant term is $O(T\, |\psi|)$ when $|\psi| \ge |\mu|$ in practice; otherwise the bound becomes $O(T\, |\mu|)$, which is still strictly smaller than $C_\text{meta}$ by a factor of $K$. We summarize the time complexity per buffer update as
+\textbf{CARE training step.} CARE updates only the Beta Network $\beta_\psi$, without differentiating through any policy step. On the same buffer of $T$ transitions:
+(i) a forward pass through the critic $V_\mu$ produces the extrinsic GAE advantages $\hat A_t^{E}$, at cost $O(T\,|\mu|)$; this pass is already required by PPO and adds no extra cost;
+(ii) the GAE recursion in Equation~\eqref{eq:gae_advantage_ext} runs in $O(T)$;
+(iii) a forward pass through $\beta_\psi$ evaluates the scaled intrinsic reward for each of the $T$ states, at cost $O(T\,|\psi|)$; and
+(iv) a single backward pass through $\beta_\psi$ computes $\nabla_\psi L_\beta$ from the correlation in Equation~\eqref{eq:corr_loss}, at cost $O(T\,|\psi|)$.
+No policy parameters enter the backward pass. The dominant term is $O(T\,|\psi|)$, so the time complexity per buffer update is
 \begin{equation*}
 C_\text{CARE} \;=\; O(T\, |\psi|).
 \end{equation*}
 
-\textbf{Asymptotic ratio.} Taking the ratio,
+\textbf{Asymptotic ratio.} Dividing the two costs,
 \begin{equation*}
 \frac{C_\text{meta}}{C_\text{CARE}} \;=\; \Theta\!\left( \frac{K\, |\theta|}{|\psi|} \right).
 \end{equation*}
-When $|\psi| \ll |\theta|$ and $K \ge 1$, this ratio is large, which is what the proposition asserts.
+This ratio is large whenever $|\psi| \ll |\theta|$ and $K \ge 1$. In the implemented system, $|\psi|$ is roughly two orders of magnitude smaller than $|\theta|$ and $K = 80$, so the saving is substantial.
 \end{proof}
 
 \section{Proof of Corollary 3.1: Degeneration to Fixed Coefficient}

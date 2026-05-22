@@ -46,7 +46,7 @@ For a policy $\pi$, the \emph{state-value function} is the expected discounted r
 V^\pi(s) \;=\; \mathbb{E}_{\pi, P}\!\left[\, \sum_{k=0}^{\infty} \gamma^k\, R_{t+k}^E \,\Big|\, s_t = s \right].
 \label{eq:value_function}
 \end{equation}
-The \emph{action-value function} is the corresponding quantity conditioned on the next action:
+The \emph{action-value function} is the corresponding quantity conditioned on the next action \cite{sutton2018rl}:
 \begin{equation}
 Q^\pi(s, a) \;=\; \mathbb{E}_{\pi, P}\!\left[\, \sum_{k=0}^{\infty} \gamma^k\, R_{t+k}^E \,\Big|\, s_t = s,\, a_t = a \right].
 \label{eq:action_value}

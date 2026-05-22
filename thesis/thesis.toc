@@ -39,29 +39,28 @@
 \contentsline {subsection}{\numberline {3.3.2}Advantage-Correlation Objective}{19}{subsection.3.3.2}%
 \contentsline {subsection}{\numberline {3.3.3}First-Order Optimization vs. Meta-Gradient}{22}{subsection.3.3.3}%
 \contentsline {section}{\numberline {3.4}Algorithm}{23}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Rollout Buffer}{24}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.1}Rollout Buffer}{23}{subsection.3.4.1}%
 \contentsline {subsection}{\numberline {3.4.2}Loss Functions}{24}{subsection.3.4.2}%
-\contentsline {subsection}{\numberline {3.4.3}Training Procedure}{25}{subsection.3.4.3}%
-\contentsline {chapter}{\numberline {4}Experimental Setup and Results}{28}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Benchmark Environments}{28}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Computing Environment}{30}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Experimental Configuration}{31}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Baselines}{32}{section.4.4}%
-\contentsline {section}{\numberline {4.5}Performance Evaluation Metrics}{34}{section.4.5}%
-\contentsline {section}{\numberline {4.6}Empirical Results}{35}{section.4.6}%
-\contentsline {subsection}{\numberline {4.6.1}Module-Level Results: Fixed-$\beta $ Sweep vs CARE}{35}{subsection.4.6.1}%
-\contentsline {subsection}{\numberline {4.6.2}Effect of CARE Across Modules}{42}{subsection.4.6.2}%
-\contentsline {subsection}{\numberline {4.6.3}Sensitivity to Fixed $\beta $}{44}{subsection.4.6.3}%
-\contentsline {subsection}{\numberline {4.6.4}Behavior of the Learned Scaling Function}{45}{subsection.4.6.4}%
-\contentsline {subsection}{\numberline {4.6.5}Discussion}{53}{subsection.4.6.5}%
-\contentsline {chapter}{Conclusion and Future Work}{55}{chapter*.37}%
-\contentsline {chapter}{References}{57}{section*.38}%
-\contentsline {chapter}{\numberline {A}Mathematical Proofs}{60}{appendix.A}%
-\contentsline {section}{\numberline {A.1}Proof of Proposition 3.1: Optimal State-Dependent Scaling}{60}{section.A.1}%
-\contentsline {section}{\numberline {A.2}Proof of Proposition 3.2: Gradient Direction}{61}{section.A.2}%
-\contentsline {section}{\numberline {A.3}Proof of Lemma 3.1: Bounded Shaped Reward}{62}{section.A.3}%
-\contentsline {section}{\numberline {A.4}Proof of Proposition 3.3: Computational Cost Comparison}{62}{section.A.4}%
-\contentsline {section}{\numberline {A.5}Proof of Corollary 3.1: Degeneration to Fixed Coefficient}{63}{section.A.5}%
-\contentsline {chapter}{\numberline {B}Implementation Details}{65}{appendix.B}%
-\contentsline {section}{\numberline {B.1}Network Architectures}{65}{section.B.1}%
-\contentsline {section}{\numberline {B.2}Hyperparameters}{68}{section.B.2}%
+\contentsline {subsection}{\numberline {3.4.3}Training Procedure}{24}{subsection.3.4.3}%
+\contentsline {chapter}{\numberline {4}Experimental Setup and Results}{27}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Benchmark Environments}{27}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Computing Environment}{29}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Experimental Configuration}{30}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Baselines}{31}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Performance Evaluation Metrics}{33}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Empirical Results}{34}{section.4.6}%
+\contentsline {subsection}{\numberline {4.6.1}Module-Level Results: Fixed-$\beta $ Sweep vs CARE}{34}{subsection.4.6.1}%
+\contentsline {subsection}{\numberline {4.6.2}Effect of CARE Across Modules}{41}{subsection.4.6.2}%
+\contentsline {subsection}{\numberline {4.6.3}Sensitivity to Fixed $\beta $}{43}{subsection.4.6.3}%
+\contentsline {subsection}{\numberline {4.6.4}Behavior of the Learned Scaling Function}{44}{subsection.4.6.4}%
+\contentsline {subsection}{\numberline {4.6.5}Discussion}{52}{subsection.4.6.5}%
+\contentsline {chapter}{Conclusion and Future Work}{54}{chapter*.37}%
+\contentsline {chapter}{References}{56}{section*.38}%
+\contentsline {chapter}{\numberline {A}Mathematical Proofs}{59}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Proof of Proposition 3.1: Optimal State-Dependent Scaling}{59}{section.A.1}%
+\contentsline {section}{\numberline {A.2}Proof of Lemma 3.1: Bounded Shaped Reward}{60}{section.A.2}%
+\contentsline {section}{\numberline {A.3}Proof of Proposition 3.2: Computational Cost Comparison}{61}{section.A.3}%
+\contentsline {section}{\numberline {A.4}Proof of Corollary 3.1: Degeneration to Fixed Coefficient}{62}{section.A.4}%
+\contentsline {chapter}{\numberline {B}Implementation Details}{64}{appendix.B}%
+\contentsline {section}{\numberline {B.1}Network Architectures}{64}{section.B.1}%
+\contentsline {section}{\numberline {B.2}Hyperparameters}{67}{section.B.2}%

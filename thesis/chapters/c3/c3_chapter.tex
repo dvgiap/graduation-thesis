@@ -125,7 +125,7 @@ which assigns a positive, bounded scaling factor to each state. In the implement
 \begin{equation*}
 \beta_\psi(s_t) \;=\; \exp\bigl( \mathrm{clamp}(z_\psi(s_t),\, \log \beta_\text{min},\, \log \beta_\text{max}) \bigr).
 \end{equation*}
-The reference value used by the regularizer in Section~\ref{sec:progress_loss} is the geometric mean $\beta_0 = \sqrt{\beta_\text{min}\,\beta_\text{max}} \approx 2.24 \times 10^{-3}$; this choice places $\log \beta_0$ at the midpoint of $[\log \beta_\text{min},\, \log \beta_\text{max}]$, so the prior is symmetric in log space. The complete architecture and weight initialization are listed in Appendix~\ref{app:architectures}, Table~\ref{tab:beta_arch}.
+The regularizer in Section~\ref{sec:progress_loss} uses the geometric mean $\beta_0 = \sqrt{\beta_\text{min}\,\beta_\text{max}} \approx 2.24 \times 10^{-3}$; this choice places $\log \beta_0$ at the midpoint of $[\log \beta_\text{min},\, \log \beta_\text{max}]$, so the prior is symmetric in log space. The complete architecture and weight initialization are listed in Appendix~\ref{app:architectures}, Table~\ref{tab:beta_arch}.
 \end{definition}
 
 For an intrinsic reward module $m$, the scaled intrinsic reward at time step $t$ is
@@ -198,36 +198,19 @@ with $\lambda_\text{reg} > 0$ the regularization weight. No separate weighting o
 
 \begin{proposition}[Optimal State-Dependent Scaling]
 \label{prop:target_recovery}
-Assume the Beta Network has sufficient expressive capacity to represent any measurable function $\mathcal{S} \to [\beta_\text{min}, \beta_\text{max}]$, and that within the rollout buffer the standardized advantage $\hat A_t^{z}$ has nonzero conditional cross-moment with the standardized intrinsic signal at almost every state. In the population limit and with $\lambda_\text{reg} = 0$, every minimizer $\psi^\star$ of $L_\beta(\psi)$ satisfies
+Suppose the Beta Network is expressive enough to represent any mapping $\mathcal{S} \to [\beta_\text{min}, \beta_\text{max}]$, and that at every visited state the intrinsic signal $I^{+,m}$ and extrinsic advantage $\hat A^{E}$ have nonzero average product. Without the regularizer ($\lambda_\text{reg} = 0$) and in the infinite-data limit, the optimal Beta Network $\beta_{\psi^\star}$ at each state $s$ satisfies
 \begin{equation*}
 \mathrm{sign}\bigl( \beta_{\psi^\star}(s) - \beta_0 \bigr)
 \;=\;
-\mathrm{sign}\!\left(\, \mathbb{E}\!\left[\, I_t^{+,m}\,\hat A_t^{E} \,\big|\, s_t = s \right] \right)
+\mathrm{sign}\!\left( \mathbb{E}\!\left[\, I_t^{+,m}\,\hat A_t^{E} \,\big|\, s_t = s \right] \right)
 \end{equation*}
-at the unconstrained interior minimum, and is clipped to $\beta_\text{min}$ or $\beta_\text{max}$ on the boundary. Equivalently, $\beta_{\psi^\star}$ is monotone in the conditional cross-moment between $I^{+,m}$ and $\hat A^{E}$.
+whenever the optimum lies inside $(\beta_\text{min}, \beta_\text{max})$, and is clipped to the nearest boundary otherwise. In words: $\beta_{\psi^\star}(s)$ is set above the reference $\beta_0$ at states where the intrinsic signal moves together with positive extrinsic advantage, and below $\beta_0$ where they move in opposite directions.
 Proof in Appendix~\ref{app:proof_target}.
 \end{proposition}
 
-Proposition~\ref{prop:target_recovery} says that, in the population limit and ignoring regularization, the optimal Beta Network raises intrinsic reward (outputs a value above $\beta_0$) at states where the intrinsic signal $I^{+,m}$ tends to move together with positive extrinsic advantage, and lowers it otherwise. The next result describes the gradient direction during training.
+Proposition~\ref{prop:target_recovery} says that, in the population limit and ignoring regularization, the optimal Beta Network raises intrinsic reward (outputs a value above $\beta_0$) at states where the intrinsic signal $I^{+,m}$ tends to move together with positive extrinsic advantage, and lowers it otherwise.
 
-\begin{proposition}[Gradient Direction]
-\label{prop:gradient_direction}
-Treat $\beta_\psi(s)$ as a free parameter at a state $s \in \mathcal{S}$ visited with positive probability. Then
-\begin{equation*}
-\frac{\partial L_\text{corr}}{\partial \beta_\psi(s)}
-\;=\;
--\,\frac{\mathbb{P}(s_t = s)}{\sigma_{\tilde I}}\,
-\Bigl(
-\mathbb{E}[\, I_t^{+,m}\,\hat A_t^{z} \mid s_t = s \,]
-\;-\;
-\mathbb{E}[\, I_t^{+,m} \mid s_t = s\,]\, \mathbb{E}[\, \hat A_t^{z} \,]
-\Bigr).
-\end{equation*}
-In particular, gradient descent on $L_\text{corr}$ increases $\beta_\psi(s)$ when $I^{+,m}$ and $\hat A^{E}$ are conditionally positively correlated at $s$, and decreases it when they are conditionally negatively correlated.
-Proof in Appendix~\ref{app:proof_gradient}.
-\end{proposition}
-
-Proposition~\ref{prop:gradient_direction} shows that the supervision signal for $\psi$ is fully determined by the agreement between the intrinsic generator and the extrinsic critic: no extra network beyond the critic itself is needed, and the gradient direction at each state $s$ depends only on the within-batch covariance at $s$. The next subsection contrasts this first-order rule with the meta-gradient alternative.
+The cross-moment that drives $\beta_{\psi^\star}$ in Proposition~\ref{prop:target_recovery} is computed from quantities already produced by the PPO pipeline: the intrinsic generator and the extrinsic critic. So no extra network beyond the critic itself is needed to supervise $\psi$. The next subsection contrasts this first-order rule with the meta-gradient alternative.
 
 \subsection{First-Order Optimization vs. Meta-Gradient}
 \label{sec:first_order}
@@ -284,7 +267,7 @@ together with the log-probabilities $\mathcal{P}_\text{tensor} \in \mathbb{R}^{T
 
 Four separate losses are minimized at each update cycle. The losses share the same rollout buffer but are optimized over different parameter groups. So no joint optimization is needed.
 
-\textbf{PPO Actor Loss $L^\text{PPO}(\theta)$.} Define the importance ratio $\rho_t(\theta) = \pi_\theta(a_t \mid s_t) / \pi_{\theta_\text{old}}(a_t \mid s_t)$ and let $\hat A_t$ denote the advantage estimate computed by Generalized Advantage Estimation (GAE) \cite{schulman2016gae} from the shaped reward $\bar r_t$. The clipped surrogate objective \cite{schulman2017ppo} is
+\textbf{PPO Actor Loss $L^\text{PPO}(\theta)$.} Define the importance ratio $\rho_t(\theta) = \dfrac{\pi_\theta(a_t \mid s_t)}{\pi_{\theta_\text{old}}(a_t \mid s_t)}$ and let $\hat A_t$ denote the advantage estimate computed by Generalized Advantage Estimation (GAE) \cite{schulman2016gae} from the shaped reward $\bar r_t$. The clipped surrogate objective \cite{schulman2017ppo} is
 \begin{equation}
 L^\text{PPO}(\theta) \;=\;
 -\,\mathbb{E}_t\!\left[
@@ -336,6 +319,6 @@ Algorithm~\ref{alg:care} specifies the complete CARE training loop. One iteratio
 \end{algorithmic}
 \end{algorithm}
 
-The algorithm keeps the standard PPO update structure (lines 11--14) and adds only two extra optimization steps (lines 6 and 8) before the shaped reward is computed. The extrinsic-only advantage $\hat A_t^{E}$ used in line 7 is computed from the same critic $V_\mu$ that drives the PPO update, but with rollout-level normalization disabled so that the cross-state magnitude is preserved. The PPO advantage $\hat A_t$ in line 10 is then recomputed from the shaped reward with the standard rollout-level normalization, so the two advantage computations differ only in their reward stream and in whether normalization is applied.
+The algorithm extends the standard PPO update structure (lines~11--14) by inserting two extra gradient-update steps---the intrinsic-module update at line~6 and the Beta Network update at line~8---together with the associated computations at lines~4--5 and 7--10. Lines~12--13 are shown as separate updates for clarity; in the implementation they share a single Adam optimiser with actor and critic as distinct parameter groups, each with its own learning rate. The extrinsic-only advantage $\hat A_t^{E}$ used in line~7 is computed from the same critic $V_\mu$ that drives the PPO update, but with rollout-level normalization disabled so that the cross-state magnitude is preserved. The PPO advantage $\hat A_t$ in line~10 is then recomputed from the shaped reward with the standard rollout-level normalization, so the two advantage computations differ only in their reward stream and in whether normalization is applied.
 
 This modular template generalizes immediately to the other intrinsic modules: replacing ICM with the count-based bonus or with RIDE only swaps Equations~\eqref{eq:icm_raw}--\eqref{eq:icm_standardized} for the corresponding module-specific computation, while the rest of the pipeline is identical. The numerical values of all hyperparameters and network architectures used in the experiments are listed in Appendix~\ref{app:implementation}.

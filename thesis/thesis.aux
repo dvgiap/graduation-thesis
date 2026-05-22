@@ -48,6 +48,7 @@
 \citation{francois2018deep}
 \citation{sutton2018rl}
 \citation{sutton2018rl}
+\citation{sutton2018rl}
 \newlabel{eq:rl_objective}{{2.1}{7}{Reinforcement Learning in Sparse-Reward Environments}{equation.2.1}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.2}Policy Optimization Foundations}{7}{section.2.2}\protected@file@percent }
 \newlabel{sec:policy_optimization_foundations}{{2.2}{7}{Policy Optimization Foundations}{section.2.2}{}}
@@ -142,111 +143,110 @@
 \newlabel{eq:corr_loss}{{3.14}{20}{Advantage-Correlation Objective}{equation.3.14}{}}
 \newlabel{eq:reg_loss}{{3.15}{20}{Advantage-Correlation Objective}{equation.3.15}{}}
 \newlabel{eq:beta_loss}{{3.16}{20}{Advantage-Correlation Objective}{equation.3.16}{}}
-\newlabel{prop:target_recovery}{{3.1}{21}{Optimal State-Dependent Scaling}{proposition.3.1}{}}
-\newlabel{prop:gradient_direction}{{3.2}{21}{Gradient Direction}{proposition.3.2}{}}
 \citation{zheng2018lirpg}
+\newlabel{prop:target_recovery}{{3.1}{21}{Optimal State-Dependent Scaling}{proposition.3.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.3.3}First-Order Optimization vs. Meta-Gradient}{22}{subsection.3.3.3}\protected@file@percent }
 \newlabel{sec:first_order}{{3.3.3}{22}{First-Order Optimization vs. Meta-Gradient}{subsection.3.3.3}{}}
-\newlabel{prop:cost}{{3.3}{22}{Computational Cost}{proposition.3.3}{}}
-\newlabel{cor:degeneration}{{3.1}{23}{Degeneration to Fixed Coefficient}{corollary.3.1}{}}
+\newlabel{prop:cost}{{3.2}{22}{Computational Cost}{proposition.3.2}{}}
+\newlabel{cor:degeneration}{{3.1}{22}{Degeneration to Fixed Coefficient}{corollary.3.1}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.4}Algorithm}{23}{section.3.4}\protected@file@percent }
 \newlabel{sec:algorithm}{{3.4}{23}{Algorithm}{section.3.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.1}Rollout Buffer}{23}{subsection.3.4.1}\protected@file@percent }
+\newlabel{sec:rollout_buffer}{{3.4.1}{23}{Rollout Buffer}{subsection.3.4.1}{}}
+\newlabel{eq:transition_tuple}{{3.17}{23}{Rollout Buffer}{equation.3.17}{}}
 \citation{schulman2016gae}
 \citation{schulman2017ppo}
 \citation{andres2025impact}
 \citation{andres2025impact}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.1}Rollout Buffer}{24}{subsection.3.4.1}\protected@file@percent }
-\newlabel{sec:rollout_buffer}{{3.4.1}{24}{Rollout Buffer}{subsection.3.4.1}{}}
-\newlabel{eq:transition_tuple}{{3.17}{24}{Rollout Buffer}{equation.3.17}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.4.2}Loss Functions}{24}{subsection.3.4.2}\protected@file@percent }
 \newlabel{sec:loss_functions}{{3.4.2}{24}{Loss Functions}{subsection.3.4.2}{}}
 \newlabel{eq:ppo_loss}{{3.18}{24}{Loss Functions}{equation.3.18}{}}
 \newlabel{eq:critic_loss}{{3.19}{24}{Loss Functions}{equation.3.19}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.3}Training Procedure}{25}{subsection.3.4.3}\protected@file@percent }
-\newlabel{sec:training_procedure}{{3.4.3}{25}{Training Procedure}{subsection.3.4.3}{}}
-\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces CARE training loop with PPO and an intrinsic reward module.}}{26}{algorithm.1}\protected@file@percent }
-\newlabel{alg:care}{{1}{26}{CARE training loop with PPO and an intrinsic reward module}{algorithm.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.3}Training Procedure}{24}{subsection.3.4.3}\protected@file@percent }
+\newlabel{sec:training_procedure}{{3.4.3}{24}{Training Procedure}{subsection.3.4.3}{}}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces CARE training loop with PPO and an intrinsic reward module.}}{25}{algorithm.1}\protected@file@percent }
+\newlabel{alg:care}{{1}{25}{CARE training loop with PPO and an intrinsic reward module}{algorithm.1}{}}
 \citation{chevalier2018minigrid}
-\pp@pagectr{footnote}{4}{44}{28}
-\@writefile{toc}{\contentsline {chapter}{\numberline {4}Experimental Setup and Results}{28}{chapter.4}\protected@file@percent }
+\pp@pagectr{footnote}{4}{43}{27}
+\@writefile{toc}{\contentsline {chapter}{\numberline {4}Experimental Setup and Results}{27}{chapter.4}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{chap:experiment}{{4}{28}{Experimental Setup and Results}{chapter.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.1}Benchmark Environments}{28}{section.4.1}\protected@file@percent }
-\newlabel{sec:benchmark_environments}{{4.1}{28}{Benchmark Environments}{section.4.1}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces MiniGrid environments used in the experiments.}}{29}{table.caption.14}\protected@file@percent }
-\newlabel{tab:envs}{{4.1}{29}{MiniGrid environments used in the experiments}{table.caption.14}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Top-down view of the six MiniGrid environments.}}{30}{figure.caption.15}\protected@file@percent }
-\newlabel{fig:minigrid_envs}{{4.1}{30}{Top-down view of the six MiniGrid environments}{figure.caption.15}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.2}Computing Environment}{30}{section.4.2}\protected@file@percent }
-\newlabel{sec:computing_environment}{{4.2}{30}{Computing Environment}{section.4.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.3}Experimental Configuration}{31}{section.4.3}\protected@file@percent }
-\newlabel{sec:experimental_config}{{4.3}{31}{Experimental Configuration}{section.4.3}{}}
+\newlabel{chap:experiment}{{4}{27}{Experimental Setup and Results}{chapter.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.1}Benchmark Environments}{27}{section.4.1}\protected@file@percent }
+\newlabel{sec:benchmark_environments}{{4.1}{27}{Benchmark Environments}{section.4.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.1}{\ignorespaces MiniGrid environments used in the experiments.}}{28}{table.caption.14}\protected@file@percent }
+\newlabel{tab:envs}{{4.1}{28}{MiniGrid environments used in the experiments}{table.caption.14}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Top-down view of the six MiniGrid environments.}}{29}{figure.caption.15}\protected@file@percent }
+\newlabel{fig:minigrid_envs}{{4.1}{29}{Top-down view of the six MiniGrid environments}{figure.caption.15}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.2}Computing Environment}{29}{section.4.2}\protected@file@percent }
+\newlabel{sec:computing_environment}{{4.2}{29}{Computing Environment}{section.4.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.3}Experimental Configuration}{30}{section.4.3}\protected@file@percent }
+\newlabel{sec:experimental_config}{{4.3}{30}{Experimental Configuration}{section.4.3}{}}
 \citation{andres2025impact}
 \citation{andres2025impact}
-\@writefile{toc}{\contentsline {section}{\numberline {4.4}Baselines}{32}{section.4.4}\protected@file@percent }
-\newlabel{sec:baselines}{{4.4}{32}{Baselines}{section.4.4}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.2}{\ignorespaces Baseline conditions evaluated on every environment.}}{33}{table.caption.16}\protected@file@percent }
-\newlabel{tab:baselines}{{4.2}{33}{Baseline conditions evaluated on every environment}{table.caption.16}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.5}Performance Evaluation Metrics}{34}{section.4.5}\protected@file@percent }
-\newlabel{sec:metrics}{{4.5}{34}{Performance Evaluation Metrics}{section.4.5}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.6}Empirical Results}{35}{section.4.6}\protected@file@percent }
-\newlabel{sec:empirical_results}{{4.6}{35}{Empirical Results}{section.4.6}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.1}Module-Level Results: Fixed-$\beta $ Sweep vs CARE}{35}{subsection.4.6.1}\protected@file@percent }
-\newlabel{sec:results_module_level}{{4.6.1}{35}{Module-Level Results: Fixed-$\beta $ Sweep vs CARE}{subsection.4.6.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces Reward curves for the count-based module.}}{36}{figure.caption.17}\protected@file@percent }
-\newlabel{fig:all_envs_count}{{4.2}{36}{Reward curves for the count-based module}{figure.caption.17}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.3}{\ignorespaces Final reward for the COUNT module.}}{36}{table.caption.18}\protected@file@percent }
-\newlabel{tab:final_reward_count}{{4.3}{36}{Final reward for the COUNT module}{table.caption.18}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces Reward curves for the ICM module.}}{38}{figure.caption.19}\protected@file@percent }
-\newlabel{fig:all_envs_icm}{{4.3}{38}{Reward curves for the ICM module}{figure.caption.19}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.4}{\ignorespaces Final reward for the ICM module.}}{38}{table.caption.20}\protected@file@percent }
-\newlabel{tab:final_reward_icm}{{4.4}{38}{Final reward for the ICM module}{table.caption.20}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.4}{\ignorespaces Reward curves for the RIDE module.}}{40}{figure.caption.21}\protected@file@percent }
-\newlabel{fig:all_envs_ride}{{4.4}{40}{Reward curves for the RIDE module}{figure.caption.21}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.5}{\ignorespaces Final reward for the RIDE module.}}{40}{table.caption.22}\protected@file@percent }
-\newlabel{tab:final_reward_ride}{{4.5}{40}{Final reward for the RIDE module}{table.caption.22}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.6}{\ignorespaces Sample efficiency for the COUNT module.}}{41}{table.caption.23}\protected@file@percent }
-\newlabel{tab:sample_efficiency_count}{{4.6}{41}{Sample efficiency for the COUNT module}{table.caption.23}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.7}{\ignorespaces Sample efficiency for the ICM module.}}{42}{table.caption.24}\protected@file@percent }
-\newlabel{tab:sample_efficiency_icm}{{4.7}{42}{Sample efficiency for the ICM module}{table.caption.24}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.8}{\ignorespaces Sample efficiency for the RIDE module.}}{42}{table.caption.25}\protected@file@percent }
-\newlabel{tab:sample_efficiency_ride}{{4.8}{42}{Sample efficiency for the RIDE module}{table.caption.25}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.2}Effect of CARE Across Modules}{42}{subsection.4.6.2}\protected@file@percent }
-\newlabel{sec:results_cross_module}{{4.6.2}{42}{Effect of CARE Across Modules}{subsection.4.6.2}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4.9}{\ignorespaces CARE versus best fixed-$\beta $.}}{43}{table.caption.26}\protected@file@percent }
-\newlabel{tab:care_vs_best_fixed}{{4.9}{43}{CARE versus best fixed-$\beta $}{table.caption.26}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.5}{\ignorespaces Aggregate performance summary.}}{44}{figure.caption.27}\protected@file@percent }
-\newlabel{fig:aggregate_summary}{{4.5}{44}{Aggregate performance summary}{figure.caption.27}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.3}Sensitivity to Fixed $\beta $}{44}{subsection.4.6.3}\protected@file@percent }
-\newlabel{sec:results_sensitivity}{{4.6.3}{44}{Sensitivity to Fixed $\beta $}{subsection.4.6.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.4}Behavior of the Learned Scaling Function}{45}{subsection.4.6.4}\protected@file@percent }
-\newlabel{sec:results_beta_behavior}{{4.6.4}{45}{Behavior of the Learned Scaling Function}{subsection.4.6.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.6}{\ignorespaces CARE-COUNT dynamics.}}{46}{figure.caption.28}\protected@file@percent }
-\newlabel{fig:care_dynamics_count}{{4.6}{46}{CARE-COUNT dynamics}{figure.caption.28}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.7}{\ignorespaces CARE-ICM dynamics.}}{47}{figure.caption.29}\protected@file@percent }
-\newlabel{fig:care_dynamics_icm}{{4.7}{47}{CARE-ICM dynamics}{figure.caption.29}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.8}{\ignorespaces CARE-RIDE dynamics.}}{48}{figure.caption.30}\protected@file@percent }
-\newlabel{fig:care_dynamics_ride}{{4.8}{48}{CARE-RIDE dynamics}{figure.caption.30}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.9}{\ignorespaces End-of-training $\beta _\psi $ distribution for CARE-COUNT.}}{49}{figure.caption.31}\protected@file@percent }
-\newlabel{fig:care_beta_hist_count}{{4.9}{49}{End-of-training $\beta _\psi $ distribution for CARE-COUNT}{figure.caption.31}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.10}{\ignorespaces End-of-training $\beta _\psi $ distribution for CARE-ICM.}}{50}{figure.caption.32}\protected@file@percent }
-\newlabel{fig:care_beta_hist_icm}{{4.10}{50}{End-of-training $\beta _\psi $ distribution for CARE-ICM}{figure.caption.32}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.11}{\ignorespaces End-of-training $\beta _\psi $ distribution for CARE-RIDE.}}{50}{figure.caption.33}\protected@file@percent }
-\newlabel{fig:care_beta_hist_ride}{{4.11}{50}{End-of-training $\beta _\psi $ distribution for CARE-RIDE}{figure.caption.33}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.4}Baselines}{31}{section.4.4}\protected@file@percent }
+\newlabel{sec:baselines}{{4.4}{31}{Baselines}{section.4.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.2}{\ignorespaces Baseline conditions evaluated on every environment.}}{32}{table.caption.16}\protected@file@percent }
+\newlabel{tab:baselines}{{4.2}{32}{Baseline conditions evaluated on every environment}{table.caption.16}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.5}Performance Evaluation Metrics}{33}{section.4.5}\protected@file@percent }
+\newlabel{sec:metrics}{{4.5}{33}{Performance Evaluation Metrics}{section.4.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.6}Empirical Results}{34}{section.4.6}\protected@file@percent }
+\newlabel{sec:empirical_results}{{4.6}{34}{Empirical Results}{section.4.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.1}Module-Level Results: Fixed-$\beta $ Sweep vs CARE}{34}{subsection.4.6.1}\protected@file@percent }
+\newlabel{sec:results_module_level}{{4.6.1}{34}{Module-Level Results: Fixed-\texorpdfstring {$\beta $}{beta} Sweep vs CARE}{subsection.4.6.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces Reward curves for the count-based module.}}{35}{figure.caption.17}\protected@file@percent }
+\newlabel{fig:all_envs_count}{{4.2}{35}{Reward curves for the count-based module}{figure.caption.17}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.3}{\ignorespaces Final reward for the COUNT module.}}{35}{table.caption.18}\protected@file@percent }
+\newlabel{tab:final_reward_count}{{4.3}{35}{Final reward for the COUNT module}{table.caption.18}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces Reward curves for the ICM module.}}{37}{figure.caption.19}\protected@file@percent }
+\newlabel{fig:all_envs_icm}{{4.3}{37}{Reward curves for the ICM module}{figure.caption.19}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.4}{\ignorespaces Final reward for the ICM module.}}{37}{table.caption.20}\protected@file@percent }
+\newlabel{tab:final_reward_icm}{{4.4}{37}{Final reward for the ICM module}{table.caption.20}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.4}{\ignorespaces Reward curves for the RIDE module.}}{39}{figure.caption.21}\protected@file@percent }
+\newlabel{fig:all_envs_ride}{{4.4}{39}{Reward curves for the RIDE module}{figure.caption.21}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.5}{\ignorespaces Final reward for the RIDE module.}}{39}{table.caption.22}\protected@file@percent }
+\newlabel{tab:final_reward_ride}{{4.5}{39}{Final reward for the RIDE module}{table.caption.22}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.6}{\ignorespaces Sample efficiency for the COUNT module.}}{40}{table.caption.23}\protected@file@percent }
+\newlabel{tab:sample_efficiency_count}{{4.6}{40}{Sample efficiency for the COUNT module}{table.caption.23}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.7}{\ignorespaces Sample efficiency for the ICM module.}}{41}{table.caption.24}\protected@file@percent }
+\newlabel{tab:sample_efficiency_icm}{{4.7}{41}{Sample efficiency for the ICM module}{table.caption.24}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.8}{\ignorespaces Sample efficiency for the RIDE module.}}{41}{table.caption.25}\protected@file@percent }
+\newlabel{tab:sample_efficiency_ride}{{4.8}{41}{Sample efficiency for the RIDE module}{table.caption.25}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.2}Effect of CARE Across Modules}{41}{subsection.4.6.2}\protected@file@percent }
+\newlabel{sec:results_cross_module}{{4.6.2}{41}{Effect of CARE Across Modules}{subsection.4.6.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4.9}{\ignorespaces CARE versus best fixed-$\beta $.}}{42}{table.caption.26}\protected@file@percent }
+\newlabel{tab:care_vs_best_fixed}{{4.9}{42}{CARE versus best fixed-$\beta $}{table.caption.26}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.5}{\ignorespaces Aggregate performance summary.}}{43}{figure.caption.27}\protected@file@percent }
+\newlabel{fig:aggregate_summary}{{4.5}{43}{Aggregate performance summary}{figure.caption.27}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.3}Sensitivity to Fixed $\beta $}{43}{subsection.4.6.3}\protected@file@percent }
+\newlabel{sec:results_sensitivity}{{4.6.3}{43}{Sensitivity to Fixed \texorpdfstring {$\beta $}{beta}}{subsection.4.6.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.4}Behavior of the Learned Scaling Function}{44}{subsection.4.6.4}\protected@file@percent }
+\newlabel{sec:results_beta_behavior}{{4.6.4}{44}{Behavior of the Learned Scaling Function}{subsection.4.6.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.6}{\ignorespaces CARE-COUNT dynamics.}}{45}{figure.caption.28}\protected@file@percent }
+\newlabel{fig:care_dynamics_count}{{4.6}{45}{CARE-COUNT dynamics}{figure.caption.28}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.7}{\ignorespaces CARE-ICM dynamics.}}{46}{figure.caption.29}\protected@file@percent }
+\newlabel{fig:care_dynamics_icm}{{4.7}{46}{CARE-ICM dynamics}{figure.caption.29}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.8}{\ignorespaces CARE-RIDE dynamics.}}{47}{figure.caption.30}\protected@file@percent }
+\newlabel{fig:care_dynamics_ride}{{4.8}{47}{CARE-RIDE dynamics}{figure.caption.30}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.9}{\ignorespaces End-of-training $\beta _\psi $ distribution for CARE-COUNT.}}{48}{figure.caption.31}\protected@file@percent }
+\newlabel{fig:care_beta_hist_count}{{4.9}{48}{End-of-training $\beta _\psi $ distribution for CARE-COUNT}{figure.caption.31}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.10}{\ignorespaces End-of-training $\beta _\psi $ distribution for CARE-ICM.}}{49}{figure.caption.32}\protected@file@percent }
+\newlabel{fig:care_beta_hist_icm}{{4.10}{49}{End-of-training $\beta _\psi $ distribution for CARE-ICM}{figure.caption.32}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.11}{\ignorespaces End-of-training $\beta _\psi $ distribution for CARE-RIDE.}}{49}{figure.caption.33}\protected@file@percent }
+\newlabel{fig:care_beta_hist_ride}{{4.11}{49}{End-of-training $\beta _\psi $ distribution for CARE-RIDE}{figure.caption.33}{}}
 \citation{agarwal2021deep}
 \citation{agarwal2021deep}
 \citation{agarwal2021deep}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.12}{\ignorespaces Performance profile for the count-based module.}}{51}{figure.caption.34}\protected@file@percent }
-\newlabel{fig:profile_count}{{4.12}{51}{Performance profile for the count-based module}{figure.caption.34}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.13}{\ignorespaces Performance profile for the ICM module.}}{52}{figure.caption.35}\protected@file@percent }
-\newlabel{fig:profile_icm}{{4.13}{52}{Performance profile for the ICM module}{figure.caption.35}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.14}{\ignorespaces Performance profile for the RIDE module.}}{52}{figure.caption.36}\protected@file@percent }
-\newlabel{fig:profile_ride}{{4.14}{52}{Performance profile for the RIDE module}{figure.caption.36}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.12}{\ignorespaces Performance profile for the count-based module.}}{50}{figure.caption.34}\protected@file@percent }
+\newlabel{fig:profile_count}{{4.12}{50}{Performance profile for the count-based module}{figure.caption.34}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.13}{\ignorespaces Performance profile for the ICM module.}}{51}{figure.caption.35}\protected@file@percent }
+\newlabel{fig:profile_icm}{{4.13}{51}{Performance profile for the ICM module}{figure.caption.35}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.14}{\ignorespaces Performance profile for the RIDE module.}}{51}{figure.caption.36}\protected@file@percent }
+\newlabel{fig:profile_ride}{{4.14}{51}{Performance profile for the RIDE module}{figure.caption.36}{}}
 \citation{andres2025impact}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.5}Discussion}{53}{subsection.4.6.5}\protected@file@percent }
-\newlabel{sec:results_discussion}{{4.6.5}{53}{Discussion}{subsection.4.6.5}{}}
-\@writefile{toc}{\contentsline {chapter}{Conclusion and Future Work}{55}{chapter*.37}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6.5}Discussion}{52}{subsection.4.6.5}\protected@file@percent }
+\newlabel{sec:results_discussion}{{4.6.5}{52}{Discussion}{subsection.4.6.5}{}}
+\@writefile{toc}{\contentsline {chapter}{Conclusion and Future Work}{54}{chapter*.37}\protected@file@percent }
 \bibdata{references}
 \bibcite{mnih2015human}{{1}{}{{}}{{}}}
 \bibcite{silver2016go}{{2}{}{{}}{{}}}
@@ -257,7 +257,7 @@
 \bibcite{bellemare2016count}{{7}{}{{}}{{}}}
 \bibcite{tang2017exploration}{{8}{}{{}}{{}}}
 \bibcite{ostrovski2017count}{{9}{}{{}}{{}}}
-\@writefile{toc}{\contentsline {chapter}{References}{57}{section*.38}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{References}{56}{section*.38}\protected@file@percent }
 \bibcite{pathak2017curiosity}{{10}{}{{}}{{}}}
 \bibcite{burda2019rnd}{{11}{}{{}}{{}}}
 \bibcite{raileanu2020ride}{{12}{}{{}}{{}}}
@@ -272,52 +272,50 @@
 \bibcite{zheng2018lirpg}{{21}{}{{}}{{}}}
 \bibcite{andres2025impact}{{22}{}{{}}{{}}}
 \bibcite{agarwal2021deep}{{23}{}{{}}{{}}}
-\pp@pagectr{footnote}{5}{76}{60}
-\@writefile{toc}{\contentsline {chapter}{\numberline {A}Mathematical Proofs}{60}{appendix.A}\protected@file@percent }
+\pp@pagectr{footnote}{5}{75}{59}
+\@writefile{toc}{\contentsline {chapter}{\numberline {A}Mathematical Proofs}{59}{appendix.A}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{app:proofs}{{A}{60}{Mathematical Proofs}{appendix.A}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {A.1}Proof of Proposition 3.1: Optimal State-Dependent Scaling}{60}{section.A.1}\protected@file@percent }
-\newlabel{app:proof_target}{{A.1}{60}{Proof of Proposition 3.1: Optimal State-Dependent Scaling}{section.A.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {A.2}Proof of Proposition 3.2: Gradient Direction}{61}{section.A.2}\protected@file@percent }
-\newlabel{app:proof_gradient}{{A.2}{61}{Proof of Proposition 3.2: Gradient Direction}{section.A.2}{}}
+\newlabel{app:proofs}{{A}{59}{Mathematical Proofs}{appendix.A}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {A.1}Proof of Proposition 3.1: Optimal State-Dependent Scaling}{59}{section.A.1}\protected@file@percent }
+\newlabel{app:proof_target}{{A.1}{59}{Proof of Proposition 3.1: Optimal State-Dependent Scaling}{section.A.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {A.2}Proof of Lemma 3.1: Bounded Shaped Reward}{60}{section.A.2}\protected@file@percent }
+\newlabel{app:proof_bounded}{{A.2}{60}{Proof of Lemma 3.1: Bounded Shaped Reward}{section.A.2}{}}
 \citation{zheng2018lirpg}
-\@writefile{toc}{\contentsline {section}{\numberline {A.3}Proof of Lemma 3.1: Bounded Shaped Reward}{62}{section.A.3}\protected@file@percent }
-\newlabel{app:proof_bounded}{{A.3}{62}{Proof of Lemma 3.1: Bounded Shaped Reward}{section.A.3}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {A.4}Proof of Proposition 3.3: Computational Cost Comparison}{62}{section.A.4}\protected@file@percent }
-\newlabel{app:proof_cost}{{A.4}{62}{Proof of Proposition 3.3: Computational Cost Comparison}{section.A.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {A.5}Proof of Corollary 3.1: Degeneration to Fixed Coefficient}{63}{section.A.5}\protected@file@percent }
-\newlabel{app:proof_degeneration}{{A.5}{63}{Proof of Corollary 3.1: Degeneration to Fixed Coefficient}{section.A.5}{}}
-\pp@pagectr{footnote}{6}{81}{65}
-\@writefile{toc}{\contentsline {chapter}{\numberline {B}Implementation Details}{65}{appendix.B}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {A.3}Proof of Proposition 3.2: Computational Cost Comparison}{61}{section.A.3}\protected@file@percent }
+\newlabel{app:proof_cost}{{A.3}{61}{Proof of Proposition 3.2: Computational Cost Comparison}{section.A.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {A.4}Proof of Corollary 3.1: Degeneration to Fixed Coefficient}{62}{section.A.4}\protected@file@percent }
+\newlabel{app:proof_degeneration}{{A.4}{62}{Proof of Corollary 3.1: Degeneration to Fixed Coefficient}{section.A.4}{}}
+\pp@pagectr{footnote}{6}{80}{64}
+\@writefile{toc}{\contentsline {chapter}{\numberline {B}Implementation Details}{64}{appendix.B}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{app:implementation}{{B}{65}{Implementation Details}{appendix.B}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {B.1}Network Architectures}{65}{section.B.1}\protected@file@percent }
-\newlabel{app:architectures}{{B.1}{65}{Network Architectures}{section.B.1}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {B.1}{\ignorespaces Beta Network $\beta _\psi $ architecture.}}{65}{table.caption.40}\protected@file@percent }
-\newlabel{tab:beta_arch}{{B.1}{65}{Beta Network $\beta _\psi $ architecture}{table.caption.40}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {B.2}{\ignorespaces Intrinsic Curiosity Module (ICM) architecture.}}{66}{table.caption.41}\protected@file@percent }
-\newlabel{tab:icm_arch}{{B.2}{66}{Intrinsic Curiosity Module (ICM) architecture}{table.caption.41}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {B.3}{\ignorespaces RIDE architecture.}}{67}{table.caption.42}\protected@file@percent }
-\newlabel{tab:ride_arch}{{B.3}{67}{RIDE architecture}{table.caption.42}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {B.4}{\ignorespaces Actor and critic network architectures used by PPO.}}{67}{table.caption.43}\protected@file@percent }
-\newlabel{tab:ppo_arch}{{B.4}{67}{Actor and critic network architectures used by PPO}{table.caption.43}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {B.2}Hyperparameters}{68}{section.B.2}\protected@file@percent }
-\newlabel{app:hyperparameters}{{B.2}{68}{Hyperparameters}{section.B.2}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {B.5}{\ignorespaces PPO hyperparameters.}}{68}{table.caption.44}\protected@file@percent }
-\newlabel{tab:ppo_hparams}{{B.5}{68}{PPO hyperparameters}{table.caption.44}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {B.6}{\ignorespaces ICM hyperparameters.}}{68}{table.caption.45}\protected@file@percent }
-\newlabel{tab:icm_hparams}{{B.6}{68}{ICM hyperparameters}{table.caption.45}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {B.7}{\ignorespaces RIDE hyperparameters.}}{68}{table.caption.46}\protected@file@percent }
-\newlabel{tab:ride_hparams}{{B.7}{68}{RIDE hyperparameters}{table.caption.46}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {B.8}{\ignorespaces CARE hyperparameters.}}{69}{table.caption.47}\protected@file@percent }
-\newlabel{tab:care_hparams}{{B.8}{69}{CARE hyperparameters}{table.caption.47}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {B.9}{\ignorespaces Fixed-$\beta $ sweep.}}{69}{table.caption.48}\protected@file@percent }
-\newlabel{tab:fixed_beta_sweep}{{B.9}{69}{Fixed-$\beta $ sweep}{table.caption.48}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {B.10}{\ignorespaces Other module-specific hyperparameters.}}{70}{table.caption.49}\protected@file@percent }
-\newlabel{tab:other_hparams}{{B.10}{70}{Other module-specific hyperparameters}{table.caption.49}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {B.11}{\ignorespaces Training schedule.}}{70}{table.caption.50}\protected@file@percent }
-\newlabel{tab:training_schedule}{{B.11}{70}{Training schedule}{table.caption.50}{}}
+\newlabel{app:implementation}{{B}{64}{Implementation Details}{appendix.B}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.1}Network Architectures}{64}{section.B.1}\protected@file@percent }
+\newlabel{app:architectures}{{B.1}{64}{Network Architectures}{section.B.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.1}{\ignorespaces Beta Network $\beta _\psi $ architecture.}}{64}{table.caption.40}\protected@file@percent }
+\newlabel{tab:beta_arch}{{B.1}{64}{Beta Network $\beta _\psi $ architecture}{table.caption.40}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.2}{\ignorespaces Intrinsic Curiosity Module (ICM) architecture.}}{65}{table.caption.41}\protected@file@percent }
+\newlabel{tab:icm_arch}{{B.2}{65}{Intrinsic Curiosity Module (ICM) architecture}{table.caption.41}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.3}{\ignorespaces RIDE architecture.}}{66}{table.caption.42}\protected@file@percent }
+\newlabel{tab:ride_arch}{{B.3}{66}{RIDE architecture}{table.caption.42}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.4}{\ignorespaces Actor and critic network architectures used by PPO.}}{66}{table.caption.43}\protected@file@percent }
+\newlabel{tab:ppo_arch}{{B.4}{66}{Actor and critic network architectures used by PPO}{table.caption.43}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B.2}Hyperparameters}{67}{section.B.2}\protected@file@percent }
+\newlabel{app:hyperparameters}{{B.2}{67}{Hyperparameters}{section.B.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.5}{\ignorespaces PPO hyperparameters.}}{67}{table.caption.44}\protected@file@percent }
+\newlabel{tab:ppo_hparams}{{B.5}{67}{PPO hyperparameters}{table.caption.44}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.6}{\ignorespaces ICM hyperparameters.}}{67}{table.caption.45}\protected@file@percent }
+\newlabel{tab:icm_hparams}{{B.6}{67}{ICM hyperparameters}{table.caption.45}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.7}{\ignorespaces RIDE hyperparameters.}}{67}{table.caption.46}\protected@file@percent }
+\newlabel{tab:ride_hparams}{{B.7}{67}{RIDE hyperparameters}{table.caption.46}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.8}{\ignorespaces CARE hyperparameters.}}{68}{table.caption.47}\protected@file@percent }
+\newlabel{tab:care_hparams}{{B.8}{68}{CARE hyperparameters}{table.caption.47}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.9}{\ignorespaces Fixed-$\beta $ sweep.}}{68}{table.caption.48}\protected@file@percent }
+\newlabel{tab:fixed_beta_sweep}{{B.9}{68}{Fixed-$\beta $ sweep}{table.caption.48}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.10}{\ignorespaces Other module-specific hyperparameters.}}{69}{table.caption.49}\protected@file@percent }
+\newlabel{tab:other_hparams}{{B.10}{69}{Other module-specific hyperparameters}{table.caption.49}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {B.11}{\ignorespaces Training schedule.}}{69}{table.caption.50}\protected@file@percent }
+\newlabel{tab:training_schedule}{{B.11}{69}{Training schedule}{table.caption.50}{}}
 \providecommand\NAT@force@numbers{}\NAT@force@numbers
-\gdef \@abspage@last{86}
+\gdef \@abspage@last{85}
