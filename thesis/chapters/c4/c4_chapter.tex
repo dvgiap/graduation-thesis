@@ -6,7 +6,7 @@ This chapter describes the experimental setup used to evaluate the proposed meth
 \section{Benchmark Environments}
 \label{sec:benchmark_environments}
 
-The experimental evaluation runs on six sparse-reward MiniGrid environments \cite{chevalier2018minigrid}. These environments are chosen because they cover different kinds of exploration difficulty while sharing a common gridworld interface. This shared interface keeps the comparison across intrinsic reward modules controlled.
+The experimental evaluation runs on six sparse-reward MiniGrid environments \cite{chevalier2018minigrid}. The selection follows three criteria. First, the six tasks form the standard benchmark set used by recent intrinsic-reward studies on MiniGrid (RIDE \cite{raileanu2020ride} and the modulation study of Andres et al.\ \cite{andres2025impact}), so the numbers reported here can be placed alongside published results under the same interface. Second, the six tasks span a deliberate spectrum of exploration challenges --- from pure navigation under extreme reward sparsity (Empty-16x16), through sequential subgoal discovery (DoorKey-8x8, UnlockPickup) and multi-room long-horizon exploration (KeyCorridor-S3R3), to settings where curiosity must be suppressed in some regions to avoid early termination or wrong ordering (LavaCrossing-S9N3, RedBlueDoors-8x8). This spectrum is exactly the regime where a state-dependent $\beta_\psi(s)$ is expected to differ from a single fixed coefficient. Third, the gridworld interface keeps the wall-clock cost of a single seed small enough that the full $1 + 15 + 3$ baseline matrix described in Section~\ref{sec:baselines} can be run with five seeds per condition within the available compute budget.
 
 \begin{table}[H]
 \centering
