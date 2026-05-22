@@ -1,6 +1,6 @@
-PWD d:\Workspace\graduation-thesis\graduation-thesis\thesis
+PWD D:\Workspace\graduation-thesis\graduation-thesis\thesis
 INPUT C:\Users\JS\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT d:\Workspace\graduation-thesis\graduation-thesis\thesis\thesis.tex
+INPUT thesis.tex
 OUTPUT thesis.log
 INPUT D:\Program Files\MiKTeX\tex\latex\base\report.cls
 INPUT D:\Program Files\MiKTeX\tex\latex\base\report.cls
@@ -410,7 +410,6 @@ OUTPUT thesis.toc
 INPUT .\thesis.lof
 INPUT .\thesis.lof
 INPUT thesis.lof
-INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnr7.tfm
 OUTPUT thesis.lof
 INPUT .\thesis.lot
 INPUT .\thesis.lot
@@ -429,6 +428,7 @@ INPUT .\chapters\notations.tex
 INPUT .\chapters\notations.tex
 INPUT .\chapters\notations.tex
 INPUT chapters\notations.tex
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnr7.tfm
 INPUT .\chapters\c1\c1_introduction.tex
 INPUT .\chapters\c1\c1_introduction.tex
 INPUT .\chapters\c1\c1_introduction.tex
@@ -438,7 +438,6 @@ INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnti12.tfm
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnr17.tfm
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnbx12.tfm
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnbx12.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\tcrm1200.tfm
 INPUT .\chapters\c2\c2_chapter.tex
 INPUT .\chapters\c2\c2_chapter.tex
 INPUT .\chapters\c2\c2_chapter.tex
@@ -509,6 +508,7 @@ INPUT .\figures\env_unlockpickup.png
 INPUT .\figures\env_unlockpickup.png
 INPUT .\figures\env_unlockpickup.png
 INPUT .\figures\env_unlockpickup.png
+INPUT D:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\tcrm1200.tfm
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\vntex\t5cmtt.fd
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\vntex\t5cmtt.fd
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\vntex\t5cmtt.fd

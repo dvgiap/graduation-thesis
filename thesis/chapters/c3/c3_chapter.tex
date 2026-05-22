@@ -23,7 +23,7 @@ The proposed system uses this form with a parameterized $\beta_\psi$ together wi
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{figures/system_architecture.png}
-\caption{CARE system architecture. The intrinsic module block stands for any of the three implementations evaluated in this thesis (count-based, ICM, or RIDE); the rest of the pipeline is identical across modules. Solid arrows trace the forward computation that produces the shaped reward $\bar r_t$ used by PPO. Dashed arrows indicate the auxiliary signals used to update the Beta Network $\beta_\psi$ via the correlation objective $L_\beta$, which couples the weighted intrinsic reward $\beta_\psi\, I_t^{+,m}$ to the extrinsic GAE advantage $\hat A_t^{E}$ obtained from the critic.}
+\caption[CARE system architecture.]{CARE system architecture. The intrinsic module block stands for any of the three implementations evaluated in this thesis (count-based, ICM, or RIDE); the rest of the pipeline is identical across modules. Solid arrows trace the forward computation that produces the shaped reward $\bar r_t$ used by PPO. Dashed arrows indicate the auxiliary signals used to update the Beta Network $\beta_\psi$ via the correlation objective $L_\beta$, which couples the weighted intrinsic reward $\beta_\psi\, I_t^{+,m}$ to the extrinsic GAE advantage $\hat A_t^{E}$ obtained from the critic.}
 \label{fig:care_arch}
 \end{figure}
 
@@ -121,7 +121,11 @@ The \emph{Beta Network} is a parameterized map
 \beta_\psi : \mathcal{S} \to [\beta_\text{min}, \beta_\text{max}], \qquad 0 < \beta_\text{min} < \beta_\text{max} < \infty,
 \label{eq:beta_network}
 \end{equation}
-which assigns a positive, bounded scaling factor to each state. In the implemented system, $\beta_\psi$ is realized as a feed-forward MLP with a 2-layer encoder of width $256$ and a 2-layer head of widths $[256, 128, 1]$ that produces $\log \beta_\psi(s_t)$. The output is mapped to $[\beta_\text{min}, \beta_\text{max}] = [10^{-4},\, 5\times 10^{-2}]$ via $\beta_\psi(s_t) = \exp\bigl( \mathrm{clamp}(\log \beta_\psi(s_t),\, \log \beta_\text{min},\, \log \beta_\text{max}) \bigr)$. The reference value used by the regularizer in Section~\ref{sec:progress_loss} is the geometric mean $\beta_0 = \sqrt{\beta_\text{min}\,\beta_\text{max}} \approx 2.24 \times 10^{-3}$; this choice places $\log \beta_0$ at the midpoint of $[\log \beta_\text{min},\, \log \beta_\text{max}]$, so the prior is symmetric in log space. The complete architecture and weight initialization are listed in Appendix~\ref{app:architectures}, Table~\ref{tab:beta_arch}.
+which assigns a positive, bounded scaling factor to each state. In the implemented system, $\beta_\psi$ is realized as a feed-forward MLP with a 2-layer encoder of width $256$ and a 2-layer head of widths $[256, 128, 1]$ whose raw output $z_\psi(s_t)$ is mapped to $[\beta_\text{min}, \beta_\text{max}] = [10^{-4},\, 5\times 10^{-2}]$ via
+\begin{equation*}
+\beta_\psi(s_t) \;=\; \exp\bigl( \mathrm{clamp}(z_\psi(s_t),\, \log \beta_\text{min},\, \log \beta_\text{max}) \bigr).
+\end{equation*}
+The reference value used by the regularizer in Section~\ref{sec:progress_loss} is the geometric mean $\beta_0 = \sqrt{\beta_\text{min}\,\beta_\text{max}} \approx 2.24 \times 10^{-3}$; this choice places $\log \beta_0$ at the midpoint of $[\log \beta_\text{min},\, \log \beta_\text{max}]$, so the prior is symmetric in log space. The complete architecture and weight initialization are listed in Appendix~\ref{app:architectures}, Table~\ref{tab:beta_arch}.
 \end{definition}
 
 For an intrinsic reward module $m$, the scaled intrinsic reward at time step $t$ is

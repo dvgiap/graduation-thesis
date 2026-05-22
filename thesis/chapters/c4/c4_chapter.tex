@@ -59,7 +59,7 @@ UnlockPickup & Extends DoorKey with an additional object manipulation stage, cre
     \includegraphics[width=\linewidth]{figures/env_unlockpickup.png}
     \caption{UnlockPickup}
 \end{subfigure}
-\caption{Top-down view of the six MiniGrid environments used in the evaluation. The red triangle marks the agent's position and orientation; yellow keys, colored doors, lava, and the green goal tile are visible where applicable.}
+\caption[Top-down view of the six MiniGrid environments.]{Top-down view of the six MiniGrid environments used in the evaluation. The red triangle marks the agent's position and orientation; yellow keys, colored doors, lava, and the green goal tile are visible where applicable.}
 \label{fig:minigrid_envs}
 \end{figure}
 
@@ -106,7 +106,7 @@ This thesis treats CARE as an adaptive layer that works with any intrinsic rewar
 \hline
 \textbf{Label} & \textbf{Configuration} & \textbf{Purpose in the comparison} \\ \hline
 $B_0$ & PPO (no intrinsic reward) & Lower bound on exploration ability without any curiosity signal. \\ \hline
-$F_{m,\beta}$ & PPO + module $m$ with constant $\beta$, $m \in \{\text{Count}, \text{ICM}, \text{RIDE}\}$, $\beta \in \{0.0005,\, 0.001,\, 0.005,\, 0.01,\, 0.05\}$ & Fixed-coefficient sweep for each module. The five values span two orders of magnitude and bracket the optimal coefficients reported for sparse MiniGrid tasks ($\beta \approx 0.005$ for count-based and $\beta \approx 0.05$ for ICM \cite{andres2025impact}). \\ \hline
+$F_{m,\beta}$ & PPO + module $m$ with constant $\beta$, $m \in \{\text{Count}, \text{ICM}, \text{RIDE}\}$, $\beta \in \{0.0005$, $0.001$, $0.005$, $0.01$, $0.05\}$ & Fixed-coefficient sweep for each module. The five values span two orders of magnitude and bracket the optimal coefficients reported for sparse MiniGrid tasks ($\beta \approx 0.005$ for count-based and $\beta \approx 0.05$ for ICM \cite{andres2025impact}). \\ \hline
 $C_\text{Count}$ & PPO + count-based + CARE & Count-based bonus with learned $\beta_\psi(s_t)$ from the Beta Network. \\ \hline
 $C_\text{ICM}$ & PPO + ICM + CARE & ICM bonus with learned $\beta_\psi(s_t)$. \\ \hline
 $C_\text{RIDE}$ & PPO + RIDE + CARE & RIDE bonus with learned $\beta_\psi(s_t)$. \\ \hline
@@ -156,7 +156,7 @@ Figures~\ref{fig:all_envs_count}, \ref{fig:all_envs_icm}, and \ref{fig:all_envs_
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{figures/all_envs_count.png}
-\caption{Reward curves for the count-based module across all six MiniGrid environments. PPO without intrinsic reward (gray dotted) is the lower-bound reference; the five fixed-$\beta$ conditions are shown in a red gradient (light $=$ small $\beta$, dark $=$ large $\beta$); CARE-COUNT is shown as a dashed crimson line.}
+\caption[Reward curves for the count-based module.]{Reward curves for the count-based module across all six MiniGrid environments. PPO without intrinsic reward (gray dotted) is the lower-bound reference; the five fixed-$\beta$ conditions are shown in a red gradient (light $=$ small $\beta$, dark $=$ large $\beta$); CARE-COUNT is shown as a dashed royal-blue line.}
 \label{fig:all_envs_count}
 \end{figure}
 
@@ -178,7 +178,7 @@ Figures~\ref{fig:all_envs_count}, \ref{fig:all_envs_icm}, and \ref{fig:all_envs_
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{figures/all_envs_icm.png}
-\caption{Reward curves for the ICM module. Same colour conventions as Figure~\ref{fig:all_envs_count}, with CARE-ICM shown in dashed dark orange.}
+\caption[Reward curves for the ICM module.]{Reward curves for the ICM module. Same colour conventions as Figure~\ref{fig:all_envs_count}, with CARE-ICM shown in dashed forest green.}
 \label{fig:all_envs_icm}
 \end{figure}
 
@@ -200,7 +200,7 @@ Figures~\ref{fig:all_envs_count}, \ref{fig:all_envs_icm}, and \ref{fig:all_envs_
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{figures/all_envs_ride.png}
-\caption{Reward curves for the RIDE module. Same colour conventions as Figure~\ref{fig:all_envs_count}, with CARE-RIDE shown in dashed goldenrod.}
+\caption[Reward curves for the RIDE module.]{Reward curves for the RIDE module. Same colour conventions as Figure~\ref{fig:all_envs_count}, with CARE-RIDE shown in dashed blue-violet.}
 \label{fig:all_envs_ride}
 \end{figure}
 
@@ -233,7 +233,7 @@ Keeping the underlying intrinsic signal fixed and changing only the scaling stra
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{figures/aggregate_summary.png}
-\caption{Aggregate performance summary across all environments and modules. Top: sample efficiency (smaller is better, $\infty$-clamped to budget) and normalized final reward (larger is better, normalized per environment). Bars are means across the six MiniGrid environments and five seeds with bootstrap confidence intervals; the no-intrinsic baseline is shown for reference and the CARE variants are highlighted in their module-specific colours.}
+\caption[Aggregate performance summary.]{Aggregate performance summary across all environments and modules. Top: sample efficiency (smaller is better, $\infty$-clamped to budget) and normalized final reward (larger is better, normalized per environment). Bars are means across the six MiniGrid environments and five seeds with bootstrap confidence intervals; the no-intrinsic baseline is shown for reference and the CARE variants are highlighted in their module-specific colours.}
 \label{fig:aggregate_summary}
 \end{figure}
 
@@ -256,21 +256,21 @@ The Beta Network is trained throughout the $10^6$-step budget, and Figures~\ref{
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{figures/care_dynamics_count.png}
-\caption{CARE-COUNT dynamics. Left: mean $\beta_\psi(s_t)$ over training updates with $\pm 1$ standard-deviation band, with the geometric-mean prior $\beta_0$ as a horizontal reference. Right: stacked decomposition of the shaped reward into extrinsic ($R_t^E$) and weighted-intrinsic ($\beta_\psi(s_t)\, I_t^{+,m}$) components.}
+\caption[CARE-COUNT dynamics.]{CARE-COUNT dynamics. Left: mean $\beta_\psi(s_t)$ over training updates with $\pm 1$ standard-deviation band, with the geometric-mean prior $\beta_0$ as a horizontal reference. Right: stacked decomposition of the shaped reward into extrinsic ($R_t^E$) and weighted-intrinsic ($\beta_\psi(s_t)\, I_t^{+,m}$) components.}
 \label{fig:care_dynamics_count}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{figures/care_dynamics_icm.png}
-\caption{CARE-ICM dynamics. Same conventions as Figure~\ref{fig:care_dynamics_count}.}
+\caption[CARE-ICM dynamics.]{CARE-ICM dynamics. Same conventions as Figure~\ref{fig:care_dynamics_count}.}
 \label{fig:care_dynamics_icm}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{figures/care_dynamics_ride.png}
-\caption{CARE-RIDE dynamics. Same conventions as Figure~\ref{fig:care_dynamics_count}.}
+\caption[CARE-RIDE dynamics.]{CARE-RIDE dynamics. Same conventions as Figure~\ref{fig:care_dynamics_count}.}
 \label{fig:care_dynamics_ride}
 \end{figure}
 
@@ -279,21 +279,21 @@ Three regimes are visible in the dynamics plots. On environments where extrinsic
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{figures/care_beta_hist_count.png}
-\caption{End-of-training distribution of $\beta_\psi(s_t)$ for CARE-COUNT, aggregated across all states sampled during the final $5\%$ of training. Vertical lines mark the geometric-mean prior $\beta_0$ and the five fixed-$\beta$ values used in the baseline sweep.}
+\caption[End-of-training $\beta_\psi$ distribution for CARE-COUNT.]{End-of-training distribution of $\beta_\psi(s_t)$ for CARE-COUNT, aggregated across all states sampled during the final $5\%$ of training. Vertical lines mark the geometric-mean prior $\beta_0$ and the five fixed-$\beta$ values used in the baseline sweep.}
 \label{fig:care_beta_hist_count}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{figures/care_beta_hist_icm.png}
-\caption{End-of-training distribution of $\beta_\psi(s_t)$ for CARE-ICM. Same conventions as Figure~\ref{fig:care_beta_hist_count}.}
+\caption[End-of-training $\beta_\psi$ distribution for CARE-ICM.]{End-of-training distribution of $\beta_\psi(s_t)$ for CARE-ICM. Same conventions as Figure~\ref{fig:care_beta_hist_count}.}
 \label{fig:care_beta_hist_icm}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{figures/care_beta_hist_ride.png}
-\caption{End-of-training distribution of $\beta_\psi(s_t)$ for CARE-RIDE. Same conventions as Figure~\ref{fig:care_beta_hist_count}.}
+\caption[End-of-training $\beta_\psi$ distribution for CARE-RIDE.]{End-of-training distribution of $\beta_\psi(s_t)$ for CARE-RIDE. Same conventions as Figure~\ref{fig:care_beta_hist_count}.}
 \label{fig:care_beta_hist_ride}
 \end{figure}
 
@@ -304,21 +304,21 @@ The performance profiles in Figures~\ref{fig:profile_count}, \ref{fig:profile_ic
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{figures/profile_count.png}
-\caption{Performance profile for the count-based module \cite{agarwal2021deep}: fraction of $(\text{env}, \text{seed})$ pairs whose normalized final reward exceeds threshold $\tau$.}
+\caption[Performance profile for the count-based module.]{Performance profile for the count-based module \cite{agarwal2021deep}: fraction of $(\text{env}, \text{seed})$ pairs whose normalized final reward exceeds threshold $\tau$.}
 \label{fig:profile_count}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{figures/profile_icm.png}
-\caption{Performance profile for the ICM module. Same conventions as Figure~\ref{fig:profile_count}.}
+\caption[Performance profile for the ICM module.]{Performance profile for the ICM module. Same conventions as Figure~\ref{fig:profile_count}.}
 \label{fig:profile_icm}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth]{figures/profile_ride.png}
-\caption{Performance profile for the RIDE module. Same conventions as Figure~\ref{fig:profile_count}.}
+\caption[Performance profile for the RIDE module.]{Performance profile for the RIDE module. Same conventions as Figure~\ref{fig:profile_count}.}
 \label{fig:profile_ride}
 \end{figure}
 

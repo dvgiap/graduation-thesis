@@ -2,25 +2,25 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces MiniGrid environments used in the experiments.}}{28}{table.caption.14}%
-\contentsline {table}{\numberline {4.2}{\ignorespaces Baseline conditions evaluated on every environment.}}{32}{table.caption.16}%
-\contentsline {table}{\numberline {4.3}{\ignorespaces Final reward (mean of last 10 logged episodes, averaged over 5 seeds, $\pm $ standard deviation) for the COUNT module. Best entry per row in bold.}}{35}{table.caption.18}%
-\contentsline {table}{\numberline {4.4}{\ignorespaces Final reward (mean of last 10 logged episodes, averaged over 5 seeds, $\pm $ standard deviation) for the ICM module. Best entry per row in bold.}}{37}{table.caption.20}%
-\contentsline {table}{\numberline {4.5}{\ignorespaces Final reward (mean of last 10 logged episodes, averaged over 5 seeds, $\pm $ standard deviation) for the RIDE module. Best entry per row in bold.}}{39}{table.caption.22}%
-\contentsline {table}{\numberline {4.6}{\ignorespaces Sample efficiency for the COUNT module: first timestep at which the across-seed mean reward reaches $0.7 \cdot r^\star _\text {env}$, where $r^\star _\text {env}$ is the best mean final reward across all conditions on that environment. Lower is better; $\infty $ means the threshold was never reached within the $10^6$-step budget. Best entry per row in bold.}}{40}{table.caption.23}%
-\contentsline {table}{\numberline {4.7}{\ignorespaces Sample efficiency for the ICM module: first timestep at which the across-seed mean reward reaches $0.7 \cdot r^\star _\text {env}$, where $r^\star _\text {env}$ is the best mean final reward across all conditions on that environment. Lower is better; $\infty $ means the threshold was never reached within the $10^6$-step budget. Best entry per row in bold.}}{41}{table.caption.24}%
-\contentsline {table}{\numberline {4.8}{\ignorespaces Sample efficiency for the RIDE module: first timestep at which the across-seed mean reward reaches $0.7 \cdot r^\star _\text {env}$, where $r^\star _\text {env}$ is the best mean final reward across all conditions on that environment. Lower is better; $\infty $ means the threshold was never reached within the $10^6$-step budget. Best entry per row in bold.}}{41}{table.caption.25}%
-\contentsline {table}{\numberline {4.9}{\ignorespaces CARE versus the best post-hoc fixed-$\beta $ value, per (environment, module). Gap is $r_\text {CARE} - r_\text {best-FB}$ in raw reward; positive means CARE is better. Best-$\beta $ is the value of $\beta $ that achieves $r_\text {best-FB}$ on that environment.}}{42}{table.caption.26}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces MiniGrid environments used in the experiments.}}{29}{table.caption.14}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Baseline conditions evaluated on every environment.}}{33}{table.caption.16}%
+\contentsline {table}{\numberline {4.3}{\ignorespaces Final reward for the COUNT module.}}{36}{table.caption.18}%
+\contentsline {table}{\numberline {4.4}{\ignorespaces Final reward for the ICM module.}}{38}{table.caption.20}%
+\contentsline {table}{\numberline {4.5}{\ignorespaces Final reward for the RIDE module.}}{40}{table.caption.22}%
+\contentsline {table}{\numberline {4.6}{\ignorespaces Sample efficiency for the COUNT module.}}{41}{table.caption.23}%
+\contentsline {table}{\numberline {4.7}{\ignorespaces Sample efficiency for the ICM module.}}{42}{table.caption.24}%
+\contentsline {table}{\numberline {4.8}{\ignorespaces Sample efficiency for the RIDE module.}}{42}{table.caption.25}%
+\contentsline {table}{\numberline {4.9}{\ignorespaces CARE versus best fixed-$\beta $.}}{43}{table.caption.26}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {B.1}{\ignorespaces Beta Network $\beta _\psi $ architecture.}}{64}{table.caption.40}%
-\contentsline {table}{\numberline {B.2}{\ignorespaces Intrinsic Curiosity Module (ICM) architecture.}}{65}{table.caption.41}%
-\contentsline {table}{\numberline {B.3}{\ignorespaces RIDE architecture. The encoder, forward model, and inverse model share the ICM design and training objective; the difference is the intrinsic reward formula in Equation~\eqref {eq:ride_raw}, which uses representation impact divided by an episodic count rather than forward prediction error.}}{66}{table.caption.42}%
-\contentsline {table}{\numberline {B.4}{\ignorespaces Actor and critic network architectures used by PPO.}}{66}{table.caption.43}%
-\contentsline {table}{\numberline {B.5}{\ignorespaces PPO hyperparameters.}}{67}{table.caption.44}%
-\contentsline {table}{\numberline {B.6}{\ignorespaces ICM hyperparameters.}}{67}{table.caption.45}%
-\contentsline {table}{\numberline {B.7}{\ignorespaces RIDE hyperparameters.}}{67}{table.caption.46}%
-\contentsline {table}{\numberline {B.8}{\ignorespaces CARE hyperparameters. The Beta Network alone determines the intrinsic-reward scale (no separate global coefficient $\alpha $ is used); the same Beta Network bounds and correlation-objective hyperparameters apply to every CARE variant.}}{68}{table.caption.47}%
-\contentsline {table}{\numberline {B.9}{\ignorespaces Fixed-$\beta $ sweep used in the baseline conditions $F_{m,\beta }$ of Section~\ref {sec:baselines}. In these conditions the Beta Network is replaced by the listed scalar value, the correlation update is disabled, and $\beta \,I_t^{+,m}$ is fed directly into the shaped reward.}}{68}{table.caption.48}%
-\contentsline {table}{\numberline {B.10}{\ignorespaces Other module-specific hyperparameters for count-based exploration and RIDE.}}{69}{table.caption.49}%
-\contentsline {table}{\numberline {B.11}{\ignorespaces Training schedule.}}{69}{table.caption.50}%
+\contentsline {table}{\numberline {B.1}{\ignorespaces Beta Network $\beta _\psi $ architecture.}}{65}{table.caption.40}%
+\contentsline {table}{\numberline {B.2}{\ignorespaces Intrinsic Curiosity Module (ICM) architecture.}}{66}{table.caption.41}%
+\contentsline {table}{\numberline {B.3}{\ignorespaces RIDE architecture.}}{67}{table.caption.42}%
+\contentsline {table}{\numberline {B.4}{\ignorespaces Actor and critic network architectures used by PPO.}}{67}{table.caption.43}%
+\contentsline {table}{\numberline {B.5}{\ignorespaces PPO hyperparameters.}}{68}{table.caption.44}%
+\contentsline {table}{\numberline {B.6}{\ignorespaces ICM hyperparameters.}}{68}{table.caption.45}%
+\contentsline {table}{\numberline {B.7}{\ignorespaces RIDE hyperparameters.}}{68}{table.caption.46}%
+\contentsline {table}{\numberline {B.8}{\ignorespaces CARE hyperparameters.}}{69}{table.caption.47}%
+\contentsline {table}{\numberline {B.9}{\ignorespaces Fixed-$\beta $ sweep.}}{69}{table.caption.48}%
+\contentsline {table}{\numberline {B.10}{\ignorespaces Other module-specific hyperparameters.}}{70}{table.caption.49}%
+\contentsline {table}{\numberline {B.11}{\ignorespaces Training schedule.}}{70}{table.caption.50}%

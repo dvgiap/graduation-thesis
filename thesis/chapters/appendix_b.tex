@@ -68,7 +68,7 @@ Encoder gradient flow & inverse loss only (forward loss detached) \\
 
 \begin{table}[H]
 \centering
-\caption{RIDE architecture. The encoder, forward model, and inverse model share the ICM design and training objective; the difference is the intrinsic reward formula in Equation~\eqref{eq:ride_raw}, which uses representation impact divided by an episodic count rather than forward prediction error.}
+\caption[RIDE architecture.]{RIDE architecture. The encoder, forward model, and inverse model share the ICM design and training objective; the difference is the intrinsic reward formula in Equation~\eqref{eq:ride_raw}, which uses representation impact divided by an episodic count rather than forward prediction error.}
 \label{tab:ride_arch}
 \begin{tabular}{|l|l|}
 \hline
@@ -182,7 +182,7 @@ RIDE batch size & Mini-batch size within each epoch & $64$ \\
 
 \begin{table}[H]
 \centering
-\caption{CARE hyperparameters. The Beta Network alone determines the intrinsic-reward scale (no separate global coefficient $\alpha$ is used); the same Beta Network bounds and correlation-objective hyperparameters apply to every CARE variant.}
+\caption[CARE hyperparameters.]{CARE hyperparameters. The Beta Network alone determines the intrinsic-reward scale (no separate global coefficient $\alpha$ is used); the same Beta Network bounds and correlation-objective hyperparameters apply to every CARE variant.}
 \label{tab:care_hparams}
 \begin{tabular}{|l|p{7.5cm}|l|}
 \hline
@@ -211,7 +211,7 @@ $\varepsilon$ & Numerical stability constant in z-scoring of $\tilde I_t$ and $\
 
 \begin{table}[H]
 \centering
-\caption{Fixed-$\beta$ sweep used in the baseline conditions $F_{m,\beta}$ of Section~\ref{sec:baselines}. In these conditions the Beta Network is replaced by the listed scalar value, the correlation update is disabled, and $\beta\,I_t^{+,m}$ is fed directly into the shaped reward.}
+\caption[Fixed-$\beta$ sweep.]{Fixed-$\beta$ sweep used in the baseline conditions $F_{m,\beta}$ of Section~\ref{sec:baselines}. In these conditions the Beta Network is replaced by the listed scalar value, the correlation update is disabled, and $\beta\,I_t^{+,m}$ is fed directly into the shaped reward.}
 \label{tab:fixed_beta_sweep}
 \begin{tabular}{|l|l|}
 \hline
@@ -234,7 +234,7 @@ Total conditions per environment & $19$ \\
 
 \begin{table}[H]
 \centering
-\caption{Other module-specific hyperparameters for count-based exploration and RIDE.}
+\caption[Other module-specific hyperparameters.]{Other module-specific hyperparameters for count-based exploration and RIDE.}
 \label{tab:other_hparams}
 \begin{tabular}{|l|l|l|}
 \hline

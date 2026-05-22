@@ -20,11 +20,11 @@ An episodic reinforcement learning (RL) problem is commonly modeled as a Markov 
         node[midway, above] {$s_{t+1}$, $R_t^E$}
         |- (agent.west);
 \end{tikzpicture}
-\caption{Standard agent--environment interaction loop in reinforcement learning. The agent observes a state, takes an action sampled from its policy, and receives a new state and an extrinsic reward from the environment.}
+\caption[Agent--environment interaction loop.]{Standard agent--environment interaction loop in reinforcement learning. The agent observes a state, takes an action sampled from its policy, and receives a new state and an extrinsic reward from the environment.}
 \label{fig:rl_loop}
 \end{figure}
 
-The goal of policy optimization is to learn parameters $\theta$ that maximize the expected discounted return:
+The goal of policy optimization is to learn parameters $\theta$ that maximize the expected discounted return \cite{sutton2018rl}:
 \begin{equation}
 J(\theta) = \mathbb{E}_{\tau \sim (\pi_\theta, P)} \left[\sum_{t=0}^{T-1} \gamma^t R_t^E \right],
 \label{eq:rl_objective}
@@ -41,7 +41,7 @@ This section reviews three tools that Chapter~\ref{ch:methodology} builds on: va
 \subsection{Value Functions and Bellman Equations}
 \label{sec:value_functions}
 
-For a policy $\pi$, the \emph{state-value function} is the expected discounted return obtained by following $\pi$ from state $s$:
+For a policy $\pi$, the \emph{state-value function} is the expected discounted return obtained by following $\pi$ from state $s$ \cite{sutton2018rl}:
 \begin{equation}
 V^\pi(s) \;=\; \mathbb{E}_{\pi, P}\!\left[\, \sum_{k=0}^{\infty} \gamma^k\, R_{t+k}^E \,\Big|\, s_t = s \right].
 \label{eq:value_function}
