@@ -285,6 +285,10 @@ INPUT D:\Program Files\MiKTeX\tex\generic\pgf\frontendlayer\tikz\libraries\tikzl
 INPUT D:\Program Files\MiKTeX\tex\generic\pgf\libraries\pgflibraryarrows.meta.code.tex
 INPUT D:\Program Files\MiKTeX\tex\generic\pgf\libraries\pgflibraryarrows.meta.code.tex
 INPUT D:\Program Files\MiKTeX\tex\generic\pgf\libraries\pgflibraryarrows.meta.code.tex
+INPUT D:\Program Files\MiKTeX\tex\generic\pgf\frontendlayer\tikz\libraries\tikzlibraryshapes.geometric.code.tex
+INPUT D:\Program Files\MiKTeX\tex\generic\pgf\frontendlayer\tikz\libraries\tikzlibraryshapes.geometric.code.tex
+INPUT D:\Program Files\MiKTeX\tex\generic\pgf\libraries\shapes\pgflibraryshapes.geometric.code.tex
+INPUT D:\Program Files\MiKTeX\tex\generic\pgf\libraries\shapes\pgflibraryshapes.geometric.code.tex
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\algorithms\algorithm.sty
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\algorithms\algorithm.sty
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\algorithmicx\algpseudocode.sty
@@ -448,19 +452,24 @@ INPUT .\chapters\c3\c3_chapter.tex
 INPUT .\chapters\c3\c3_chapter.tex
 INPUT .\chapters\c3\c3_chapter.tex
 INPUT chapters\c3\c3_chapter.tex
-INPUT .\figures\system_architecture.png
-INPUT .\figures\system_architecture.png
-INPUT .\figures\system_architecture.png
-INPUT .\figures\system_architecture.png
-INPUT .\figures\system_architecture.png
-INPUT .\figures\system_architecture.png
-INPUT .\figures\system_architecture.png
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnr10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmr10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmmi10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmsy10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmex10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex8.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam7.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam5.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm7.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm5.tfm
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnti9.tfm
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnti7.tfm
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnbxti10.tfm
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnbx9.tfm
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnbx7.tfm
-INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnr10.tfm
 INPUT .\chapters\c4\c4_chapter.tex
 INPUT .\chapters\c4\c4_chapter.tex
 INPUT .\chapters\c4\c4_chapter.tex
@@ -677,6 +686,8 @@ INPUT C:\Users\JS\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\tcrm12
 INPUT C:\Users\JS\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\tcrm1200.pk
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmex10.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmex10.pfb
+INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi10.pfb
+INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi10.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi12.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi12.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi6.pfb
@@ -685,6 +696,8 @@ INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi8.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi8.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi9.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi9.pfb
+INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr10.pfb
+INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr10.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr12.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr12.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmr6.pfb

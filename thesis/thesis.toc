@@ -29,11 +29,11 @@
 \contentsline {section}{\numberline {2.5}Summary and Research Gap}{12}{section.2.5}%
 \contentsline {chapter}{\numberline {3}Methodology}{14}{chapter.3}%
 \contentsline {section}{\numberline {3.1}System Architecture}{14}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Intrinsic Reward Generation}{15}{section.3.2}%
+\contentsline {section}{\numberline {3.2}Intrinsic Reward Generation}{16}{section.3.2}%
 \contentsline {subsection}{\numberline {3.2.1}ICM Instantiation}{16}{subsection.3.2.1}%
 \contentsline {subsection}{\numberline {3.2.2}Count-Based Exploration}{16}{subsection.3.2.2}%
 \contentsline {subsection}{\numberline {3.2.3}Rewarding Impact-Driven Exploration}{17}{subsection.3.2.3}%
-\contentsline {subsection}{\numberline {3.2.4}Standardization and Rectification}{17}{subsection.3.2.4}%
+\contentsline {subsection}{\numberline {3.2.4}Standardization and Rectification}{18}{subsection.3.2.4}%
 \contentsline {section}{\numberline {3.3}Correlation-Aware Reward Exploration}{18}{section.3.3}%
 \contentsline {subsection}{\numberline {3.3.1}Beta Network}{18}{subsection.3.3.1}%
 \contentsline {subsection}{\numberline {3.3.2}Advantage-Correlation Objective}{19}{subsection.3.3.2}%
@@ -41,7 +41,7 @@
 \contentsline {section}{\numberline {3.4}Algorithm}{23}{section.3.4}%
 \contentsline {subsection}{\numberline {3.4.1}Rollout Buffer}{23}{subsection.3.4.1}%
 \contentsline {subsection}{\numberline {3.4.2}Loss Functions}{24}{subsection.3.4.2}%
-\contentsline {subsection}{\numberline {3.4.3}Training Procedure}{24}{subsection.3.4.3}%
+\contentsline {subsection}{\numberline {3.4.3}Training Procedure}{25}{subsection.3.4.3}%
 \contentsline {chapter}{\numberline {4}Experimental Setup and Results}{27}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Benchmark Environments}{27}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Computing Environment}{29}{section.4.2}%

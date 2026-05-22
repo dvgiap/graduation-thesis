@@ -100,16 +100,15 @@
 \newlabel{sec:system_architecture}{{3.1}{14}{System Architecture}{section.3.1}{}}
 \newlabel{def:reward_shaping}{{3.1}{14}{State-Dependent Reward Shaping}{definition.3.1}{}}
 \newlabel{eq:shaped_reward}{{3.1}{14}{State-Dependent Reward Shaping}{equation.3.1}{}}
-\citation{bellemare2016count,tang2017exploration}
-\citation{pathak2017curiosity}
-\citation{raileanu2020ride}
 \@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces CARE system architecture.}}{15}{figure.caption.13}\protected@file@percent }
 \newlabel{fig:care_arch}{{3.1}{15}{CARE system architecture}{figure.caption.13}{}}
 \newlabel{eq:combined_reward}{{3.2}{15}{System Architecture}{equation.3.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.2}Intrinsic Reward Generation}{15}{section.3.2}\protected@file@percent }
-\newlabel{sec:intrinsic_modules}{{3.2}{15}{Intrinsic Reward Generation}{section.3.2}{}}
-\citation{tang2017exploration}
+\citation{bellemare2016count,tang2017exploration}
+\citation{pathak2017curiosity}
 \citation{raileanu2020ride}
+\citation{tang2017exploration}
+\@writefile{toc}{\contentsline {section}{\numberline {3.2}Intrinsic Reward Generation}{16}{section.3.2}\protected@file@percent }
+\newlabel{sec:intrinsic_modules}{{3.2}{16}{Intrinsic Reward Generation}{section.3.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2.1}ICM Instantiation}{16}{subsection.3.2.1}\protected@file@percent }
 \newlabel{sec:icm}{{3.2.1}{16}{ICM Instantiation}{subsection.3.2.1}{}}
 \newlabel{eq:icm_loss}{{3.3}{16}{ICM Instantiation}{equation.3.3}{}}
@@ -117,13 +116,14 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2.2}Count-Based Exploration}{16}{subsection.3.2.2}\protected@file@percent }
 \newlabel{sec:count_module}{{3.2.2}{16}{Count-Based Exploration}{subsection.3.2.2}{}}
 \newlabel{eq:count_hash}{{3.5}{16}{Count-Based Exploration}{equation.3.5}{}}
-\newlabel{eq:count_raw}{{3.6}{16}{Count-Based Exploration}{equation.3.6}{}}
+\citation{raileanu2020ride}
+\newlabel{eq:count_raw}{{3.6}{17}{Count-Based Exploration}{equation.3.6}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2.3}Rewarding Impact-Driven Exploration}{17}{subsection.3.2.3}\protected@file@percent }
 \newlabel{sec:ride_module}{{3.2.3}{17}{Rewarding Impact-Driven Exploration}{subsection.3.2.3}{}}
 \newlabel{eq:ride_embed}{{3.7}{17}{Rewarding Impact-Driven Exploration}{equation.3.7}{}}
 \newlabel{eq:ride_raw}{{3.8}{17}{Rewarding Impact-Driven Exploration}{equation.3.8}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.4}Standardization and Rectification}{17}{subsection.3.2.4}\protected@file@percent }
-\newlabel{sec:standardization}{{3.2.4}{17}{Standardization and Rectification}{subsection.3.2.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2.4}Standardization and Rectification}{18}{subsection.3.2.4}\protected@file@percent }
+\newlabel{sec:standardization}{{3.2.4}{18}{Standardization and Rectification}{subsection.3.2.4}{}}
 \newlabel{def:standardized_intrinsic}{{3.2}{18}{Standardized Intrinsic Reward}{definition.3.2}{}}
 \newlabel{eq:icm_standardized}{{3.9}{18}{Standardized Intrinsic Reward}{equation.3.9}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3.3}Correlation-Aware Reward Exploration}{18}{section.3.3}\protected@file@percent }
@@ -132,19 +132,19 @@
 \newlabel{sec:beta_network}{{3.3.1}{18}{Beta Network}{subsection.3.3.1}{}}
 \newlabel{def:beta_network}{{3.3}{18}{Beta Network}{definition.3.3}{}}
 \newlabel{eq:beta_network}{{3.10}{18}{Beta Network}{equation.3.10}{}}
-\citation{schulman2016gae}
 \newlabel{eq:scaled_intrinsic}{{3.11}{19}{Beta Network}{equation.3.11}{}}
 \newlabel{lem:bounded_shaped}{{3.1}{19}{Bounded Shaped Reward}{lemma.3.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.3.2}Advantage-Correlation Objective}{19}{subsection.3.3.2}\protected@file@percent }
 \newlabel{sec:progress_loss}{{3.3.2}{19}{Advantage-Correlation Objective}{subsection.3.3.2}{}}
-\citation{andres2025impact}
+\citation{schulman2016gae}
 \newlabel{eq:gae_advantage_ext}{{3.12}{20}{Advantage-Correlation Objective}{equation.3.12}{}}
 \newlabel{eq:zscored_signals}{{3.13}{20}{Advantage-Correlation Objective}{equation.3.13}{}}
 \newlabel{eq:corr_loss}{{3.14}{20}{Advantage-Correlation Objective}{equation.3.14}{}}
 \newlabel{eq:reg_loss}{{3.15}{20}{Advantage-Correlation Objective}{equation.3.15}{}}
-\newlabel{eq:beta_loss}{{3.16}{20}{Advantage-Correlation Objective}{equation.3.16}{}}
-\citation{zheng2018lirpg}
+\citation{andres2025impact}
+\newlabel{eq:beta_loss}{{3.16}{21}{Advantage-Correlation Objective}{equation.3.16}{}}
 \newlabel{prop:target_recovery}{{3.1}{21}{Optimal State-Dependent Scaling}{proposition.3.1}{}}
+\citation{zheng2018lirpg}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.3.3}First-Order Optimization vs. Meta-Gradient}{22}{subsection.3.3.3}\protected@file@percent }
 \newlabel{sec:first_order}{{3.3.3}{22}{First-Order Optimization vs. Meta-Gradient}{subsection.3.3.3}{}}
 \newlabel{prop:cost}{{3.2}{22}{Computational Cost}{proposition.3.2}{}}
@@ -162,8 +162,8 @@
 \newlabel{sec:loss_functions}{{3.4.2}{24}{Loss Functions}{subsection.3.4.2}{}}
 \newlabel{eq:ppo_loss}{{3.18}{24}{Loss Functions}{equation.3.18}{}}
 \newlabel{eq:critic_loss}{{3.19}{24}{Loss Functions}{equation.3.19}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.3}Training Procedure}{24}{subsection.3.4.3}\protected@file@percent }
-\newlabel{sec:training_procedure}{{3.4.3}{24}{Training Procedure}{subsection.3.4.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4.3}Training Procedure}{25}{subsection.3.4.3}\protected@file@percent }
+\newlabel{sec:training_procedure}{{3.4.3}{25}{Training Procedure}{subsection.3.4.3}{}}
 \@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces CARE training loop with PPO and an intrinsic reward module.}}{25}{algorithm.1}\protected@file@percent }
 \newlabel{alg:care}{{1}{25}{CARE training loop with PPO and an intrinsic reward module}{algorithm.1}{}}
 \citation{chevalier2018minigrid}

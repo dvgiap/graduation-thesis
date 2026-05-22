@@ -22,8 +22,75 @@ The proposed system uses this form with a parameterized $\beta_\psi$ together wi
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\linewidth]{figures/system_architecture.png}
-\caption[CARE system architecture.]{CARE system architecture. The intrinsic module block stands for any of the three implementations evaluated in this thesis (count-based, ICM, or RIDE); the rest of the pipeline is identical across modules. Solid arrows trace the forward computation that produces the shaped reward $\bar r_t$ used by PPO. Dashed arrows indicate the auxiliary signals used to update the Beta Network $\beta_\psi$ via the correlation objective $L_\beta$, which couples the weighted intrinsic reward $\beta_\psi\, I_t^{+,m}$ to the extrinsic GAE advantage $\hat A_t^{E}$ obtained from the critic.}
+\begin{tikzpicture}[
+    node distance = 1.4cm and 4.5cm,
+    box/.style  = {rectangle, draw, rounded corners=3pt,
+                   minimum width=3.4cm, minimum height=0.75cm,
+                   align=center, font=\small},
+    op/.style   = {circle, draw, minimum size=0.7cm,
+                   inner sep=0pt, font=\normalsize},
+    arr/.style  = {->, >=Stealth, thick},
+    darr/.style = {->, >=Stealth, dashed, thick},
+    lbl/.style  = {font=\footnotesize, fill=white, inner sep=1.5pt},
+]
+
+%% Left column (forward path)
+\node[box]                       (env)  {Environment};
+\node[box, below=1.3cm of env]   (buf)  {Rollout Buffer};
+\node[box, below=1.3cm of buf]   (intr) {Intrinsic Module $m$};
+\node[box, below=1.1cm of intr]  (std)  {Standardize \& Rectify};
+\node[op,  below=1.0cm of std]   (mul)  {$\times$};
+\node[op,  below=1.1cm of mul]   (add)  {$+$};
+\node[box, below=1.0cm of add]   (ppo)  {PPO Update};
+
+%% Right column
+\node[box, right=4.5cm of buf]   (critic) {Critic $V_\mu$};
+\node[box, right=4.5cm of std]   (beta)   {Beta Network $\beta_\psi$};
+\node[box, right=4.5cm of mul]   (care)   {Correlation Loss $L_\beta$};
+
+%% Solid arrows (forward computation)
+\draw[arr] (env)  -- node[lbl,right] {$\xi_t$}                      (buf);
+\draw[arr] (buf)  -- node[lbl,right] {$s_t,\,a_t,\,s_{t+1}$}        (intr);
+\draw[arr] (intr) -- node[lbl,right] {$I_t$}                         (std);
+\draw[arr] (std)  -- node[lbl,right] {$I_t^{+,m}$}                   (mul);
+\draw[arr] (mul)  -- node[lbl,right] {$\beta_\psi(s_t)\,I_t^{+,m}$} (add);
+\draw[arr] (add)  -- node[lbl,right] {$\bar{r}_t$}                   (ppo);
+
+%% beta_psi(s_t): Beta Network -> multiply
+\draw[arr] (beta.west) -- node[lbl,above] {$\beta_\psi(s_t)$} (mul.east);
+
+%% s_t: Rollout Buffer -> Beta Network
+\draw[arr] (buf.south) -- ++(0,-0.3)
+    -| node[lbl,right,pos=0.25] {$s_t$} (beta.north);
+
+%% R_t^E: Rollout Buffer -> add (loop left side)
+\draw[arr] (buf.west) -- ++(-0.8,0)
+    |- node[lbl,left,pos=0.65] {$R_t^E$} (add.west);
+
+%% pi_theta feedback: PPO -> Environment (loop left side)
+\draw[arr] (ppo.west) -- ++(-1.3,0)
+    |- node[lbl,left,pos=0.25] {$\pi_\theta$} (env.west);
+
+%% Dashed arrows (Beta Network training)
+
+%% Rollout Buffer -> Critic
+\draw[darr] (buf.east)
+    -- node[lbl,above] {$s_t,\,R_t^E,\,d_t$} (critic.west);
+
+%% Critic -> Correlation Loss
+\draw[darr] (critic.east) -- ++(0.6,0)
+    |- node[lbl,right,pos=0.3] {$\hat{A}_t^E$} (care.east);
+
+%% multiply -> Correlation Loss
+\draw[darr] (mul.east) to[out=0, in=180, looseness=0.6]
+    node[lbl,below,pos=0.5] {$\beta_\psi\,I_t^{+,m}$} (care.west);
+
+%% Correlation Loss -> Beta Network (gradient)
+\draw[darr] (care.north)
+    -- node[lbl,right] {$\nabla_\psi L_\beta$} (beta.south);
+
+\end{tikzpicture}
+\caption[CARE system architecture.]{CARE system architecture. The intrinsic module block stands for any of the three implementations evaluated in this thesis (count-based, ICM, or RIDE); the rest of the pipeline is identical across modules. Solid arrows trace the forward computation that produces the shaped reward $\bar r_t$ used by PPO; $\xi_t$ denotes the per-step transition tuple stored in the rollout buffer (defined in Equation~\eqref{eq:transition_tuple}). Dashed arrows indicate the auxiliary signals used to update the Beta Network $\beta_\psi$ via the correlation objective $L_\beta$, which couples the weighted intrinsic reward $\beta_\psi\, I_t^{+,m}$ to the extrinsic GAE advantage $\hat A_t^{E}$ obtained from the critic.}
 \label{fig:care_arch}
 \end{figure}
 
