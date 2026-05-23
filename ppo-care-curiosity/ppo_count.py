@@ -141,8 +141,8 @@ class PPO:
                  beta_encoding_size=256,
                  beta_num_layers=2,
                  beta_head_hidden=128,
-                 beta_min=1e-4,
-                 beta_max=5e-2,
+                 beta_min=1e-8,
+                 beta_max=1.0,
                  # Meta options (correlation-based β scaling)
                  meta_use_progress=True,
                  meta_reg_weight=1e-3,

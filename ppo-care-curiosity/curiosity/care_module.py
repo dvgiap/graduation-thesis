@@ -11,7 +11,7 @@ class BetaNetwork(nn.Module):
     """State-dependent β(s) ∈ [β_min, β_max] via log-space clamped output."""
 
     def __init__(self, state_dim, encoding_size=256, num_layers=2, head_hidden=128,
-                 min_beta=1e-4, max_beta=5e-2,
+                 min_beta=1e-8, max_beta=1.0,
                  beta_0=None):
         super().__init__()
         self.min = float(min_beta)
@@ -53,7 +53,7 @@ class BetaNetwork(nn.Module):
 
 class CAREModule:
     def __init__(self, state_dim,
-                 beta_min=1e-4, beta_max=5e-2, beta_0=None,
+                 beta_min=1e-8, beta_max=1.0, beta_0=None,
                  encoding_size=256, num_layers=2, head_hidden=128,
                  lr=5e-4, weight_decay=1e-6, grad_clip=1.0,
                  reg_weight=1e-3,
