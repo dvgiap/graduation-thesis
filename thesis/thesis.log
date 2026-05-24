@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.15)  22 MAY 2026 12:33
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.15)  25 MAY 2026 01:21
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -985,7 +985,7 @@ Package hyperref Info: Link coloring OFF on input line 150.
 
 \c@lstlisting=\count380
 (cover.tex
-<figures/uet.jpg, id=270, 1125.20375pt x 1125.20375pt>
+<figures/uet.jpg, id=290, 1125.20375pt x 1125.20375pt>
 File: figures/uet.jpg Graphic file (type jpg)
 <use figures/uet.jpg>
 Package pdftex.def Info: figures/uet.jpg  used on input line 22.
@@ -1091,18 +1091,18 @@ Overfull \hbox (17.59851pt too wide) in paragraph at lines 10--11
 \tf@toc=\write5
 \openout5 = `thesis.toc'.
 
- [6] (thesis.lof)
+ [6] (thesis.lof [7
+
+
+])
 \tf@lof=\write6
 \openout6 = `thesis.lof'.
 
- [7
-
-
-] (thesis.lot)
+ [8] (thesis.lot)
 \tf@lot=\write7
 \openout7 = `thesis.lot'.
 
- [8
+ [9
 
 
 ] (chapters/glossary.tex
@@ -1130,9 +1130,9 @@ Underfull \hbox (badness 1087) in paragraph at lines 21--22
 []|\T5/cmr/m/n/13 Technique for re-duc-ing vari-
  []
 
-) [9
+) [10
 
-] (chapters/notations.tex [10
+] (chapters/notations.tex [11
 
 
 
@@ -1141,7 +1141,7 @@ Underfull \hbox (badness 3482) in paragraph at lines 89--90
 []|\T5/cmr/m/n/13 Reference value for log-space reg-u-lar-iza-tion, set to
  []
 
-) [11] [12] (chapters/c1/c1_introduction.tex
+) [12] [13] (chapters/c1/c1_introduction.tex
 Ch\uhorn \ohorn ng 1.
 [1
 
@@ -1218,32 +1218,32 @@ Underfull \hbox (badness 1087) in paragraph at lines 23--23
 
 
 ]
-<figures/env_doorkey.png, id=780, 256.96pt x 256.96pt>
+<figures/env_doorkey.png, id=835, 256.96pt x 256.96pt>
 File: figures/env_doorkey.png Graphic file (type png)
 <use figures/env_doorkey.png>
 Package pdftex.def Info: figures/env_doorkey.png  used on input line 31.
 (pdftex.def)             Requested size: 141.12456pt x 141.12454pt.
-<figures/env_empty.png, id=781, 513.92pt x 513.92pt>
+<figures/env_empty.png, id=836, 513.92pt x 513.92pt>
 File: figures/env_empty.png Graphic file (type png)
 <use figures/env_empty.png>
 Package pdftex.def Info: figures/env_empty.png  used on input line 36.
 (pdftex.def)             Requested size: 141.12456pt x 141.12062pt.
-<figures/env_keycorridor.png, id=782, 224.84pt x 224.84pt>
+<figures/env_keycorridor.png, id=837, 224.84pt x 224.84pt>
 File: figures/env_keycorridor.png Graphic file (type png)
 <use figures/env_keycorridor.png>
 Package pdftex.def Info: figures/env_keycorridor.png  used on input line 41.
 (pdftex.def)             Requested size: 141.12456pt x 141.12846pt.
-<figures/env_lavacrossing.png, id=783, 289.08pt x 289.08pt>
+<figures/env_lavacrossing.png, id=838, 289.08pt x 289.08pt>
 File: figures/env_lavacrossing.png Graphic file (type png)
 <use figures/env_lavacrossing.png>
 Package pdftex.def Info: figures/env_lavacrossing.png  used on input line 49.
 (pdftex.def)             Requested size: 141.12456pt x 141.12111pt.
-<figures/env_redbluedoors.png, id=784, 513.92pt x 256.96pt>
+<figures/env_redbluedoors.png, id=839, 513.92pt x 256.96pt>
 File: figures/env_redbluedoors.png Graphic file (type png)
 <use figures/env_redbluedoors.png>
 Package pdftex.def Info: figures/env_redbluedoors.png  used on input line 54.
 (pdftex.def)             Requested size: 141.12456pt x 70.5603pt.
-<figures/env_unlockpickup.png, id=785, 353.32pt x 192.72pt>
+<figures/env_unlockpickup.png, id=840, 353.32pt x 192.72pt>
 File: figures/env_unlockpickup.png Graphic file (type png)
 <use figures/env_unlockpickup.png>
 Package pdftex.def Info: figures/env_unlockpickup.png  used on input line 59.
@@ -1282,7 +1282,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 112--112
  []
 
 [31] [32] [33]
-<figures/all_envs_count.png, id=834, 1437.6912pt x 797.379pt>
+<figures/all_envs_count.png, id=889, 1437.6912pt x 797.379pt>
 File: figures/all_envs_count.png Graphic file (type png)
 <use figures/all_envs_count.png>
 Package pdftex.def Info: figures/all_envs_count.png  used on input line 158.
@@ -1303,13 +1303,13 @@ LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <4.33336> not available
 (Font)              size <5> substituted on input line 24.
 
 ) [35 <./figures/all_envs_count.png>]
-<figures/all_envs_icm.png, id=847, 1437.6912pt x 797.379pt>
+<figures/all_envs_icm.png, id=902, 1437.6912pt x 797.379pt>
 File: figures/all_envs_icm.png Graphic file (type png)
 <use figures/all_envs_icm.png>
 Package pdftex.def Info: figures/all_envs_icm.png  used on input line 180.
 (pdftex.def)             Requested size: 455.24411pt x 252.47758pt.
  [36] (tables/final_reward_icm.tex) [37 <./figures/all_envs_icm.png>]
-<figures/all_envs_ride.png, id=860, 1437.6912pt x 797.379pt>
+<figures/all_envs_ride.png, id=915, 1437.6912pt x 797.379pt>
 File: figures/all_envs_ride.png Graphic file (type png)
 <use figures/all_envs_ride.png>
 Package pdftex.def Info: figures/all_envs_ride.png  used on input line 202.
@@ -1330,59 +1330,59 @@ Overfull \hbox (19.26599pt too wide) in paragraph at lines 229--230
  []
 
 [41] (tables/care_vs_best_fixed.tex)
-<figures/aggregate_summary.png, id=886, 1582.713pt x 519.8622pt>
+<figures/aggregate_summary.png, id=941, 1582.713pt x 519.8622pt>
 File: figures/aggregate_summary.png Graphic file (type png)
 <use figures/aggregate_summary.png>
 Package pdftex.def Info: figures/aggregate_summary.png  used on input line 235.
 (pdftex.def)             Requested size: 455.24411pt x 149.52664pt.
  [42] [43 <./figures/aggregate_summary.png>]
-<figures/care_dynamics_count.png, id=909, 1075.8594pt x 1303.7508pt>
+<figures/care_dynamics_count.png, id=964, 1075.8594pt x 1303.7508pt>
 File: figures/care_dynamics_count.png Graphic file (type png)
 <use figures/care_dynamics_count.png>
 Package pdftex.def Info: figures/care_dynamics_count.png  used on input line 258.
 (pdftex.def)             Requested size: 455.24411pt x 551.6697pt.
  [44]
-<figures/care_dynamics_icm.png, id=914, 1075.8594pt x 1303.7508pt>
+<figures/care_dynamics_icm.png, id=970, 1075.8594pt x 1303.7508pt>
 File: figures/care_dynamics_icm.png Graphic file (type png)
 <use figures/care_dynamics_icm.png>
 Package pdftex.def Info: figures/care_dynamics_icm.png  used on input line 265.
 (pdftex.def)             Requested size: 455.24411pt x 551.6697pt.
  [45 <./figures/care_dynamics_count.png>]
-<figures/care_dynamics_ride.png, id=923, 1075.8594pt x 1303.7508pt>
+<figures/care_dynamics_ride.png, id=978, 1075.8594pt x 1303.7508pt>
 File: figures/care_dynamics_ride.png Graphic file (type png)
 <use figures/care_dynamics_ride.png>
 Package pdftex.def Info: figures/care_dynamics_ride.png  used on input line 272.
 (pdftex.def)             Requested size: 455.24411pt x 551.6697pt.
  [46 <./figures/care_dynamics_icm.png>] [47 <./figures/care_dynamics_ride.png>]
-<figures/care_beta_hist_count.png, id=937, 1293.1512pt x 652.3572pt>
+<figures/care_beta_hist_count.png, id=992, 1293.1512pt x 652.3572pt>
 File: figures/care_beta_hist_count.png Graphic file (type png)
 <use figures/care_beta_hist_count.png>
 Package pdftex.def Info: figures/care_beta_hist_count.png  used on input line 281.
 (pdftex.def)             Requested size: 455.24411pt x 229.65233pt.
-<figures/care_beta_hist_icm.png, id=938, 1293.1512pt x 652.3572pt>
+<figures/care_beta_hist_icm.png, id=993, 1293.1512pt x 652.3572pt>
 File: figures/care_beta_hist_icm.png Graphic file (type png)
 <use figures/care_beta_hist_icm.png>
 Package pdftex.def Info: figures/care_beta_hist_icm.png  used on input line 288.
 (pdftex.def)             Requested size: 455.24411pt x 229.65233pt.
  [48 <./figures/care_beta_hist_count.png>]
-<figures/care_beta_hist_ride.png, id=946, 1293.1512pt x 652.3572pt>
+<figures/care_beta_hist_ride.png, id=1001, 1293.1512pt x 652.3572pt>
 File: figures/care_beta_hist_ride.png Graphic file (type png)
 <use figures/care_beta_hist_ride.png>
 Package pdftex.def Info: figures/care_beta_hist_ride.png  used on input line 295.
 (pdftex.def)             Requested size: 455.24411pt x 229.65233pt.
  [49 <./figures/care_beta_hist_icm.png> <./figures/care_beta_hist_ride.png>]
-<figures/profile_count.png, id=964, 643.203pt x 425.4294pt>
+<figures/profile_count.png, id=1019, 643.203pt x 425.4294pt>
 File: figures/profile_count.png Graphic file (type png)
 <use figures/profile_count.png>
 Package pdftex.def Info: figures/profile_count.png  used on input line 306.
 (pdftex.def)             Requested size: 455.24411pt x 301.1092pt.
-<figures/profile_icm.png, id=967, 643.203pt x 425.4294pt>
+<figures/profile_icm.png, id=1022, 643.203pt x 425.4294pt>
 File: figures/profile_icm.png Graphic file (type png)
 <use figures/profile_icm.png>
 Package pdftex.def Info: figures/profile_icm.png  used on input line 313.
 (pdftex.def)             Requested size: 455.24411pt x 301.1092pt.
  [50 <./figures/profile_count.png>]
-<figures/profile_ride.png, id=976, 643.203pt x 425.4294pt>
+<figures/profile_ride.png, id=1032, 643.203pt x 425.4294pt>
 File: figures/profile_ride.png Graphic file (type png)
 <use figures/profile_ride.png>
 Package pdftex.def Info: figures/profile_ride.png  used on input line 320.
@@ -1482,7 +1482,182 @@ Overfull \hbox (8.6826pt too wide) in paragraph at lines 262--279
  [][] 
  []
 
-) [69] (thesis.aux)
+) [69] (chapters/appendix_c.tex
+Appendix C.
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 1.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\beta' on input line 1.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 1.
+
+LaTeX Font Info:    Calculating math sizes for size <22.46396> on input line 1.
+
+LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <22.46396> not available
+(Font)              size <20.74> substituted on input line 1.
+
+
+LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <15.7247> not available
+(Font)              size <14.4> substituted on input line 1.
+
+
+LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <22.46396> not available
+(Font)              size <20.74> substituted on input line 1.
+
+
+LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <15.7247> not available
+(Font)              size <14.4> substituted on input line 1.
+
+
+LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <22.46396> not available
+(Font)              size <20.74> substituted on input line 1.
+
+
+LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <15.7247> not available
+(Font)              size <14.4> substituted on input line 1.
+
+<figures/all_envs_count_beta1e-8_1.png, id=1148, 1437.6912pt x 797.379pt>
+File: figures/all_envs_count_beta1e-8_1.png Graphic file (type png)
+<use figures/all_envs_count_beta1e-8_1.png>
+Package pdftex.def Info: figures/all_envs_count_beta1e-8_1.png  used on input line 13.
+(pdftex.def)             Requested size: 455.24411pt x 252.47758pt.
+[70
+
+
+
+]
+<figures/all_envs_icm_beta1e-8_1.png, id=1155, 1437.6912pt x 797.379pt>
+File: figures/all_envs_icm_beta1e-8_1.png Graphic file (type png)
+<use figures/all_envs_icm_beta1e-8_1.png>
+Package pdftex.def Info: figures/all_envs_icm_beta1e-8_1.png  used on input line 20.
+(pdftex.def)             Requested size: 455.24411pt x 252.47758pt.
+<figures/all_envs_ride_beta1e-8_1.png, id=1158, 1437.6912pt x 797.379pt>
+File: figures/all_envs_ride_beta1e-8_1.png Graphic file (type png)
+<use figures/all_envs_ride_beta1e-8_1.png>
+Package pdftex.def Info: figures/all_envs_ride_beta1e-8_1.png  used on input line 27.
+(pdftex.def)             Requested size: 455.24411pt x 252.47758pt.
+ [71 <./figures/all_envs_count_beta1e-8_1.png> <./figures/all_envs_icm_beta1e-8_1.png>]
+<figures/aggregate_summary_beta1e-8_1.png, id=1168, 1582.713pt x 519.8622pt>
+File: figures/aggregate_summary_beta1e-8_1.png Graphic file (type png)
+<use figures/aggregate_summary_beta1e-8_1.png>
+Package pdftex.def Info: figures/aggregate_summary_beta1e-8_1.png  used on input line 37.
+(pdftex.def)             Requested size: 455.24411pt x 149.52664pt.
+<figures/profile_count_beta1e-8_1.png, id=1171, 643.203pt x 425.4294pt>
+File: figures/profile_count_beta1e-8_1.png Graphic file (type png)
+<use figures/profile_count_beta1e-8_1.png>
+Package pdftex.def Info: figures/profile_count_beta1e-8_1.png  used on input line 44.
+(pdftex.def)             Requested size: 455.24411pt x 301.1092pt.
+ [72 <./figures/all_envs_ride_beta1e-8_1.png> <./figures/aggregate_summary_beta1e-8_1.png>]
+<figures/profile_icm_beta1e-8_1.png, id=1180, 643.203pt x 425.4294pt>
+File: figures/profile_icm_beta1e-8_1.png Graphic file (type png)
+<use figures/profile_icm_beta1e-8_1.png>
+Package pdftex.def Info: figures/profile_icm_beta1e-8_1.png  used on input line 51.
+(pdftex.def)             Requested size: 455.24411pt x 301.1092pt.
+ [73 <./figures/profile_count_beta1e-8_1.png>]
+<figures/profile_ride_beta1e-8_1.png, id=1188, 643.203pt x 425.4294pt>
+File: figures/profile_ride_beta1e-8_1.png Graphic file (type png)
+<use figures/profile_ride_beta1e-8_1.png>
+Package pdftex.def Info: figures/profile_ride_beta1e-8_1.png  used on input line 58.
+(pdftex.def)             Requested size: 455.24411pt x 301.1092pt.
+ [74 <./figures/profile_icm_beta1e-8_1.png>]
+LaTeX Font Info:    Calculating math sizes for size <15> on input line 63.
+
+
+LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <15> not available
+(Font)              size <14.4> substituted on input line 63.
+
+
+LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <10.49995> not available
+(Font)              size <10.95> substituted on input line 63.
+
+
+LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <7.5> not available
+(Font)              size <7> substituted on input line 63.
+
+
+LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <15> not available
+(Font)              size <14.4> substituted on input line 63.
+
+
+LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <10.49995> not available
+(Font)              size <10.95> substituted on input line 63.
+
+
+LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <7.5> not available
+(Font)              size <7> substituted on input line 63.
+
+
+LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <15> not available
+(Font)              size <14.4> substituted on input line 63.
+
+
+LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <10.49995> not available
+(Font)              size <10.95> substituted on input line 63.
+
+
+LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <7.5> not available
+(Font)              size <7> substituted on input line 63.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 63.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\beta' on input line 63.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `subscript' on input line 63.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\psi' on input line 63.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 63.
+
+<figures/care_dynamics_count_beta1e-8_1.png, id=1197, 1075.8594pt x 1303.7508pt>
+File: figures/care_dynamics_count_beta1e-8_1.png Graphic file (type png)
+<use figures/care_dynamics_count_beta1e-8_1.png>
+Package pdftex.def Info: figures/care_dynamics_count_beta1e-8_1.png  used on input line 68.
+(pdftex.def)             Requested size: 455.24411pt x 551.6697pt.
+[75 <./figures/profile_ride_beta1e-8_1.png>]
+<figures/care_dynamics_icm_beta1e-8_1.png, id=1205, 1075.8594pt x 1303.7508pt>
+File: figures/care_dynamics_icm_beta1e-8_1.png Graphic file (type png)
+<use figures/care_dynamics_icm_beta1e-8_1.png>
+Package pdftex.def Info: figures/care_dynamics_icm_beta1e-8_1.png  used on input line 75.
+(pdftex.def)             Requested size: 455.24411pt x 551.6697pt.
+ [76 <./figures/care_dynamics_count_beta1e-8_1.png>]
+<figures/care_dynamics_ride_beta1e-8_1.png, id=1213, 1075.8594pt x 1303.7508pt>
+File: figures/care_dynamics_ride_beta1e-8_1.png Graphic file (type png)
+<use figures/care_dynamics_ride_beta1e-8_1.png>
+Package pdftex.def Info: figures/care_dynamics_ride_beta1e-8_1.png  used on input line 82.
+(pdftex.def)             Requested size: 455.24411pt x 551.6697pt.
+ [77 <./figures/care_dynamics_icm_beta1e-8_1.png>]
+<figures/care_beta_hist_count_beta1e-8_1.png, id=1221, 1293.1512pt x 652.3572pt>
+File: figures/care_beta_hist_count_beta1e-8_1.png Graphic file (type png)
+<use figures/care_beta_hist_count_beta1e-8_1.png>
+Package pdftex.def Info: figures/care_beta_hist_count_beta1e-8_1.png  used on input line 89.
+(pdftex.def)             Requested size: 455.24411pt x 229.65233pt.
+ [78 <./figures/care_dynamics_ride_beta1e-8_1.png>]
+<figures/care_beta_hist_icm_beta1e-8_1.png, id=1227, 1293.1512pt x 652.3572pt>
+File: figures/care_beta_hist_icm_beta1e-8_1.png Graphic file (type png)
+<use figures/care_beta_hist_icm_beta1e-8_1.png>
+Package pdftex.def Info: figures/care_beta_hist_icm_beta1e-8_1.png  used on input line 96.
+(pdftex.def)             Requested size: 455.24411pt x 229.65233pt.
+<figures/care_beta_hist_ride_beta1e-8_1.png, id=1230, 1293.1512pt x 652.3572pt>
+File: figures/care_beta_hist_ride_beta1e-8_1.png Graphic file (type png)
+<use figures/care_beta_hist_ride_beta1e-8_1.png>
+Package pdftex.def Info: figures/care_beta_hist_ride_beta1e-8_1.png  used on input line 103.
+(pdftex.def)             Requested size: 455.24411pt x 229.65233pt.
+ [79 <./figures/care_beta_hist_count_beta1e-8_1.png> <./figures/care_beta_hist_icm_beta1e-8_1.png>] [80 <./figures/care_beta_hist_ride_beta1e-8_1.png>]) [81] (thesis.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -1490,23 +1665,23 @@ L3 programming layer <2026-01-19>
 
 
 LaTeX Font Warning: Size substitutions with differences
-(Font)              up to 1.0pt have occurred.
+(Font)              up to 1.72395pt have occurred.
 
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 7B08F013C2DB03A23B2DDB7003AFF3DF;12239.
+(rerunfilecheck)             Checksum: CB0F9A26678450598375D1199CAE570F;13035.
  ) 
 Here is how much of TeX's memory you used:
- 30047 strings out of 467867
- 547447 string characters out of 5428410
- 975666 words of memory out of 5000000
- 58102 multiletter control sequences out of 15000+600000
- 668157 words of font info for 122 fonts, out of 8000000 for 9000
+ 30246 strings out of 467867
+ 553505 string characters out of 5428410
+ 976015 words of memory out of 5000000
+ 58266 multiletter control sequences out of 15000+600000
+ 673786 words of font info for 146 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  108i,16n,107p,1965b,888s stack positions out of 10000i,1000n,20000p,200000b,200000s
- <C:\Users\JS\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnbx12.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnbx9.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnbxti10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr12.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr7.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr8.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr9.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnti12.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnti9.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vntt12.pfb>
-Output written on thesis.pdf (85 pages, 6815195 bytes).
+ <C:\Users\JS\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnbx12.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnbx9.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnbxti10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr12.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr7.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr8.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr9.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnti12.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnti9.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vntt12.pfb>
+Output written on thesis.pdf (98 pages, 12639324 bytes).
 PDF statistics:
- 1254 PDF objects out of 1440 (max. 8388607)
- 248 named destinations out of 1000 (max. 500000)
- 641 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1438 PDF objects out of 1440 (max. 8388607)
+ 279 named destinations out of 1000 (max. 500000)
+ 746 words of extra memory for PDF output out of 10000 (max. 10000000)
 

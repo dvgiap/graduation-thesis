@@ -20,3 +20,17 @@
 \contentsline {figure}{\numberline {4.14}{\ignorespaces Performance profile for the RIDE module.}}{51}{figure.caption.36}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {C.1}{\ignorespaces Reward curves for the count-based module (extended bound).}}{71}{figure.caption.51}%
+\contentsline {figure}{\numberline {C.2}{\ignorespaces Reward curves for the ICM module (extended bound).}}{71}{figure.caption.52}%
+\contentsline {figure}{\numberline {C.3}{\ignorespaces Reward curves for the RIDE module (extended bound).}}{72}{figure.caption.53}%
+\contentsline {figure}{\numberline {C.4}{\ignorespaces Aggregate performance summary (extended bound).}}{72}{figure.caption.54}%
+\contentsline {figure}{\numberline {C.5}{\ignorespaces Performance profile, count-based module (extended bound).}}{73}{figure.caption.55}%
+\contentsline {figure}{\numberline {C.6}{\ignorespaces Performance profile, ICM module (extended bound).}}{74}{figure.caption.56}%
+\contentsline {figure}{\numberline {C.7}{\ignorespaces Performance profile, RIDE module (extended bound).}}{75}{figure.caption.57}%
+\contentsline {figure}{\numberline {C.8}{\ignorespaces CARE-COUNT dynamics (extended bound).}}{76}{figure.caption.58}%
+\contentsline {figure}{\numberline {C.9}{\ignorespaces CARE-ICM dynamics (extended bound).}}{77}{figure.caption.59}%
+\contentsline {figure}{\numberline {C.10}{\ignorespaces CARE-RIDE dynamics (extended bound).}}{78}{figure.caption.60}%
+\contentsline {figure}{\numberline {C.11}{\ignorespaces End-of-training $\beta _\psi $ distribution, CARE-COUNT (extended bound).}}{79}{figure.caption.61}%
+\contentsline {figure}{\numberline {C.12}{\ignorespaces End-of-training $\beta _\psi $ distribution, CARE-ICM (extended bound).}}{79}{figure.caption.62}%
+\contentsline {figure}{\numberline {C.13}{\ignorespaces End-of-training $\beta _\psi $ distribution, CARE-RIDE (extended bound).}}{80}{figure.caption.63}%

@@ -4,9 +4,9 @@
 \contentsline {chapter}{Abstract}{iii}{section*.4}%
 \contentsline {chapter}{Contents}{iv}{section*.5}%
 \contentsline {chapter}{List of Figures}{vii}{section*.6}%
-\contentsline {chapter}{List of Tables}{viii}{section*.7}%
-\contentsline {chapter}{List of Acronyms}{ix}{section*.9}%
-\contentsline {chapter}{List of Notations}{x}{section*.11}%
+\contentsline {chapter}{List of Tables}{ix}{section*.7}%
+\contentsline {chapter}{List of Acronyms}{x}{section*.9}%
+\contentsline {chapter}{List of Notations}{xi}{section*.11}%
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Background and Research Motivation}{1}{section.1.1}%
 \contentsline {section}{\numberline {1.2}Research Problem}{2}{section.1.2}%
@@ -64,3 +64,8 @@
 \contentsline {chapter}{\numberline {B}Implementation Details}{64}{appendix.B}%
 \contentsline {section}{\numberline {B.1}Network Architectures}{64}{section.B.1}%
 \contentsline {section}{\numberline {B.2}Hyperparameters}{67}{section.B.2}%
+\contentsline {chapter}{\numberline {C}Ablation: Extended $\beta $ Range}{70}{appendix.C}%
+\contentsline {section}{\numberline {C.1}Reward Curves}{71}{section.C.1}%
+\contentsline {section}{\numberline {C.2}Aggregate Performance}{72}{section.C.2}%
+\contentsline {section}{\numberline {C.3}CARE Dynamics and $\beta _\psi $ Distribution}{76}{section.C.3}%
+\contentsline {section}{\numberline {C.4}Discussion}{80}{section.C.4}%

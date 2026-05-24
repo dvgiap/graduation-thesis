@@ -679,6 +679,126 @@ INPUT .\chapters\appendix_b.tex
 INPUT .\chapters\appendix_b.tex
 INPUT .\chapters\appendix_b.tex
 INPUT chapters\appendix_b.tex
+INPUT .\chapters\appendix_c.tex
+INPUT .\chapters\appendix_c.tex
+INPUT .\chapters\appendix_c.tex
+INPUT .\chapters\appendix_c.tex
+INPUT chapters\appendix_c.tex
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmr17.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmr12.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmmi12.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmmi12.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmsy10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmsy10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmex10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmex10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmex10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
+INPUT .\figures\all_envs_count_beta1e-8_1.png
+INPUT .\figures\all_envs_count_beta1e-8_1.png
+INPUT .\figures\all_envs_count_beta1e-8_1.png
+INPUT .\figures\all_envs_count_beta1e-8_1.png
+INPUT .\figures\all_envs_count_beta1e-8_1.png
+INPUT .\figures\all_envs_count_beta1e-8_1.png
+INPUT .\figures\all_envs_count_beta1e-8_1.png
+INPUT .\figures\all_envs_icm_beta1e-8_1.png
+INPUT .\figures\all_envs_icm_beta1e-8_1.png
+INPUT .\figures\all_envs_icm_beta1e-8_1.png
+INPUT .\figures\all_envs_icm_beta1e-8_1.png
+INPUT .\figures\all_envs_icm_beta1e-8_1.png
+INPUT .\figures\all_envs_icm_beta1e-8_1.png
+INPUT .\figures\all_envs_icm_beta1e-8_1.png
+INPUT .\figures\all_envs_ride_beta1e-8_1.png
+INPUT .\figures\all_envs_ride_beta1e-8_1.png
+INPUT .\figures\all_envs_ride_beta1e-8_1.png
+INPUT .\figures\all_envs_ride_beta1e-8_1.png
+INPUT .\figures\all_envs_ride_beta1e-8_1.png
+INPUT .\figures\all_envs_ride_beta1e-8_1.png
+INPUT .\figures\all_envs_ride_beta1e-8_1.png
+INPUT .\figures\aggregate_summary_beta1e-8_1.png
+INPUT .\figures\aggregate_summary_beta1e-8_1.png
+INPUT .\figures\aggregate_summary_beta1e-8_1.png
+INPUT .\figures\aggregate_summary_beta1e-8_1.png
+INPUT .\figures\aggregate_summary_beta1e-8_1.png
+INPUT .\figures\aggregate_summary_beta1e-8_1.png
+INPUT .\figures\aggregate_summary_beta1e-8_1.png
+INPUT .\figures\profile_count_beta1e-8_1.png
+INPUT .\figures\profile_count_beta1e-8_1.png
+INPUT .\figures\profile_count_beta1e-8_1.png
+INPUT .\figures\profile_count_beta1e-8_1.png
+INPUT .\figures\profile_count_beta1e-8_1.png
+INPUT .\figures\profile_count_beta1e-8_1.png
+INPUT .\figures\profile_count_beta1e-8_1.png
+INPUT .\figures\profile_icm_beta1e-8_1.png
+INPUT .\figures\profile_icm_beta1e-8_1.png
+INPUT .\figures\profile_icm_beta1e-8_1.png
+INPUT .\figures\profile_icm_beta1e-8_1.png
+INPUT .\figures\profile_icm_beta1e-8_1.png
+INPUT .\figures\profile_icm_beta1e-8_1.png
+INPUT .\figures\profile_icm_beta1e-8_1.png
+INPUT .\figures\profile_ride_beta1e-8_1.png
+INPUT .\figures\profile_ride_beta1e-8_1.png
+INPUT .\figures\profile_ride_beta1e-8_1.png
+INPUT .\figures\profile_ride_beta1e-8_1.png
+INPUT .\figures\profile_ride_beta1e-8_1.png
+INPUT .\figures\profile_ride_beta1e-8_1.png
+INPUT .\figures\profile_ride_beta1e-8_1.png
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmex10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmex10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex8.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam7.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm7.tfm
+INPUT .\figures\care_dynamics_count_beta1e-8_1.png
+INPUT .\figures\care_dynamics_count_beta1e-8_1.png
+INPUT .\figures\care_dynamics_count_beta1e-8_1.png
+INPUT .\figures\care_dynamics_count_beta1e-8_1.png
+INPUT .\figures\care_dynamics_count_beta1e-8_1.png
+INPUT .\figures\care_dynamics_count_beta1e-8_1.png
+INPUT .\figures\care_dynamics_count_beta1e-8_1.png
+INPUT .\figures\care_dynamics_icm_beta1e-8_1.png
+INPUT .\figures\care_dynamics_icm_beta1e-8_1.png
+INPUT .\figures\care_dynamics_icm_beta1e-8_1.png
+INPUT .\figures\care_dynamics_icm_beta1e-8_1.png
+INPUT .\figures\care_dynamics_icm_beta1e-8_1.png
+INPUT .\figures\care_dynamics_icm_beta1e-8_1.png
+INPUT .\figures\care_dynamics_icm_beta1e-8_1.png
+INPUT .\figures\care_dynamics_ride_beta1e-8_1.png
+INPUT .\figures\care_dynamics_ride_beta1e-8_1.png
+INPUT .\figures\care_dynamics_ride_beta1e-8_1.png
+INPUT .\figures\care_dynamics_ride_beta1e-8_1.png
+INPUT .\figures\care_dynamics_ride_beta1e-8_1.png
+INPUT .\figures\care_dynamics_ride_beta1e-8_1.png
+INPUT .\figures\care_dynamics_ride_beta1e-8_1.png
+INPUT .\figures\care_beta_hist_count_beta1e-8_1.png
+INPUT .\figures\care_beta_hist_count_beta1e-8_1.png
+INPUT .\figures\care_beta_hist_count_beta1e-8_1.png
+INPUT .\figures\care_beta_hist_count_beta1e-8_1.png
+INPUT .\figures\care_beta_hist_count_beta1e-8_1.png
+INPUT .\figures\care_beta_hist_count_beta1e-8_1.png
+INPUT .\figures\care_beta_hist_count_beta1e-8_1.png
+INPUT .\figures\care_beta_hist_icm_beta1e-8_1.png
+INPUT .\figures\care_beta_hist_icm_beta1e-8_1.png
+INPUT .\figures\care_beta_hist_icm_beta1e-8_1.png
+INPUT .\figures\care_beta_hist_icm_beta1e-8_1.png
+INPUT .\figures\care_beta_hist_icm_beta1e-8_1.png
+INPUT .\figures\care_beta_hist_icm_beta1e-8_1.png
+INPUT .\figures\care_beta_hist_icm_beta1e-8_1.png
+INPUT .\figures\care_beta_hist_ride_beta1e-8_1.png
+INPUT .\figures\care_beta_hist_ride_beta1e-8_1.png
+INPUT .\figures\care_beta_hist_ride_beta1e-8_1.png
+INPUT .\figures\care_beta_hist_ride_beta1e-8_1.png
+INPUT .\figures\care_beta_hist_ride_beta1e-8_1.png
+INPUT .\figures\care_beta_hist_ride_beta1e-8_1.png
+INPUT .\figures\care_beta_hist_ride_beta1e-8_1.png
 INPUT thesis.aux
 INPUT .\thesis.out
 INPUT .\thesis.out
@@ -710,6 +830,8 @@ INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy6.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy6.pfb
+INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy8.pfb
+INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy8.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy9.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy9.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\symbols\msbm10.pfb
