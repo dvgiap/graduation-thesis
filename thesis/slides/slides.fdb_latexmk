@@ -1,11 +1,11 @@
 # Fdb version 4
-["pdflatex"] 1779820193.6637 "d:/Workspace/graduation-thesis/graduation-thesis/thesis/slides/slides.tex" "slides.pdf" "slides" 1779820206.73801 0
+["pdflatex"] 1779820960.51302 "d:/Workspace/graduation-thesis/graduation-thesis/thesis/slides/slides.tex" "slides.pdf" "slides" 1779820973.58424 0
   "../figures/RL_loop.png" 1779808430 3613355 0876205084502d8904910fa867702cfb ""
   "../figures/aggregate_efficiency.png" 1779819006 97989 9d035d97ccb13fb723b20d834d8bca8e ""
   "../figures/aggregate_efficiency_beta1e-8_1.png" 1779818325 98941 dead5d328de118b225087a373297226f ""
   "../figures/aggregate_final.png" 1779819006 92577 682b53c4349bedb39ce2950202e9df86 ""
   "../figures/aggregate_final_beta1e-8_1.png" 1779818326 94204 1c0104a957680eacc9325d7a2c336c11 ""
-  "../figures/care_dynamics_count.png" 1779417183 999708 ab7d136f1e127d7aeea90e6aea60b159 ""
+  "../figures/care_dynamics_ride.png" 1779417183 1007338 1e147823131019f34eb66e59e99c4d3a ""
   "../figures/env_doorkey.png" 1778906170 1374 1a289acbbc2757738070b86343829b54 ""
   "../figures/env_empty.png" 1778906171 2403 2e9f5105cb454bfcb7087ea2101f944e ""
   "../figures/env_humanoid.png" 1779474315 75602 87b155cd3ecf237881b10ac7f11876c9 ""
@@ -278,11 +278,11 @@
   "D:/Program Files/MiKTeX/tex/latex/tools/enumerate.sty" 1761901070 3468 f21ceb3448a22fec45299f924e7fc48b ""
   "D:/Program Files/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "D:/Program Files/MiKTeX/tex/latex/xcolor/xcolor.sty" 1729265222 55384 b454dec21c2d9f45ec0b793f0995b992 ""
-  "d:/Workspace/graduation-thesis/graduation-thesis/thesis/slides/slides.tex" 1779820192 15468 0fb524fa19098457035afc070d6f8052 ""
-  "slides.aux" 1779820206 3137 3196b36a46c64f704778bb2b798d0b75 "pdflatex"
-  "slides.nav" 1779820206 2128 e95b8f65525e89401f05d4e4ddf84077 "pdflatex"
-  "slides.out" 1779820206 85 3add7af6a95872e48224e70d4c50f073 "pdflatex"
-  "slides.tex" 1779820192 15468 0fb524fa19098457035afc070d6f8052 ""
+  "d:/Workspace/graduation-thesis/graduation-thesis/thesis/slides/slides.tex" 1779820964 14228 1325748dd523b7b64ef4092bd7c91b3b ""
+  "slides.aux" 1779820973 3008 df2095d4f687f5b2d1df2f2b16cd2fdc "pdflatex"
+  "slides.nav" 1779820973 2035 d8847595d0d84dac2782494e0352fa47 "pdflatex"
+  "slides.out" 1779820973 85 3add7af6a95872e48224e70d4c50f073 "pdflatex"
+  "slides.tex" 1779820964 14228 1325748dd523b7b64ef4092bd7c91b3b ""
   (generated)
   "slides.aux"
   "slides.log"

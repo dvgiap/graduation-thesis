@@ -135,9 +135,9 @@
   \vspace{1em}
   \begin{itemize}\small
     \setlength{\itemsep}{0.6em}
-    \item Same $\beta$ for every state -- but useful exploration varies per state.
-    \item Static throughout training -- exploration need shifts as the agent learns.
-    \item Decoupled from task signal -- intrinsic bonus fires whether or not it helps extrinsic reward.
+    \item Same $\beta$ for every state -- but some states need more exploration than others.
+    \item Same $\beta$ throughout training -- exploration need changes as the agent learns.
+    \item Ignores the task -- keeps exploring even when exploration does not help solve the task.
   \end{itemize}
 
   \vspace{1em}
@@ -245,18 +245,10 @@
 % =============================================================
 \begin{frame}{Analysis -- Why CARE Works}
   \centering
-  \includegraphics[height=4.2cm,keepaspectratio]{care_dynamics_count.png}
+  \includegraphics[height=0.82\textheight,keepaspectratio]{care_dynamics_ride.png}
 
-  \vspace{0.6em}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.48\textwidth}
-    \centering\textbf{Fixed $\beta$}\\[0.3em]
-    \footnotesize Same exploration strength everywhere.
-
-    \column{0.48\textwidth}
-    \centering\textbf{CARE}\\[0.3em]
-    \footnotesize Per-state $\beta_\psi$; shrinks once useful exploration is found.
-  \end{columns}
+  \vspace{0.1em}
+  \footnotesize $\beta_\psi(s)$ (left) and reward composition (right) for 6 envs -- CARE-RIDE.
 \end{frame}
 
 % =============================================================
@@ -268,7 +260,7 @@
     \setlength{\itemsep}{0.9em}
     \item MiniGrid only (discrete, low-dim).
     \item Extra network + training objective.
-    \item Sensitive to $\beta_0$, $\lambda_\text{reg}$, lr$_\psi$.
+    \item Sensitive to $\beta_0$, $\lambda_\text{reg}$.
     \item Future: continuous control, image-based.
   \end{itemize}
 \end{frame}
@@ -301,7 +293,7 @@
   \includegraphics[width=0.95\linewidth,height=0.72\textheight,keepaspectratio]{aggregate_efficiency_beta1e-8_1.png}
 
   \vspace{0.2em}
-  \footnotesize Fixed-$\beta$ sweep extended to $\beta \in [10^{-8},\,1]$.
+  \footnotesize $\beta$ sweep extended to $\beta \in [10^{-8},\,1]$.
 \end{frame}
 
 \begin{frame}{[Backup] Extended $\beta$ Range -- Final Performance}
@@ -309,7 +301,7 @@
   \includegraphics[width=0.95\linewidth,height=0.72\textheight,keepaspectratio]{aggregate_final_beta1e-8_1.png}
 
   \vspace{0.2em}
-  \footnotesize Fixed-$\beta$ sweep extended to $\beta \in [10^{-8},\,1]$.
+  \footnotesize $\beta$ sweep extended to $\beta \in [10^{-8},\,1]$.
 \end{frame}
 
 \begin{frame}{[Backup] CARE vs Best Fixed $\beta$ (all 18 cells)}
@@ -343,23 +335,6 @@
      & RIDE  & \textbf{0.536} & 0.369 & 0.0005 & \textbf{+0.167} \\
     \hline
   \end{tabular}
-\end{frame}
-
-\begin{frame}{[Backup] CARE Pseudocode (Algorithm 1)}
-  \footnotesize
-  \begin{enumerate}
-    \item Initialize $\pi_\theta$, $V_\phi$, Beta Network $\beta_\psi$, intrinsic module $m$.
-    \item \textbf{Repeat} for $T$ steps:
-    \begin{enumerate}\footnotesize
-      \item Collect rollout $\{(s_t,a_t,r^E_t,s_{t+1})\}$ with $\pi_\theta$.
-      \item Compute $R^{I,m}_t$ from module $m$; standardize to $I^+_t$.
-      \item Compute $\beta_\psi(s_t)$ and shaped reward $\bar{r}_t = r^E_t + \beta_\psi(s_t)\cdot I^+_t$.
-      \item Compute raw extrinsic GAE advantage $\hat{A}^E_t$ and shaped advantage $\hat{A}^{\text{shaped}}_t$.
-      \item Update $\pi_\theta$, $V_\phi$ with PPO ($K{=}80$ epochs, normalized $\hat{A}$).
-      \item \textbf{One} Adam step on $\psi$: $\mathcal{L}_\beta = -\mathbb{E}[\hat{I}_z\,\hat{A}^E_z] + \lambda_\text{reg}(\log\beta_\psi - \log\beta_0)^2$.
-      \item Clip $\beta_\psi$ to $[\beta_\text{min},\beta_\text{max}]$.
-    \end{enumerate}
-  \end{enumerate}
 \end{frame}
 
 \begin{frame}{[Backup] Key Hyperparameters}

@@ -1,31 +1,29 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.15)  27 MAY 2026 01:31
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.15)  27 MAY 2026 01:42
 entering extended mode
  restricted \write18 enabled.
+ file:line:error style messages enabled.
  %&-line parsing enabled.
-**./slides.tex
-(slides.tex
+**d:/Workspace/graduation-thesis/graduation-thesis/thesis/slides/slides.tex
+(d:/Workspace/graduation-thesis/graduation-thesis/thesis/slides/slides.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
 (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamer.cls
 Document Class: beamer 2026/01/22 v3.77 A class for typesetting presentations
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasemodes.sty
-(D:\Program Files\MiKTeX\tex/latex/etoolbox\etoolbox.sty
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasemodes.sty (D:\Program Files\MiKTeX\tex/latex/etoolbox\etoolbox.sty
 Package: etoolbox 2025/10/02 v2.5m e-TeX tools for LaTeX (JAW)
 \etb@tempcnta=\count275
 )
 \beamer@tempbox=\box53
 \beamer@tempcount=\count276
 \c@beamerpauses=\count277
-
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasedecode.sty
+ (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasedecode.sty
 \beamer@slideinframe=\count278
 \beamer@minimum=\count279
 \beamer@decode@box=\box54
 )
 \beamer@commentbox=\box55
 \beamer@modecount=\count280
-)
-(D:\Program Files\MiKTeX\tex/generic/iftex\iftex.sty
+) (D:\Program Files\MiKTeX\tex/generic/iftex\iftex.sty
 Package: iftex 2024/12/12 v1.0g TeX engine tests
 )
 \headdp=\dimen148
@@ -71,19 +69,15 @@ Package: iftex 2024/12/12 v1.0g TeX engine tests
 \beamer@sectionadjust=\count298
 \beamer@toclastsection=\count299
 \beamer@tocsectionnumber=\count300
-
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbaseoptions.sty
-(D:\Program Files\MiKTeX\tex/latex/graphics\keyval.sty
+ (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbaseoptions.sty (D:\Program Files\MiKTeX\tex/latex/graphics\keyval.sty
 Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
 \KV@toks@=\toks17
 ))
 \beamer@paperwidth=\skip50
 \beamer@paperheight=\skip51
-
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/geometry\geometry.sty
+ (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/geometry\geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
-
-(D:\Program Files\MiKTeX\tex/generic/iftex\ifvtex.sty
+ (D:\Program Files\MiKTeX\tex/generic/iftex\ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 )
 \Gm@cnth=\count301
@@ -98,32 +92,20 @@ Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 \Gm@layouthoffset=\dimen170
 \Gm@layoutvoffset=\dimen171
 \Gm@dimlist=\toks18
-
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/geometry\geometry.cfg))
-(D:\Program Files\MiKTeX\tex/latex/pgf/math\pgfmath.sty
-(D:\Program Files\MiKTeX\tex/latex/pgf/utilities\pgfrcs.sty
-(D:\Program Files\MiKTeX\tex/generic/pgf/utilities\pgfutil-common.tex
+ (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/geometry\geometry.cfg)) (D:\Program Files\MiKTeX\tex/latex/pgf/math\pgfmath.sty (D:\Program Files\MiKTeX\tex/latex/pgf/utilities\pgfrcs.sty (D:\Program Files\MiKTeX\tex/generic/pgf/utilities\pgfutil-common.tex
 \pgfutil@everybye=\toks19
 \pgfutil@tempdima=\dimen172
 \pgfutil@tempdimb=\dimen173
-)
-(D:\Program Files\MiKTeX\tex/generic/pgf/utilities\pgfutil-latex.def
+) (D:\Program Files\MiKTeX\tex/generic/pgf/utilities\pgfutil-latex.def
 \pgfutil@abb=\box62
-)
-(D:\Program Files\MiKTeX\tex/generic/pgf/utilities\pgfrcs.code.tex
-(D:\Program Files\MiKTeX\tex/generic/pgf\pgf.revision.tex)
+) (D:\Program Files\MiKTeX\tex/generic/pgf/utilities\pgfrcs.code.tex (D:\Program Files\MiKTeX\tex/generic/pgf\pgf.revision.tex)
 Package: pgfrcs 2025-08-29 v3.1.11a (3.1.11a)
-))
-(D:\Program Files\MiKTeX\tex/latex/pgf/utilities\pgfkeys.sty
-(D:\Program Files\MiKTeX\tex/generic/pgf/utilities\pgfkeys.code.tex
+)) (D:\Program Files\MiKTeX\tex/latex/pgf/utilities\pgfkeys.sty (D:\Program Files\MiKTeX\tex/generic/pgf/utilities\pgfkeys.code.tex
 \pgfkeys@pathtoks=\toks20
 \pgfkeys@temptoks=\toks21
-
-(D:\Program Files\MiKTeX\tex/generic/pgf/utilities\pgfkeyslibraryfiltered.code.
-tex
+ (D:\Program Files\MiKTeX\tex/generic/pgf/utilities\pgfkeyslibraryfiltered.code.tex
 \pgfkeys@tmptoks=\toks22
-))) (D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmath.code.tex
-(D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathutil.code.tex
+))) (D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmath.code.tex (D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathutil.code.tex
 \pgf@x=\dimen174
 \pgf@xa=\dimen175
 \pgf@xb=\dimen176
@@ -136,57 +118,33 @@ tex
 \c@pgf@countb=\count305
 \c@pgf@countc=\count306
 \c@pgf@countd=\count307
-)
-(D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathparser.code.tex
+) (D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathparser.code.tex
 \pgfmath@dimen=\dimen182
 \pgfmath@count=\count308
 \pgfmath@box=\box63
 \pgfmath@toks=\toks23
 \pgfmath@stack@operand=\toks24
 \pgfmath@stack@operation=\toks25
-)
-(D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.code.tex)
-(D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.basic.code.tex)
-(D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.trigonometric.co
-de.tex)
-(D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.random.code.tex)
-
-(D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.comparison.code.
-tex)
-(D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.base.code.tex)
-(D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.round.code.tex)
-(D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.misc.code.tex)
-(D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.integerarithmeti
-cs.code.tex) (D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathcalc.code.tex
-) (D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfloat.code.tex
+) (D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.code.tex) (D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.basic.code.tex) (D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.trigonometric.code.tex) (D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.random.code.tex) (D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.comparison.code.tex) (D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.base.code.tex) (D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.round.code.tex) (D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.misc.code.tex) (D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.integerarithmetics.code.tex) (D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathcalc.code.tex) (D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfloat.code.tex
 \c@pgfmathroundto@lastzeros=\count309
-)))
-(D:\Program Files\MiKTeX\tex/latex/base\size10.clo
+))) (D:\Program Files\MiKTeX\tex/latex/base\size10.clo
 File: size10.clo 2025/01/22 v1.4n Standard LaTeX file (size option)
-)
-(D:\Program Files\MiKTeX\tex/latex/pgf/basiclayer\pgfcore.sty
-(D:\Program Files\MiKTeX\tex/latex/graphics\graphicx.sty
+) (D:\Program Files\MiKTeX\tex/latex/pgf/basiclayer\pgfcore.sty (D:\Program Files\MiKTeX\tex/latex/graphics\graphicx.sty
 Package: graphicx 2024/12/31 v1.2e Enhanced LaTeX Graphics (DPC,SPQR)
-
-(D:\Program Files\MiKTeX\tex/latex/graphics\graphics.sty
+ (D:\Program Files\MiKTeX\tex/latex/graphics\graphics.sty
 Package: graphics 2024/08/06 v1.4g Standard LaTeX Graphics (DPC,SPQR)
-
-(D:\Program Files\MiKTeX\tex/latex/graphics\trig.sty
+ (D:\Program Files\MiKTeX\tex/latex/graphics\trig.sty
 Package: trig 2023/12/02 v1.11 sin cos tan (DPC)
-)
-(D:\Program Files\MiKTeX\tex/latex/graphics-cfg\graphics.cfg
+) (D:\Program Files\MiKTeX\tex/latex/graphics-cfg\graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 106.
-
-(D:\Program Files\MiKTeX\tex/latex/graphics-def\pdftex.def
+ (D:\Program Files\MiKTeX\tex/latex/graphics-def\pdftex.def
 File: pdftex.def 2025/09/29 v1.2d Graphics/color driver for pdftex
 ))
 \Gin@req@height=\dimen183
 \Gin@req@width=\dimen184
-)
-(D:\Program Files\MiKTeX\tex/latex/pgf/systemlayer\pgfsys.sty
-(D:\Program Files\MiKTeX\tex/generic/pgf/systemlayer\pgfsys.code.tex
+) (D:\Program Files\MiKTeX\tex/latex/pgf/systemlayer\pgfsys.sty (D:\Program Files\MiKTeX\tex/generic/pgf/systemlayer\pgfsys.code.tex
 Package: pgfsys 2025-08-29 v3.1.11a (3.1.11a)
 \pgf@x=\dimen185
 \pgf@y=\dimen186
@@ -208,35 +166,27 @@ Package: pgfsys 2025-08-29 v3.1.11a (3.1.11a)
 \t@pgf@tokb=\toks27
 \t@pgf@tokc=\toks28
 \pgf@sys@id@count=\count314
-
-(D:\Program Files\MiKTeX\tex/generic/pgf/systemlayer\pgf.cfg
+ (D:\Program Files\MiKTeX\tex/generic/pgf/systemlayer\pgf.cfg
 File: pgf.cfg 2025-08-29 v3.1.11a (3.1.11a)
 )
 Driver file for pgf: pgfsys-pdftex.def
-
-(D:\Program Files\MiKTeX\tex/generic/pgf/systemlayer\pgfsys-pdftex.def
+ (D:\Program Files\MiKTeX\tex/generic/pgf/systemlayer\pgfsys-pdftex.def
 File: pgfsys-pdftex.def 2025-08-29 v3.1.11a (3.1.11a)
-
-(D:\Program Files\MiKTeX\tex/generic/pgf/systemlayer\pgfsys-common-pdf.def
+ (D:\Program Files\MiKTeX\tex/generic/pgf/systemlayer\pgfsys-common-pdf.def
 File: pgfsys-common-pdf.def 2025-08-29 v3.1.11a (3.1.11a)
-)))
-(D:\Program Files\MiKTeX\tex/generic/pgf/systemlayer\pgfsyssoftpath.code.tex
+))) (D:\Program Files\MiKTeX\tex/generic/pgf/systemlayer\pgfsyssoftpath.code.tex
 File: pgfsyssoftpath.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgfsyssoftpath@smallbuffer@items=\count315
 \pgfsyssoftpath@bigbuffer@items=\count316
-)
-(D:\Program Files\MiKTeX\tex/generic/pgf/systemlayer\pgfsysprotocol.code.tex
+) (D:\Program Files\MiKTeX\tex/generic/pgf/systemlayer\pgfsysprotocol.code.tex
 File: pgfsysprotocol.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-))
-(D:\Program Files\MiKTeX\tex/latex/xcolor\xcolor.sty
+)) (D:\Program Files\MiKTeX\tex/latex/xcolor\xcolor.sty
 Package: xcolor 2024/09/29 v3.02 LaTeX color extensions (UK)
-
-(D:\Program Files\MiKTeX\tex/latex/graphics-cfg\color.cfg
+ (D:\Program Files\MiKTeX\tex/latex/graphics-cfg\color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package xcolor Info: Driver file: pdftex.def on input line 274.
-
-(D:\Program Files\MiKTeX\tex/latex/graphics\mathcolor.ltx)
+ (D:\Program Files\MiKTeX\tex/latex/graphics\mathcolor.ltx)
 Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1349.
 Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1353.
 Package xcolor Info: Model `RGB' extended on input line 1365.
@@ -246,12 +196,9 @@ Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1369.
 Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1370.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1371.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1372.
-)
-(D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcore.code.tex
+) (D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcore.code.tex
 Package: pgfcore 2025-08-29 v3.1.11a (3.1.11a)
-
-(D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfint.code.tex)
-(D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepoints.code.tex
+ (D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfint.code.tex) (D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepoints.code.tex
 File: pgfcorepoints.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgf@picminx=\dimen195
 \pgf@picmaxx=\dimen196
@@ -267,32 +214,24 @@ File: pgfcorepoints.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgf@yy=\dimen262
 \pgf@zx=\dimen263
 \pgf@zy=\dimen264
-)
-(D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepathconstruct.code.t
-ex
+) (D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepathconstruct.code.tex
 File: pgfcorepathconstruct.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgf@path@lastx=\dimen265
 \pgf@path@lasty=\dimen266
-)
-(D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepathusage.code.tex
+) (D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepathusage.code.tex
 File: pgfcorepathusage.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgf@shorten@end@additional=\dimen267
 \pgf@shorten@start@additional=\dimen268
-)
-(D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorescopes.code.tex
+) (D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorescopes.code.tex
 File: pgfcorescopes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgfpic=\box64
 \pgf@hbox=\box65
 \pgf@layerbox@main=\box66
 \pgf@picture@serial@count=\count317
-)
-(D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcoregraphicstate.code.te
-x
+) (D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcoregraphicstate.code.tex
 File: pgfcoregraphicstate.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgflinewidth=\dimen269
-)
-(D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcoretransformations.code
-.tex
+) (D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcoretransformations.code.tex
 File: pgfcoretransformations.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgf@pt@x=\dimen270
 \pgf@pt@y=\dimen271
@@ -301,9 +240,7 @@ File: pgfcoretransformations.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 File: pgfcorequick.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 ) (D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcoreobjects.code.tex
 File: pgfcoreobjects.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-)
-(D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepathprocessing.code.
-tex
+) (D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepathprocessing.code.tex
 File: pgfcorepathprocessing.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 ) (D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorearrows.code.tex
 File: pgfcorearrows.code.tex 2025-08-29 v3.1.11a (3.1.11a)
@@ -313,96 +250,71 @@ File: pgfcoreshade.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgf@max=\dimen274
 \pgf@sys@shading@range@num=\count318
 \pgf@shadingcount=\count319
-)
-(D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcoreimage.code.tex
+) (D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcoreimage.code.tex
 File: pgfcoreimage.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-)
-(D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcoreexternal.code.tex
+) (D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcoreexternal.code.tex
 File: pgfcoreexternal.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgfexternal@startupbox=\box67
-)
-(D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorelayers.code.tex
+) (D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorelayers.code.tex
 File: pgfcorelayers.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-)
-(D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcoretransparency.code.te
-x
+) (D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcoretransparency.code.tex
 File: pgfcoretransparency.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 ) (D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepatterns.code.tex
 File: pgfcorepatterns.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 ) (D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorerdf.code.tex
 File: pgfcorerdf.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-)))
-(D:\Program Files\MiKTeX\tex/latex/pgf/utilities\xxcolor.sty
+))) (D:\Program Files\MiKTeX\tex/latex/pgf/utilities\xxcolor.sty
 Package: xxcolor 2003/10/24 ver 0.1
 \XC@nummixins=\count320
 \XC@countmixins=\count321
-)
-(D:\Program Files\MiKTeX\tex/latex/base\atbegshi-ltx.sty
+) (D:\Program Files\MiKTeX\tex/latex/base\atbegshi-ltx.sty
 Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
 package with kernel methods
-)
-(D:\Program Files\MiKTeX\tex/latex/hyperref\hyperref.sty
+) (D:\Program Files\MiKTeX\tex/latex/hyperref\hyperref.sty
 Package: hyperref 2026-01-29 v7.01p Hypertext links for LaTeX
-
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.sty
+ (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.sty
 Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
-)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/generic/kvdefinekeys\kvdefinekeys.sty
+) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/generic/kvdefinekeys\kvdefinekeys.sty
 Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
-)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/generic/pdfescape\pdfescape.sty
+) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/generic/pdfescape\pdfescape.sty
 Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
-
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty
+ (C:\Users\JS\AppData\Roaming\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty
 Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
-)
-(D:\Program Files\MiKTeX\tex/generic/pdftexcmds\pdftexcmds.sty
-Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
-)
-
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/generic/infwarerr\infwarerr.sty
+) (D:\Program Files\MiKTeX\tex/generic/pdftexcmds\pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO)
+ (C:\Users\JS\AppData\Roaming\MiKTeX\tex/generic/infwarerr\infwarerr.sty
 Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
 )
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
-))
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/hycolor\hycolor.sty
+)) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/hycolor\hycolor.sty
 Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
-)
-(D:\Program Files\MiKTeX\tex/latex/hyperref\nameref.sty
+) (D:\Program Files\MiKTeX\tex/latex/hyperref\nameref.sty
 Package: nameref 2026-01-29 v2.58 Cross-referencing by name of section
-
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/refcount\refcount.sty
+ (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/refcount\refcount.sty
 Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
-)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/generic/gettitlestring\gettitlestring.s
-ty
+) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/generic/gettitlestring\gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
  (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/kvoptions\kvoptions.sty
 Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
 ))
 \c@section@level=\count322
-)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/generic/stringenc\stringenc.sty
-Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO
-)
+) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/generic/stringenc\stringenc.sty
+Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
 )
 \@linkdim=\dimen275
 \Hy@linkcounter=\count323
 \Hy@pagecounter=\count324
-
-(D:\Program Files\MiKTeX\tex/latex/hyperref\pd1enc.def
+ (D:\Program Files\MiKTeX\tex/latex/hyperref\pd1enc.def
 File: pd1enc.def 2026-01-29 v7.01p Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
-)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/generic/intcalc\intcalc.sty
+) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/generic/intcalc\intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
 \Hy@SavedSpaceFactor=\count325
-
-(D:\Program Files\MiKTeX\tex/latex/hyperref\puenc.def
+ (D:\Program Files\MiKTeX\tex/latex/hyperref\puenc.def
 File: puenc.def 2026-01-29 v7.01p Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
@@ -418,20 +330,16 @@ Package hyperref Info: Backreferencing OFF on input line 4221.
 Package hyperref Info: Implicit mode OFF; no redefinition of LaTeX internals.
 Package hyperref Info: Bookmarks ON on input line 4468.
 \c@Hy@tempcnt=\count326
-
-(D:\Program Files\MiKTeX\tex/latex/url\url.sty
+ (D:\Program Files\MiKTeX\tex/latex/url\url.sty
 \Urlmuskip=\muskip17
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 4807.
 \XeTeXLinkMargin=\dimen276
-
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/generic/bitset\bitset.sty
+ (C:\Users\JS\AppData\Roaming\MiKTeX\tex/generic/bitset\bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
-
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/generic/bigintcalc\bigintcalc.sty
-Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
-)
+ (C:\Users\JS\AppData\Roaming\MiKTeX\tex/generic/bigintcalc\bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
 ))
 \Fld@menulength=\count327
 \Field@Width=\dimen277
@@ -454,22 +362,15 @@ Package hyperref Info: Driver (autodetected): hpdftex.
 File: hpdftex.def 2026-01-29 v7.01p Hyperref driver for pdfTeX
 \Fld@listcount=\count329
 \c@bookmark@seq@number=\count330
-
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/rerunfilecheck\rerunfilecheck.sty
+ (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/rerunfilecheck\rerunfilecheck.sty
 Package: rerunfilecheck 2025-06-21 v1.11 Rerun checks for auxiliary files (HO)
-
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/generic/uniquecounter\uniquecounter.sty
+ (C:\Users\JS\AppData\Roaming\MiKTeX\tex/generic/uniquecounter\uniquecounter.sty
 Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 )
-Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
-84.
-)) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbaserequires.sty
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasecompatibility.st
-y) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasefont.sty
-(D:\Program Files\MiKTeX\tex/latex/amsfonts\amssymb.sty
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 284.
+)) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbaserequires.sty (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasecompatibility.sty) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasefont.sty (D:\Program Files\MiKTeX\tex/latex/amsfonts\amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
-
-(D:\Program Files\MiKTeX\tex/latex/amsfonts\amsfonts.sty
+ (D:\Program Files\MiKTeX\tex/latex/amsfonts\amsfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 \@emptytoks=\toks29
 \symAMSa=\mathgroup4
@@ -477,39 +378,27 @@ Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
-))
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/sansmathaccent\sansmathaccent.sty
+)) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/sansmathaccent\sansmathaccent.sty
 Package: sansmathaccent 2020/01/31
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/koma-script\scrlfile.sty
+ (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/koma-script\scrlfile.sty
 Package: scrlfile 2026/02/02 v3.49.2 KOMA-Script package (file load hooks)
-
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/koma-script\scrlfile-hook.sty
-Package: scrlfile-hook 2026/02/02 v3.49.2 KOMA-Script package (using LaTeX hook
-s)
-
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/koma-script\scrlogo.sty
+ (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/koma-script\scrlfile-hook.sty
+Package: scrlfile-hook 2026/02/02 v3.49.2 KOMA-Script package (using LaTeX hooks)
+ (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/koma-script\scrlogo.sty
 Package: scrlogo 2026/02/02 v3.49.2 KOMA-Script package (logo)
-)))))
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasetranslator.sty
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/translator\translator.sty
+))))) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasetranslator.sty (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/translator\translator.sty
 Package: translator 2021-05-31 v1.12d Easy translation of strings in LaTeX
-))
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasemisc.sty)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasetwoscreens.sty)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbaseoverlay.sty
+)) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasemisc.sty) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasetwoscreens.sty) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbaseoverlay.sty
 \beamer@argscount=\count331
 \beamer@lastskipcover=\skip52
 \beamer@trivlistdepth=\count332
-)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasetitle.sty)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasesection.sty
+) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasetitle.sty) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasesection.sty
 \c@lecture=\count333
 \c@part=\count334
 \c@section=\count335
 \c@subsection=\count336
 \c@subsubsection=\count337
-)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbaseframe.sty
+) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbaseframe.sty
 \beamer@framebox=\box68
 \beamer@frametitlebox=\box69
 \beamer@zoombox=\box70
@@ -524,31 +413,22 @@ Package: translator 2021-05-31 v1.12d Easy translation of strings in LaTeX
 \beamer@envbody=\toks30
 \framewidth=\dimen280
 \c@framenumber=\count341
-)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbaseverbatim.sty
+) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbaseverbatim.sty
 \beamer@verbatimfileout=\write4
-)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbaseframesize.sty
+) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbaseframesize.sty
 \beamer@splitbox=\box71
 \beamer@autobreakcount=\count342
 \beamer@autobreaklastheight=\dimen281
 \beamer@frametitletoks=\toks31
 \beamer@framesubtitletoks=\toks32
-)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbaseframecomponents.
-sty
+) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbaseframecomponents.sty
 \beamer@colheight=\skip57
 \beamer@footins=\box72
-) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasecolor.sty)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasenotes.sty
+) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasecolor.sty) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasenotes.sty
 \beamer@frameboxcopy=\box73
-)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasetoc.sty)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasetemplates.sty
+) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasetoc.sty) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasetemplates.sty
 \beamer@sbttoks=\toks33
-
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbaseauxtemplates.sty
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbaseboxes.sty
+ (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbaseauxtemplates.sty (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbaseboxes.sty
 \bmb@box=\box74
 \bmb@colorbox=\box75
 \bmb@boxwidth=\dimen282
@@ -560,9 +440,7 @@ sty
 \bmb@prevheight=\dimen288
 )
 \beamer@blockheadheight=\dimen289
-))
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbaselocalstructure.s
-ty (D:\Program Files\MiKTeX\tex/latex/tools\enumerate.sty
+)) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbaselocalstructure.sty (D:\Program Files\MiKTeX\tex/latex/tools\enumerate.sty
 Package: enumerate 2023/07/04 v3.00 enumerate extensions (DPC)
 \@enLab=\toks34
 )
@@ -571,31 +449,23 @@ Package: enumerate 2023/07/04 v3.00 enumerate extensions (DPC)
 \c@table=\count344
 \abovecaptionskip=\skip59
 \belowcaptionskip=\skip60
-)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasenavigation.sty
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasenavigationsymbol
-s.tex)
+) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasenavigation.sty (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasenavigationsymbols.tex)
 \beamer@section@min@dim=\dimen290
-)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasetheorems.sty
-(D:\Program Files\MiKTeX\tex/latex/amsmath\amsmath.sty
+) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasetheorems.sty (D:\Program Files\MiKTeX\tex/latex/amsmath\amsmath.sty
 Package: amsmath 2025/07/09 v2.17z AMS math features
 \@mathmargin=\skip61
 
 For additional information on amsmath, use the `?' option.
 (D:\Program Files\MiKTeX\tex/latex/amsmath\amstext.sty
 Package: amstext 2024/11/17 v2.01 AMS text
-
-(D:\Program Files\MiKTeX\tex/latex/amsmath\amsgen.sty
+ (D:\Program Files\MiKTeX\tex/latex/amsmath\amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks35
 \ex@=\dimen291
-))
-(D:\Program Files\MiKTeX\tex/latex/amsmath\amsbsy.sty
+)) (D:\Program Files\MiKTeX\tex/latex/amsmath\amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 \pmbraise@=\dimen292
-)
-(D:\Program Files\MiKTeX\tex/latex/amsmath\amsopn.sty
+) (D:\Program Files\MiKTeX\tex/latex/amsmath\amsopn.sty
 Package: amsopn 2022/04/08 v2.04 operator names
 )
 \inf@bad=\count345
@@ -645,8 +515,7 @@ LaTeX Info: Redefining \Relbar on input line 970.
 \mathdisplay@stack=\toks39
 LaTeX Info: Redefining \[ on input line 2950.
 LaTeX Info: Redefining \] on input line 2951.
-)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/amscls\amsthm.sty
+) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/amscls\amsthm.sty
 Package: amsthm 2020/05/29 v2.20.6
 \thm@style=\toks40
 \thm@bodyfont=\toks41
@@ -659,34 +528,20 @@ Package: amsthm 2020/05/29 v2.20.6
 \dth@everypar=\toks45
 )
 \c@theorem=\count357
-)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasethemes.sty))
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerthemedefault.sty
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerfontthemedefault.sty
-)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamercolorthemedefault.st
-y)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerinnerthemedefault.st
-y
+) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasethemes.sty)) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerthemedefault.sty (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerfontthemedefault.sty) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamercolorthemedefault.sty) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerinnerthemedefault.sty
 \beamer@dima=\dimen300
 \beamer@dimb=\dimen301
-)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerouterthemedefault.st
-y))) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/vntex\vietnam.sty
+) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerouterthemedefault.sty))) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/vntex\vietnam.sty
 Package: vietnam 2009/07/12 v1.3 support for Vietnamese
-
-(D:\Program Files\MiKTeX\tex/latex/base\ifthen.sty
+ (D:\Program Files\MiKTeX\tex/latex/base\ifthen.sty
 Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
-)
-(D:\Program Files\MiKTeX\tex/latex/base\fontenc.sty
+) (D:\Program Files\MiKTeX\tex/latex/base\fontenc.sty
 Package: fontenc 2025/07/18 v2.1d Standard LaTeX package
-
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/vntex\t5enc.def
+ (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/vntex\t5enc.def
 File: t5enc.def 2006/11/21 v1.4 Vietnamese T5 encoding
 Now handling font encoding T5 ...
 ... processing UTF-8 mapping file for font encoding T5
-
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/vntex\t5enc.dfu
+ (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/vntex\t5enc.dfu
 File: t5enc.dfu 2006/08/19 v1.1 UTF8 support for Vietnamese
    defining Unicode char U+00AB (decimal 171)
    defining Unicode char U+00BB (decimal 187)
@@ -840,24 +695,18 @@ File: t5enc.dfu 2006/08/19 v1.1 UTF8 support for Vietnamese
    defining Unicode char U+203A (decimal 8250)
    defining Unicode char U+2423 (decimal 9251)
 ))
-LaTeX Font Info:    Trying to load font information for T5+cmss on input line 1
-16.
-
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/vntex\t5cmss.fd
+LaTeX Font Info:    Trying to load font information for T5+cmss on input line 116.
+ (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/vntex\t5cmss.fd
 File: t5cmss.fd 1999/05/25 v2.5h Standard LaTeX font definitions
-))
-(D:\Program Files\MiKTeX\tex/latex/base\inputenc.sty
+)) (D:\Program Files\MiKTeX\tex/latex/base\inputenc.sty
 Package: inputenc 2024/02/08 v1.3d Input encoding file
 \inpenc@prehook=\toks46
 \inpenc@posthook=\toks47
-)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/vntex\vncaps.tex
+) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/vntex\vncaps.tex
 File: vncaps.tex 2006/06/07 v1.1 Captions in Vietnamese
-))
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/mathtools\mathtools.sty
+)) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/mathtools\mathtools.sty
 Package: mathtools 2024/10/04 v1.31 mathematical typesetting tools
-
-(D:\Program Files\MiKTeX\tex/latex/tools\calc.sty
+ (D:\Program Files\MiKTeX\tex/latex/tools\calc.sty
 Package: calc 2025/03/01 v4.3b Infix arithmetic (KKT,FJ)
 \calc@Acount=\count358
 \calc@Bcount=\count359
@@ -869,8 +718,7 @@ LaTeX Info: Redefining \setlength on input line 86.
 LaTeX Info: Redefining \addtolength on input line 87.
 \calc@Ccount=\count360
 \calc@Cskip=\skip69
-)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/mathtools\mhsetup.sty
+) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/mathtools\mhsetup.sty
 Package: mhsetup 2021/03/18 v1.4 programming setup (MH)
 )
 \g_MT_multlinerow_int=\count361
@@ -884,8 +732,7 @@ Package: mhsetup 2021/03/18 v1.4 programming setup (MH)
 \l_MT_below_shortintertext_sep=\dimen310
 \xmathstrut@box=\box78
 \xmathstrut@dim=\dimen311
-)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/booktabs\booktabs.sty
+) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/booktabs\booktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \heavyrulewidth=\dimen312
 \lightrulewidth=\dimen313
@@ -904,15 +751,13 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \@thisruleclass=\count364
 \@lastruleclass=\count365
 \@thisrulewidth=\dimen324
-)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/multirow\multirow.sty
+) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/multirow\multirow.sty
 Package: multirow 2024/11/12 v2.9 Span multiple rows of a table
 \multirow@colwidth=\skip71
 \multirow@cntb=\count366
 \multirow@dima=\skip72
 \bigstrutjot=\dimen325
-)
-(D:\Program Files\MiKTeX\tex/latex/tools\array.sty
+) (D:\Program Files\MiKTeX\tex/latex/tools\array.sty
 Package: array 2025/09/25 v2.6n Tabular extension package (FMi)
 \col@sep=\dimen326
 \ar@mcellbox=\box79
@@ -921,38 +766,28 @@ Package: array 2025/09/25 v2.6n Tabular extension package (FMi)
 \extratabsurround=\skip73
 \backup@length=\skip74
 \ar@cellbox=\box80
-)
-(D:\Program Files\MiKTeX\tex/latex/pgf/frontendlayer\tikz.sty
-(D:\Program Files\MiKTeX\tex/latex/pgf/basiclayer\pgf.sty
+) (D:\Program Files\MiKTeX\tex/latex/pgf/frontendlayer\tikz.sty (D:\Program Files\MiKTeX\tex/latex/pgf/basiclayer\pgf.sty
 Package: pgf 2025-08-29 v3.1.11a (3.1.11a)
-
-(D:\Program Files\MiKTeX\tex/generic/pgf/modules\pgfmoduleshapes.code.tex
+ (D:\Program Files\MiKTeX\tex/generic/pgf/modules\pgfmoduleshapes.code.tex
 File: pgfmoduleshapes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgfnodeparttextbox=\box81
-)
-(D:\Program Files\MiKTeX\tex/generic/pgf/modules\pgfmoduleplot.code.tex
+) (D:\Program Files\MiKTeX\tex/generic/pgf/modules\pgfmoduleplot.code.tex
 File: pgfmoduleplot.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-)
-(D:\Program Files\MiKTeX\tex/latex/pgf/compatibility\pgfcomp-version-0-65.sty
+) (D:\Program Files\MiKTeX\tex/latex/pgf/compatibility\pgfcomp-version-0-65.sty
 Package: pgfcomp-version-0-65 2025-08-29 v3.1.11a (3.1.11a)
 \pgf@nodesepstart=\dimen328
 \pgf@nodesepend=\dimen329
-)
-(D:\Program Files\MiKTeX\tex/latex/pgf/compatibility\pgfcomp-version-1-18.sty
+) (D:\Program Files\MiKTeX\tex/latex/pgf/compatibility\pgfcomp-version-1-18.sty
 Package: pgfcomp-version-1-18 2025-08-29 v3.1.11a (3.1.11a)
-)) (D:\Program Files\MiKTeX\tex/latex/pgf/utilities\pgffor.sty
-(D:\Program Files\MiKTeX\tex/generic/pgf/utilities\pgffor.code.tex
+)) (D:\Program Files\MiKTeX\tex/latex/pgf/utilities\pgffor.sty (D:\Program Files\MiKTeX\tex/generic/pgf/utilities\pgffor.code.tex
 Package: pgffor 2025-08-29 v3.1.11a (3.1.11a)
 \pgffor@iter=\dimen330
 \pgffor@skip=\dimen331
 \pgffor@stack=\toks49
 \pgffor@toks=\toks50
-))
-(D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz\tikz.code.tex
+)) (D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz\tikz.code.tex
 Package: tikz 2025-08-29 v3.1.11a (3.1.11a)
-
-(D:\Program Files\MiKTeX\tex/generic/pgf/libraries\pgflibraryplothandlers.code.
-tex
+ (D:\Program Files\MiKTeX\tex/generic/pgf/libraries\pgflibraryplothandlers.code.tex
 File: pgflibraryplothandlers.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgf@plot@mark@count=\count367
 \pgfplotmarksize=\dimen332
@@ -980,77 +815,41 @@ File: pgfmodulematrix.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgf@matrix@numberofcolumns=\count374
 )
 \tikz@expandcount=\count375
-
-(D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibra
-rytopaths.code.tex
+ (D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibrarytopaths.code.tex
 File: tikzlibrarytopaths.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-)))
-(D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibra
-rycalc.code.tex
+))) (D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibrarycalc.code.tex
 File: tikzlibrarycalc.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-)
-(D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibra
-rypositioning.code.tex
+) (D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibrarypositioning.code.tex
 File: tikzlibrarypositioning.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-)
-(D:\Program Files\MiKTeX\tex/generic/pgf/libraries\pgflibraryarrows.meta.code.t
-ex
+) (D:\Program Files\MiKTeX\tex/generic/pgf/libraries\pgflibraryarrows.meta.code.tex
 File: pgflibraryarrows.meta.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgfarrowinset=\dimen341
 \pgfarrowlength=\dimen342
 \pgfarrowwidth=\dimen343
 \pgfarrowlinewidth=\dimen344
-)
-(D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibra
-ryfit.code.tex
+) (D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibraryfit.code.tex
 File: tikzlibraryfit.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-)
-(D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibra
-ryshapes.code.tex
+) (D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibraryshapes.code.tex
 File: tikzlibraryshapes.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-
-(D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibra
-ryshapes.geometric.code.tex
+ (D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibraryshapes.geometric.code.tex
 File: tikzlibraryshapes.geometric.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-
-(D:\Program Files\MiKTeX\tex/generic/pgf/libraries/shapes\pgflibraryshapes.geom
-etric.code.tex
+ (D:\Program Files\MiKTeX\tex/generic/pgf/libraries/shapes\pgflibraryshapes.geometric.code.tex
 File: pgflibraryshapes.geometric.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-))
-(D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibra
-ryshapes.misc.code.tex
+)) (D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibraryshapes.misc.code.tex
 File: tikzlibraryshapes.misc.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-
-(D:\Program Files\MiKTeX\tex/generic/pgf/libraries/shapes\pgflibraryshapes.misc
-.code.tex
+ (D:\Program Files\MiKTeX\tex/generic/pgf/libraries/shapes\pgflibraryshapes.misc.code.tex
 File: pgflibraryshapes.misc.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-))
-(D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibra
-ryshapes.symbols.code.tex
+)) (D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibraryshapes.symbols.code.tex
 File: tikzlibraryshapes.symbols.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-
-(D:\Program Files\MiKTeX\tex/generic/pgf/libraries/shapes\pgflibraryshapes.symb
-ols.code.tex
+ (D:\Program Files\MiKTeX\tex/generic/pgf/libraries/shapes\pgflibraryshapes.symbols.code.tex
 File: pgflibraryshapes.symbols.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-))
-(D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibra
-ryshapes.arrows.code.tex
+)) (D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibraryshapes.arrows.code.tex
 File: tikzlibraryshapes.arrows.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-
-(D:\Program Files\MiKTeX\tex/generic/pgf/libraries/shapes\pgflibraryshapes.arro
-ws.code.tex
+ (D:\Program Files\MiKTeX\tex/generic/pgf/libraries/shapes\pgflibraryshapes.arrows.code.tex
 File: pgflibraryshapes.arrows.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-))
-(D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibra
-ryshapes.callouts.code.tex
-(D:\Program Files\MiKTeX\tex/generic/pgf/libraries/shapes\pgflibraryshapes.call
-outs.code.tex))
-(D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibra
-ryshapes.multipart.code.tex
+)) (D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibraryshapes.callouts.code.tex (D:\Program Files\MiKTeX\tex/generic/pgf/libraries/shapes\pgflibraryshapes.callouts.code.tex)) (D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibraryshapes.multipart.code.tex
 File: tikzlibraryshapes.multipart.code.tex 2025-08-29 v3.1.11a (3.1.11a)
-
-(D:\Program Files\MiKTeX\tex/generic/pgf/libraries/shapes\pgflibraryshapes.mult
-ipart.code.tex
+ (D:\Program Files\MiKTeX\tex/generic/pgf/libraries/shapes\pgflibraryshapes.multipart.code.tex
 File: pgflibraryshapes.multipart.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgfnodepartlowerbox=\box86
 \pgfnodeparttwobox=\box87
@@ -1072,18 +871,7 @@ File: pgflibraryshapes.multipart.code.tex 2025-08-29 v3.1.11a (3.1.11a)
 \pgfnodepartsevenbox=\box103
 \pgfnodepartsixbox=\box104
 \pgfnodepartfivebox=\box105
-)))
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerthemeMadrid.sty
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamercolorthemewhale.sty)
-
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamercolorthemeorchid.sty
-)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerinnerthemerounded.st
-y)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerouterthemeinfolines.
-sty))
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamercolorthemeseahorse.s
-ty)
+))) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerthemeMadrid.sty (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamercolorthemewhale.sty) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamercolorthemeorchid.sty) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerinnerthemerounded.sty) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerouterthemeinfolines.sty)) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamercolorthemeseahorse.sty)
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `\\' on input line 47.
@@ -1113,9 +901,8 @@ LaTeX Font Info:    ... okay on input line 51.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 51.
 LaTeX Font Info:    ... okay on input line 51.
 LaTeX Font Info:    Checking defaults for T5/cmr/m/n on input line 51.
-LaTeX Font Info:    Trying to load font information for T5+cmr on input line 51
-.
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/vntex\t5cmr.fd
+LaTeX Font Info:    Trying to load font information for T5+cmr on input line 51.
+ (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/vntex\t5cmr.fd
 File: t5cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 51.
@@ -1169,15 +956,12 @@ LaTeX Font Info:    ... okay on input line 51.
 \everyMPtoPDFconversion=\toks52
 ) (D:\Program Files\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
-Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
-85.
-
-(D:\Program Files\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
+ (D:\Program Files\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
 Package hyperref Info: Link coloring OFF on input line 51.
- (slides.out)
-(slides.out)
+ (slides.out) (slides.out)
 \@outlinefile=\write5
 \openout5 = `slides.out'.
 
@@ -1225,42 +1009,26 @@ LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 (Font)                  T5/cmtt/m/n --> T5/cmtt/b/n on input line 51.
 LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 51.
 LaTeX Font Info:    Encoding `T5' has changed to `OT1' for symbol font
-(Font)              `pureletters' in the math version `normal' on input line 51
-.
+(Font)              `pureletters' in the math version `normal' on input line 51.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `normal'
-(Font)                  T5/cmss/m/it --> OT1/mathkerncmss/m/sl on input line 51
-.
+(Font)                  T5/cmss/m/it --> OT1/mathkerncmss/m/sl on input line 51.
 LaTeX Font Info:    Encoding `T5' has changed to `OT1' for symbol font
 (Font)              `pureletters' in the math version `bold' on input line 51.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  T5/cmss/b/it --> OT1/mathkerncmss/m/sl on input line 51
-.
+(Font)                  T5/cmss/b/it --> OT1/mathkerncmss/m/sl on input line 51.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  OT1/mathkerncmss/m/sl --> OT1/mathkerncmss/bx/sl on inp
-ut line 51.
-
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/translator\translator-basic-dicti
-onary-English.dict
+(Font)                  OT1/mathkerncmss/m/sl --> OT1/mathkerncmss/bx/sl on input line 51.
+ (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/translator\translator-basic-dictionary-English.dict
 Dictionary: translator-basic-dictionary, Language: English 
-)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/translator\translator-bibliograph
-y-dictionary-English.dict
+) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/translator\translator-bibliography-dictionary-English.dict
 Dictionary: translator-bibliography-dictionary, Language: English 
-)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/translator\translator-environment
--dictionary-English.dict
+) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/translator\translator-environment-dictionary-English.dict
 Dictionary: translator-environment-dictionary, Language: English 
-)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/translator\translator-months-dict
-ionary-English.dict
+) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/translator\translator-months-dictionary-English.dict
 Dictionary: translator-months-dictionary, Language: English 
-)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/translator\translator-numbers-dic
-tionary-English.dict
+) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/translator\translator-numbers-dictionary-English.dict
 Dictionary: translator-numbers-dictionary, Language: English 
-)
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/translator\translator-theorem-dic
-tionary-English.dict
+) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/translator\translator-theorem-dictionary-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
 ) (slides.nav) [1
 
@@ -1282,29 +1050,22 @@ Package pdftex.def Info: ../figures/env_empty.png  used on input line 86.
 (pdftex.def)             Requested size: 62.59306pt x 62.59596pt.
  [2
 
- <../figures/RL_loop.png> <../figures/env_humanoid.png (PNG copy)> <../figures/
-env_empty.png (PNG copy)>]
+ <../figures/RL_loop.png> <../figures/env_humanoid.png (PNG copy)> <../figures/env_empty.png (PNG copy)>]
 
 LaTeX Font Warning: Font shape `T5/cmss/m/it' in size <8> not available
 (Font)              Font shape `T5/cmss/m/sl' tried instead on input line 129.
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 129
-.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 129.
 (D:\Program Files\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 129
-.
-
-(D:\Program Files\MiKTeX\tex/latex/amsfonts\umsb.fd
+LaTeX Font Info:    Trying to load font information for U+msb on input line 129.
+ (D:\Program Files\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Trying to load font information for OT1+mathkerncmss on inp
-ut line 129.
-
-(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/sansmathaccent\ot1mathkerncmss.fd
-File: ot1mathkerncmss.fd 2020/01/31 Fontinst v1.933 font definitions for OT1/ma
-thkerncmss.
+LaTeX Font Info:    Trying to load font information for OT1+mathkerncmss on input line 129.
+ (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/sansmathaccent\ot1mathkerncmss.fd
+File: ot1mathkerncmss.fd 2020/01/31 Fontinst v1.933 font definitions for OT1/mathkerncmss.
 ) [3
 
 ] [4
@@ -1326,39 +1087,32 @@ Package pdftex.def Info: ../figures/env_empty.png  used on input line 205.
 <../figures/env_keycorridor.png, id=125, 224.84pt x 224.84pt>
 File: ../figures/env_keycorridor.png Graphic file (type png)
 <use ../figures/env_keycorridor.png>
-Package pdftex.def Info: ../figures/env_keycorridor.png  used on input line 205
-.
+Package pdftex.def Info: ../figures/env_keycorridor.png  used on input line 205.
 (pdftex.def)             Requested size: 73.97784pt x 73.97733pt.
 <../figures/env_lavacrossing.png, id=126, 289.08pt x 289.08pt>
 File: ../figures/env_lavacrossing.png Graphic file (type png)
 <use ../figures/env_lavacrossing.png>
-Package pdftex.def Info: ../figures/env_lavacrossing.png  used on input line 20
-5.
+Package pdftex.def Info: ../figures/env_lavacrossing.png  used on input line 205.
 (pdftex.def)             Requested size: 73.97687pt x 73.97733pt.
 <../figures/env_redbluedoors.png, id=127, 513.92pt x 256.96pt>
 File: ../figures/env_redbluedoors.png Graphic file (type png)
 <use ../figures/env_redbluedoors.png>
-Package pdftex.def Info: ../figures/env_redbluedoors.png  used on input line 20
-5.
+Package pdftex.def Info: ../figures/env_redbluedoors.png  used on input line 205.
 (pdftex.def)             Requested size: 147.9508pt x 73.97733pt.
 <../figures/env_unlockpickup.png, id=128, 353.32pt x 192.72pt>
 File: ../figures/env_unlockpickup.png Graphic file (type png)
 <use ../figures/env_unlockpickup.png>
-Package pdftex.def Info: ../figures/env_unlockpickup.png  used on input line 20
-5.
+Package pdftex.def Info: ../figures/env_unlockpickup.png  used on input line 205.
 (pdftex.def)             Requested size: 135.62158pt x 73.97733pt.
  [7
 
- <../figures/env_doorkey.png (PNG copy)> <../figures/env_keycorridor.png (PNG c
-opy)> <../figures/env_lavacrossing.png (PNG copy)> <../figures/env_redbluedoors
-.png (PNG copy)> <../figures/env_unlockpickup.png (PNG copy)>] [8
+ <../figures/env_doorkey.png (PNG copy)> <../figures/env_keycorridor.png (PNG copy)> <../figures/env_lavacrossing.png (PNG copy)> <../figures/env_redbluedoors.png (PNG copy)> <../figures/env_unlockpickup.png (PNG copy)>] [8
 
 ]
 <../figures/aggregate_efficiency.png, id=144, 1653.17625pt x 996.72375pt>
 File: ../figures/aggregate_efficiency.png Graphic file (type png)
 <use ../figures/aggregate_efficiency.png>
-Package pdftex.def Info: ../figures/aggregate_efficiency.png  used on input lin
-e 233.
+Package pdftex.def Info: ../figures/aggregate_efficiency.png  used on input line 233.
 (pdftex.def)             Requested size: 292.38768pt x 176.28473pt.
  [9
 
@@ -1366,31 +1120,27 @@ e 233.
 <../figures/aggregate_final.png, id=154, 1654.18pt x 996.72375pt>
 File: ../figures/aggregate_final.png Graphic file (type png)
 <use ../figures/aggregate_final.png>
-Package pdftex.def Info: ../figures/aggregate_final.png  used on input line 241
-.
+Package pdftex.def Info: ../figures/aggregate_final.png  used on input line 241.
 (pdftex.def)             Requested size: 292.5652pt x 176.28473pt.
  [10
 
  <../figures/aggregate_final.png>]
-<../figures/care_dynamics_count.png, id=163, 1075.8594pt x 1303.7508pt>
-File: ../figures/care_dynamics_count.png Graphic file (type png)
-<use ../figures/care_dynamics_count.png>
-Package pdftex.def Info: ../figures/care_dynamics_count.png  used on input line
- 260.
-(pdftex.def)             Requested size: 98.61253pt x 119.50148pt.
+<../figures/care_dynamics_ride.png, id=163, 1075.8594pt x 1303.7508pt>
+File: ../figures/care_dynamics_ride.png Graphic file (type png)
+<use ../figures/care_dynamics_ride.png>
+Package pdftex.def Info: ../figures/care_dynamics_ride.png  used on input line 252.
+(pdftex.def)             Requested size: 165.673pt x 200.78235pt.
  [11
 
- <../figures/care_dynamics_count.png>] [12
+ <../figures/care_dynamics_ride.png>] [12
 
 ] [13
 
 ]
-<../figures/aggregate_efficiency_beta1e-8_1.png, id=189, 786.2976pt x 528.5346p
-t>
+<../figures/aggregate_efficiency_beta1e-8_1.png, id=190, 786.2976pt x 528.5346pt>
 File: ../figures/aggregate_efficiency_beta1e-8_1.png Graphic file (type png)
 <use ../figures/aggregate_efficiency_beta1e-8_1.png>
-Package pdftex.def Info: ../figures/aggregate_efficiency_beta1e-8_1.png  used o
-n input line 305.
+Package pdftex.def Info: ../figures/aggregate_efficiency_beta1e-8_1.png  used on input line 297.
 (pdftex.def)             Requested size: 262.27454pt x 176.29605pt.
  [14
 
@@ -1398,16 +1148,13 @@ n input line 305.
 <../figures/aggregate_final_beta1e-8_1.png, id=200, 786.2976pt x 528.5346pt>
 File: ../figures/aggregate_final_beta1e-8_1.png Graphic file (type png)
 <use ../figures/aggregate_final_beta1e-8_1.png>
-Package pdftex.def Info: ../figures/aggregate_final_beta1e-8_1.png  used on inp
-ut line 313.
+Package pdftex.def Info: ../figures/aggregate_final_beta1e-8_1.png  used on input line 305.
 (pdftex.def)             Requested size: 262.27454pt x 176.29605pt.
  [15
 
  <../figures/aggregate_final_beta1e-8_1.png>] [16
 
 ] [17
-
-] [18
 
 ]
 \tf@nav=\write6
@@ -1428,37 +1175,17 @@ Package rerunfilecheck Info: File `slides.out' has not changed.
 (rerunfilecheck)             Checksum: 3ADD7AF6A95872E48224E70D4C50F073;85.
  ) 
 Here is how much of TeX's memory you used:
- 29092 strings out of 467867
- 593273 string characters out of 5428410
+ 29036 strings out of 467867
+ 591740 string characters out of 5428410
  1001385 words of memory out of 5000000
- 57333 multiletter control sequences out of 15000+600000
+ 57277 multiletter control sequences out of 15000+600000
  656322 words of font info for 100 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 128i,15n,123p,383b,807s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><D:/Progra
-m Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><D:/Program Files/MiKT
-eX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><D:/Program Files/MiKTeX/fonts/typ
-e1/public/amsfonts/cm/cmmi6.pfb><D:/Program Files/MiKTeX/fonts/type1/public/ams
-fonts/cm/cmmi7.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi
-8.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi9.pfb><D:/Pro
-gram Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmss10.pfb><D:/Program Files/M
-iKTeX/fonts/type1/public/amsfonts/cm/cmss8.pfb><D:/Program Files/MiKTeX/fonts/t
-ype1/public/amsfonts/cm/cmss9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/a
-msfonts/cm/cmssi10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/
-cmssi8.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmssi9.pfb><
-D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><D:/Program F
-iles/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb><D:/Program Files/MiKTeX/f
-onts/type1/public/amsfonts/cm/cmsy8.pfb><D:/Program Files/MiKTeX/fonts/type1/pu
-blic/amsfonts/cm/cmsy9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts
-/symbols/msbm10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/v
-nss10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnss12.pfb>
-<C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnss8.pfb><C:/Users/J
-S/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnss9.pfb><C:/Users/JS/AppData/R
-oaming/MiKTeX/fonts/type1/vntex/vnr/vnssbx10.pfb><C:/Users/JS/AppData/Roaming/M
-iKTeX/fonts/type1/vntex/vnr/vnssi8.pfb>
-Output written on slides.pdf (18 pages, 3070475 bytes).
+ 128i,15n,123p,444b,807s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmss10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmss8.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmss9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmssi10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmssi8.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmssi9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnss10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnss12.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnss8.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnss9.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnssbx10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnssi8.pfb>
+Output written on slides.pdf (17 pages, 3068498 bytes).
 PDF statistics:
- 339 PDF objects out of 1000 (max. 8388607)
- 38 named destinations out of 1000 (max. 500000)
+ 329 PDF objects out of 1000 (max. 8388607)
+ 36 named destinations out of 1000 (max. 500000)
  236 words of extra memory for PDF output out of 10000 (max. 10000000)
 
