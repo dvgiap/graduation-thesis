@@ -1,0 +1,384 @@
+% =============================================================
+%  Bachelor's thesis defense slides
+%  Title : Correlation-Aware Reward Exploration (CARE)
+%  Author: Doan Van Giap - UET, VNU
+%  Compile: pdflatex slides.tex (run twice to update labels)
+% =============================================================
+\documentclass[10pt,aspectratio=169]{beamer}
+
+% --- Vietnamese font (preamble kept for safety; body is English) ---
+\usepackage[utf8]{vietnam}
+\usepackage[utf8]{inputenc}
+
+% --- Math + graphics ---
+\usepackage{amsmath,amssymb,amsfonts,mathtools}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{tikz}
+\usetikzlibrary{calc,positioning,arrows.meta,fit,shapes}
+
+% --- Theme ---
+\usetheme{Madrid}
+\usecolortheme{seahorse}
+\useoutertheme{infolines}
+\setbeamertemplate{navigation symbols}{}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamerfont{title}{size=\Large,series=\bfseries}
+
+% --- Brand colours ---
+\definecolor{uetblue}{RGB}{0, 51, 102}
+\definecolor{uetorange}{RGB}{220, 110, 30}
+\definecolor{softgray}{RGB}{120, 120, 120}
+\definecolor{lightbg}{RGB}{245, 245, 240}
+
+\setbeamercolor{title}{fg=uetblue}
+\setbeamercolor{frametitle}{fg=uetblue}
+\setbeamercolor{structure}{fg=uetblue}
+\setbeamercolor{block title}{bg=uetblue,fg=white}
+\setbeamercolor{block body}{bg=lightbg,fg=black}
+
+\graphicspath{{../figures/}}
+
+% --- Metadata ---
+\title[CARE: State-Dependent Curiosity]{Research on Intrinsic Motivation for Reinforcement Learning}
+\subtitle{Correlation-Aware Reward Exploration (CARE)}
+\author[Doan Van Giap]{\textbf{Doan Van Giap}\\\footnotesize Supervisor: Dr. Nguyen Thi Thuy}
+\institute[VNU-UET]{VNU University of Engineering and Technology, Hanoi}
+\date{May 2026}
+
+\begin{document}
+
+% =============================================================
+% Slide 1 - Title page
+% =============================================================
+\begin{frame}[plain]
+  \titlepage
+  \begin{center}
+    \footnotesize\color{softgray}
+    Bachelor's Thesis -- Faculty of Information Technology
+  \end{center}
+\end{frame}
+
+% =============================================================
+% Slide 2 - Reinforcement Learning and Sparse Reward
+% =============================================================
+\begin{frame}{Reinforcement Learning and Sparse Reward}
+  \begin{center}
+    \includegraphics[height=3.0cm,keepaspectratio]{RL_loop.png}
+  \end{center}
+
+  \vspace{0.3em}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.48\textwidth}
+    \centering
+    \textbf{Dense Reward}\\[0.2em]
+    \includegraphics[height=2.2cm,keepaspectratio]{env_humanoid.png}\\[0.2em]
+    \footnotesize MuJoCo Humanoid
+
+    \column{0.48\textwidth}
+    \centering
+    \textbf{Sparse Reward}\\[0.2em]
+    \includegraphics[height=2.2cm,keepaspectratio]{env_empty.png}\\[0.2em]
+    \footnotesize MiniGrid Empty-16x16
+  \end{columns}
+\end{frame}
+
+% =============================================================
+% Slide 3 - PPO Backbone and Three Sources of Intrinsic Reward
+% =============================================================
+\begin{frame}{Three Sources of Intrinsic Reward}
+  \vspace{0.3em}
+  \centering
+  \begin{tikzpicture}[font=\footnotesize]
+    \tikzset{
+      card/.style={draw=uetblue!50, line width=0.6pt, rounded corners=5pt,
+                   minimum width=3.7cm, minimum height=2.8cm, fill=lightbg},
+      ctitle/.style={fill=uetblue, text=white, font=\small\bfseries,
+                     rounded corners=2pt, minimum width=3.4cm, minimum height=0.5cm,
+                     align=center, inner sep=3pt}
+    }
+    \node[card] (c1) at (-4.5, 0) {};
+    \node[ctitle, anchor=north] (t1) at ([yshift=-0.15cm]c1.north) {Novelty};
+    \node[text width=3.3cm, align=center, anchor=north, font=\footnotesize,
+          below=0.5cm of t1]
+      {\itshape ``Have I been\\here before?''\\[0.8em]
+       \upshape\textbf{\color{uetblue}Count-based}};
+
+    \node[card] (c2) at (0, 0) {};
+    \node[ctitle, anchor=north] (t2) at ([yshift=-0.15cm]c2.north) {Surprise};
+    \node[text width=3.3cm, align=center, anchor=north, font=\footnotesize,
+          below=0.5cm of t2]
+      {\itshape ``Did I\\predict that?''\\[0.8em]
+       \upshape\textbf{\color{uetblue}ICM}};
+
+    \node[card] (c3) at (4.5, 0) {};
+    \node[ctitle, anchor=north] (t3) at ([yshift=-0.15cm]c3.north) {Influence};
+    \node[text width=3.3cm, align=center, anchor=north, font=\footnotesize,
+          below=0.5cm of t3]
+      {\itshape ``Did I change\\the world?''\\[0.8em]
+       \upshape\textbf{\color{uetblue}RIDE}};
+  \end{tikzpicture}
+  
+  \vspace{0.6em}
+  \begin{center}\small
+    Shaped reward: $\displaystyle r_t \;=\; r_t^{ext} + \beta\,r_t^{int}$
+  \end{center}
+
+\end{frame}
+
+% =============================================================
+% Slide 4 - Fixed-beta problem and research question
+% =============================================================
+\begin{frame}{Fixed-$\beta$ Problem and Research Question}
+  \vspace{1em}
+  \begin{itemize}\small
+    \setlength{\itemsep}{0.6em}
+    \item Same $\beta$ for every state -- but useful exploration varies per state.
+    \item Static throughout training -- exploration need shifts as the agent learns.
+    \item Decoupled from task signal -- intrinsic bonus fires whether or not it helps extrinsic reward.
+  \end{itemize}
+
+  \vspace{1em}
+  \begin{block}{Research question}
+    \footnotesize\itshape Can we adapt the intrinsic-reward coefficient automatically during training so that exploration better supports extrinsic-reward learning?
+  \end{block}
+\end{frame}
+
+% =============================================================
+% Slide 5 - Proposed Method: CARE
+% =============================================================
+\begin{frame}{Proposed Method: CARE}
+  \vspace{1.5em}
+  \centering
+  \begin{tabular}{rc}
+    \textbf{Before:} & $\displaystyle r_t = r_t^{ext} + \beta\,r_t^{int}$ \\[1em]
+    \textbf{CARE:}   & $\displaystyle r_t = r_t^{ext} + \boxed{\beta_\psi(s_t)}\,r_t^{int}$ \\
+  \end{tabular}
+
+  \vspace{1.5em}
+  \begin{block}{Main idea}
+    \small Raise intrinsic reward when exploration helps future extrinsic reward; reduce it when distracting.
+  \end{block}
+\end{frame}
+
+% =============================================================
+% Slide 6 - CARE Training Objective
+% =============================================================
+\begin{frame}{CARE Training Objective}
+  \vspace{0.6em}
+  \begin{itemize}\small
+    \setlength{\itemsep}{0.3em}
+    \item \textbf{\color{uetblue}Correlation} -- align intrinsic reward with future extrinsic advantage.
+    \item \textbf{\color{uetorange}Regularizer} -- keep $\beta_\psi$ near $\beta_0$ in log-space.
+  \end{itemize}
+
+  \vspace{1em}
+  \[
+    \mathcal{L}_\beta(\psi)
+    \;=\;
+    \underbrace{\fcolorbox{uetblue}{uetblue!10}{$\displaystyle -\,\mathbb{E}\bigl[\,\hat{I}_z \cdot \hat{A}^E_z \,\bigr]\,$}}_{\text{\footnotesize\color{uetblue}\bfseries correlation}}
+    \;+\;
+    \underbrace{\fcolorbox{uetorange}{uetorange!15}{$\displaystyle \,\lambda_\text{reg}\,\bigl(\log \beta_\psi(s) - \log \beta_0\bigr)^2\,$}}_{\text{\footnotesize\color{uetorange}\bfseries log-space regularizer}}
+  \]
+\end{frame}
+
+% =============================================================
+% Slide 9 - Six MiniGrid environments
+% =============================================================
+\begin{frame}{Experimental Design}
+  \centering
+  \begin{tabular}{ccc}
+    \includegraphics[height=2.6cm]{env_doorkey.png} &
+    \includegraphics[height=2.6cm]{env_empty.png} &
+    \includegraphics[height=2.6cm]{env_keycorridor.png} \\
+    \scriptsize DoorKey-8x8 & \scriptsize Empty-16x16 & \scriptsize KeyCorridor-S3R3 \\[0.3em]
+    \includegraphics[height=2.6cm]{env_lavacrossing.png} &
+    \includegraphics[height=2.6cm]{env_redbluedoors.png} &
+    \includegraphics[height=2.6cm]{env_unlockpickup.png} \\
+    \scriptsize LavaCrossing-S9N3 & \scriptsize RedBlueDoors-8x8 & \scriptsize UnlockPickup \\
+  \end{tabular}
+
+  \vspace{0.3em}
+  \scriptsize\textcolor{softgray}{All sparse-reward, discrete grid. Red triangle = agent.}
+\end{frame}
+
+% =============================================================
+% Slide 8 - Experimental Design
+% =============================================================
+\begin{frame}{Experimental Design}
+  \centering
+  \small
+  \begin{tabular}{@{}>{\bfseries}p{3.5cm}p{9cm}@{}}
+    \toprule
+    Base algorithm     & PPO (actor--critic, on-policy) \\[0.5em]
+    Intrinsic modules  & Count-based, ICM, RIDE \\[0.5em]
+    Compared methods   & PPO (no intrinsic) \,/\, PPO + fixed-$\beta$ \,/\, PPO + CARE \\[0.5em]
+    Environments       & 6 MiniGrid sparse-reward tasks (5 seeds, $10^6$ env steps each) \\[0.5em]
+    Metrics            & Success rate, episode return, learning speed, stability across seeds \\
+    \bottomrule
+  \end{tabular}
+\end{frame}
+
+% =============================================================
+% Slide 9 - Results Overview
+% =============================================================
+\begin{frame}{Results -- Sample Efficiency}
+  \centering
+  \includegraphics[width=0.95\linewidth,height=0.72\textheight,keepaspectratio]{aggregate_efficiency.png}
+
+  \vspace{0.2em}
+  \footnotesize Lower is faster. Aggregated across 6 envs $\times$ 5 seeds (95\% bootstrap CI).
+\end{frame}
+
+\begin{frame}{Results -- Final Performance}
+  \centering
+  \includegraphics[width=0.95\linewidth,height=0.72\textheight,keepaspectratio]{aggregate_final.png}
+
+  \vspace{0.2em}
+  \footnotesize Higher is better. Final reward normalized to env-max, last $10$ logs averaged.
+\end{frame}
+
+% =============================================================
+% Slide 10 - Analysis: Why CARE Works
+% =============================================================
+\begin{frame}{Analysis -- Why CARE Works}
+  \centering
+  \includegraphics[height=4.2cm,keepaspectratio]{care_dynamics_count.png}
+
+  \vspace{0.6em}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.48\textwidth}
+    \centering\textbf{Fixed $\beta$}\\[0.3em]
+    \footnotesize Same exploration strength everywhere.
+
+    \column{0.48\textwidth}
+    \centering\textbf{CARE}\\[0.3em]
+    \footnotesize Per-state $\beta_\psi$; shrinks once useful exploration is found.
+  \end{columns}
+\end{frame}
+
+% =============================================================
+% Slide 11 - Limitations
+% =============================================================
+\begin{frame}{Limitations}
+  \vspace{1em}
+  \begin{itemize}\small
+    \setlength{\itemsep}{0.9em}
+    \item MiniGrid only (discrete, low-dim).
+    \item Extra network + training objective.
+    \item Sensitive to $\beta_0$, $\lambda_\text{reg}$, lr$_\psi$.
+    \item Future: continuous control, image-based.
+  \end{itemize}
+\end{frame}
+
+% =============================================================
+% Slide 12 - Conclusion
+% =============================================================
+\begin{frame}{Conclusion}
+  \vspace{1em}
+  \begin{itemize}\small
+    \setlength{\itemsep}{0.8em}
+    \item Sparse rewards $\Rightarrow$ hard exploration.
+    \item Fixed $\beta$ = one-size-fits-all.
+    \item \textbf{CARE}: adaptive $\beta_\psi(s)$ per state.
+  \end{itemize}
+
+  \vspace{1.5em}
+  \begin{center}
+    {\Huge\bfseries\color{uetblue} Thank you for listening!}
+  \end{center}
+\end{frame}
+
+% =============================================================
+% Backup slides (not counted in main deck)
+% =============================================================
+\appendix
+
+\begin{frame}{[Backup] Extended $\beta$ Range -- Sample Efficiency}
+  \centering
+  \includegraphics[width=0.95\linewidth,height=0.72\textheight,keepaspectratio]{aggregate_efficiency_beta1e-8_1.png}
+
+  \vspace{0.2em}
+  \footnotesize Fixed-$\beta$ sweep extended to $\beta \in [10^{-8},\,1]$.
+\end{frame}
+
+\begin{frame}{[Backup] Extended $\beta$ Range -- Final Performance}
+  \centering
+  \includegraphics[width=0.95\linewidth,height=0.72\textheight,keepaspectratio]{aggregate_final_beta1e-8_1.png}
+
+  \vspace{0.2em}
+  \footnotesize Fixed-$\beta$ sweep extended to $\beta \in [10^{-8},\,1]$.
+\end{frame}
+
+\begin{frame}{[Backup] CARE vs Best Fixed $\beta$ (all 18 cells)}
+  \centering\scriptsize
+  \begin{tabular}{|l|l|c|c|c|c|}
+    \hline
+    \textbf{Env} & \textbf{Module} & \textbf{CARE} & \textbf{Best fixed} & \textbf{Best $\beta$} & \textbf{Gap} \\
+    \hline
+    \multirow{3}{*}{DoorKey-8x8} & COUNT & 0.973 & 0.973 & 0.0005 & \textbf{+0.001} \\
+     & ICM   & 0.770 & 0.973 & 0.0005 & -0.202 \\
+     & RIDE  & 0.973 & 0.973 & 0.0005 & \textbf{+0.000} \\
+    \hline
+    \multirow{3}{*}{Empty-16x16} & COUNT & 0.959 & 0.975 & 0.0005 & -0.017 \\
+     & ICM   & 0.575 & 0.975 & 0.0005 & -0.400 \\
+     & RIDE  & 0.941 & 0.974 & 0.001  & -0.033 \\
+    \hline
+    \multirow{3}{*}{KeyCorridor} & COUNT & 0.831 & 0.828 & 0.001 & \textbf{+0.003} \\
+     & ICM   & 0.000 & 0.457 & 0.001 & -0.457 \\
+     & RIDE  & 0.548 & 0.703 & 0.001 & -0.155 \\
+    \hline
+    \multirow{3}{*}{LavaCrossing} & COUNT & 0.372 & 0.530 & 0.001 & -0.158 \\
+     & ICM   & 0.077 & 0.060 & 0.001 & \textbf{+0.017} \\
+     & RIDE  & 0.543 & 0.512 & 0.0005 & \textbf{+0.031} \\
+    \hline
+    \multirow{3}{*}{RedBlueDoors} & COUNT & 0.653 & 0.779 & 0.0005 & -0.126 \\
+     & ICM   & 0.273 & 0.737 & 0.0005 & -0.464 \\
+     & RIDE  & 0.593 & 0.794 & 0.001  & -0.201 \\
+    \hline
+    \multirow{3}{*}{UnlockPickup} & COUNT & 0.936 & 0.936 & 0.0005 & \textbf{+0.000} \\
+     & ICM   & 0.716 & 0.937 & 0.001 & -0.221 \\
+     & RIDE  & \textbf{0.536} & 0.369 & 0.0005 & \textbf{+0.167} \\
+    \hline
+  \end{tabular}
+\end{frame}
+
+\begin{frame}{[Backup] CARE Pseudocode (Algorithm 1)}
+  \footnotesize
+  \begin{enumerate}
+    \item Initialize $\pi_\theta$, $V_\phi$, Beta Network $\beta_\psi$, intrinsic module $m$.
+    \item \textbf{Repeat} for $T$ steps:
+    \begin{enumerate}\footnotesize
+      \item Collect rollout $\{(s_t,a_t,r^E_t,s_{t+1})\}$ with $\pi_\theta$.
+      \item Compute $R^{I,m}_t$ from module $m$; standardize to $I^+_t$.
+      \item Compute $\beta_\psi(s_t)$ and shaped reward $\bar{r}_t = r^E_t + \beta_\psi(s_t)\cdot I^+_t$.
+      \item Compute raw extrinsic GAE advantage $\hat{A}^E_t$ and shaped advantage $\hat{A}^{\text{shaped}}_t$.
+      \item Update $\pi_\theta$, $V_\phi$ with PPO ($K{=}80$ epochs, normalized $\hat{A}$).
+      \item \textbf{One} Adam step on $\psi$: $\mathcal{L}_\beta = -\mathbb{E}[\hat{I}_z\,\hat{A}^E_z] + \lambda_\text{reg}(\log\beta_\psi - \log\beta_0)^2$.
+      \item Clip $\beta_\psi$ to $[\beta_\text{min},\beta_\text{max}]$.
+    \end{enumerate}
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{[Backup] Key Hyperparameters}
+  \footnotesize
+  \begin{tabular}{ll}
+    \toprule
+    \textbf{PPO} & $K=80$, $\epsilon_\text{clip}=0.2$, $\gamma=0.99$, $\lambda_\text{GAE}=0.95$ \\
+                 & lr$_\text{actor}=3{\times}10^{-4}$, lr$_\text{critic}=10^{-3}$, rollout $T=4{,}000$ \\
+    \midrule
+    \textbf{CARE} & $\beta_\text{min}=10^{-4}$, $\beta_\text{max}=5{\times}10^{-2}$ \\
+                  & $\beta_0=\sqrt{\beta_\text{min}\beta_\text{max}}\approx 2.24{\times}10^{-3}$ \\
+                  & $\lambda_\text{reg}=10^{-3}$, lr$_\psi=5{\times}10^{-4}$, weight decay $10^{-6}$ \\
+                  & one $\psi$-step per PPO update, grad-clip L2 $=1.0$, no delayed target copy \\
+    \midrule
+    \textbf{Fixed-$\beta$ sweep} & $\beta \in \{0.0005,\,0.001,\,0.005,\,0.01,\,0.05\}$ \\
+    \midrule
+    \textbf{Seeds} & $\{1,2,3,4,5\}$, $10^6$ env steps per run \\
+    \bottomrule
+  \end{tabular}
+\end{frame}
+
+\end{document}

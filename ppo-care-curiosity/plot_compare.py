@@ -50,7 +50,7 @@ WINDOW = 20
 FIXED_BETA_VALUES = [0.0005, 0.001, 0.005, 0.01, 0.05]
 FB_COLORS = ['#fee5d9', '#fcae91', '#fb6a4a', '#de2d26', '#a50f15']  # gradient red (5 shades)
 PPO_COLOR = 'gray'
-BETA_0    = 0.00224  # CARE cold-start prior — √(β_min·β_max) = √(1e-4·5e-2) ≈ 2.24e-3
+BETA_0    = 1e-4     # CARE cold-start prior — √(β_min·β_max) = √(1e-8·1) = 1e-4
 
 # Hardcoded budget guess for sample-efficiency penalty when threshold is never reached.
 DEFAULT_MAX_STEPS = 1_000_000
@@ -288,6 +288,17 @@ def plot_aggregate():
     out = os.path.join(OUT_DIR, 'aggregate_summary.png')
     fig.savefig(out, dpi=150, bbox_inches='tight')
     print(f"  saved {out}")
+
+    # Per-panel exports for slides (larger when shown alone)
+    renderer = fig.canvas.get_renderer()
+    for ax, name in [(axE, 'aggregate_efficiency.png'),
+                     (axF, 'aggregate_final.png')]:
+        extent = ax.get_tightbbox(renderer).transformed(
+            fig.dpi_scale_trans.inverted())
+        out_panel = os.path.join(OUT_DIR, name)
+        fig.savefig(out_panel, dpi=150,
+                    bbox_inches=extent.expanded(1.01, 1.15))
+        print(f"  saved {out_panel}")
     plt.close(fig)
 
 

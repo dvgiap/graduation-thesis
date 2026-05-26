@@ -1,0 +1,322 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex.fmt)
+ restricted \write18 enabled.
+entering extended mode
+(slides.tex
+LaTeX2e <2025-11-01>
+L3 programming layer <2026-01-19>
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamer.cls
+Document Class: beamer 2026/01/22 v3.77 A class for typesetting presentations
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasemodes.sty
+(D:\Program Files\MiKTeX\tex/latex/etoolbox\etoolbox.sty)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasedecode.sty))
+(D:\Program Files\MiKTeX\tex/generic/iftex\iftex.sty)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbaseoptions.sty
+(D:\Program Files\MiKTeX\tex/latex/graphics\keyval.sty))
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/geometry\geometry.sty
+(D:\Program Files\MiKTeX\tex/generic/iftex\ifvtex.sty)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/geometry\geometry.cfg))
+(D:\Program Files\MiKTeX\tex/latex/pgf/math\pgfmath.sty
+(D:\Program Files\MiKTeX\tex/latex/pgf/utilities\pgfrcs.sty
+(D:\Program Files\MiKTeX\tex/generic/pgf/utilities\pgfutil-common.tex)
+(D:\Program Files\MiKTeX\tex/generic/pgf/utilities\pgfutil-latex.def)
+(D:\Program Files\MiKTeX\tex/generic/pgf/utilities\pgfrcs.code.tex
+(D:\Program Files\MiKTeX\tex/generic/pgf\pgf.revision.tex)))
+(D:\Program Files\MiKTeX\tex/latex/pgf/utilities\pgfkeys.sty
+(D:\Program Files\MiKTeX\tex/generic/pgf/utilities\pgfkeys.code.tex
+(D:\Program Files\MiKTeX\tex/generic/pgf/utilities\pgfkeyslibraryfiltered.code.
+tex))) (D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmath.code.tex
+(D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathutil.code.tex)
+(D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathparser.code.tex)
+(D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.code.tex)
+(D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.basic.code.tex)
+(D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.trigonometric.co
+de.tex)
+(D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.random.code.tex)
+
+(D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.comparison.code.
+tex)
+(D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.base.code.tex)
+(D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.round.code.tex)
+(D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.misc.code.tex)
+(D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfunctions.integerarithmeti
+cs.code.tex) (D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathcalc.code.tex
+) (D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfmathfloat.code.tex)))
+(D:\Program Files\MiKTeX\tex/latex/base\size10.clo)
+(D:\Program Files\MiKTeX\tex/latex/pgf/basiclayer\pgfcore.sty
+(D:\Program Files\MiKTeX\tex/latex/graphics\graphicx.sty
+(D:\Program Files\MiKTeX\tex/latex/graphics\graphics.sty
+(D:\Program Files\MiKTeX\tex/latex/graphics\trig.sty)
+(D:\Program Files\MiKTeX\tex/latex/graphics-cfg\graphics.cfg)
+(D:\Program Files\MiKTeX\tex/latex/graphics-def\pdftex.def)))
+(D:\Program Files\MiKTeX\tex/latex/pgf/systemlayer\pgfsys.sty
+(D:\Program Files\MiKTeX\tex/generic/pgf/systemlayer\pgfsys.code.tex
+(D:\Program Files\MiKTeX\tex/generic/pgf/systemlayer\pgf.cfg)
+(D:\Program Files\MiKTeX\tex/generic/pgf/systemlayer\pgfsys-pdftex.def
+(D:\Program Files\MiKTeX\tex/generic/pgf/systemlayer\pgfsys-common-pdf.def)))
+(D:\Program Files\MiKTeX\tex/generic/pgf/systemlayer\pgfsyssoftpath.code.tex)
+(D:\Program Files\MiKTeX\tex/generic/pgf/systemlayer\pgfsysprotocol.code.tex))
+(D:\Program Files\MiKTeX\tex/latex/xcolor\xcolor.sty
+(D:\Program Files\MiKTeX\tex/latex/graphics-cfg\color.cfg)
+(D:\Program Files\MiKTeX\tex/latex/graphics\mathcolor.ltx))
+(D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcore.code.tex
+(D:\Program Files\MiKTeX\tex/generic/pgf/math\pgfint.code.tex)
+(D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepoints.code.tex)
+(D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepathconstruct.code.t
+ex)
+(D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepathusage.code.tex)
+(D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorescopes.code.tex)
+(D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcoregraphicstate.code.te
+x)
+(D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcoretransformations.code
+.tex) (D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorequick.code.tex
+) (D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcoreobjects.code.tex)
+(D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepathprocessing.code.
+tex) (D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorearrows.code.tex
+) (D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcoreshade.code.tex)
+(D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcoreimage.code.tex)
+(D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcoreexternal.code.tex)
+(D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorelayers.code.tex)
+(D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcoretransparency.code.te
+x) (D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorepatterns.code.tex
+) (D:\Program Files\MiKTeX\tex/generic/pgf/basiclayer\pgfcorerdf.code.tex)))
+(D:\Program Files\MiKTeX\tex/latex/pgf/utilities\xxcolor.sty)
+(D:\Program Files\MiKTeX\tex/latex/base\atbegshi-ltx.sty)
+(D:\Program Files\MiKTeX\tex/latex/hyperref\hyperref.sty
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.sty)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/generic/kvdefinekeys\kvdefinekeys.sty)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/generic/pdfescape\pdfescape.sty
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty)
+(D:\Program Files\MiKTeX\tex/generic/pdftexcmds\pdftexcmds.sty
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/generic/infwarerr\infwarerr.sty)))
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/hycolor\hycolor.sty)
+(D:\Program Files\MiKTeX\tex/latex/hyperref\nameref.sty
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/refcount\refcount.sty)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/generic/gettitlestring\gettitlestring.s
+ty (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/kvoptions\kvoptions.sty)))
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/generic/stringenc\stringenc.sty)
+(D:\Program Files\MiKTeX\tex/latex/hyperref\pd1enc.def)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/generic/intcalc\intcalc.sty)
+(D:\Program Files\MiKTeX\tex/latex/hyperref\puenc.def)
+(D:\Program Files\MiKTeX\tex/latex/url\url.sty)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/generic/bitset\bitset.sty
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/generic/bigintcalc\bigintcalc.sty))
+
+Package hyperref Message: Stopped early.
+
+) (D:\Program Files\MiKTeX\tex/latex/hyperref\hpdftex.def
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/rerunfilecheck\rerunfilecheck.sty
+
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/generic/uniquecounter\uniquecounter.sty
+))) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbaserequires.sty
+
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasecompatibility.st
+y) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasefont.sty
+(D:\Program Files\MiKTeX\tex/latex/amsfonts\amssymb.sty
+(D:\Program Files\MiKTeX\tex/latex/amsfonts\amsfonts.sty))
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/sansmathaccent\sansmathaccent.sty
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/koma-script\scrlfile.sty
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/koma-script\scrlfile-hook.sty
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/koma-script\scrlogo.sty)))))
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasetranslator.sty
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/translator\translator.sty))
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasemisc.sty)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasetwoscreens.sty)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbaseoverlay.sty)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasetitle.sty)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasesection.sty)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbaseframe.sty)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbaseverbatim.sty)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbaseframesize.sty)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbaseframecomponents.
+sty) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasecolor.sty)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasenotes.sty)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasetoc.sty)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasetemplates.sty
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbaseauxtemplates.sty
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbaseboxes.sty)))
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbaselocalstructure.s
+ty (D:\Program Files\MiKTeX\tex/latex/tools\enumerate.sty))
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasenavigation.sty
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasenavigationsymbol
+s.tex))
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasetheorems.sty
+(D:\Program Files\MiKTeX\tex/latex/amsmath\amsmath.sty
+For additional information on amsmath, use the `?' option.
+(D:\Program Files\MiKTeX\tex/latex/amsmath\amstext.sty
+(D:\Program Files\MiKTeX\tex/latex/amsmath\amsgen.sty))
+(D:\Program Files\MiKTeX\tex/latex/amsmath\amsbsy.sty)
+(D:\Program Files\MiKTeX\tex/latex/amsmath\amsopn.sty))
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/amscls\amsthm.sty))
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerbasethemes.sty))
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerthemedefault.sty
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerfontthemedefault.sty
+)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamercolorthemedefault.st
+y)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerinnerthemedefault.st
+y)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerouterthemedefault.st
+y))) (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/vntex\vietnam.sty
+(D:\Program Files\MiKTeX\tex/latex/base\ifthen.sty)
+(D:\Program Files\MiKTeX\tex/latex/base\fontenc.sty
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/vntex\t5enc.def
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/vntex\t5enc.dfu))
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/vntex\t5cmss.fd))
+(D:\Program Files\MiKTeX\tex/latex/base\inputenc.sty)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/vntex\vncaps.tex))
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/mathtools\mathtools.sty
+(D:\Program Files\MiKTeX\tex/latex/tools\calc.sty)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/mathtools\mhsetup.sty))
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/booktabs\booktabs.sty)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/multirow\multirow.sty)
+(D:\Program Files\MiKTeX\tex/latex/tools\array.sty)
+(D:\Program Files\MiKTeX\tex/latex/pgf/frontendlayer\tikz.sty
+(D:\Program Files\MiKTeX\tex/latex/pgf/basiclayer\pgf.sty
+(D:\Program Files\MiKTeX\tex/generic/pgf/modules\pgfmoduleshapes.code.tex)
+(D:\Program Files\MiKTeX\tex/generic/pgf/modules\pgfmoduleplot.code.tex)
+(D:\Program Files\MiKTeX\tex/latex/pgf/compatibility\pgfcomp-version-0-65.sty)
+(D:\Program Files\MiKTeX\tex/latex/pgf/compatibility\pgfcomp-version-1-18.sty))
+ (D:\Program Files\MiKTeX\tex/latex/pgf/utilities\pgffor.sty
+(D:\Program Files\MiKTeX\tex/generic/pgf/utilities\pgffor.code.tex))
+(D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz\tikz.code.tex
+(D:\Program Files\MiKTeX\tex/generic/pgf/libraries\pgflibraryplothandlers.code.
+tex) (D:\Program Files\MiKTeX\tex/generic/pgf/modules\pgfmodulematrix.code.tex)
+
+(D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibra
+rytopaths.code.tex)))
+(D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibra
+rycalc.code.tex)
+(D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibra
+rypositioning.code.tex)
+(D:\Program Files\MiKTeX\tex/generic/pgf/libraries\pgflibraryarrows.meta.code.t
+ex)
+(D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibra
+ryfit.code.tex)
+(D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibra
+ryshapes.code.tex
+(D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibra
+ryshapes.geometric.code.tex
+(D:\Program Files\MiKTeX\tex/generic/pgf/libraries/shapes\pgflibraryshapes.geom
+etric.code.tex))
+(D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibra
+ryshapes.misc.code.tex
+(D:\Program Files\MiKTeX\tex/generic/pgf/libraries/shapes\pgflibraryshapes.misc
+.code.tex))
+(D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibra
+ryshapes.symbols.code.tex
+(D:\Program Files\MiKTeX\tex/generic/pgf/libraries/shapes\pgflibraryshapes.symb
+ols.code.tex))
+(D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibra
+ryshapes.arrows.code.tex
+(D:\Program Files\MiKTeX\tex/generic/pgf/libraries/shapes\pgflibraryshapes.arro
+ws.code.tex))
+(D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibra
+ryshapes.callouts.code.tex
+(D:\Program Files\MiKTeX\tex/generic/pgf/libraries/shapes\pgflibraryshapes.call
+outs.code.tex))
+(D:\Program Files\MiKTeX\tex/generic/pgf/frontendlayer/tikz/libraries\tikzlibra
+ryshapes.multipart.code.tex
+(D:\Program Files\MiKTeX\tex/generic/pgf/libraries/shapes\pgflibraryshapes.mult
+ipart.code.tex)))
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerthemeMadrid.sty
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamercolorthemewhale.sty)
+
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamercolorthemeorchid.sty
+)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerinnerthemerounded.st
+y)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamerouterthemeinfolines.
+sty))
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/beamer\beamercolorthemeseahorse.s
+ty)
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\\' on input line 47.
+
+(D:\Program Files\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def) (slides.aux)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/vntex\t5cmr.fd)
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+(D:\Program Files\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (D:\Program Files\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
+(D:\Program Files\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg)) (slides.out)
+(slides.out)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/translator\translator-basic-dicti
+onary-English.dict)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/translator\translator-bibliograph
+y-dictionary-English.dict)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/translator\translator-environment
+-dictionary-English.dict)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/translator\translator-months-dict
+ionary-English.dict)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/translator\translator-numbers-dic
+tionary-English.dict)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/translator\translator-theorem-dic
+tionary-English.dict) (slides.nav) [1{C:/Users/JS/AppData/Local/MiKTeX/fonts/ma
+p/pdftex/pdftex.map}] (D:\Program Files\MiKTeX\tex/latex/amsfonts\umsa.fd)
+(D:\Program Files\MiKTeX\tex/latex/amsfonts\umsb.fd)
+(C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/sansmathaccent\ot1mathkerncmss.fd
+)
+
+LaTeX Font Warning: Font shape `T5/cmss/bx/it' undefined
+(Font)              using `T5/cmss/bx/n' instead on input line 86.
+
+
+LaTeX Font Warning: Font shape `T5/cmss/m/it' in size <10> not available
+(Font)              Font shape `T5/cmss/m/sl' tried instead on input line 86.
+
+
+LaTeX Font Warning: Font shape `T5/cmss/m/it' in size <9> not available
+(Font)              Font shape `T5/cmss/m/sl' tried instead on input line 86.
+
+[2]
+Underfull \hbox (badness 2302) in paragraph at lines 112--112
+[]|\T5/cmss/m/sl/9 Novelty. $\T5/cmss/m/n/9 1\OML/cmm/m/it/9 =[]$ \T5/cmss/m/n/
+9 via random-projection hash;
+[3] [4] [5]
+
+LaTeX Font Warning: Font shape `T5/cmss/m/it' in size <7> not available
+(Font)              Font shape `T5/cmss/m/sl' tried instead on input line 205.
+
+[6] [7] [8 <../figures/env_doorkey.png (PNG copy)> <../figures/env_empty.png (P
+NG copy)> <../figures/env_keycorridor.png (PNG copy)> <../figures/env_lavacross
+ing.png (PNG copy)> <../figures/env_redbluedoors.png (PNG copy)> <../figures/en
+v_unlockpickup.png (PNG copy)>] [9] [10 <../figures/all_envs_count.png>]
+[11 <../figures/all_envs_ride.png>] [12 <../figures/all_envs_icm.png>] [13 <../
+figures/aggregate_summary.png>] [14 <../figures/care_dynamics_count.png> <../fi
+gures/care_beta_hist_ride.png>] [15 <../figures/profile_icm.png>] [16] [17]
+[18] [19] [20] (slides.aux)
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+ )
+(see the transcript file for additional information)<D:/Program Files/MiKTeX/fo
+nts/type1/public/amsfonts/cm/cmex10.pfb><D:/Program Files/MiKTeX/fonts/type1/pu
+blic/amsfonts/cmextra/cmex9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/ams
+fonts/cm/cmmi10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmm
+i12.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi5.pfb><D:/P
+rogram Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><D:/Program Files/
+MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><D:/Program Files/MiKTeX/fonts/
+type1/public/amsfonts/cm/cmmi8.pfb><D:/Program Files/MiKTeX/fonts/type1/public/
+amsfonts/cm/cmmi9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/c
+mss10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmss8.pfb><D:
+/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmss9.pfb><D:/Program File
+s/MiKTeX/fonts/type1/public/amsfonts/cm/cmssi10.pfb><D:/Program Files/MiKTeX/fo
+nts/type1/public/amsfonts/cm/cmssi8.pfb><D:/Program Files/MiKTeX/fonts/type1/pu
+blic/amsfonts/cm/cmssi9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfont
+s/cm/cmsy10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.p
+fb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><D:/Progra
+m Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><D:/Program Files/MiKTe
+X/fonts/type1/public/amsfonts/cm/cmsy9.pfb><D:/Program Files/MiKTeX/fonts/type1
+/public/amsfonts/symbols/msbm10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/t
+ype1/vntex/vnr/vnss10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex
+/vnr/vnss12.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnss8
+.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnss9.pfb><C:/Us
+ers/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnssbx10.pfb><C:/Users/JS/A
+ppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnssi10.pfb><C:/Users/JS/AppData/Ro
+aming/MiKTeX/fonts/type1/vntex/vnr/vnssi8.pfb><C:/Users/JS/AppData/Roaming/MiKT
+eX/fonts/type1/vntex/vnr/vnssi9.pfb>
+Output written on slides.pdf (20 pages, 4289157 bytes).
+Transcript written on slides.log.
+pdflatex: major issue: User/administrator updates are out-of-sync.
