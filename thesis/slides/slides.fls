@@ -456,18 +456,15 @@ INPUT ..\figures\env_empty.png
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnss12.tfm
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnssbx10.tfm
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnss8.tfm
-INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnss9.tfm
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnssbx10.tfm
-INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnssi8.tfm
-INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnssbx10.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmss9.tfm
 INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmss8.tfm
 INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmss8.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmmi9.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmss8.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmmi8.tfm
 INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmmi6.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmsy9.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmsy8.tfm
 INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmsy6.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex9.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex8.tfm
 INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
 INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
 INPUT D:\Program Files\MiKTeX\tex\latex\amsfonts\umsa.fd
@@ -486,23 +483,27 @@ INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnss8.tfm
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\sansmathaccent\ot1mathkerncmss.fd
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\sansmathaccent\ot1mathkerncmss.fd
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\tex\latex\sansmathaccent\ot1mathkerncmss.fd
-INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\public\sansmathaccent\mathkerncmssi9.tfm
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\public\sansmathaccent\mathkerncmssi8.tfm
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\public\sansmathaccent\mathkerncmssi8.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmss12.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmss8.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmmi12.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmmi8.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmsy10.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmsy8.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmex10.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex8.tfm
-INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\public\sansmathaccent\mathkerncmssi8.tfm
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnssi8.tfm
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnss9.tfm
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnssbx10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmss9.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmmi9.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmsy9.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex9.tfm
 INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
 INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
+INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\public\sansmathaccent\mathkerncmssi9.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\tcss0700.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmss12.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmmi12.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmsy10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmex10.tfm
+INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
 INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
 INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\public\sansmathaccent\mathkerncmssi12.tfm
-INPUT C:\Users\JS\AppData\Roaming\MiKTeX\fonts\tfm\public\sansmathaccent\mathkerncmssi8.tfm
 INPUT D:\Program Files\MiKTeX\fonts\tfm\public\cm\cmss8.tfm
 INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
 INPUT D:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
@@ -583,6 +584,8 @@ OUTPUT slides.snm
 INPUT slides.aux
 INPUT .\slides.out
 INPUT .\slides.out
+INPUT C:\Users\JS\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\tcss0700.pk
+INPUT C:\Users\JS\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\tcss0700.pk
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmex10.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmex10.pfb
 INPUT D:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi10.pfb

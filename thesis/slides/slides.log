@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.15)  27 MAY 2026 01:42
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.5.29)  29 MAY 2026 15:44
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1051,22 +1051,23 @@ Package pdftex.def Info: ../figures/env_empty.png  used on input line 86.
  [2
 
  <../figures/RL_loop.png> <../figures/env_humanoid.png (PNG copy)> <../figures/env_empty.png (PNG copy)>]
-
-LaTeX Font Warning: Font shape `T5/cmss/m/it' in size <8> not available
-(Font)              Font shape `T5/cmss/m/sl' tried instead on input line 129.
-
-LaTeX Font Info:    Trying to load font information for U+msa on input line 129.
-(D:\Program Files\MiKTeX\tex/latex/amsfonts\umsa.fd
+LaTeX Font Info:    Trying to load font information for U+msa on input line 146.
+ (D:\Program Files\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 129.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 146.
  (D:\Program Files\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Trying to load font information for OT1+mathkerncmss on input line 129.
+LaTeX Font Info:    Trying to load font information for OT1+mathkerncmss on input line 146.
  (C:\Users\JS\AppData\Roaming\MiKTeX\tex/latex/sansmathaccent\ot1mathkerncmss.fd
 File: ot1mathkerncmss.fd 2020/01/31 Fontinst v1.933 font definitions for OT1/mathkerncmss.
-) [3
+)
+
+LaTeX Font Warning: Font shape `T5/cmss/m/it' in size <8> not available
+(Font)              Font shape `T5/cmss/m/sl' tried instead on input line 146.
+
+[3
 
 ] [4
 
@@ -1074,61 +1075,61 @@ File: ot1mathkerncmss.fd 2020/01/31 Fontinst v1.933 font definitions for OT1/mat
 
 ] [6
 
+] [7
+
 ]
-<../figures/env_doorkey.png, id=124, 256.96pt x 256.96pt>
+<../figures/env_doorkey.png, id=151, 256.96pt x 256.96pt>
 File: ../figures/env_doorkey.png Graphic file (type png)
 <use ../figures/env_doorkey.png>
-Package pdftex.def Info: ../figures/env_doorkey.png  used on input line 205.
+Package pdftex.def Info: ../figures/env_doorkey.png  used on input line 288.
 (pdftex.def)             Requested size: 73.9754pt x 73.97733pt.
 File: ../figures/env_empty.png Graphic file (type png)
 <use ../figures/env_empty.png>
-Package pdftex.def Info: ../figures/env_empty.png  used on input line 205.
+Package pdftex.def Info: ../figures/env_empty.png  used on input line 288.
 (pdftex.def)             Requested size: 73.97148pt x 73.97733pt.
-<../figures/env_keycorridor.png, id=125, 224.84pt x 224.84pt>
+<../figures/env_keycorridor.png, id=152, 224.84pt x 224.84pt>
 File: ../figures/env_keycorridor.png Graphic file (type png)
 <use ../figures/env_keycorridor.png>
-Package pdftex.def Info: ../figures/env_keycorridor.png  used on input line 205.
+Package pdftex.def Info: ../figures/env_keycorridor.png  used on input line 288.
 (pdftex.def)             Requested size: 73.97784pt x 73.97733pt.
-<../figures/env_lavacrossing.png, id=126, 289.08pt x 289.08pt>
+<../figures/env_lavacrossing.png, id=153, 289.08pt x 289.08pt>
 File: ../figures/env_lavacrossing.png Graphic file (type png)
 <use ../figures/env_lavacrossing.png>
-Package pdftex.def Info: ../figures/env_lavacrossing.png  used on input line 205.
+Package pdftex.def Info: ../figures/env_lavacrossing.png  used on input line 288.
 (pdftex.def)             Requested size: 73.97687pt x 73.97733pt.
-<../figures/env_redbluedoors.png, id=127, 513.92pt x 256.96pt>
+<../figures/env_redbluedoors.png, id=154, 513.92pt x 256.96pt>
 File: ../figures/env_redbluedoors.png Graphic file (type png)
 <use ../figures/env_redbluedoors.png>
-Package pdftex.def Info: ../figures/env_redbluedoors.png  used on input line 205.
+Package pdftex.def Info: ../figures/env_redbluedoors.png  used on input line 288.
 (pdftex.def)             Requested size: 147.9508pt x 73.97733pt.
-<../figures/env_unlockpickup.png, id=128, 353.32pt x 192.72pt>
+<../figures/env_unlockpickup.png, id=155, 353.32pt x 192.72pt>
 File: ../figures/env_unlockpickup.png Graphic file (type png)
 <use ../figures/env_unlockpickup.png>
-Package pdftex.def Info: ../figures/env_unlockpickup.png  used on input line 205.
+Package pdftex.def Info: ../figures/env_unlockpickup.png  used on input line 288.
 (pdftex.def)             Requested size: 135.62158pt x 73.97733pt.
- [7
+ [8
 
- <../figures/env_doorkey.png (PNG copy)> <../figures/env_keycorridor.png (PNG copy)> <../figures/env_lavacrossing.png (PNG copy)> <../figures/env_redbluedoors.png (PNG copy)> <../figures/env_unlockpickup.png (PNG copy)>] [8
-
-]
-<../figures/aggregate_efficiency.png, id=144, 1653.17625pt x 996.72375pt>
+ <../figures/env_doorkey.png (PNG copy)> <../figures/env_keycorridor.png (PNG copy)> <../figures/env_lavacrossing.png (PNG copy)> <../figures/env_redbluedoors.png (PNG copy)> <../figures/env_unlockpickup.png (PNG copy)>]
+<../figures/aggregate_efficiency.png, id=163, 1653.17625pt x 996.72375pt>
 File: ../figures/aggregate_efficiency.png Graphic file (type png)
 <use ../figures/aggregate_efficiency.png>
-Package pdftex.def Info: ../figures/aggregate_efficiency.png  used on input line 233.
+Package pdftex.def Info: ../figures/aggregate_efficiency.png  used on input line 299.
 (pdftex.def)             Requested size: 292.38768pt x 176.28473pt.
  [9
 
  <../figures/aggregate_efficiency.png>]
-<../figures/aggregate_final.png, id=154, 1654.18pt x 996.72375pt>
+<../figures/aggregate_final.png, id=172, 1654.18pt x 996.72375pt>
 File: ../figures/aggregate_final.png Graphic file (type png)
 <use ../figures/aggregate_final.png>
-Package pdftex.def Info: ../figures/aggregate_final.png  used on input line 241.
+Package pdftex.def Info: ../figures/aggregate_final.png  used on input line 307.
 (pdftex.def)             Requested size: 292.5652pt x 176.28473pt.
  [10
 
  <../figures/aggregate_final.png>]
-<../figures/care_dynamics_ride.png, id=163, 1075.8594pt x 1303.7508pt>
+<../figures/care_dynamics_ride.png, id=181, 1075.8594pt x 1303.7508pt>
 File: ../figures/care_dynamics_ride.png Graphic file (type png)
 <use ../figures/care_dynamics_ride.png>
-Package pdftex.def Info: ../figures/care_dynamics_ride.png  used on input line 252.
+Package pdftex.def Info: ../figures/care_dynamics_ride.png  used on input line 318.
 (pdftex.def)             Requested size: 165.673pt x 200.78235pt.
  [11
 
@@ -1137,24 +1138,22 @@ Package pdftex.def Info: ../figures/care_dynamics_ride.png  used on input line 2
 ] [13
 
 ]
-<../figures/aggregate_efficiency_beta1e-8_1.png, id=190, 786.2976pt x 528.5346pt>
+<../figures/aggregate_efficiency_beta1e-8_1.png, id=206, 786.2976pt x 528.5346pt>
 File: ../figures/aggregate_efficiency_beta1e-8_1.png Graphic file (type png)
 <use ../figures/aggregate_efficiency_beta1e-8_1.png>
-Package pdftex.def Info: ../figures/aggregate_efficiency_beta1e-8_1.png  used on input line 297.
+Package pdftex.def Info: ../figures/aggregate_efficiency_beta1e-8_1.png  used on input line 363.
 (pdftex.def)             Requested size: 262.27454pt x 176.29605pt.
  [14
 
  <../figures/aggregate_efficiency_beta1e-8_1.png>]
-<../figures/aggregate_final_beta1e-8_1.png, id=200, 786.2976pt x 528.5346pt>
+<../figures/aggregate_final_beta1e-8_1.png, id=215, 786.2976pt x 528.5346pt>
 File: ../figures/aggregate_final_beta1e-8_1.png Graphic file (type png)
 <use ../figures/aggregate_final_beta1e-8_1.png>
-Package pdftex.def Info: ../figures/aggregate_final_beta1e-8_1.png  used on input line 305.
+Package pdftex.def Info: ../figures/aggregate_final_beta1e-8_1.png  used on input line 371.
 (pdftex.def)             Requested size: 262.27454pt x 176.29605pt.
  [15
 
  <../figures/aggregate_final_beta1e-8_1.png>] [16
-
-] [17
 
 ]
 \tf@nav=\write6
@@ -1175,17 +1174,17 @@ Package rerunfilecheck Info: File `slides.out' has not changed.
 (rerunfilecheck)             Checksum: 3ADD7AF6A95872E48224E70D4C50F073;85.
  ) 
 Here is how much of TeX's memory you used:
- 29036 strings out of 467867
- 591740 string characters out of 5428410
- 1001385 words of memory out of 5000000
- 57277 multiletter control sequences out of 15000+600000
- 656322 words of font info for 100 fonts, out of 8000000 for 9000
+ 29044 strings out of 467867
+ 592118 string characters out of 5428410
+ 1001402 words of memory out of 5000000
+ 57286 multiletter control sequences out of 15000+600000
+ 656667 words of font info for 101 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 128i,15n,123p,444b,807s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmss10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmss8.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmss9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmssi10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmssi8.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmssi9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnss10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnss12.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnss8.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnss9.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnssbx10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnssi8.pfb>
-Output written on slides.pdf (17 pages, 3068498 bytes).
+ 128i,16n,123p,444b,806s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ <C:\Users\JS\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcss0700.pk><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmss10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmss8.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmss9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmssi10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmssi8.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmssi9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy9.pfb><D:/Program Files/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnss10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnss12.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnss8.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnss9.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnssbx10.pfb><C:/Users/JS/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnssi8.pfb>
+Output written on slides.pdf (16 pages, 3072898 bytes).
 PDF statistics:
- 329 PDF objects out of 1000 (max. 8388607)
- 36 named destinations out of 1000 (max. 500000)
- 236 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 341 PDF objects out of 1000 (max. 8388607)
+ 34 named destinations out of 1000 (max. 500000)
+ 278 words of extra memory for PDF output out of 10000 (max. 10000000)
 

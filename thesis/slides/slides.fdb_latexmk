@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1779820960.51302 "d:/Workspace/graduation-thesis/graduation-thesis/thesis/slides/slides.tex" "slides.pdf" "slides" 1779820973.58424 0
+["pdflatex"] 1780044275.53934 "d:/Workspace/graduation-thesis/graduation-thesis/thesis/slides/slides.tex" "slides.pdf" "slides" 1780044288.42266 0
   "../figures/RL_loop.png" 1779808430 3613355 0876205084502d8904910fa867702cfb ""
   "../figures/aggregate_efficiency.png" 1779819006 97989 9d035d97ccb13fb723b20d834d8bca8e ""
   "../figures/aggregate_efficiency_beta1e-8_1.png" 1779818325 98941 dead5d328de118b225087a373297226f ""
@@ -14,7 +14,8 @@
   "../figures/env_redbluedoors.png" 1778906171 1600 af514ca642bbdee6f017a341ab13da44 ""
   "../figures/env_unlockpickup.png" 1778906171 1353 acfed37b57e87cbb9488a087ddae2b6f ""
   "C:/Users/JS/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1778850130 88550 556fbefa7d2e4c8f68bc8647c78bd8e4 ""
-  "C:/Users/JS/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1773592751 13323773 8ddd8b3a37ea204ad94af85bcf127cda ""
+  "C:/Users/JS/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcss0700.pk" 1780034946 7628 c02da97e40148476d99b0536cc5a9375 ""
+  "C:/Users/JS/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1780041581 13323773 b231dd1ce8a2e86d4376ef7db21275f6 ""
   "C:/Users/JS/AppData/Roaming/MiKTeX/fonts/tfm/public/sansmathaccent/mathkerncmssi10.tfm" 1363549528 1696 aaa5bbd1f47f001247d42218ce371101 ""
   "C:/Users/JS/AppData/Roaming/MiKTeX/fonts/tfm/public/sansmathaccent/mathkerncmssi12.tfm" 1363549534 1708 6d4e701533a08297ca48058e38aa9e38 ""
   "C:/Users/JS/AppData/Roaming/MiKTeX/fonts/tfm/public/sansmathaccent/mathkerncmssi8.tfm" 1363549514 1676 fb6c6a335484692abff897d6e8965829 ""
@@ -117,6 +118,7 @@
   "C:/Users/JS/AppData/Roaming/MiKTeX/tex/latex/vntex/t5enc.dfu" 1368738347 13949 387dd4fa58aea5f873839c93430fffed ""
   "C:/Users/JS/AppData/Roaming/MiKTeX/tex/latex/vntex/vietnam.sty" 1368738347 2477 91784aa2c9213f74609391e3cae65a13 ""
   "C:/Users/JS/AppData/Roaming/MiKTeX/tex/latex/vntex/vncaps.tex" 1368738347 3273 a55ebdb07413d2fea580f210e3c0b252 ""
+  "D:/Program Files/MiKTeX/fonts/tfm/jknappen/ec/tcss0700.tfm" 993062536 1476 ede63354c69baa6e58b4e3d4cfdaa2cd ""
   "D:/Program Files/MiKTeX/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1233951848 1004 54797486969f23fa377b128694d548df ""
   "D:/Program Files/MiKTeX/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1233951848 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
   "D:/Program Files/MiKTeX/fonts/tfm/public/amsfonts/cmextra/cmex9.tfm" 1234365220 996 a18840b13b499c08ac2de96a99eda4bc ""
@@ -278,11 +280,11 @@
   "D:/Program Files/MiKTeX/tex/latex/tools/enumerate.sty" 1761901070 3468 f21ceb3448a22fec45299f924e7fc48b ""
   "D:/Program Files/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "D:/Program Files/MiKTeX/tex/latex/xcolor/xcolor.sty" 1729265222 55384 b454dec21c2d9f45ec0b793f0995b992 ""
-  "d:/Workspace/graduation-thesis/graduation-thesis/thesis/slides/slides.tex" 1779820964 14228 1325748dd523b7b64ef4092bd7c91b3b ""
-  "slides.aux" 1779820973 3008 df2095d4f687f5b2d1df2f2b16cd2fdc "pdflatex"
-  "slides.nav" 1779820973 2035 d8847595d0d84dac2782494e0352fa47 "pdflatex"
-  "slides.out" 1779820973 85 3add7af6a95872e48224e70d4c50f073 "pdflatex"
-  "slides.tex" 1779820964 14228 1325748dd523b7b64ef4092bd7c91b3b ""
+  "d:/Workspace/graduation-thesis/graduation-thesis/thesis/slides/slides.tex" 1780044274 16219 bb1ff7b9a6191a0914fb4087b0c71a00 ""
+  "slides.aux" 1780044288 2879 f54d8b3c17765a711a6b9f2b126a788c "pdflatex"
+  "slides.nav" 1780044288 1942 1eb9a6fda64a8178d993c30b5cb31d98 "pdflatex"
+  "slides.out" 1780044288 85 3add7af6a95872e48224e70d4c50f073 "pdflatex"
+  "slides.tex" 1780044274 16219 bb1ff7b9a6191a0914fb4087b0c71a00 ""
   (generated)
   "slides.aux"
   "slides.log"

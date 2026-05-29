@@ -62,9 +62,9 @@
 \end{frame}
 
 % =============================================================
-% Slide 2 - Reinforcement Learning and Sparse Reward
+% Slide 2 - Background: Reinforcement Learning and Sparse Reward
 % =============================================================
-\begin{frame}{Reinforcement Learning and Sparse Reward}
+\begin{frame}{Background: Reinforcement Learning and Sparse Reward}
   \begin{center}
     \includegraphics[height=3.0cm,keepaspectratio]{RL_loop.png}
   \end{center}
@@ -86,15 +86,28 @@
 \end{frame}
 
 % =============================================================
-% Slide 3 - PPO Backbone and Three Sources of Intrinsic Reward
+% Slide 3 - Background: PPO and Exploration Methods
 % =============================================================
-\begin{frame}{Three Sources of Intrinsic Reward}
-  \vspace{0.3em}
+\begin{frame}{Background: PPO and Exploration Methods}
+  \vspace{0.2em}
+  \begin{block}{PPO as the Core RL Framework}
+    \footnotesize
+    \begin{itemize}
+      \setlength{\itemsep}{0.15em}
+      \item \textbf{Policy optimization:} Proximal Policy Optimization (PPO) is the base
+            RL algorithm that updates the policy $\pi_\theta$.
+      \item \textbf{Objective:} PPO maximizes the expected total \emph{shaped} reward $r_t$,
+            with its clipping mechanism keeping policy updates stable and effective.
+    \end{itemize}
+  \end{block}
+
+  \vspace{0.2em}
   \centering
+  {\footnotesize\color{softgray}Exploration methods that supply the intrinsic reward $r_t^{int}$:}\\[0.3em]
   \begin{tikzpicture}[font=\footnotesize]
     \tikzset{
       card/.style={draw=uetblue!50, line width=0.6pt, rounded corners=5pt,
-                   minimum width=3.7cm, minimum height=2.8cm, fill=lightbg},
+                   minimum width=3.7cm, minimum height=2.7cm, fill=lightbg},
       ctitle/.style={fill=uetblue, text=white, font=\small\bfseries,
                      rounded corners=2pt, minimum width=3.4cm, minimum height=0.5cm,
                      align=center, inner sep=3pt}
@@ -103,35 +116,39 @@
     \node[ctitle, anchor=north] (t1) at ([yshift=-0.15cm]c1.north) {Novelty};
     \node[text width=3.3cm, align=center, anchor=north, font=\footnotesize,
           below=0.5cm of t1]
-      {\itshape ``Have I been\\here before?''\\[0.8em]
+      {\itshape ``Have I been\\here before?''\\[0.6em]
        \upshape\textbf{\color{uetblue}Count-based}};
 
     \node[card] (c2) at (0, 0) {};
     \node[ctitle, anchor=north] (t2) at ([yshift=-0.15cm]c2.north) {Surprise};
     \node[text width=3.3cm, align=center, anchor=north, font=\footnotesize,
           below=0.5cm of t2]
-      {\itshape ``Did I\\predict that?''\\[0.8em]
+      {\itshape ``Did I\\predict that?''\\[0.6em]
        \upshape\textbf{\color{uetblue}ICM}};
 
     \node[card] (c3) at (4.5, 0) {};
     \node[ctitle, anchor=north] (t3) at ([yshift=-0.15cm]c3.north) {Influence};
     \node[text width=3.3cm, align=center, anchor=north, font=\footnotesize,
           below=0.5cm of t3]
-      {\itshape ``Did I change\\the world?''\\[0.8em]
+      {\itshape ``Did I change\\the world?''\\[0.6em]
        \upshape\textbf{\color{uetblue}RIDE}};
   \end{tikzpicture}
   
-  \vspace{0.6em}
+  \vspace{0.3em}
   \begin{center}\small
     Shaped reward: $\displaystyle r_t \;=\; r_t^{ext} + \beta\,r_t^{int}$
   \end{center}
 
+  \vspace{0.2em}
+  \begin{center}\scriptsize\color{softgray}
+    PPO: Proximal Policy Optimization \textbullet\ ICM: Intrinsic Curiosity Module \textbullet\ RIDE: Rewarding Impact-Driven Exploration
+  \end{center}
 \end{frame}
 
 % =============================================================
-% Slide 4 - Fixed-beta problem and research question
+% Slide 4 - Fixed-beta problem and research objective
 % =============================================================
-\begin{frame}{Fixed-$\beta$ Problem and Research Question}
+\begin{frame}{Fixed-$\beta$ Problem and Research Objective}
   \vspace{1em}
   \begin{itemize}\small
     \setlength{\itemsep}{0.6em}
@@ -141,8 +158,8 @@
   \end{itemize}
 
   \vspace{1em}
-  \begin{block}{Research question}
-    \footnotesize\itshape Can we adapt the intrinsic-reward coefficient automatically during training so that exploration better supports extrinsic-reward learning?
+  \begin{block}{Objective}
+    \footnotesize\itshape A method to adapt the intrinsic-reward coefficient automatically during training so that exploration better supports extrinsic-reward learning
   \end{block}
 \end{frame}
 
@@ -185,7 +202,73 @@
 \end{frame}
 
 % =============================================================
-% Slide 9 - Six MiniGrid environments
+% Slide 7 - Experimental Design
+% =============================================================
+\begin{frame}{Experimental Design}
+  % ---------- Upper section: Setup Overview ----------
+  \centering
+  \footnotesize
+  \begin{tabular}{@{}>{\bfseries}p{3.2cm}p{8.8cm}@{}}
+    \toprule
+    Base algorithm     & PPO \\[0.35em]
+    Intrinsic modules  & Count-based, ICM, RIDE \\[0.35em]
+    Compared methods   & PPO (no intrinsic) \,/\, PPO + fixed-$\beta$ \,/\, PPO + CARE \\[0.35em]
+    Environments       & 6 MiniGrid sparse-reward tasks ($10^6$ env steps each) \\[0.35em]
+    Metrics            & Success rate, episode return, learning speed, stability \\[0.35em]
+    Seeds              & $\{1,2,3,4,5\}$ \\
+    \bottomrule
+  \end{tabular}
+
+  \vspace{0.3cm}
+
+  % ---------- Lower section: Hyperparameters ----------
+  \begin{columns}[t]
+    \begin{column}{0.45\textwidth}
+      \centering
+      \footnotesize
+      \textbf{PPO Config}\\[0.3em]
+      \begin{tabular}{r@{\;$=$\;}l}
+        \toprule
+        $K$                    & $80$            \\
+        $\epsilon_\text{clip}$ & $0.2$           \\
+        $\gamma$               & $0.99$          \\
+        $\lambda_\text{GAE}$   & $0.95$          \\
+        lr$_\text{actor}$      & $3{\times}10^{-4}$ \\
+        lr$_\text{critic}$     & $10^{-3}$       \\
+        rollout $T$            & $4{,}000$       \\
+        \bottomrule
+      \end{tabular}
+    \end{column}
+    \hspace{0.06\textwidth}
+    \begin{column}{0.45\textwidth}
+      \centering
+      \footnotesize
+      \textbf{CARE Config}\\[0.3em]
+      \begin{tabular}{r@{\;$=$\;}l}
+        \toprule
+        $\beta_\text{min}$   & $10^{-4}$ \\
+        $\beta_\text{max}$   & $5{\times}10^{-2}$ \\
+        $\beta_0$            & $\sqrt{\beta_\text{min}\beta_\text{max}}\approx 2.24{\times}10^{-3}$ \\
+        $\lambda_\text{reg}$ & $10^{-3}$ \\
+        lr$_\psi$            & $5{\times}10^{-4}$ \\
+        weight decay         & $10^{-6}$ \\
+        grad-clip (L2)       & $1.0$ \\
+        \bottomrule
+      \end{tabular}
+    \end{column}
+  \end{columns}
+
+  \vspace{0.3cm}
+
+  \centering
+  {\footnotesize\textbf{Fixed-$\beta$ sweep:} $\beta \in \{0.0005,\,0.001,\,0.005,\,0.01,\,0.05\}$;\quad one $\psi$-step per PPO update\par}
+
+  \vspace{0.2cm}
+  {\scriptsize\color{softgray} GAE: Generalized Advantage Estimation\par}
+\end{frame}
+
+% =============================================================
+% Slide 8 - Six MiniGrid environments
 % =============================================================
 \begin{frame}{Experimental Design}
   \centering
@@ -205,23 +288,6 @@
 \end{frame}
 
 % =============================================================
-% Slide 8 - Experimental Design
-% =============================================================
-\begin{frame}{Experimental Design}
-  \centering
-  \small
-  \begin{tabular}{@{}>{\bfseries}p{3.5cm}p{9cm}@{}}
-    \toprule
-    Base algorithm     & PPO (actor--critic, on-policy) \\[0.5em]
-    Intrinsic modules  & Count-based, ICM, RIDE \\[0.5em]
-    Compared methods   & PPO (no intrinsic) \,/\, PPO + fixed-$\beta$ \,/\, PPO + CARE \\[0.5em]
-    Environments       & 6 MiniGrid sparse-reward tasks (5 seeds, $10^6$ env steps each) \\[0.5em]
-    Metrics            & Success rate, episode return, learning speed, stability across seeds \\
-    \bottomrule
-  \end{tabular}
-\end{frame}
-
-% =============================================================
 % Slide 9 - Results Overview
 % =============================================================
 \begin{frame}{Results -- Sample Efficiency}
@@ -229,7 +295,7 @@
   \includegraphics[width=0.95\linewidth,height=0.72\textheight,keepaspectratio]{aggregate_efficiency.png}
 
   \vspace{0.2em}
-  \footnotesize Lower is faster. Aggregated across 6 envs $\times$ 5 seeds (95\% bootstrap CI).
+  \footnotesize Lower is faster. Aggregated across 6 envs $\times$ 5 seeds (95\% bootstrap confidence interval).
 \end{frame}
 
 \begin{frame}{Results -- Final Performance}
@@ -334,25 +400,6 @@
      & ICM   & 0.716 & 0.937 & 0.001 & -0.221 \\
      & RIDE  & \textbf{0.536} & 0.369 & 0.0005 & \textbf{+0.167} \\
     \hline
-  \end{tabular}
-\end{frame}
-
-\begin{frame}{[Backup] Key Hyperparameters}
-  \footnotesize
-  \begin{tabular}{ll}
-    \toprule
-    \textbf{PPO} & $K=80$, $\epsilon_\text{clip}=0.2$, $\gamma=0.99$, $\lambda_\text{GAE}=0.95$ \\
-                 & lr$_\text{actor}=3{\times}10^{-4}$, lr$_\text{critic}=10^{-3}$, rollout $T=4{,}000$ \\
-    \midrule
-    \textbf{CARE} & $\beta_\text{min}=10^{-4}$, $\beta_\text{max}=5{\times}10^{-2}$ \\
-                  & $\beta_0=\sqrt{\beta_\text{min}\beta_\text{max}}\approx 2.24{\times}10^{-3}$ \\
-                  & $\lambda_\text{reg}=10^{-3}$, lr$_\psi=5{\times}10^{-4}$, weight decay $10^{-6}$ \\
-                  & one $\psi$-step per PPO update, grad-clip L2 $=1.0$, no delayed target copy \\
-    \midrule
-    \textbf{Fixed-$\beta$ sweep} & $\beta \in \{0.0005,\,0.001,\,0.005,\,0.01,\,0.05\}$ \\
-    \midrule
-    \textbf{Seeds} & $\{1,2,3,4,5\}$, $10^6$ env steps per run \\
-    \bottomrule
   \end{tabular}
 \end{frame}
 
